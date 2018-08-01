@@ -37,7 +37,7 @@
 						</a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="novoUsuario">Usuário</a></li>
-								<li><a href="">Servidor</a></li>
+								<li><a href="novoCurso">Curso</a></li>
 								<li><a href="">Servidor</a></li>
 							</ul></li>
 					</security:authorize>

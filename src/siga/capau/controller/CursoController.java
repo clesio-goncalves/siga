@@ -6,7 +6,6 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.CursoDao;
-import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Curso;
 
 @Transactional
@@ -29,13 +27,11 @@ public class CursoController {
 	@Autowired
 	AlunoDao dao_aluno;
 
-	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("novoCurso")
 	public String curso() {
 		return "curso/novo";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("adicionaCurso")
 	public String adiciona(@Valid Curso curso, BindingResult result) {
 
@@ -55,12 +51,11 @@ public class CursoController {
 		return "curso/lista";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("removeCurso")
 	public String remove(Curso curso) {
 
 		// Remove o curso caso não haja alunos cadastrados nesse curso
-		if (dao_usuario.buscaAlunosPorCurso(curso.getId()).size() > 0) {
+		if (dao_aluno.buscaAlunosPorCurso(curso.getId()).size() > 0) {
 			return "redirect:listaCursos";
 		}
 
@@ -74,14 +69,12 @@ public class CursoController {
 		return "curso/exibe";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("editaCurso")
 	public String edita(Long id, Model model) {
 		model.addAttribute("curso", dao.buscaPorId(id));
 		return "curso/edita";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("alteraCurso")
 	public String altera(@Valid Curso curso, BindingResult result) {
 
