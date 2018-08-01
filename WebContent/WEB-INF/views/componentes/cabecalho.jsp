@@ -23,7 +23,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="index"> <span
-					class="glyphicon glyphicon-print"></span> Print CAPAU
+					class="glyphicon glyphicon-home"></span> SIGA CAPAU
 				</a>
 			</div>
 
@@ -37,10 +37,11 @@
 						</a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="novoUsuario">Usuário</a></li>
-								<li><a href="novoSetor">Setor</a></li>
+								<li><a href="">Servidor</a></li>
+								<li><a href="">Servidor</a></li>
 							</ul></li>
 					</security:authorize>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
+					<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-expanded="false">Relatórios
 							<span class="caret"></span>
 					</a>
@@ -50,7 +51,7 @@
 							<li><a href="listaImpressoras">Impressoras</a></li>
 							<li class="divider"></li>
 							<li><a href="listaImpressoes">Impressão</a></li>
-						</ul></li>
+						</ul></li> 
 					<security:authorize access="hasRole('ROLE_Administrador')">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-expanded="false">Configuração
@@ -61,7 +62,7 @@
 								<li class="divider"></li>
 								<li><a href="diretorioLogs">Diretório dos Logs</a></li>
 							</ul></li>
-					</security:authorize>
+					</security:authorize>-->
 				</ul>
 				<security:authorize access="isAuthenticated()">
 					<ul class="nav navbar-nav navbar-right">

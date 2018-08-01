@@ -16,7 +16,7 @@
 
 	<!-- Pacote base da aplicação WEB -->
 	<context:component-scan
-		base-package="print.capau" />
+		base-package="siga.capau" />
 
 	<!-- Habilitar anotações no Spring -->
 	<mvc:annotation-driven />

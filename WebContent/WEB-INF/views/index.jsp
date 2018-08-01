@@ -13,13 +13,10 @@
 		
 		<security:authorize access="isAuthenticated()">
 			<security:authentication property="principal" var="usuario"/>
-			<h1>Bem-vindo, ${usuario.nome}</h1>
+			<h1>Bem-vindo, ${usuario.usuario}</h1>
 		</security:authorize>
-		<p>Este é o protótipo do sistema Print Capau que emite relatórios
-			de impressão.</p>
-		<p>OBS.: Para o sistema ter acesso ao relatório de impressão é
-			necessário informar o diretório de Logs do Paper Cut no Menu de
-			Configuração.</p>
+		<p>Este é o protótipo do sistema SIGA-Capau (Sistema Integrado de Gestão de Alunos do Campus Paulistana)  que acompanha 
+		o desenvolvimento dos alunos abaixo da média.</p>
 	</div>
 </div>
 

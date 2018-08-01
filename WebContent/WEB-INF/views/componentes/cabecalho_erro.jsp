@@ -23,7 +23,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="index"> <span
-					class="glyphicon glyphicon-print"></span> Print CAPAU
+					class="glyphicon glyphicon-home"></span> SIGA CAPAU
 				</a>
 			</div>
 

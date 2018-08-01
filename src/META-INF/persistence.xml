@@ -10,9 +10,6 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 		<!-- provedor/implementacao do JPA -->
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<!-- entidade mapeada -->
-		<!-- <class>print.capau.modelo.Setor</class> -->
-
 		<properties>
 
 			<!-- propriedades do hibernate -->
