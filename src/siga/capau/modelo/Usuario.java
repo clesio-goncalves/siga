@@ -30,6 +30,7 @@ public class Usuario implements UserDetails {
 	private String usuario;
 
 	@NotNull
+	@Size(max = 255)
 	private String senha;
 
 	@Transient
@@ -94,9 +95,9 @@ public class Usuario implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
 		Set<Permissao> permissoes = new HashSet<>();
-		
+
 		this.permissao.setNome("ROLE_" + this.permissao.getNome());
-		
+
 		permissoes.add(this.permissao);
 
 		return permissoes;

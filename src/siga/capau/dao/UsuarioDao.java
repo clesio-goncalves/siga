@@ -39,11 +39,6 @@ public class UsuarioDao implements UserDetailsService {
 		manager.remove(usuarioARemover);
 	}
 
-	public List<Usuario> buscaUsuarioPorSetor(Long id) {
-		return manager.createQuery("select u from Usuario as u where u.setor.id = :idSetor", Usuario.class)
-				.setParameter("idSetor", id).getResultList();
-	}
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario usuario = manager.createQuery("select u from Usuario u where u.usuario = :usuario", Usuario.class)
