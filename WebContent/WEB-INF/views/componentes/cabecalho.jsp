@@ -41,18 +41,16 @@
 								<li><a href="">Servidor</a></li>
 							</ul></li>
 					</security:authorize>
-					<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
+					 <li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-expanded="false">Relatórios
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="listaUsuarios">Usuários</a></li>
-							<li><a href="listaSetores">Setores</a></li>
-							<li><a href="listaImpressoras">Impressoras</a></li>
+							<li><a href="listaCursos">Cursos</a></li>
 							<li class="divider"></li>
-							<li><a href="listaImpressoes">Impressão</a></li>
 						</ul></li> 
-					<security:authorize access="hasRole('ROLE_Administrador')">
+					<!--<security:authorize access="hasRole('ROLE_Administrador')">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-expanded="false">Configuração
 								<span class="caret"></span>

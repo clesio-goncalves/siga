@@ -20,55 +20,38 @@
 		<!-- ID -->
 		<input type="hidden" name="id" value="${usuario.id}" />
 
-		<!-- NOME -->
-		<div class="form-group">
-			<label for="nome">Nome Completo*</label> <input type="text"
-				class="form-control" name="nome" autofocus MAXLENGTH="255" required
-				value="${usuario.nome}">
-		</div>
-
 		<!-- USUARIO -->
 		<div class="form-group">
 			<label for="usuario">Usuário*</label> <input type="text"
-				class="form-control" name="usuario" MAXLENGTH="20" required
+				class="form-control" name="usuario" autofocus MAXLENGTH="50" required
 				value="${usuario.usuario}">
 		</div>
 
 		<!-- SENHA -->
 		<div class="form-group">
 			<label for="senha">Senha*</label> <input type="password"
-				class="form-control" name="senha" id="senha" MAXLENGTH="20" required>
+				class="form-control" name="senha" id="senha" MAXLENGTH="50" required>
 		</div>
 
 		<!-- REPETIR SENHA -->
 		<div class="form-group">
 			<label for="repetir_senha">Repetir Senha*</label> <input
 				type="password" class="form-control" name="repetir_senha"
-				id="repetir_senha" MAXLENGTH="20" required>
+				id="repetir_senha" MAXLENGTH="50" required>
 		</div>
 
-		<!-- SETOR -->
+		<!-- PERMISSÃO -->
 		<div class="form-group">
-			<label for="setor">Setor*</label> <select class="form-control"
-				name="setor.id" required>
-				<!-- percorre setores montando as linhas da tabela -->
-				<c:forEach var="st" items="${setores}">
-					<option value="${st.id}"
-						${st.id == usuario.setor.id ? 'selected' : ''}>${st.nome}</option>
+			<label for="permissao">Permissão*</label> <select class="form-control"
+				name="permissao.id" required>
+				<!-- percorre permissões montando as linhas da tabela -->
+				<c:forEach var="permissao" items="${permissoes}">
+					<option value="${permissao.id}"
+						${permissao.id == usuario.permissao.id ? 'selected' : ''}>${permissao.nome}</option>
 				</c:forEach>
 			</select>
 		</div>
 		
-		<!-- PERMISSÃO -->
-		<div class="form-group">
-			<label for="permissao.id">Permissão*</label>
-			<c:forEach var="permissao" items="${permissoes}">
-				<div class="radio">
-					<label> <input type="radio" name="permissao.id" value="${permissao.id}" ${permissao.id == usuario.permissao.id ? 'checked' : ''}> ${permissao.nome} </label>
-				</div>
-			</c:forEach>
-		</div>
-
 		<!-- ATIVO -->
 		<div class="form-group">
 			<div class="checkbox">

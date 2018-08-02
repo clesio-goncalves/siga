@@ -22,11 +22,6 @@
 					</tr>
 
 					<tr>
-						<th>Nome Completo</th>
-						<td>${usuario.nome}</td>
-					</tr>
-
-					<tr>
 						<th>Usuário</th>
 						<td>${usuario.usuario}</td>
 					</tr>
@@ -43,10 +38,6 @@
 					<tr>
 						<th>Permissão</th>
 						<td>${usuario.permissao.nome}</td>
-					</tr>
-					<tr>
-						<th>Setor</th>
-						<td>${usuario.setor.nome}</td>
 					</tr>
 				</table>
 			</div>
@@ -78,7 +69,7 @@
 						<h4 class="modal-title" id="myModalLabel">Exclusão do usuário</h4>
 					</div>
 					<div class="modal-body">Deseja realmente excluir o usuário
-						(${usuario.id}) -> ${usuario.nome}?</div>
+						(${usuario.id}) -> ${usuario.usuario}?</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							<span class="glyphicon glyphicon-log-out"></span> Fechar
