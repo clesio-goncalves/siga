@@ -45,7 +45,7 @@
 			</c:forEach>
 		</div>
 		
-		<!-- USUÁRIO -->
+		<!-- USUÁRIO-->
 		<div class="form-group">
 			<label for="usuario">Usuário</label> <select class="form-control"
 				name="usuario.id">
@@ -55,7 +55,8 @@
 					<option value="${usuario.id}">${usuario.usuario}</option>
 				</c:forEach>
 			</select>
-		</div>
+		</div> 
+
 
 		<security:csrfInput />
 

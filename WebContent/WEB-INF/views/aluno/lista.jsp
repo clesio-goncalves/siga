@@ -38,10 +38,10 @@
 								<td>${aluno.nome}</td>
 								
 								<!-- Matricula -->
-								<c:if test="${aluno.matricula == ''}">
+								<c:if test="${aluno.matricula eq \"\"}">
 									<td>Não informada</td>
 								</c:if>
-								<c:if test="${aluno.matricula !== ''}">
+								<c:if test="${aluno.matricula ne \"\"}">
 									<td>${aluno.matricula}</td>
 								</c:if>
 
@@ -52,7 +52,7 @@
 									<td>Não informado</td>
 								</c:if>
 								<c:if test="${aluno.usuario != null}">
-									<td>${aluno.usuario.usuario}</td>
+									<td>${aluno.usuario}</td>
 								</c:if>
 
 								<!-- AÇÕES -->

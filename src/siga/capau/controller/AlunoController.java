@@ -36,10 +36,14 @@ public class AlunoController {
 	@RequestMapping("novoAluno")
 	public String novoAluno(Model model) {
 
-		model.addAttribute("cursos", dao_curso.lista());
-		model.addAttribute("usuarios", dao_usuario.lista());
-
-		return "aluno/novo";
+		// Testa se há cursos cadastrados
+		if (dao_curso.lista().size() == 0) {
+			return "redirect:novoCurso";
+		} else {
+			model.addAttribute("cursos", dao_curso.lista());
+			model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
+			return "aluno/novo";
+		}
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")
@@ -48,6 +52,11 @@ public class AlunoController {
 
 		if (result.hasErrors()) {
 			return "redirect:novoAluno";
+		}
+
+		// Testa se o id do usuário é null
+		if (aluno.getUsuario().getId() == null) {
+			aluno.setUsuario(null);
 		}
 
 		// Adiciona no banco de dados
@@ -79,10 +88,15 @@ public class AlunoController {
 	@RequestMapping("editaAluno")
 	public String edita(Long id, Model model) {
 
-		model.addAttribute("aluno", dao.buscaPorId(id));
-		model.addAttribute("cursos", dao_curso.lista());
-		model.addAttribute("usuarios", dao_usuario.lista());
-		return "aluno/edita";
+		// Testa se há cursos cadastrados
+		if (dao_curso.lista().size() == 0) {
+			return "redirect:novoCurso";
+		} else {
+			model.addAttribute("aluno", dao.buscaPorId(id));
+			model.addAttribute("cursos", dao_curso.lista());
+			model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
+			return "aluno/edita";
+		}
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")
@@ -91,6 +105,11 @@ public class AlunoController {
 
 		if (result.hasErrors()) {
 			return "redirect:editaAluno?id=" + aluno.getId();
+		}
+
+		// Testa se o id do usuário é null
+		if (aluno.getUsuario().getId() == null) {
+			aluno.setUsuario(null);
 		}
 
 		// Altera no banco

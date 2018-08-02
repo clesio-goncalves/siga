@@ -30,6 +30,13 @@ public class UsuarioDao implements UserDetailsService {
 		return manager.createQuery("select u from Usuario u", Usuario.class).getResultList();
 	}
 
+	// Seleciona todos os usuários do tipo aluno que não estão vinculados a nenhum aluno
+	public List<Usuario> listaUsuarioAlunoSemVinculo() {
+		return manager.createQuery(
+				"select u from Usuario u where u.permissao.nome like 'Aluno' and u.id not in (select a.usuario.id from Aluno as a where a.usuario.id is not null)",
+				Usuario.class).getResultList();
+	}
+
 	public Usuario buscaPorId(Long id) {
 		return manager.find(Usuario.class, id);
 	}
