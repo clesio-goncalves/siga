@@ -38,7 +38,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="novoUsuario">Usuário</a></li>
 								<li><a href="novoCurso">Curso</a></li>
-								<li><a href="">Servidor</a></li>
+								<li><a href="novoAluno">Aluno</a></li>
 							</ul></li>
 					</security:authorize>
 					 <li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -48,6 +48,7 @@
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="listaUsuarios">Usuários</a></li>
 							<li><a href="listaCursos">Cursos</a></li>
+							<li><a href="listaAlunos">Alunos</a></li>
 							<li class="divider"></li>
 						</ul></li> 
 					<!--<security:authorize access="hasRole('ROLE_Administrador')">
