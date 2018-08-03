@@ -16,12 +16,15 @@ import siga.capau.dao.AlunoDao;
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Aluno;
+import siga.capau.modelo.Usuario;
 
 @Transactional
 @Controller
 public class AlunoController {
 
 	private List<Aluno> lista_alunos;
+	private List<Usuario> lista_usuarios;
+	private Aluno aluno;
 
 	@Autowired
 	AlunoDao dao;
@@ -92,9 +95,21 @@ public class AlunoController {
 		if (dao_curso.lista().size() == 0) {
 			return "redirect:novoCurso";
 		} else {
-			model.addAttribute("aluno", dao.buscaPorId(id));
+
+			// Alem de inserir as variaveis aluno, cursos e usuarios, verifica se o aluno
+			// possui usuário e adiciona na lista_usuarios
+
+			aluno = dao.buscaPorId(id);
+			lista_usuarios = dao_usuario.listaUsuarioAlunoSemVinculo();
+
+			model.addAttribute("aluno", aluno);
 			model.addAttribute("cursos", dao_curso.lista());
-			model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
+
+			if (aluno.getUsuario() != null) {
+				lista_usuarios.add(aluno.getUsuario());
+			}
+			
+			model.addAttribute("usuarios", lista_usuarios);
 			return "aluno/edita";
 		}
 	}
@@ -104,6 +119,7 @@ public class AlunoController {
 	public String altera(@Valid Aluno aluno, BindingResult result) {
 
 		if (result.hasErrors()) {
+			System.out.println(result);
 			return "redirect:editaAluno?id=" + aluno.getId();
 		}
 

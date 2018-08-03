@@ -41,8 +41,8 @@
 			<label for="curso.id">Curso*</label>
 			<c:forEach var="curso" items="${cursos}">
 				<div class="radio">
-					<label> <input type="radio" name="permissao.id"
-						value="${curso.id}" ${curso.id == aluno.curso.id ? 'checked' : ''}>
+					<label> <input type="radio" name="curso.id" required
+						value="${curso.id}"  ${curso.id == aluno.curso.id ? 'checked' : ''}>
 						${curso.nome}
 					</label>
 				</div>

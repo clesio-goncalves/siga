@@ -37,20 +37,33 @@
 						</a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="novoUsuario">Usuário</a></li>
-								<li><a href="novoCurso">Curso</a></li>
 								<li><a href="novoAluno">Aluno</a></li>
+								<li><a href="#">Docente</a></li>
+								<li><a href="#">Monitor</a></li>
+								<li><a href="#">Profissional da Saúde</a></li>
+								<li class="divider"></li>
+								<li><a href="novoCurso">Curso</a></li>
+								<li><a href="#">Disciplina</a></li>
+							</ul></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false">Atendimento
+								<span class="caret"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Extra Classe</a></li>
+								<li><a href="#">Monitoria</a></li>
 							</ul></li>
 					</security:authorize>
-					 <li class="dropdown"><a href="#" class="dropdown-toggle"
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-expanded="false">Relatórios
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="listaUsuarios">Usuários</a></li>
-							<li><a href="listaCursos">Cursos</a></li>
 							<li><a href="listaAlunos">Alunos</a></li>
 							<li class="divider"></li>
-						</ul></li> 
+							<li><a href="listaCursos">Cursos</a></li>
+						</ul></li>
 					<!--<security:authorize access="hasRole('ROLE_Administrador')">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-expanded="false">Configuração

@@ -52,7 +52,7 @@
 									<td>Não informado</td>
 								</c:if>
 								<c:if test="${aluno.usuario != null}">
-									<td>${aluno.usuario}</td>
+									<td>${aluno.usuario.usuario}</td>
 								</c:if>
 
 								<!-- AÇÕES -->

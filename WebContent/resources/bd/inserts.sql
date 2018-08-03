@@ -31,6 +31,7 @@ values (2, 'teste','$2a$10$qpt3HctirwaIRedM0ERwXegnlFN0dejoMPBqsv5GDxJj9eAM/scBy
 insert into Aluno(id, nome, curso_id, usuario_id)
 values (1,'Aluno com Usuario', 1, 2);
 
+-- seleciona todos os usuário do tipo aluno que ainda estão sem vinculo com algum aluno
 select * from Usuario as u 
 inner join Permissao as p on p.id = u.permissao_id
 where p.nome = 'Aluno' and u.id not in (
