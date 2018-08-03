@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Listar Usuários</title>
+<title>Listar Profissional da Saúde</title>
 <link rel="stylesheet" type="text/css"
 	href="resources/css/jquery.dataTables.css">
 
@@ -14,7 +14,7 @@
 
 <div class="container">
 	<div class="panel panel-default">
-		<div class="panel-heading">Listagem de Usuários</div>
+		<div class="panel-heading">Listagem de Profissionais da Saúde</div>
 
 		<!-- Table -->
 		<div class="panel-body">
@@ -23,49 +23,43 @@
 					<thead>
 						<tr>
 							<th>ID</th>
+							<th>Nome Completo</th>
+							<th>SIAPE</th>
+							<th>Tipo Profissional</th>
 							<th>Usuário</th>
-							<th>Ativo</th>
-							<th>Perfil</th>
 							<th>Ações</th>
 						</tr>
 					</thead>
 					<tbody>
-						<!-- percorre usuarios montando as linhas da tabela -->
-						<c:forEach var="usuario" items="${usuarios}">
+						<!-- percorre profissionais_saude montando as linhas da tabela -->
+						<c:forEach var="profissional_saude" items="${profissionais_saude}">
 							<tr>
-								<td>${usuario.id}</td>
-								<td>${usuario.usuario}</td>
-
-								<!-- Ativo -->
-								<c:if test="${usuario.ativo eq true}">
-									<td>Sim</td>
-								</c:if>
-								<c:if test="${usuario.ativo eq false}">
-									<td>Não</td>
-								</c:if>
-
-								<td>${usuario.perfil.nome}</td>
+								<td>${profissional_saude.id}</td>
+								<td>${profissional_saude.nome}</td>
+								<td>${profissional_saude.siape}</td>
+								<td>${profissional_saude.tipo_profissional}</td>
+								<td>${profissional_saude.usuario.usuario}</td>
 
 								<!-- AÇÕES -->
 								<td>
-									<!-- Exibir --> <a href="exibeUsuario?id=${usuario.id}"
+									<!-- Exibir --> <a
+									href="exibeProfissionalSaude?id=${profissional_saude.id}"
 									class="btn btn-success btn-xs"><span
-										class="glyphicon glyphicon-zoom-in"></span> Exibir</a> 
-										
-									<security:authorize access="hasRole('ROLE_Administrador')">
-										
+										class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
+										access="hasRole('ROLE_Administrador')">
+
 										<!-- Editar -->
-										<a href="editaUsuario?id=${usuario.id}"
+										<a href="editaProfissionalSaude?id=${profissional_saude.id}"
 											class="btn btn-info btn-xs"><span
 											class="glyphicon glyphicon-edit"></span> Editar </a>
 										<!-- Botão exluir -->
 										<button class="btn btn-danger btn-xs" data-toggle="modal"
-											data-target="#${usuario.id}">
+											data-target="#${profissional_saude.id}">
 											<span class="glyphicon glyphicon-trash"></span> Excluir
 										</button>
 										<!-- Modal -->
-										<div class="modal fade" id="${usuario.id}" tabindex="-1"
-											role="dialog" aria-labelledby="myModalLabel"
+										<div class="modal fade" id="${profissional_saude.id}"
+											tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 											aria-hidden="true">
 											<div class="modal-dialog">
 												<div class="modal-content">
@@ -75,16 +69,18 @@
 																class="sr-only">Fechar</span>
 														</button>
 														<h4 class="modal-title" id="myModalLabel">Exclusão do
-															usuário</h4>
+															Profissional da Saúde</h4>
 													</div>
 													<div class="modal-body">Deseja realmente excluir o
-														usuário (${usuario.id}) -> ${usuario.usuario}?</div>
+														Profissional da Saúde (${profissional_saude.id}) ->
+														${profissional_saude.nome}?</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-default"
 															data-dismiss="modal">
 															<span class="glyphicon glyphicon-log-out"></span> Fechar
 														</button>
-														<a href="removeUsuario?id=${usuario.id}"
+														<a
+															href="removeProfissionalSaude?id=${profissional_saude.id}"
 															class="btn btn-danger"><span
 															class="glyphicon glyphicon-trash"></span> Excluir</a>
 													</div>
@@ -104,7 +100,7 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="novoUsuario" class="btn btn-primary btn-lg"><span
+			<a href="novoProfissionalSaude" class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
 	</div>

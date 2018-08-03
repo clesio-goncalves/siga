@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-public class Permissao implements GrantedAuthority {
+public class Perfil implements GrantedAuthority {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

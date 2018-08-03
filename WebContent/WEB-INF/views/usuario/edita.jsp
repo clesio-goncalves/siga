@@ -42,12 +42,12 @@
 
 		<!-- PERMISSÃO -->
 		<div class="form-group">
-			<label for="permissao">Permissão*</label> <select class="form-control"
-				name="permissao.id" required>
-				<!-- percorre permissões montando as linhas da tabela -->
-				<c:forEach var="permissao" items="${permissoes}">
-					<option value="${permissao.id}"
-						${permissao.id == usuario.permissao.id ? 'selected' : ''}>${permissao.nome}</option>
+			<label for="perfil">Perfil*</label> <select class="form-control"
+				name="perfil.id" required>
+				<!-- percorre perfis montando as linhas da tabela -->
+				<c:forEach var="perfil" items="${perfis}">
+					<option value="${perfil.id}"
+						${perfil.id == usuario.perfil.id ? 'selected' : ''}>${perfil.nome}</option>
 				</c:forEach>
 			</select>
 		</div>

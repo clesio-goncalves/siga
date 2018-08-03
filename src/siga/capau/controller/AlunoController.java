@@ -22,7 +22,6 @@ import siga.capau.modelo.Usuario;
 @Controller
 public class AlunoController {
 
-	private List<Aluno> lista_alunos;
 	private List<Usuario> lista_usuarios;
 	private Aluno aluno;
 
@@ -69,8 +68,7 @@ public class AlunoController {
 
 	@RequestMapping("listaAlunos")
 	public String lista(Model model) {
-		lista_alunos = dao.lista();
-		model.addAttribute("alunos", lista_alunos);
+		model.addAttribute("alunos", dao.lista());
 		return "aluno/lista";
 	}
 
@@ -119,7 +117,6 @@ public class AlunoController {
 	public String altera(@Valid Aluno aluno, BindingResult result) {
 
 		if (result.hasErrors()) {
-			System.out.println(result);
 			return "redirect:editaAluno?id=" + aluno.getId();
 		}
 

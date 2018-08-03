@@ -1,7 +1,5 @@
 package siga.capau.controller;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -13,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import siga.capau.dao.PermissaoDao;
+import siga.capau.dao.PerfilDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Usuario;
 
@@ -21,19 +19,17 @@ import siga.capau.modelo.Usuario;
 @Controller
 public class UsuarioController {
 
-	private List<Usuario> lista_usuarios;
-
 	@Autowired
 	UsuarioDao dao;
 
 	@Autowired
-	PermissaoDao dao_permissao;
+	PerfilDao dao_perfil;
 
 	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("novoUsuario")
 	public String novoUsuario(Model model) {
 
-		model.addAttribute("permissoes", dao_permissao.lista());
+		model.addAttribute("perfis", dao_perfil.lista());
 
 		return "usuario/novo";
 	}
@@ -56,8 +52,7 @@ public class UsuarioController {
 
 	@RequestMapping("listaUsuarios")
 	public String lista(Model model) {
-		lista_usuarios = dao.lista();
-		model.addAttribute("usuarios", lista_usuarios);
+		model.addAttribute("usuarios", dao.lista());
 		return "usuario/lista";
 	}
 
@@ -79,7 +74,7 @@ public class UsuarioController {
 	public String edita(Long id, Model model) {
 
 		model.addAttribute("usuario", dao.buscaPorId(id));
-		model.addAttribute("permissoes", dao_permissao.lista());
+		model.addAttribute("perfis", dao_perfil.lista());
 		return "usuario/edita";
 	}
 

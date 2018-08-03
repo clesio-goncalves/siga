@@ -40,7 +40,8 @@
 								<li><a href="novoAluno">Aluno</a></li>
 								<li><a href="#">Docente</a></li>
 								<li><a href="#">Monitor</a></li>
-								<li><a href="#">Profissional da Saúde</a></li>
+								<li><a href="novoProfissionalSaude">Profissional da
+										Saúde</a></li>
 								<li class="divider"></li>
 								<li><a href="novoCurso">Curso</a></li>
 								<li><a href="#">Disciplina</a></li>
@@ -61,6 +62,10 @@
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="listaUsuarios">Usuários</a></li>
 							<li><a href="listaAlunos">Alunos</a></li>
+							<li><a href="#">Docentes</a></li>
+							<li><a href="#">Monitores</a></li>
+							<li><a href="listaProfissionalSaude">Profissionais da
+									Saúde</a></li>
 							<li class="divider"></li>
 							<li><a href="listaCursos">Cursos</a></li>
 						</ul></li>

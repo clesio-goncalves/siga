@@ -1,7 +1,5 @@
 package siga.capau.controller;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -18,8 +16,6 @@ import siga.capau.modelo.Curso;
 @Transactional
 @Controller
 public class CursoController {
-
-	private List<Curso> lista_cursos;
 
 	@Autowired
 	CursoDao dao;
@@ -46,8 +42,7 @@ public class CursoController {
 
 	@RequestMapping("listaCursos")
 	public String lista(Model model) {
-		lista_cursos = dao.lista();
-		model.addAttribute("cursos", lista_cursos);
+		model.addAttribute("cursos", dao.lista());
 		return "curso/lista";
 	}
 

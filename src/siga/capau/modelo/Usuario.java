@@ -30,7 +30,6 @@ public class Usuario implements UserDetails {
 	private String usuario;
 
 	@NotNull
-	@Size(max = 255)
 	private String senha;
 
 	@Transient
@@ -41,7 +40,7 @@ public class Usuario implements UserDetails {
 
 	@NotNull
 	@ManyToOne
-	private Permissao permissao;
+	private Perfil perfil;
 
 	public Long getId() {
 		return id;
@@ -83,24 +82,24 @@ public class Usuario implements UserDetails {
 		this.ativo = ativo;
 	}
 
-	public Permissao getPermissao() {
-		return permissao;
+	public Perfil getPerfil() {
+		return perfil;
 	}
 
-	public void setPermissao(Permissao permissao) {
-		this.permissao = permissao;
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
-		Set<Permissao> permissoes = new HashSet<>();
+		Set<Perfil> perfis = new HashSet<>();
 
-		this.permissao.setNome("ROLE_" + this.permissao.getNome());
+		this.perfil.setNome("ROLE_" + this.perfil.getNome());
 
-		permissoes.add(this.permissao);
+		perfis.add(this.perfil);
 
-		return permissoes;
+		return perfis;
 	}
 
 	@Override

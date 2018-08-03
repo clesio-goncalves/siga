@@ -41,11 +41,11 @@
 
 		<!-- PERMISSÃO -->
 		<div class="form-group">
-			<label for="permissao">Permissão*</label> <select class="form-control"
-				name="permissao.id" required>
-				<!-- percorre permissao montando as linhas da tabela -->
-				<c:forEach var="permissao" items="${permissoes}">
-					<option value="${permissao.id}">${permissao.nome}</option>
+			<label for="perfil">Perfil*</label> <select class="form-control"
+				name="perfil.id" required>
+				<!-- percorre perfil montando as linhas da tabela -->
+				<c:forEach var="perfil" items="${perfis}">
+					<option value="${perfil.id}">${perfil.nome}</option>
 				</c:forEach>
 			</select>
 		</div>
