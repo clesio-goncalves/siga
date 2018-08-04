@@ -24,6 +24,7 @@ public class ProfissionalSaude {
 	private String tipo_profissional;
 
 	@OneToOne
+	@NotNull
 	private Usuario usuario;
 
 	public Long getId() {

@@ -6,59 +6,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Editar Aluno</title>
+<title>Editar Profissional da saúde</title>
 
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="jumbotron">
 	<div class="container">
 		<h1>Editar Aluno</h1>
-		<p>Preencha o formulário abaixo para realizar a alteração.</p>
+		<p>Preencha o formulário abaixo para realizar a alteração. É
+			permitida a alteração somente dos campos Nome e SIAPE, com o objetivo
+			de mater a consistência dos dados.</p>
 	</div>
 </div>
 <div class="container">
-	<form action="alteraAluno" method="POST">
+	<form action="alteraProfissionalSaude" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${aluno.id}" />
+		<input type="hidden" name="id" value="${profissional_saude.id}" />
 
 		<!-- NOME -->
 		<div class="form-group">
 			<label for="nome">Nome Completo*</label> <input type="text"
 				class="form-control" name="nome" autofocus MAXLENGTH="255" required
-				value="${aluno.nome}">
+				value="${profissional_saude.nome}">
 		</div>
 
-		<!-- MATRICULA -->
+		<!-- SIAPE -->
 		<div class="form-group">
-			<label for="matricula">Matricula</label> <input type="text"
-				class="form-control" name="matricula" MAXLENGTH="50"
-				value="${aluno.matricula}">
+			<label for="siape">SIAPE*</label> <input type="number"
+				class="form-control" name=siape MAXLENGTH="10" required
+				onkeypress='return SomenteNumero(event)'
+				value="${profissional_saude.siape}">
 		</div>
 
 		<!-- CURSO -->
 		<div class="form-group">
-			<label for="curso.id">Curso*</label>
-			<c:forEach var="curso" items="${cursos}">
-				<div class="radio">
-					<label> <input type="radio" name="curso.id" required
-						value="${curso.id}"  ${curso.id == aluno.curso.id ? 'checked' : ''}>
-						${curso.nome}
-					</label>
-				</div>
-			</c:forEach>
+			<label for="tipo_profissional">Tipo de Profissional*</label>
+			<div class="radio">
+				<label><input type="radio" name="tipo_profissional"
+					value="${profissional_saude.tipo_profissional}" checked="checked"
+					required disabled="disabled"> ${profissional_saude.tipo_profissional} </label>
+			</div>
 		</div>
 
 		<!-- USUÁRIO -->
 		<div class="form-group">
-			<label for="usuario">Usuário</label> <select class="form-control"
-				name="usuario.id">
-				<!-- percorre usuários montando as linhas da tabela -->
-				<option value="">Não informar</option>
-				<c:forEach var="usuario" items="${usuarios}">
-					<option value="${usuario.id}"
-						${usuario.id == aluno.usuario.id ? 'selected' : ''}>${usuario.usuario}</option>
-				</c:forEach>
+			<label for="usuario">Usuário*</label> <select class="form-control"
+				name="usuario.id" required disabled="disabled">
+				<option value="${profissional_saude.usuario.id}">${profissional_saude.usuario.usuario}</option>
 			</select>
 		</div>
 
@@ -67,8 +62,8 @@
 		<!-- OBTIGATÓRIO -->
 		<label for="obrigatorio">(*) Campos obrigatórios</label>
 		<div>
-			<a href="listaAlunos" class="btn btn-default btn-lg"> <span
-				class="glyphicon glyphicon-remove"></span> Cancelar
+			<a href="listaProfissionalSaude" class="btn btn-default btn-lg">
+				<span class="glyphicon glyphicon-remove"></span> Cancelar
 			</a>
 			<button type="submit" class="btn btn-primary btn-lg">
 				<span class="glyphicon glyphicon-refresh"></span> Atualizar
@@ -77,4 +72,5 @@
 	</form>
 </div>
 
+<script type="text/javascript" src="resources/js/SomenteNumero.js"></script>
 <c:import url="../componentes/rodape.jsp" />

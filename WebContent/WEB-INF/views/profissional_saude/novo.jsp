@@ -6,6 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Cadastrar Profissional da Saúde</title>
 
 <c:import url="../componentes/cabecalho.jsp" />
@@ -50,23 +52,15 @@
 			</div>
 			<div class="radio">
 				<label><input type="radio" name="tipo_profissional"
-					value="Odontologo"> Odontologo </label>
+					value="Odontólogo"> Odontólogo </label>
 			</div>
 
 		</div>
 
 		<!-- USUÁRIO-->
-		<div class="form-group">
-			<label for="usuario">Usuário*</label> <select class="form-control"
-				name="usuario.id">
-				<option value="">Não informar</option>
-				<!-- percorre usuarios montando as linhas da tabela -->
-				<c:forEach var="usuario" items="${usuarios}">
-					<option value="${usuario.id}">${usuario.usuario}</option>
-				</c:forEach>
-			</select>
+		<div class="form-group" id="lista_usuario">
+			<jsp:include page="lista_usuario.jsp"></jsp:include>
 		</div>
-
 
 		<security:csrfInput />
 
@@ -83,6 +77,6 @@
 	</form>
 </div>
 
-
 <script type="text/javascript" src="resources/js/SomenteNumero.js"></script>
+<script type="text/javascript" src="resources/js/filtroCadProfSaude.js"></script>
 <c:import url="../componentes/rodape.jsp" />
