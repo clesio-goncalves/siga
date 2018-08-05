@@ -8,18 +8,18 @@
 <head>
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
-<title>Cadastrar Profissional da Saúde</title>
+<title>Cadastrar Servidor</title>
 
 <c:import url="../componentes/cabecalho.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Cadastrar Profissional da Saúde</h1>
+		<h1 class="display-3">Cadastrar Servidor</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar o
-			cadastro do Profissional de Saúde no sistema.</p>
+			cadastro do Servidor no sistema.</p>
 	</div>
 </div>
 <div class="container">
-	<form action="adicionaProfissionalSaude" method="POST">
+	<form action="adicionaServidor" method="POST">
 
 		<!-- NOME -->
 		<div class="form-group">
@@ -35,33 +35,32 @@
 				onkeypress='return SomenteNumero(event)'>
 		</div>
 
-		<!-- TIPO PROFISSIONAL -->
+		<!-- FUNCAO -->
 		<div class="form-group">
-			<label for="tipo_profissional" class="col-form-label">Tipo de
-				Profissional*</label>
+			<label for="funcao" class="col-form-label">Função*</label>
 			<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio1" name="tipo_profissional"
+				<input type="radio" id="customRadio1" name="funcao"
 					class="custom-control-input" checked="checked" required
-					value="Psicólogo"> <label class="custom-control-label"
-					for="customRadio1">Psicólogo</label>
+					value="Coordenador"> <label class="custom-control-label"
+					for="customRadio1">Coordenador</label>
 			</div>
 			<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio2" name="tipo_profissional"
-					class="custom-control-input" value="Assistente Social"> <label
-					class="custom-control-label" for="customRadio2">Assistente
-					Social</label>
+				<input type="radio" id="customRadio2" name="funcao"
+					class="custom-control-input" value="Administrador"> <label
+					class="custom-control-label" for="customRadio2">Administrador</label>
 			</div>
 			<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio3" name="tipo_profissional"
-					class="custom-control-input" value="Enfermeiro"> <label
-					class="custom-control-label" for="customRadio3">Enfermeiro</label>
+				<input type="radio" id="customRadio3" name="funcao"
+					class="custom-control-input" value="Diretor"> <label
+					class="custom-control-label" for="customRadio3">Diretor</label>
 			</div>
-			<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio4" name="tipo_profissional"
-					class="custom-control-input" value="Odontólogo"> <label
-					class="custom-control-label" for="customRadio4">Odontólogo</label>
-			</div>
+		</div>
 
+		<!-- DESCRICAO FUNÇÃO -->
+		<div class="form-group">
+			<label for="descricao_funcao" class="col-form-label">Descrição
+				da Função*</label> <input type="text" class="form-control"
+				name="descricao_funcao" MAXLENGTH="255" required>
 		</div>
 
 		<!-- USUÁRIO-->
@@ -86,5 +85,5 @@
 
 <script type="text/javascript" src="resources/js/SomenteNumero.js"></script>
 <script type="text/javascript"
-	src="resources/js/filtro_cadastro/filtroCadProfSaude.js"></script>
+	src="resources/js/filtro_cadastro/filtroCadServidor.js"></script>
 <c:import url="../componentes/rodape.jsp" />

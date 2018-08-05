@@ -92,24 +92,13 @@ public class AlunoController {
 		// Testa se há cursos cadastrados
 		if (dao_curso.lista().size() == 0) {
 			return "redirect:novoCurso";
-		} else {
-
-			// Alem de inserir as variaveis aluno, cursos e usuarios, verifica se o aluno
-			// possui usuário e adiciona na lista_usuarios
-
-			aluno = dao.buscaPorId(id);
-			lista_usuarios = dao_usuario.listaUsuarioAlunoSemVinculo();
-
-			model.addAttribute("aluno", aluno);
-			model.addAttribute("cursos", dao_curso.lista());
-
-			if (aluno.getUsuario() != null) {
-				lista_usuarios.add(aluno.getUsuario());
-			}
-			
-			model.addAttribute("usuarios", lista_usuarios);
-			return "aluno/edita";
 		}
+
+		model.addAttribute("aluno", dao.buscaPorId(id));
+		model.addAttribute("cursos", dao_curso.lista());
+		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
+		return "aluno/edita";
+
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")

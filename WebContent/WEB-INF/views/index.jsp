@@ -12,7 +12,7 @@
 	<div class="container">
 		<security:authorize access="isAuthenticated()">
 			<security:authentication property="principal" var="usuario" />
-			<h1 class="display-3">Bem-vindo, ${usuario.usuario}</h1>
+			<h1 class="display-3">Bem-vindo, ${usuario.email}</h1>
 		</security:authorize>
 		<p class="lead">Este é o protótipo do sistema SIGA-Capau (Sistema
 			Integrado de Gestão de Alunos do Campus Paulistana) que acompanha o

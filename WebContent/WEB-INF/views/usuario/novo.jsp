@@ -18,10 +18,10 @@
 <div class="container">
 	<form action="adicionaUsuario" method="POST">
 
-		<!-- USUARIO -->
+		<!-- EMAIL -->
 		<div class="form-group">
-			<label for="usuario" class="col-form-label">Usuário*</label> <input
-				type="text" class="form-control" name="usuario" MAXLENGTH="50"
+			<label for="email" class="col-form-label">E-mail*</label> <input
+				type="email" class="form-control" name="email" MAXLENGTH="50"
 				required autofocus>
 		</div>
 

@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class ProfissionalSaude {
+public class Servidor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,10 @@ public class ProfissionalSaude {
 	private int siape;
 
 	@NotNull
-	private String tipo_profissional;
+	private String funcao;
+
+	@NotNull
+	private String descricao_funcao;
 
 	@OneToOne
 	@NotNull
@@ -53,12 +56,20 @@ public class ProfissionalSaude {
 		this.siape = siape;
 	}
 
-	public String getTipo_profissional() {
-		return tipo_profissional;
+	public String getFuncao() {
+		return funcao;
 	}
 
-	public void setTipo_profissional(String tipo_profissional) {
-		this.tipo_profissional = tipo_profissional;
+	public void setFuncao(String funcao) {
+		this.funcao = funcao;
+	}
+
+	public String getDescricao_funcao() {
+		return descricao_funcao;
+	}
+
+	public void setDescricao_funcao(String descricao_funcao) {
+		this.descricao_funcao = descricao_funcao;
 	}
 
 	public Usuario getUsuario() {

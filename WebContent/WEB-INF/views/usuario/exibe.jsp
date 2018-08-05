@@ -23,8 +23,8 @@
 					</tr>
 
 					<tr>
-						<th>Usuário</th>
-						<td>${usuario.usuario}</td>
+						<th>E-mail</th>
+						<td>${usuario.email}</td>
 					</tr>
 
 					<tr>
@@ -70,8 +70,8 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Deseja realmente excluir o usuário (${usuario.id}) ->
-							${usuario.usuario}?</p>
+						<p>Deseja realmente excluir o usuário ID (${usuario.id}) ->
+							${usuario.email}?</p>
 					</div>
 					<div class="modal-footer">
 						<a href="removeUsuario?id=${usuario.id}" class="btn btn-danger"><span

@@ -43,9 +43,9 @@
 								</c:if>
 
 								<div class="form-group">
-									<label for="username">Usuário</label> <input
+									<label for="username">E-mail</label> <input
 										class="form-control" id="username" name="username"
-										MAXLENGTH="50" type="text" name="email" required autofocus>
+										MAXLENGTH="50" type="email" required autofocus>
 								</div>
 
 								<div class="form-group">

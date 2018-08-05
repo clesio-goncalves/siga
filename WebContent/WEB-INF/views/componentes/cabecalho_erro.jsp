@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css"
 	href="resources/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/css/glyphicons.css">
+	href="resources/css/glyphicons.min.css">
 <link rel="stylesheet" type="text/css"
 	href="resources/css/cabecalho.css">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css"
 	href="resources/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/css/glyphicons.css">
+	href="resources/css/glyphicons.min.css">
 <link rel="stylesheet" type="text/css"
 	href="resources/css/cabecalho.css">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
@@ -38,7 +38,7 @@
 							class="dropdown-item" href="#">Docente</a> <a
 							class="dropdown-item" href="#">Monitor</a> <a
 							class="dropdown-item" href="novoProfissionalSaude">Profissional
-							da Saúde</a>
+							da Saúde</a><a class="dropdown-item" href="novoServidor">Servidor</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="novoCurso">Curso</a> <a
 							class="dropdown-item" href="#">Disciplina</a>
@@ -60,8 +60,8 @@
 							class="dropdown-item" href="listaAlunos">Alunos</a> <a
 							class="dropdown-item" href="#">Docentes</a> <a
 							class="dropdown-item" href="#">Monitores</a> <a
-							class="dropdown-item" href="listaProfissionalSaude">Profissionais
-							da Saúde</a>
+							class="dropdown-item" href="listaProfissionaisSaude">Profissionais
+							da Saúde</a><a class="dropdown-item" href="listaServidores">Servidores</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="listaCursos">Cursos</a> <a
 							class="dropdown-item" href="#">Disciplinas</a>
@@ -72,7 +72,7 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
 						role="button" aria-haspopup="true" aria-expanded="false"><security:authentication
-								property="principal" var="user" /> ${user.usuario}</a>
+								property="principal" var="user" /> ${user.email}</a>
 						<div class="dropdown-menu" x-placement="bottom-start"
 							style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
 							<a class="dropdown-item" href="#"><span

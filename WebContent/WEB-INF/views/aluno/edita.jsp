@@ -53,14 +53,16 @@
 			<label for="usuario.id" class="col-form-label">Usuário</label> <select
 				class="custom-select" name="usuario.id">
 				<option value="">Não informar</option>
-				<!-- percorre usuarios montando as linhas da tabela -->
-				<c:forEach var="usuario" items="${usuarios}">
-					<option value="${usuario.id}"
-						${usuario.id == aluno.usuario.id ? 'selected' : ''}>${usuario.usuario}</option>
-				</c:forEach>
+				<c:if test="${aluno.usuario != null}">
+					<option value="${aluno.usuario.id}" selected>${aluno.usuario.email}</option>
+				</c:if>
+				<c:if test="${aluno.usuario == null}">
+					<c:forEach var="usuario" items="${usuarios}">
+						<option value="${usuario.id}">${usuario.email}</option>
+					</c:forEach>
+				</c:if>
 			</select>
 		</div>
-
 
 		<security:csrfInput />
 

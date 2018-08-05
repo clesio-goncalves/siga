@@ -6,14 +6,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Listar Cursos</title>
+<title>Listar Servidores</title>
 <c:import url="../componentes/css_data_table.jsp" />
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
 
 	<div class="card border-light mb-3">
-		<div class="card-header">Listagem de Cursos</div>
+		<div class="card-header">Listagem de Servidores</div>
 
 		<!-- Table -->
 		<div class="card-body">
@@ -23,45 +23,54 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Nome</th>
+						<th>Nome Completo</th>
+						<th>SIAPE</th>
+						<th>Função</th>
+						<th>Descrição da Função</th>
+						<th>Usuário</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
-					<!-- percorre cursos montando as linhas da tabela -->
-					<c:forEach var="curso" items="${cursos}">
+					<c:forEach var="servidor" items="${servidores}">
 						<tr>
-							<td>${curso.id}</td>
-							<td>${curso.nome}</td>
+							<td>${servidor.id}</td>
+							<td>${servidor.nome}</td>
+							<td>${servidor.siape}</td>
+							<td>${servidor.funcao}</td>
+							<td>${servidor.descricao_funcao}</td>
+							<td>${servidor.usuario.email}</td>
+
+							<!-- AÇÕES -->
 							<th>
-								<!-- Exibir --> <a href="exibeCurso?id=${curso.id}"
+								<!-- Exibir --> <a href="exibeServidor?id=${servidor.id}"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
 									access="hasRole('ROLE_Administrador')">
 									<!-- Editar -->
-									<a href="editaCurso?id=${curso.id}"
+									<a href="editaServidor?id=${servidor.id}"
 										class="btn btn-info btn-sm"><span
 										class="glyphicon glyphicon-edit"></span> Editar </a>
 									<button type="button" class="btn btn-danger btn-sm"
-										data-toggle="modal" data-target="#modal${curso.id}">
+										data-toggle="modal" data-target="#modal${servidor.id}">
 										<span class="glyphicon glyphicon-trash"></span> Excluir
 									</button>
-									<div class="modal fade" id="modal${curso.id}">
+									<div class="modal fade" id="modal${servidor.id}">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title">Exclusão do curso</h5>
+													<h5 class="modal-title">Exclusão do Servidor</h5>
 													<button type="button" class="close" data-dismiss="modal"
 														aria-label="Close">
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o curso (${curso.id}) ->
-														${curso.nome}?</p>
+													<p>Deseja realmente excluir o Servidor ID
+														(${servidor.id}) -> ${servidor.nome}?</p>
 												</div>
 												<div class="modal-footer">
-													<a href="removeCurso?id=${curso.id}"
+													<a href="removeServidor?id=${servidor.id}"
 														class="btn btn-danger"><span
 														class="glyphicon glyphicon-trash"></span> Excluir</a>
 													<button type="button" class="btn btn-secondary"
@@ -83,11 +92,10 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="novoCurso" class="btn btn-primary btn-lg"><span
+			<a href="novoServidor" class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
 	</div>
 </div>
-
 <c:import url="../componentes/js_data_table.jsp" />
 <c:import url="../componentes/rodape.jsp" />

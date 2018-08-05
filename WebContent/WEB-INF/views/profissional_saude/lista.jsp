@@ -7,11 +7,7 @@
 <html>
 <head>
 <title>Listar Profissionais da Saúde</title>
-<link rel="stylesheet" type="text/css"
-	href="resources/css/data_table/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/css/data_table/responsive.bootstrap4.min.css">
-
+<c:import url="../componentes/css_data_table.jsp" />
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
@@ -41,7 +37,7 @@
 							<td>${profissional_saude.nome}</td>
 							<td>${profissional_saude.siape}</td>
 							<td>${profissional_saude.tipo_profissional}</td>
-							<td>${profissional_saude.usuario.usuario}</td>
+							<td>${profissional_saude.usuario.email}</td>
 
 							<!-- AÇÕES -->
 							<th>
@@ -104,15 +100,5 @@
 	</div>
 </div>
 
-<script type="text/javascript"
-	src="resources/js/data_table/jquery.dataTables.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/dataTables.responsive.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/responsive.bootstrap4.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/data_table.js"></script>
-
+<c:import url="../componentes/js_data_table.jsp" />
 <c:import url="../componentes/rodape.jsp" />

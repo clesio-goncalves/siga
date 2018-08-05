@@ -23,9 +23,9 @@
 
 		<!-- USUARIO -->
 		<div class="form-group">
-			<label for="usuario" class="col-form-label">Usuário*</label> <input
-				type="text" class="form-control" name="usuario" MAXLENGTH="50"
-				required autofocus value="${usuario.usuario}">
+			<label for="email" class="col-form-label">E-mai*</label> <input
+				type="email" class="form-control" name="email" MAXLENGTH="50"
+				required autofocus value="${usuario.email}">
 		</div>
 
 		<!-- SENHA -->

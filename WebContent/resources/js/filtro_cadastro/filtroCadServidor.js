@@ -5,16 +5,16 @@ $(document).ready(function() {
 	$('input[type=radio]').change(function() {
 		$.ajax({
 			type : "POST",
-			url : "filtrarUsuarios",
+			url : "filtrarUsuariosServidor",
 			cache : false,
 			data : {
-				tipo_profissional : $("input[name='tipo_profissional']:checked").val()
+				funcao : $("input[name='funcao']:checked").val()
 			},
 			beforeSend: function(xhr) {
 	            xhr.setRequestHeader(header, token);
 	        },
 			success : function(response) {
-				$('#lista_usuario').html(response);
+				$('#lista_usuarios').html(response);
 			},
 			error : function() {
 				alert("Ocorreu um erro");

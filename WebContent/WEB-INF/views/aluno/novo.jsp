@@ -51,7 +51,7 @@
 				<option value="">Não informar</option>
 				<!-- percorre usuarios montando as linhas da tabela -->
 				<c:forEach var="usuario" items="${usuarios}">
-					<option value="${usuario.id}">${usuario.usuario}</option>
+					<option value="${usuario.id}">${usuario.email}</option>
 				</c:forEach>
 			</select>
 		</div>

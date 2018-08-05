@@ -40,17 +40,16 @@ public class ProfissionalSaudeController {
 
 	@RequestMapping("adicionaProfissionalSaude")
 	public String adiciona(@Valid ProfissionalSaude profissionalSaude, BindingResult result) {
-
 		if (result.hasErrors()) {
 			return "redirect:novoProfissionalSaude";
 		}
 
 		// Adiciona no banco de dados
 		dao.adiciona(profissionalSaude);
-		return "redirect:listaProfissionalSaude";
+		return "redirect:listaProfissionaisSaude";
 	}
 
-	@RequestMapping("listaProfissionalSaude")
+	@RequestMapping("listaProfissionaisSaude")
 	public String lista(Model model) {
 		model.addAttribute("profissionais_saude", dao.lista());
 		return "profissional_saude/lista";
@@ -76,24 +75,20 @@ public class ProfissionalSaudeController {
 
 	@RequestMapping("alteraProfissionalSaude")
 	public String altera(@Valid ProfissionalSaude profissionalSaude, BindingResult result) {
-
 		if (result.hasErrors()) {
 			return "redirect:editaProfissionalSaude?id=" + profissionalSaude.getId();
 		}
 
 		// Altera no banco
 		dao.altera(profissionalSaude);
-		return "redirect:listaProfissionalSaude";
-
+		return "redirect:listaProfissionaisSaude";
 	}
 
-	@RequestMapping(value = "filtrarUsuarios", method = RequestMethod.POST)
+	@RequestMapping(value = "filtrarUsuariosProfissionalSaude", method = RequestMethod.POST)
 	public String filtrar(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-
 		model.addAttribute("usuarios",
 				dao_usuario.listaUsuarioProfissionalSaudeSemVinculo(request.getParameter("tipo_profissional")));
-		return "profissional_saude/lista_usuario";
-
+		return "profissional_saude/lista_usuarios";
 	}
 
 }

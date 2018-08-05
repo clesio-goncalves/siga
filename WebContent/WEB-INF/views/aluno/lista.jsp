@@ -7,11 +7,7 @@
 <html>
 <head>
 <title>Listar Alunos</title>
-<link rel="stylesheet" type="text/css"
-	href="resources/css/data_table/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/css/data_table/responsive.bootstrap4.min.css">
-
+<c:import url="../componentes/css_data_table.jsp" />
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
@@ -55,7 +51,7 @@
 								<td>Não informado</td>
 							</c:if>
 							<c:if test="${aluno.usuario != null}">
-								<td>${aluno.usuario.usuario}</td>
+								<td>${aluno.usuario.email}</td>
 							</c:if>
 
 							<!-- AÇÕES -->
@@ -112,16 +108,5 @@
 		</security:authorize>
 	</div>
 </div>
-
-<script type="text/javascript"
-	src="resources/js/data_table/jquery.dataTables.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/dataTables.responsive.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/responsive.bootstrap4.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/data_table.js"></script>
-
+<c:import url="../componentes/js_data_table.jsp" />
 <c:import url="../componentes/rodape.jsp" />

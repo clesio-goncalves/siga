@@ -7,10 +7,7 @@
 <html>
 <head>
 <title>Listar Usuários</title>
-<link rel="stylesheet" type="text/css"
-	href="resources/css/data_table/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/css/data_table/responsive.bootstrap4.min.css">
+<c:import url="../componentes/css_data_table.jsp" />
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
@@ -26,7 +23,7 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Usuário</th>
+						<th>E-mail</th>
 						<th>Ativo</th>
 						<th>Perfil</th>
 						<th>Ações</th>
@@ -37,7 +34,7 @@
 					<c:forEach var="usuario" items="${usuarios}">
 						<tr>
 							<th>${usuario.id}</th>
-							<th>${usuario.usuario}</th>
+							<th>${usuario.email}</th>
 
 							<!-- Ativo -->
 							<c:if test="${usuario.ativo eq true}">
@@ -73,8 +70,8 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o usuário (${usuario.id})
-														-> ${usuario.usuario}?</p>
+													<p>Deseja realmente excluir o usuário ID (${usuario.id})
+														-> ${usuario.email}?</p>
 												</div>
 												<div class="modal-footer">
 													<a href="removeUsuario?id=${usuario.id}"
@@ -105,15 +102,5 @@
 	</div>
 </div>
 
-<script type="text/javascript"
-	src="resources/js/data_table/jquery.dataTables.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/dataTables.responsive.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/responsive.bootstrap4.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/data_table/data_table.js"></script>
-
+<c:import url="../componentes/js_data_table.jsp" />
 <c:import url="../componentes/rodape.jsp" />
