@@ -7,14 +7,12 @@
 <html>
 <head>
 <title>Cadastrar Usuário</title>
-
 <c:import url="../componentes/cabecalho.jsp" />
-
 <div class="jumbotron">
 	<div class="container">
-		<h1>Cadastrar Usuário</h1>
-		<p>Preencha o formulário abaixo para realizar o cadastro do
-			usuário no sistema.</p>
+		<h1 class="display-3">Cadastrar Usuário</h1>
+		<p class="lead">Preencha o formulário abaixo para realizar o
+			cadastro do usuário no sistema.</p>
 	</div>
 </div>
 <div class="container">
@@ -22,27 +20,29 @@
 
 		<!-- USUARIO -->
 		<div class="form-group">
-			<label for="usuario">Usuário*</label> <input type="text"
-				class="form-control" name="usuario" MAXLENGTH="50" required autofocus>
+			<label for="usuario" class="col-form-label">Usuário*</label> <input
+				type="text" class="form-control" name="usuario" MAXLENGTH="50"
+				required autofocus>
 		</div>
 
 		<!-- SENHA -->
 		<div class="form-group">
-			<label for="senha">Senha*</label> <input type="password"
-				class="form-control" name="senha" id="senha" MAXLENGTH="50" required>
+			<label for="senha" class="col-form-label">Senha*</label> <input
+				type="password" class="form-control" name="senha" id="senha"
+				MAXLENGTH="50" required>
 		</div>
 
 		<!-- REPETIR SENHA -->
 		<div class="form-group">
-			<label for="repetir_senha">Repetir Senha*</label> <input
-				type="password" class="form-control" name="repetir_senha"
-				id="repetir_senha" MAXLENGTH="50" required>
+			<label for="repetir_senha" class="col-form-label">Repetir
+				Senha*</label> <input type="password" class="form-control"
+				name="repetir_senha" id="repetir_senha" MAXLENGTH="50" required>
 		</div>
 
 		<!-- PERMISSÃO -->
 		<div class="form-group">
-			<label for="perfil">Perfil*</label> <select class="form-control"
-				name="perfil.id" required>
+			<label for="perfil" class="col-form-label">Perfil*</label> <select
+				class="custom-select" name="perfil.id" required>
 				<!-- percorre perfil montando as linhas da tabela -->
 				<c:forEach var="perfil" items="${perfis}">
 					<option value="${perfil.id}">${perfil.nome}</option>
@@ -52,10 +52,10 @@
 
 		<!-- ATIVO -->
 		<div class="form-group">
-			<div class="checkbox">
-				<label> <input type="checkbox" name="ativo"
-					checked="checked"> Ativo
-				</label>
+			<div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input"
+					id="customCheck1" name="ativo" checked="checked"> <label
+					class="custom-control-label" for="customCheck1">Ativo</label>
 			</div>
 		</div>
 
@@ -64,7 +64,7 @@
 		<!-- OBTIGATÓRIO -->
 		<label for="obrigatorio">(*) Campos obrigatórios</label>
 		<div>
-			<button type="reset" class="btn btn-default btn-lg">
+			<button type="reset" class="btn btn-secondary btn-lg">
 				<span class="glyphicon glyphicon-trash"></span> Limpar
 			</button>
 			<button type="submit" class="btn btn-primary btn-lg">

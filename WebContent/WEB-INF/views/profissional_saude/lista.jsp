@@ -6,95 +6,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Listar Profissional da Saúde</title>
+<title>Listar Profissionais da Saúde</title>
 <link rel="stylesheet" type="text/css"
-	href="resources/css/jquery.dataTables.css">
+	href="resources/css/data_table/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/css/data_table/responsive.bootstrap4.min.css">
 
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
-	<div class="panel panel-default">
-		<div class="panel-heading">Listagem de Profissionais da Saúde</div>
+
+	<div class="card border-light mb-3">
+		<div class="card-header">Listagem de Profissionais da Saúde</div>
 
 		<!-- Table -->
-		<div class="panel-body">
-			<div class="table-responsive">
-				<table class="table table-striped table-hover display" id="table_id">
-					<thead>
+		<div class="card-body">
+			<table id="tabela_id"
+				class="table table-striped table-bordered dt-responsive nowrap"
+				style="width: 100%">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nome Completo</th>
+						<th>SIAPE</th>
+						<th>Tipo Profissional</th>
+						<th>Usuário</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="profissional_saude" items="${profissionais_saude}">
 						<tr>
-							<th>ID</th>
-							<th>Nome Completo</th>
-							<th>SIAPE</th>
-							<th>Tipo Profissional</th>
-							<th>Usuário</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- percorre profissionais_saude montando as linhas da tabela -->
-						<c:forEach var="profissional_saude" items="${profissionais_saude}">
-							<tr>
-								<td>${profissional_saude.id}</td>
-								<td>${profissional_saude.nome}</td>
-								<td>${profissional_saude.siape}</td>
-								<td>${profissional_saude.tipo_profissional}</td>
-								<td>${profissional_saude.usuario.usuario}</td>
+							<td>${profissional_saude.id}</td>
+							<td>${profissional_saude.nome}</td>
+							<td>${profissional_saude.siape}</td>
+							<td>${profissional_saude.tipo_profissional}</td>
+							<td>${profissional_saude.usuario.usuario}</td>
 
-								<!-- AÇÕES -->
-								<td>
-									<!-- Exibir --> <a
-									href="exibeProfissionalSaude?id=${profissional_saude.id}"
-									class="btn btn-success btn-xs"><span
-										class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
-										access="hasRole('ROLE_Administrador')">
-
-										<!-- Editar -->
-										<a href="editaProfissionalSaude?id=${profissional_saude.id}"
-											class="btn btn-info btn-xs"><span
-											class="glyphicon glyphicon-edit"></span> Editar </a>
-										<!-- Botão exluir -->
-										<button class="btn btn-danger btn-xs" data-toggle="modal"
-											data-target="#${profissional_saude.id}">
-											<span class="glyphicon glyphicon-trash"></span> Excluir
-										</button>
-										<!-- Modal -->
-										<div class="modal fade" id="${profissional_saude.id}"
-											tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-											aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal">
-															<span aria-hidden="true">&times;</span><span
-																class="sr-only">Fechar</span>
-														</button>
-														<h4 class="modal-title" id="myModalLabel">Exclusão do
-															Profissional da Saúde</h4>
-													</div>
-													<div class="modal-body">Deseja realmente excluir o
-														Profissional da Saúde (${profissional_saude.id}) ->
-														${profissional_saude.nome}?</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default"
-															data-dismiss="modal">
-															<span class="glyphicon glyphicon-log-out"></span> Fechar
-														</button>
-														<a
-															href="removeProfissionalSaude?id=${profissional_saude.id}"
-															class="btn btn-danger"><span
-															class="glyphicon glyphicon-trash"></span> Excluir</a>
-													</div>
+							<!-- AÇÕES -->
+							<th>
+								<!-- Exibir --> <a
+								href="exibeProfissionalSaude?id=${profissional_saude.id}"
+								class="btn btn-secondary btn-sm"><span
+									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
+									access="hasRole('ROLE_Administrador')">
+									<!-- Editar -->
+									<a href="editaProfissionalSaude?id=${profissional_saude.id}"
+										class="btn btn-info btn-sm"><span
+										class="glyphicon glyphicon-edit"></span> Editar </a>
+									<button type="button" class="btn btn-danger btn-sm"
+										data-toggle="modal"
+										data-target="#modal${profissional_saude.id}">
+										<span class="glyphicon glyphicon-trash"></span> Excluir
+									</button>
+									<div class="modal fade" id="modal${profissional_saude.id}">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">Exclusão do Profissional da
+														Saúde</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<p>Deseja realmente excluir o Profissional da Saúde
+														(${profissional_saude.id}) -> ${profissional_saude.nome}?</p>
+												</div>
+												<div class="modal-footer">
+													<a
+														href="removeProfissionalSaude?id=${profissional_saude.id}"
+														class="btn btn-danger"><span
+														class="glyphicon glyphicon-trash"></span> Excluir</a>
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">
+														<span class="glyphicon glyphicon-log-out"></span> Fechar
+													</button>
 												</div>
 											</div>
 										</div>
-									</security:authorize>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-
-				</table>
-			</div>
+									</div>
+								</security:authorize>
+							</th>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 	</div>
 
@@ -106,7 +104,15 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="resources/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="resources/js/data_table.js"></script>
+<script type="text/javascript"
+	src="resources/js/data_table/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="resources/js/data_table/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript"
+	src="resources/js/data_table/dataTables.responsive.min.js"></script>
+<script type="text/javascript"
+	src="resources/js/data_table/responsive.bootstrap4.min.js"></script>
+<script type="text/javascript"
+	src="resources/js/data_table/data_table.js"></script>
 
 <c:import url="../componentes/rodape.jsp" />

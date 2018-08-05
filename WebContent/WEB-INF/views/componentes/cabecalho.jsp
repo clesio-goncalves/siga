@@ -3,101 +3,84 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <link rel="stylesheet" type="text/css"
-	href="resources/css/bootstrap.css" />
+	href="resources/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/css/cabecalho.css" />
+	href="resources/css/glyphicons.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/css/jquery-ui.css">
-<script type="text/javascript" src="resources/js/jquery.js"></script>
-<script type="text/javascript" src="resources/js/bootstrap.js"></script>
+	href="resources/css/cabecalho.css">
+<script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="resources/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="resources/js/popper.min.js"></script>
+<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar">
-					<span class="icon-bar"> </span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index"> <span
-					class="glyphicon glyphicon-home"></span> SIGA CAPAU
-				</a>
-			</div>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+		<a class="navbar-brand" href="index">SIGA CAPAU</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarColor01" aria-controls="navbarColor01"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-			<div class="collapse navbar-collapse" id="navbar">
-				<ul class="nav navbar-nav nav-pills">
-
-					<security:authorize access="hasRole('ROLE_Administrador')">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false">Cadastro
-								<span class="caret"></span>
-						</a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="novoUsuario">Usuário</a></li>
-								<li><a href="novoAluno">Aluno</a></li>
-								<li><a href="#">Docente</a></li>
-								<li><a href="#">Monitor</a></li>
-								<li><a href="novoProfissionalSaude">Profissional da
-										Saúde</a></li>
-								<li class="divider"></li>
-								<li><a href="novoCurso">Curso</a></li>
-								<li><a href="#">Disciplina</a></li>
-							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false">Atendimento
-								<span class="caret"></span>
-						</a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Extra Classe</a></li>
-								<li><a href="#">Monitoria</a></li>
-							</ul></li>
-					</security:authorize>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">Relatórios
-							<span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="listaUsuarios">Usuários</a></li>
-							<li><a href="listaAlunos">Alunos</a></li>
-							<li><a href="#">Docentes</a></li>
-							<li><a href="#">Monitores</a></li>
-							<li><a href="listaProfissionalSaude">Profissionais da
-									Saúde</a></li>
-							<li class="divider"></li>
-							<li><a href="listaCursos">Cursos</a></li>
-						</ul></li>
-					<!--<security:authorize access="hasRole('ROLE_Administrador')">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false">Configuração
-								<span class="caret"></span>
-						</a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="desativacaoIpv6">Desativação IPv6</a></li>
-								<li class="divider"></li>
-								<li><a href="diretorioLogs">Diretório dos Logs</a></li>
-							</ul></li>
-					</security:authorize>-->
+		<div class="collapse navbar-collapse" id="navbarColor01">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+					role="button" aria-haspopup="true" aria-expanded="false">Cadastro</a>
+					<div class="dropdown-menu" x-placement="bottom-start"
+						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+						<a class="dropdown-item" href="novoUsuario">Usuário</a> <a
+							class="dropdown-item" href="novoAluno">Aluno</a> <a
+							class="dropdown-item" href="#">Docente</a> <a
+							class="dropdown-item" href="#">Monitor</a> <a
+							class="dropdown-item" href="novoProfissionalSaude">Profissional
+							da Saúde</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="novoCurso">Curso</a> <a
+							class="dropdown-item" href="#">Disciplina</a>
+					</div></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+					role="button" aria-haspopup="true" aria-expanded="false">Atendimento</a>
+					<div class="dropdown-menu" x-placement="bottom-start"
+						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+						<a class="dropdown-item" href="#">Extra Classe</a> <a
+							class="dropdown-item" href="#">Monitoria</a>
+					</div></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+					role="button" aria-haspopup="true" aria-expanded="false">Relatórios</a>
+					<div class="dropdown-menu" x-placement="bottom-start"
+						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+						<a class="dropdown-item" href="listaUsuarios">Usuários</a> <a
+							class="dropdown-item" href="listaAlunos">Alunos</a> <a
+							class="dropdown-item" href="#">Docentes</a> <a
+							class="dropdown-item" href="#">Monitores</a> <a
+							class="dropdown-item" href="listaProfissionalSaude">Profissionais
+							da Saúde</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="listaCursos">Cursos</a> <a
+							class="dropdown-item" href="#">Disciplinas</a>
+					</div></li>
+			</ul>
+			<security:authorize access="isAuthenticated()">
+				<ul class="navbar-nav navbar-right">
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+						role="button" aria-haspopup="true" aria-expanded="false"><security:authentication
+								property="principal" var="user" /> ${user.usuario}</a>
+						<div class="dropdown-menu" x-placement="bottom-start"
+							style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+							<a class="dropdown-item" href="#"><span
+								class="glyphicon glyphicon-info-sign"></span> Perfil</a> <a
+								class="dropdown-item" href="logout"><span
+								class="glyphicon glyphicon-log-out"></span> Sair</a>
+						</div></li>
 				</ul>
-				<security:authorize access="isAuthenticated()">
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"> <span
-								class="glyphicon glyphicon-user"></span> <security:authentication
-									property="principal" var="user" /> ${user.usuario} <span
-								class="caret"></span>
-						</a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="exibeUsuario?id=${user.id}"><span
-										class="glyphicon glyphicon-info-sign"></span> Perfil</a></li>
-								<li class="divider"></li>
-								<li><a href="logout"><span
-										class="glyphicon glyphicon-log-out"></span> Sair</a></li>
-							</ul></li>
-					</ul>
-				</security:authorize>
-			</div>
+			</security:authorize>
 		</div>
 	</nav>

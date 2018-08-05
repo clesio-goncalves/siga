@@ -3,14 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
 <title>404</title>
 <c:import url="../componentes/cabecalho_erro.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1>A página acessada não existe.</h1>
-		<p>Entre em contato com a CTI - Campus Paulistana para solucionar o problema. E-mail: cti.capau@ifpi.edu.br</p>
+		<h1 class="display-3">A página acessada não existe.</h1>
+		<p class="lead">Entre em contato com a CTI - Campus Paulistana
+			para solucionar o problema. E-mail: cti.capau@ifpi.edu.br.</p>
 	</div>
 </div>
-
 <c:import url="../componentes/rodape.jsp" />

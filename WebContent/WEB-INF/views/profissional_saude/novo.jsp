@@ -6,17 +6,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <title>Cadastrar Profissional da Saúde</title>
 
 <c:import url="../componentes/cabecalho.jsp" />
-
 <div class="jumbotron">
 	<div class="container">
-		<h1>Cadastrar Profissional da Saúde</h1>
-		<p>Preencha o formulário abaixo para realizar o cadastro do
-			Profissional da Saúde no sistema.</p>
+		<h1 class="display-3">Cadastrar Profissional da Saúde</h1>
+		<p class="lead">Preencha o formulário abaixo para realizar o
+			cadastro do Profissional de Saúde no sistema.</p>
 	</div>
 </div>
 <div class="container">
@@ -24,12 +23,13 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome">Nome Completo*</label> <input type="text"
-				class="form-control" name="nome" autofocus MAXLENGTH="255" required>
+			<label for="nome" class="col-form-label">Nome Completo*</label> <input
+				type="text" class="form-control" name="nome" autofocus
+				MAXLENGTH="255" required>
 		</div>
 
 		<!-- SIAPE -->
-		<div class="form-group">
+		<div class="form-group" class="col-form-label">
 			<label for="siape">SIAPE*</label> <input type="number"
 				class="form-control" name=siape MAXLENGTH="10" required
 				onkeypress='return SomenteNumero(event)'>
@@ -37,22 +37,29 @@
 
 		<!-- CURSO -->
 		<div class="form-group">
-			<label for="tipo_profissional">Tipo de Profissional*</label>
-			<div class="radio">
-				<label><input type="radio" name="tipo_profissional"
-					value="Psicólogo" checked="checked" required> Psicólogo </label>
+			<label for="tipo_profissional" class="col-form-label">Tipo de
+				Profissional*</label>
+			<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio1" name="tipo_profissional"
+					class="custom-control-input" checked="checked" required
+					value="Psicólogo"> <label class="custom-control-label"
+					for="customRadio1">Psicólogo</label>
 			</div>
-			<div class="radio">
-				<label><input type="radio" name="tipo_profissional"
-					value="Assistente Social"> Assistente Social </label>
+			<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio2" name="tipo_profissional"
+					class="custom-control-input" value="Assistente Social"> <label
+					class="custom-control-label" for="customRadio2">Assistente
+					Social</label>
 			</div>
-			<div class="radio">
-				<label><input type="radio" name="tipo_profissional"
-					value="Enfermeiro"> Enfermeiro </label>
+			<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio3" name="tipo_profissional"
+					class="custom-control-input" value="Enfermeiro"> <label
+					class="custom-control-label" for="customRadio3">Enfermeiro</label>
 			</div>
-			<div class="radio">
-				<label><input type="radio" name="tipo_profissional"
-					value="Odontólogo"> Odontólogo </label>
+			<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio4" name="tipo_profissional"
+					class="custom-control-input" value="Odontólogo"> <label
+					class="custom-control-label" for="customRadio4">Odontólogo</label>
 			</div>
 
 		</div>
@@ -65,9 +72,9 @@
 		<security:csrfInput />
 
 		<!-- OBTIGATÓRIO -->
-		<label for="obrigatorio">(*) Campos obrigatórios</label>
+		<label>(*) Campos obrigatórios</label>
 		<div>
-			<button type="reset" class="btn btn-default btn-lg">
+			<button type="reset" class="btn btn-secondary btn-lg">
 				<span class="glyphicon glyphicon-trash"></span> Limpar
 			</button>
 			<button type="submit" class="btn btn-primary btn-lg">

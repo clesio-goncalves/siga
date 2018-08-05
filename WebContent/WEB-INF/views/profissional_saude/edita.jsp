@@ -12,10 +12,11 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1>Editar Aluno</h1>
-		<p>Preencha o formulário abaixo para realizar a alteração. É
-			permitida a alteração somente dos campos Nome e SIAPE, com o objetivo
-			de mater a consistência dos dados.</p>
+		<h1 class="display-3">Editar Profissional da Saúde</h1>
+		<p class="lead">Preencha o formulário abaixo para realizar a
+			alteração do Profissional da Saúde no sistema. É permitida a
+			alteração somente dos campos Nome e SIAPE, com o objetivo de mater a
+			consistência dos dados.</p>
 	</div>
 </div>
 <div class="container">
@@ -26,13 +27,13 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome">Nome Completo*</label> <input type="text"
-				class="form-control" name="nome" autofocus MAXLENGTH="255" required
-				value="${profissional_saude.nome}">
+			<label for="nome" class="col-form-label">Nome Completo*</label> <input
+				type="text" class="form-control" name="nome" autofocus
+				MAXLENGTH="255" required value="${profissional_saude.nome}">
 		</div>
 
 		<!-- SIAPE -->
-		<div class="form-group">
+		<div class="form-group" class="col-form-label">
 			<label for="siape">SIAPE*</label> <input type="number"
 				class="form-control" name=siape MAXLENGTH="10" required
 				onkeypress='return SomenteNumero(event)'
@@ -41,18 +42,22 @@
 
 		<!-- CURSO -->
 		<div class="form-group">
-			<label for="tipo_profissional">Tipo de Profissional*</label>
-			<div class="radio">
-				<label><input type="radio" name="tipo_profissional"
-					value="${profissional_saude.tipo_profissional}" checked="checked"
-					required disabled="disabled"> ${profissional_saude.tipo_profissional} </label>
+			<label for="tipo_profissional" class="col-form-label">Tipo de
+				Profissional*</label>
+			<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio1" name="tipo_profissional"
+					class="custom-control-input" checked="checked" disabled="disabled"
+					required value="${profissional_saude.tipo_profissional}"> <label
+					class="custom-control-label" for="customRadio1">${profissional_saude.tipo_profissional}</label>
 			</div>
+
+
 		</div>
 
 		<!-- USUÁRIO -->
 		<div class="form-group">
-			<label for="usuario">Usuário*</label> <select class="form-control"
-				name="usuario.id" required disabled="disabled">
+			<label for="usuario" class="col-form-label">Usuário*</label> <select
+				class="custom-select" name="usuario.id" required disabled="disabled">
 				<option value="${profissional_saude.usuario.id}">${profissional_saude.usuario.usuario}</option>
 			</select>
 		</div>
@@ -62,7 +67,7 @@
 		<!-- OBTIGATÓRIO -->
 		<label for="obrigatorio">(*) Campos obrigatórios</label>
 		<div>
-			<a href="listaProfissionalSaude" class="btn btn-default btn-lg">
+			<a href="listaProfissionalSaude" class="btn btn-secondary btn-lg">
 				<span class="glyphicon glyphicon-remove"></span> Cancelar
 			</a>
 			<button type="submit" class="btn btn-primary btn-lg">

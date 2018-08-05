@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="UTF-8"%>
+<%@taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +12,9 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1>Editar Curso</h1>
-		<p>Preencha o formulário abaixo para realizar a alteração do
-			curso.</p>
+		<h1 class="display-3">Editar Curso</h1>
+		<p class="lead">Preencha o formulário abaixo para realizar a
+			alteração do curso no sistema.</p>
 	</div>
 </div>
 <div class="container">
@@ -23,17 +25,17 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome">Nome*</label> <input type="text"
-				class="form-control" name="nome" autofocus MAXLENGTH="255" required
-				value="${curso.nome}">
+			<label for="nome" class="col-form-label">Nome*</label> <input
+				type="text" class="form-control" name="nome" autofocus
+				MAXLENGTH="255" required value="${curso.nome}">
 		</div>
 
-		<security:csrfInput/>
-		
+		<security:csrfInput />
+
 		<!-- OBTIGATÓRIO -->
 		<label for="obrigatorio">(*) Campo obrigatório</label>
 		<div>
-			<a href="listaCursos" class="btn btn-default btn-lg"> <span
+			<a href="listaCursos" class="btn btn-secondary btn-lg"> <span
 				class="glyphicon glyphicon-remove"></span> Cancelar
 			</a>
 			<button type="submit" class="btn btn-primary btn-lg">
