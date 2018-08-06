@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -21,9 +21,11 @@ public class Disciplina {
 	@Column(unique = true)
 	private String nome;
 
-	@NotNull
-	@ManyToMany
-	private List<Curso> cursos;
+	@Transient
+	private List<String> lista_cursos;
+
+	@Transient
+	private List<Curso> curso;
 
 	public Long getId() {
 		return id;
@@ -41,12 +43,20 @@ public class Disciplina {
 		this.nome = nome;
 	}
 
-	public List<Curso> getCursos() {
-		return cursos;
+	public List<String> getLista_cursos() {
+		return lista_cursos;
 	}
 
-	public void setCursos(List<Curso> cursos) {
-		this.cursos = cursos;
+	public void setLista_cursos(List<String> lista_cursos) {
+		this.lista_cursos = lista_cursos;
+	}
+
+	public List<Curso> getCurso() {
+		return curso;
+	}
+
+	public void setCurso(List<Curso> curso) {
+		this.curso = curso;
 	}
 
 }

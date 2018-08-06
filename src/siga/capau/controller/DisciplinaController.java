@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.DisciplinaDao;
+import siga.capau.modelo.Curso;
 import siga.capau.modelo.Disciplina;
 
 @Transactional
 @Controller
 public class DisciplinaController {
+
+	private Curso curso;
 
 	@Autowired
 	DisciplinaDao dao;
@@ -29,7 +32,7 @@ public class DisciplinaController {
 			return "redirect:novoCurso";
 		}
 
-		disciplina.setCursos(dao_curso.lista());
+		disciplina.setCurso(dao_curso.lista());
 		model.addAttribute("disciplina", disciplina);
 		return "disciplina/novo";
 	}
@@ -42,8 +45,15 @@ public class DisciplinaController {
 			return "redirect:novaDisciplina";
 		}
 
-		// Adiciona no banco de dados
-		dao.adiciona(disciplina);
+		// Adiciona a disciplina no banco de dados e pega o ID Gerado
+		disciplina.setId(dao.adiciona(disciplina));
+
+		// Percorre todos os cursos informados para a disciplina
+//		for (String id_curso : disciplina.getLista_cursos()) {
+//			this.curso = dao_curso.buscaPorId(Long.parseLong(id_curso));
+//
+//		}
+
 		return "redirect:listaDisciplinas";
 	}
 

@@ -15,8 +15,9 @@ public class DisciplinaDao {
 	@PersistenceContext
 	private EntityManager manager;
 
-	public void adiciona(Disciplina disciplina) {
+	public Long adiciona(Disciplina disciplina) {
 		manager.persist(disciplina);
+		return disciplina.getId();
 	}
 
 	public void altera(Disciplina disciplina) {
@@ -29,6 +30,11 @@ public class DisciplinaDao {
 
 	public Disciplina buscaPorId(Long id) {
 		return manager.find(Disciplina.class, id);
+	}
+
+	public Disciplina buscaPorNome(String nome) {
+		return manager.createQuery("select d from Disciplina d where d.nome = :nome", Disciplina.class)
+				.setParameter("nome", nome).getSingleResult();
 	}
 
 	public void remove(Disciplina disciplina) {
