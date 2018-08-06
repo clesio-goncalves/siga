@@ -72,8 +72,7 @@ public class UsuarioDao implements UserDetailsService {
 	}
 
 	public void remove(Usuario usuario) {
-		Usuario usuarioARemover = buscaPorId(usuario.getId());
-		manager.remove(usuarioARemover);
+		manager.remove(buscaPorId(usuario.getId()));
 	}
 
 	@Override

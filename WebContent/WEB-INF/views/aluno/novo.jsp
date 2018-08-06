@@ -37,7 +37,7 @@
 			<c:forEach var="curso" items="${cursos}">
 				<div class="custom-control custom-radio">
 					<input type="radio" id="${curso.id}" name="curso.id"
-						value="${curso.id}" class="custom-control-input" checked="checked"
+						value="${curso.id}" class="custom-control-input" checked
 						required> <label class="custom-control-label"
 						for="${curso.id}">${curso.nome}</label>
 				</div>

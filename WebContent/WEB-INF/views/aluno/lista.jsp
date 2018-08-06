@@ -55,7 +55,7 @@
 							</c:if>
 
 							<!-- AÇÕES -->
-							<th>
+							<td>
 								<!-- Exibir --> <a href="exibeAluno?id=${aluno.id}"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
@@ -93,7 +93,7 @@
 										</div>
 									</div>
 								</security:authorize>
-							</th>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

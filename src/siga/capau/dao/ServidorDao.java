@@ -32,8 +32,7 @@ public class ServidorDao {
 	}
 
 	public void remove(Servidor servidor) {
-		Servidor servidorARemover = buscaPorId(servidor.getId());
-		manager.remove(servidorARemover);
+		manager.remove(buscaPorId(servidor.getId()));
 	}
 
 }

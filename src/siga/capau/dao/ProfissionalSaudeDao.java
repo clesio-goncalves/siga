@@ -32,8 +32,7 @@ public class ProfissionalSaudeDao {
 	}
 
 	public void remove(ProfissionalSaude profissional_saude) {
-		ProfissionalSaude profissionalARemover = buscaPorId(profissional_saude.getId());
-		manager.remove(profissionalARemover);
+		manager.remove(buscaPorId(profissional_saude.getId()));
 	}
 
 }

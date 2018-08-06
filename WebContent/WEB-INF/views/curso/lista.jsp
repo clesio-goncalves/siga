@@ -33,7 +33,7 @@
 						<tr>
 							<td>${curso.id}</td>
 							<td>${curso.nome}</td>
-							<th>
+							<td>
 								<!-- Exibir --> <a href="exibeCurso?id=${curso.id}"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
@@ -73,7 +73,7 @@
 										</div>
 									</div>
 								</security:authorize>
-							</th>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

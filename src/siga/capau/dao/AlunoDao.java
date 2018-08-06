@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import siga.capau.modelo.Aluno;
-import siga.capau.modelo.Usuario;
 
 @Repository
 public class AlunoDao {
@@ -33,8 +32,7 @@ public class AlunoDao {
 	}
 
 	public void remove(Aluno aluno) {
-		Aluno alunoARemover = buscaPorId(aluno.getId());
-		manager.remove(alunoARemover);
+		manager.remove(buscaPorId(aluno.getId()));
 	}
 
 	public List<Aluno> buscaAlunosPorCurso(Long id) {

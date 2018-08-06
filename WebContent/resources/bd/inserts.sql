@@ -34,8 +34,11 @@ values (1, 'clesio@clesio.com','$2a$10$EWuQ/cYO46g0fCOJDUxrReYT/TjKz2QXVIKTXx34e
 insert into Usuario(id, email, senha, ativo, perfil_id)
 values (2, 'aluno@aluno.com','$2a$10$qpt3HctirwaIRedM0ERwXegnlFN0dejoMPBqsv5GDxJj9eAM/scBy', 1, 10);
 
-insert into Aluno(id, nome, curso_id, usuario_id)
-values (1,'Aluno com Usuario', 1, 2);
+insert into Curso(id, nome)
+values (1,'Técnico em Mineração');
+
+insert into Curso(id, nome)
+values (2,'Técnico em Informática');
 
 -- seleciona todos os usuário do tipo aluno que ainda estão sem vinculo com algum aluno
 select * from Usuario as u 

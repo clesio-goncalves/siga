@@ -1,7 +1,5 @@
 package siga.capau.controller;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -16,14 +14,10 @@ import siga.capau.dao.AlunoDao;
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Aluno;
-import siga.capau.modelo.Usuario;
 
 @Transactional
 @Controller
 public class AlunoController {
-
-	private List<Usuario> lista_usuarios;
-	private Aluno aluno;
 
 	@Autowired
 	AlunoDao dao;
@@ -37,15 +31,13 @@ public class AlunoController {
 	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("novoAluno")
 	public String novoAluno(Model model) {
-
 		// Testa se há cursos cadastrados
 		if (dao_curso.lista().size() == 0) {
 			return "redirect:novoCurso";
-		} else {
-			model.addAttribute("cursos", dao_curso.lista());
-			model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
-			return "aluno/novo";
 		}
+		model.addAttribute("cursos", dao_curso.lista());
+		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
+		return "aluno/novo";
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")

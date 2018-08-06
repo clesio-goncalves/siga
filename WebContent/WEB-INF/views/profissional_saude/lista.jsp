@@ -40,7 +40,7 @@
 							<td>${profissional_saude.usuario.email}</td>
 
 							<!-- AÇÕES -->
-							<th>
+							<td>
 								<!-- Exibir --> <a
 								href="exibeProfissionalSaude?id=${profissional_saude.id}"
 								class="btn btn-secondary btn-sm"><span
@@ -84,7 +84,7 @@
 										</div>
 									</div>
 								</security:authorize>
-							</th>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

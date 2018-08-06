@@ -32,8 +32,7 @@ public class CursoDao {
 	}
 
 	public void remove(Curso curso) {
-		Curso cursoARemover = buscaPorId(curso.getId());
-		manager.remove(cursoARemover);
+		manager.remove(buscaPorId(curso.getId()));
 	}
 
 }

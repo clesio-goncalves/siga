@@ -41,7 +41,7 @@
 							da Saúde</a><a class="dropdown-item" href="novoServidor">Servidor</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="novoCurso">Curso</a> <a
-							class="dropdown-item" href="#">Disciplina</a>
+							class="dropdown-item" href="novaDisciplina">Disciplina</a>
 					</div></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
@@ -64,7 +64,7 @@
 							da Saúde</a><a class="dropdown-item" href="listaServidores">Servidores</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="listaCursos">Cursos</a> <a
-							class="dropdown-item" href="#">Disciplinas</a>
+							class="dropdown-item" href="listaDisciplinas">Disciplinas</a>
 					</div></li>
 			</ul>
 			<security:authorize access="isAuthenticated()">

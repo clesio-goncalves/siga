@@ -6,14 +6,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Listar Usuários</title>
+<title>Listar Disciplinas</title>
 <c:import url="../componentes/css_data_table.jsp" />
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
 
 	<div class="card border-light mb-3">
-		<div class="card-header">Listagem de Usuários</div>
+		<div class="card-header">Listagem de Disciplinas</div>
 
 		<!-- Table -->
 		<div class="card-body">
@@ -23,58 +23,47 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>E-mail</th>
-						<th>Ativo</th>
-						<th>Perfil</th>
+						<th>Nome</th>
+						<th>Curso(s)</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
-					<!-- percorre usuarios montando as linhas da tabela -->
-					<c:forEach var="usuario" items="${usuarios}">
+					<!-- percorre cursos montando as linhas da tabela -->
+					<c:forEach var="disciplina" items="${disciplinas}">
 						<tr>
-							<td>${usuario.id}</td>
-							<td>${usuario.email}</td>
-
-							<!-- Ativo -->
-							<c:if test="${usuario.ativo eq true}">
-								<td>Sim</td>
-							</c:if>
-							<c:if test="${usuario.ativo eq false}">
-								<td>Não</td>
-							</c:if>
-
-							<td>${usuario.perfil.nome}</td>
+							<td>${disciplina.id}</td>
+							<td>${disciplina.nome}</td>
+							<td>${disciplina.nome}</td>
 							<td>
-								<!-- Exibir --> <a href="exibeUsuario?id=${usuario.id}"
+								<!-- Exibir --> <a href="exibeDisciplina?id=${disciplina.id}"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
 									access="hasRole('ROLE_Administrador')">
 									<!-- Editar -->
-									<a href="editaUsuario?id=${usuario.id}"
+									<a href="editaDisciplina?id=${disciplina.id}"
 										class="btn btn-info btn-sm"><span
 										class="glyphicon glyphicon-edit"></span> Editar </a>
-									<!-- Button to Open the Modal -->
 									<button type="button" class="btn btn-danger btn-sm"
-										data-toggle="modal" data-target="#modal${usuario.id}">
+										data-toggle="modal" data-target="#modal${disciplina.id}">
 										<span class="glyphicon glyphicon-trash"></span> Excluir
 									</button>
-									<div class="modal fade" id="modal${usuario.id}">
+									<div class="modal fade" id="modal${disciplina.id}">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title">Exclusão do usuário</h5>
+													<h5 class="modal-title">Exclusão da disciplina</h5>
 													<button type="button" class="close" data-dismiss="modal"
 														aria-label="Close">
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o usuário ID (${usuario.id})
-														-> ${usuario.email}?</p>
+													<p>Deseja realmente excluir a disciplina ID
+														(${disciplina.id}) -> ${disciplina.nome}?</p>
 												</div>
 												<div class="modal-footer">
-													<a href="removeUsuario?id=${usuario.id}"
+													<a href="removeDisciplina?id=${disciplina.id}"
 														class="btn btn-danger"><span
 														class="glyphicon glyphicon-trash"></span> Excluir</a>
 													<button type="button" class="btn btn-secondary"
@@ -96,7 +85,7 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="novoUsuario" class="btn btn-primary btn-lg"><span
+			<a href="novaDisciplina" class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
 	</div>
