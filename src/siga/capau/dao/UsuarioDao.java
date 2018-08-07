@@ -67,6 +67,11 @@ public class UsuarioDao implements UserDetailsService {
 				Usuario.class).setParameter("funcao", funcao).getResultList();
 	}
 
+	public List<Usuario> buscaPorNome(String email) {
+		return manager.createQuery("select u from Usuario u where u.email = :email", Usuario.class)
+				.setParameter("email", email).getResultList();
+	}
+
 	public Usuario buscaPorId(Long id) {
 		return manager.find(Usuario.class, id);
 	}

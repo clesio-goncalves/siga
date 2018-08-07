@@ -1,5 +1,6 @@
 package siga.capau.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -24,8 +25,9 @@ public class Disciplina {
 	@Transient
 	private List<String> lista_cursos;
 
+	@NotNull
 	@Transient
-	private List<Curso> curso;
+	private List<Curso> curso = new ArrayList<>();
 
 	public Long getId() {
 		return id;

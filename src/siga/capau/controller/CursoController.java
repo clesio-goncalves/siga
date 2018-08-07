@@ -19,7 +19,7 @@ public class CursoController {
 
 	@Autowired
 	CursoDao dao;
-	
+
 	@Autowired
 	AlunoDao dao_aluno;
 
@@ -31,7 +31,7 @@ public class CursoController {
 	@RequestMapping("adicionaCurso")
 	public String adiciona(@Valid Curso curso, BindingResult result) {
 
-		if (result.hasErrors()) {
+		if (result.hasErrors() || dao.buscaPorNome(curso.getNome()).size() > 0) {
 			return "redirect:novoCurso";
 		}
 

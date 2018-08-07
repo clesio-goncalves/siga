@@ -1,43 +1,36 @@
 package siga.capau.modelo;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
-
-@Embeddable
 public class CursoDisciplinaPK implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3691452171585806073L;
+	private Long curso;
 
-	@Id
-	@NotNull
-	@ManyToOne
-	private Curso curso;
+	private Long disciplina;
 
-	@Id
-	@NotNull
-	@ManyToOne
-	private Disciplina disciplina;
+	public CursoDisciplinaPK(Long curso, Long disciplina) {
+		super();
+		this.curso = curso;
+		this.disciplina = disciplina;
+	}
 
-	public Curso getCurso() {
+	public CursoDisciplinaPK() {
+	}
+
+	public Long getCurso() {
 		return curso;
 	}
 
-	public void setCurso(Curso curso) {
+	public void setCurso(Long curso) {
 		this.curso = curso;
 	}
 
-	public Disciplina getDisciplina() {
+	public Long getDisciplina() {
 		return disciplina;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
+	public void setDisciplina(Long disciplina) {
 		this.disciplina = disciplina;
 	}
 
@@ -45,24 +38,16 @@ public class CursoDisciplinaPK implements Serializable {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (!(o instanceof CursoDisciplinaPK))
 			return false;
-
 		CursoDisciplinaPK that = (CursoDisciplinaPK) o;
-
-		if (curso != null ? !curso.equals(that.curso) : that.curso != null)
-			return false;
-		if (disciplina != null ? !disciplina.equals(that.disciplina) : that.disciplina != null)
-			return false;
-
-		return true;
+		return Objects.equals(getCurso(), that.getCurso()) && Objects.equals(getDisciplina(), that.getDisciplina());
 	}
 
 	@Override
 	public int hashCode() {
-		int result;
-		result = (curso != null ? curso.hashCode() : 0);
-		result = 31 * result + (disciplina != null ? disciplina.hashCode() : 0);
-		return result;
+		return Objects.hash(getCurso(), getDisciplina());
+
 	}
+
 }

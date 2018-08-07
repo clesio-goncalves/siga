@@ -27,6 +27,11 @@ public class CursoDao {
 		return manager.createQuery("select c from Curso c", Curso.class).getResultList();
 	}
 
+	public List<Curso> buscaPorNome(String nome) {
+		return manager.createQuery("select c from Curso c where c.nome = :nome", Curso.class).setParameter("nome", nome)
+				.getResultList();
+	}
+
 	public Curso buscaPorId(Long id) {
 		return manager.find(Curso.class, id);
 	}

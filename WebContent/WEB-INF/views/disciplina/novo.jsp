@@ -30,15 +30,10 @@
 
 		<!-- CURSO -->
 		<div class="form-group">
-			<label for="curso" class="col-form-label">Cursos*</label>
-			<!--<form:select class="form-control" path="curso"
-				items="${disciplina.curso}" itemLabel="nome" itemValue="id" />
-			<form:errors path="curso" /> -->
-
-			<form:select class="form-control" path="lista_cursos">
-				<form:options items="${disciplina.curso}" itemLabel="nome"
-					itemValue="id" />
-			</form:select>
+			<label for="lista_cursos" class="col-form-label">Cursos*</label>
+			<form:select class="form-control" path="lista_cursos"
+				items="${disciplina.curso}" itemLabel="nome" itemValue="id"
+				multiple="true" />
 		</div>
 
 		<security:csrfInput />

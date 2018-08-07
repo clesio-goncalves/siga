@@ -38,7 +38,7 @@ public class UsuarioController {
 	@RequestMapping("adicionaUsuario")
 	public String adiciona(@Valid Usuario usuario, BindingResult result) {
 
-		if (result.hasErrors() || usuario.comparaSenhas() == false) {
+		if (result.hasErrors() || usuario.comparaSenhas() == false || dao.buscaPorNome(usuario.getEmail()).size() > 0) {
 			return "redirect:novoUsuario";
 		}
 

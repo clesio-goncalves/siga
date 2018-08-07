@@ -1,6 +1,5 @@
 package siga.capau.modelo;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +18,6 @@ public class ProfissionalSaude {
 	private String nome;
 
 	@NotNull
-	@Column(unique = true)
 	private int siape;
 
 	@NotNull

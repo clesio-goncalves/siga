@@ -15,9 +15,9 @@ public class DisciplinaDao {
 	@PersistenceContext
 	private EntityManager manager;
 
-	public Long adiciona(Disciplina disciplina) {
+	public Disciplina adiciona(Disciplina disciplina) {
 		manager.persist(disciplina);
-		return disciplina.getId();
+		return disciplina;
 	}
 
 	public void altera(Disciplina disciplina) {
@@ -28,13 +28,13 @@ public class DisciplinaDao {
 		return manager.createQuery("select d from Disciplina d", Disciplina.class).getResultList();
 	}
 
-	public Disciplina buscaPorId(Long id) {
-		return manager.find(Disciplina.class, id);
+	public List<Disciplina> buscaPorNome(String nome) {
+		return manager.createQuery("select d from Disciplina d where d.nome = :nome", Disciplina.class)
+				.setParameter("nome", nome).getResultList();
 	}
 
-	public Disciplina buscaPorNome(String nome) {
-		return manager.createQuery("select d from Disciplina d where d.nome = :nome", Disciplina.class)
-				.setParameter("nome", nome).getSingleResult();
+	public Disciplina buscaPorId(Long id) {
+		return manager.find(Disciplina.class, id);
 	}
 
 	public void remove(Disciplina disciplina) {
