@@ -24,7 +24,6 @@
 					<tr>
 						<th>ID</th>
 						<th>Nome</th>
-						<th>Curso(s)</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
@@ -33,7 +32,6 @@
 					<c:forEach var="disciplina" items="${disciplinas}">
 						<tr>
 							<td>${disciplina.id}</td>
-							<td>${disciplina.nome}</td>
 							<td>${disciplina.nome}</td>
 							<td>
 								<!-- Exibir --> <a href="exibeDisciplina?id=${disciplina.id}"

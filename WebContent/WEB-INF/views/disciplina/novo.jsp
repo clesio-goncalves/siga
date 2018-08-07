@@ -31,9 +31,13 @@
 		<!-- CURSO -->
 		<div class="form-group">
 			<label for="lista_cursos" class="col-form-label">Cursos*</label>
-			<form:select class="form-control" path="lista_cursos"
-				items="${disciplina.curso}" itemLabel="nome" itemValue="id"
-				multiple="true" />
+			<c:forEach var="curso" items="${disciplina.curso}">
+				<div class="custom-control custom-checkbox">
+					<form:checkbox path="lista_cursos" value="${curso.id}"
+						class="custom-control-input" id="curso${curso.id}" />
+					<label class="custom-control-label" for="curso${curso.id}">${curso.nome}</label>
+				</div>
+			</c:forEach>
 		</div>
 
 		<security:csrfInput />

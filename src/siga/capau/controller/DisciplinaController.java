@@ -38,13 +38,13 @@ public class DisciplinaController {
 
 	@RequestMapping("novaDisciplina")
 	public String disciplina(Disciplina disciplina, Model model) {
-		lista_curso = dao_curso.lista();
+		this.lista_curso = dao_curso.lista();
 
-		if (lista_curso.size() == 0) {
+		if (this.lista_curso.size() == 0) {
 			return "redirect:novoCurso";
 		}
 
-		disciplina.setCurso(lista_curso);
+		disciplina.setCurso(this.lista_curso);
 		model.addAttribute("disciplina", disciplina);
 		return "disciplina/novo";
 	}
@@ -88,23 +88,70 @@ public class DisciplinaController {
 
 	@RequestMapping("exibeDisciplina")
 	public String exibe(Long id, Model model) {
-		model.addAttribute("disciplina", dao.buscaPorId(id));
+		this.disciplina = dao.buscaPorId(id);
+		this.disciplina.setCurso(dao_curso.buscaCursoPorDisciplinaId(id));
+
+		// Altera a quantidade de disciplina em cada curso
+//		for (int i = 0; i < this.disciplina.getCurso().size(); i++) {
+//			this.disciplina.getCurso().get(i).setQnt_disciplinas(
+//					dao_curso.buscaQntDisciplinaPorCurso(this.disciplina.getCurso().get(i).getId()));
+//		}
+
+		model.addAttribute("disciplina", this.disciplina);
 		return "disciplina/exibe";
 	}
 
 	@RequestMapping("editaDisciplina")
 	public String edita(Long id, Model model) {
-		model.addAttribute("disciplina", dao.buscaPorId(id));
+
+		// Pega a disciplina com todos os cursos
+		this.disciplina = dao.buscaPorId(id);
+		this.disciplina.setLista_cursos(dao_curso.buscaCursoPorDisciplinaIdString(id));
+		model.addAttribute("disciplina", this.disciplina);
+
+		// Pega todos os cursos
+		this.lista_curso = dao_curso.lista();
+		model.addAttribute("lista_todos_cursos", this.lista_curso);
+
 		return "disciplina/edita";
 	}
 
 	@RequestMapping("alteraDisciplina")
 	public String altera(@Valid Disciplina disciplina, BindingResult result) {
-		if (result.hasErrors()) {
+		if (result.hasErrors() || disciplina.getLista_cursos().size() == 0) {
 			return "redirect:editaDisciplina?id=" + disciplina.getId();
 		}
 
+		// Altera a disciplina
 		dao.altera(disciplina);
+
+		// Buscar todos os cursos por disciplina
+		this.lista_curso = dao_curso.buscaCursoPorDisciplinaId(disciplina.getId());
+		
+		// Remove todos os CursoDisciplina que não foram passados pela view e estão
+		// cadastrados
+		for (Curso curso : this.lista_curso) {
+
+			if (!disciplina.getLista_cursos().contains(curso.getNome())) {
+				dao_curso_disciplina.removeCursoDisciplina(curso.getId(), disciplina.getId());
+			}
+			disciplina.getLista_cursos().remove(disciplina.getLista_cursos().indexOf(curso.getNome()));
+		}
+
+	
+
+//		// Intera sobre os IDs dos cursos recebidos da view
+//		for (String nome_curso : disciplina.getLista_cursos()) {
+//
+//			this.curso = dao_curso.buscaCursoPorNome(nome_curso);
+//
+//			// Adiciona os relacionamentos na tabela CursoDisciplina
+//			this.curso_disciplina = new CursoDisciplina();
+//			this.curso_disciplina.setDisciplina(disciplina);
+//			this.curso_disciplina.setCurso(this.curso);
+//			this.dao_curso_disciplina.adiciona(this.curso_disciplina);
+//		}
+
 		return "redirect:listaDisciplinas";
 	}
 

@@ -25,7 +25,6 @@ public class Disciplina {
 	@Transient
 	private List<String> lista_cursos;
 
-	@NotNull
 	@Transient
 	private List<Curso> curso = new ArrayList<>();
 

@@ -6,12 +6,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Exibe os dados do curso</title>
+<title>Exibe os dados da disciplina</title>
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
 	<div class="card border-light mb-3">
-		<div class="card-header">Exibe os dados do curso</div>
+		<div class="card-header">Exibe os dados da disciplina</div>
 		<!-- Table -->
 		<div class="card-body">
 			<div class="table-responsive">
@@ -19,48 +19,59 @@
 					class="table table-striped table-bordered dt-responsive nowrap">
 					<tr>
 						<th width="300">ID</th>
-						<td>${curso.id}</td>
+						<td>${disciplina.id}</td>
 					</tr>
-
 					<tr>
 						<th>Nome</th>
-						<td>${curso.nome}</td>
+						<td>${disciplina.nome}</td>
 					</tr>
 				</table>
 			</div>
+			<h3>Cursos vinculados</h3>
+			<ul class="list-group">
+				<c:forEach var="curso" items="${disciplina.curso}">
+					<li
+						class="list-group-item d-flex justify-content-between align-items-center">
+						<a href="exibeCurso?id=${curso.id}" class="alert-link">${curso.nome}</a>
+					</li>
+				</c:forEach>
+			</ul>
+
 		</div>
 	</div>
 	<div align="center">
 		<!-- Cadastrar -->
-		<a href="novoCurso" class="btn btn-primary btn-lg"><span
+		<a href="novaDisciplina" class="btn btn-primary btn-lg"><span
 			class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		<!-- Editar -->
-		<a href="editarCurso?id=${curso.id}" class="btn btn-info btn-lg"><span
+		<a href="editaDisciplina?id=${disciplina.id}"
+			class="btn btn-info btn-lg"><span
 			class="glyphicon glyphicon-edit"></span> Editar </a>
 		<!-- Excluir -->
 		<button type="button" class="btn btn-danger btn-lg"
-			data-toggle="modal" data-target="#modal${curso.id}">
+			data-toggle="modal" data-target="#modal${disciplina.id}">
 			<span class="glyphicon glyphicon-trash"></span> Excluir
 		</button>
 	</div>
 	<!-- Modal -->
-	<div class="modal fade" id="modal${curso.id}">
+	<div class="modal fade" id="modal${disciplina.id}">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Exclusão do curso</h5>
+					<h5 class="modal-title">Exclusão da disciplina</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<p>Deseja realmente excluir o curso (${curso.id}) ->
-						${curso.nome}?</p>
+					<p>Deseja realmente excluir a disciplina ID (${curso.id}) ->
+						${disciplina.nome}?</p>
 				</div>
 				<div class="modal-footer">
-					<a href="removeCurso?id=${curso.id}" class="btn btn-danger"><span
-						class="glyphicon glyphicon-trash"></span> Excluir</a>
+					<a href="removeDisciplina?id=${disciplina.id}"
+						class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
+						Excluir</a>
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">
 						<span class="glyphicon glyphicon-log-out"></span> Fechar
@@ -69,7 +80,7 @@
 			</div>
 		</div>
 	</div>
-	<a class="btn btn-success" href="listaCursos"><span
+	<a class="btn btn-success" href="listaDisciplinas"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
 

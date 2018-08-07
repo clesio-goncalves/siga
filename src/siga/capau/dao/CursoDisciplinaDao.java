@@ -31,4 +31,15 @@ public class CursoDisciplinaDao {
 		return manager.find(CursoDisciplina.class, id);
 	}
 
+	public void removeCursoDisciplina(Long curso_id, Long disciplina_id) {
+		manager.createQuery(
+				"delete from CursoDisciplina cd where cd.curso.id = :curso_id and cd.disciplina.id = :disciplina_id")
+				.setParameter("curso_id", curso_id).setParameter("disciplina_id", disciplina_id).executeUpdate();
+	}
+
+	public void removeCursoDisciplinaPelaDisciplinaId(Long id) {
+		manager.createQuery("delete from CursoDisciplina cd where cd.disciplina.id = :id").setParameter("id", id)
+				.executeUpdate();
+	}
+
 }

@@ -1,3 +1,5 @@
+-- BUG: ALTERAR DISCIPLINA PARA O NOME DE UMA QUE JA EXISTE
+
 insert into Perfil (id, nome)
 values (1, 'Administrador');
 
@@ -56,7 +58,10 @@ where p.nome in ('Psicólogo', 'Assistente Social', 'Enfermeiro', 'Odontólogo')
 	and u.id not in (
 	select ps.usuario_id from ProfissionalSaude as ps);
 
-
+select count(c.id) from Curso c 
+inner join CursoDisciplina cd on cd.curso_id = c.id 
+inner join Disciplina d on d.id = cd.disciplina_id 
+where c.id = 3;
 
 
 
