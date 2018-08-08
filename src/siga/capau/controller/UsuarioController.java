@@ -1,5 +1,7 @@
 package siga.capau.controller;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -18,6 +20,8 @@ import siga.capau.modelo.Usuario;
 @Transactional
 @Controller
 public class UsuarioController {
+
+	private List<Usuario> lista_usuario;
 
 	@Autowired
 	UsuarioDao dao;
@@ -38,10 +42,13 @@ public class UsuarioController {
 	@RequestMapping("adicionaUsuario")
 	public String adiciona(@Valid Usuario usuario, BindingResult result) {
 
-		if (result.hasErrors() || usuario.comparaSenhas() == false || dao.buscaPorNome(usuario.getEmail()).size() > 0) {
+		if (result.hasErrors()) {
+			return "redirect:novoUsuario";
+		} else if (usuario.comparaSenhas() == false) {
+			return "redirect:novoUsuario";
+		} else if (dao.buscaPorEmail(usuario.getEmail()).size() > 0) {
 			return "redirect:novoUsuario";
 		}
-
 		// aplica o hash a senha fornecida
 		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
 
@@ -81,8 +88,12 @@ public class UsuarioController {
 	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("alteraUsuario")
 	public String altera(@Valid Usuario usuario, BindingResult result) {
-
-		if (result.hasErrors() || usuario.comparaSenhas() == false) {
+		this.lista_usuario = dao.buscaPorEmail(usuario.getEmail());
+		if (result.hasErrors()) {
+			return "redirect:editaUsuario?id=" + usuario.getId();
+		} else if (usuario.comparaSenhas() == false) {
+			return "redirect:editaUsuario?id=" + usuario.getId();
+		} else if (this.lista_usuario.size() > 0 && this.lista_usuario.get(0).getId() != usuario.getId()) {
 			return "redirect:editaUsuario?id=" + usuario.getId();
 		}
 

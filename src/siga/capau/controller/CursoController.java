@@ -1,5 +1,7 @@
 package siga.capau.controller;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -16,6 +18,8 @@ import siga.capau.modelo.Curso;
 @Transactional
 @Controller
 public class CursoController {
+
+	private List<Curso> lista_curso;
 
 	@Autowired
 	CursoDao dao;
@@ -72,8 +76,10 @@ public class CursoController {
 
 	@RequestMapping("alteraCurso")
 	public String altera(@Valid Curso curso, BindingResult result) {
-
+		this.lista_curso = dao.buscaPorNome(curso.getNome());
 		if (result.hasErrors()) {
+			return "redirect:editaCurso?id=" + curso.getId();
+		} else if (this.lista_curso.size() > 0 && this.lista_curso.get(0).getId() != curso.getId()) {
 			return "redirect:editaCurso?id=" + curso.getId();
 		}
 
