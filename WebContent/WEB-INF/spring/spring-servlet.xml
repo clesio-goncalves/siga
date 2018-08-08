@@ -20,6 +20,9 @@
 
 	<!-- Habilitar anotações no Spring -->
 	<mvc:annotation-driven />
+	
+	<!-- Define pagina inicial (ingnora a configuração do web.xml)-->
+	<mvc:view-controller path="/" view-name="index"/>
 
 	<!-- Controle de transações por anotações no Spring -->
 	<tx:annotation-driven />

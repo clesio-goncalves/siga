@@ -19,6 +19,7 @@ import siga.capau.modelo.Usuario;
 
 @Transactional
 @Controller
+@RequestMapping("/usuario")
 public class UsuarioController {
 
 	private List<Usuario> lista_usuario;
@@ -30,44 +31,42 @@ public class UsuarioController {
 	PerfilDao dao_perfil;
 
 	@Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("novoUsuario")
+	@RequestMapping("/novo")
 	public String novoUsuario(Model model) {
-
 		model.addAttribute("perfis", dao_perfil.lista());
-
 		return "usuario/novo";
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("adicionaUsuario")
+	@RequestMapping("/adiciona")
 	public String adiciona(@Valid Usuario usuario, BindingResult result) {
 
 		if (result.hasErrors()) {
-			return "redirect:novoUsuario";
+			return "redirect:novo";
 		} else if (usuario.comparaSenhas() == false) {
-			return "redirect:novoUsuario";
+			return "redirect:novo";
 		} else if (dao.buscaPorEmail(usuario.getEmail()).size() > 0) {
-			return "redirect:novoUsuario";
+			return "redirect:novo";
 		}
 		// aplica o hash a senha fornecida
 		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
 
 		// Adiciona no banco de dados
 		dao.adiciona(usuario);
-		return "redirect:listaUsuarios";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("listaUsuarios")
+	@RequestMapping("/lista")
 	public String lista(Model model) {
 		model.addAttribute("usuarios", dao.lista());
 		return "usuario/lista";
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("removeUsuario")
+	@RequestMapping("/remove")
 	public String remove(Usuario usuario) {
 		dao.remove(usuario);
-		return "redirect:listaUsuarios";
+		return "redirect:lista";
 	}
 
 	@RequestMapping("exibeUsuario")

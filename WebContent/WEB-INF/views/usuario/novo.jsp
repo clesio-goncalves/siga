@@ -16,7 +16,7 @@
 	</div>
 </div>
 <div class="container">
-	<form action="adicionaUsuario" method="POST">
+	<form action="adiciona" method="POST">
 
 		<!-- EMAIL -->
 		<div class="form-group">
