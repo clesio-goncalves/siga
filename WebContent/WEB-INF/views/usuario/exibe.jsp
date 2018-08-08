@@ -47,10 +47,12 @@
 	<security:authorize access="hasRole('ROLE_Administrador')">
 		<div align="center">
 			<!-- Cadastrar -->
-			<a href="novoUsuario" class="btn btn-primary btn-lg"><span
+			<a href="<c:url value="/usuario/novo" />"
+				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 			<!-- Editar -->
-			<a href="editaUsuario?id=${usuario.id}" class="btn btn-info btn-lg"><span
+			<a href="<c:url value="/usuario/edita?id=${usuario.id}" />"
+				class="btn btn-info btn-lg"><span
 				class="glyphicon glyphicon-edit"></span> Editar </a>
 			<!-- Excluir -->
 			<button type="button" class="btn btn-danger btn-lg"
@@ -74,7 +76,8 @@
 							${usuario.email}?</p>
 					</div>
 					<div class="modal-footer">
-						<a href="removeUsuario?id=${usuario.id}" class="btn btn-danger"><span
+						<a href="<c:url value="/usuario/remove?id=${usuario.id}" />"
+							class="btn btn-danger"><span
 							class="glyphicon glyphicon-trash"></span> Excluir</a>
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">
@@ -85,7 +88,7 @@
 			</div>
 		</div>
 	</security:authorize>
-	<a class="btn btn-success" href="listaUsuarios"><span
+	<a class="btn btn-success" href="<c:url value="/usuario/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
 

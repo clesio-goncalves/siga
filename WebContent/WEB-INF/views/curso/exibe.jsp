@@ -32,10 +32,11 @@
 	</div>
 	<div align="center">
 		<!-- Cadastrar -->
-		<a href="novoCurso" class="btn btn-primary btn-lg"><span
+		<a href="<c:url value="/curso/novo" />" class="btn btn-primary btn-lg"><span
 			class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		<!-- Editar -->
-		<a href="editarCurso?id=${curso.id}" class="btn btn-info btn-lg"><span
+		<a href="<c:url value="/curso/edita?id=${curso.id}" />"
+			class="btn btn-info btn-lg"><span
 			class="glyphicon glyphicon-edit"></span> Editar </a>
 		<!-- Excluir -->
 		<button type="button" class="btn btn-danger btn-lg"
@@ -55,12 +56,13 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<p>Deseja realmente excluir o curso (${curso.id}) ->
+					<p>Deseja realmente excluir o curso ID (${curso.id}) ->
 						${curso.nome}?</p>
 				</div>
 				<div class="modal-footer">
-					<a href="removeCurso?id=${curso.id}" class="btn btn-danger"><span
-						class="glyphicon glyphicon-trash"></span> Excluir</a>
+					<a href="<c:url value="/curso/remove?id=${curso.id}" />"
+						class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
+						Excluir</a>
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">
 						<span class="glyphicon glyphicon-log-out"></span> Fechar
@@ -69,7 +71,7 @@
 			</div>
 		</div>
 	</div>
-	<a class="btn btn-success" href="listaCursos"><span
+	<a class="btn btn-success" href="<c:url value="/curso/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
 

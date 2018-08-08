@@ -17,6 +17,7 @@ import siga.capau.modelo.Curso;
 
 @Transactional
 @Controller
+@RequestMapping("/curso")
 public class CursoController {
 
 	private List<Curso> lista_curso;
@@ -27,64 +28,64 @@ public class CursoController {
 	@Autowired
 	AlunoDao dao_aluno;
 
-	@RequestMapping("novoCurso")
+	@RequestMapping("/novo")
 	public String curso() {
 		return "curso/novo";
 	}
 
-	@RequestMapping("adicionaCurso")
+	@RequestMapping("/adiciona")
 	public String adiciona(@Valid Curso curso, BindingResult result) {
 
 		if (result.hasErrors() || dao.buscaPorNome(curso.getNome()).size() > 0) {
-			return "redirect:novoCurso";
+			return "redirect:novo";
 		}
 
 		// Adiciona no banco de dados
 		dao.adiciona(curso);
-		return "redirect:listaCursos";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("listaCursos")
+	@RequestMapping("/lista")
 	public String lista(Model model) {
 		model.addAttribute("cursos", dao.lista());
 		return "curso/lista";
 	}
 
-	@RequestMapping("removeCurso")
+	@RequestMapping("/remove")
 	public String remove(Curso curso) {
 
 		// Remove o curso caso não haja alunos cadastrados nesse curso
 		if (dao_aluno.buscaAlunosPorCurso(curso.getId()).size() > 0) {
-			return "redirect:listaCursos";
+			return "redirect:lista";
 		}
 
 		dao.remove(curso);
-		return "redirect:listaCursos";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("exibeCurso")
+	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("curso", dao.buscaPorId(id));
 		return "curso/exibe";
 	}
 
-	@RequestMapping("editaCurso")
+	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 		model.addAttribute("curso", dao.buscaPorId(id));
 		return "curso/edita";
 	}
 
-	@RequestMapping("alteraCurso")
+	@RequestMapping("/altera")
 	public String altera(@Valid Curso curso, BindingResult result) {
 		this.lista_curso = dao.buscaPorNome(curso.getNome());
 		if (result.hasErrors()) {
-			return "redirect:editaCurso?id=" + curso.getId();
+			return "redirect:edita?id=" + curso.getId();
 		} else if (this.lista_curso.size() > 0 && this.lista_curso.get(0).getId() != curso.getId()) {
-			return "redirect:editaCurso?id=" + curso.getId();
+			return "redirect:edita?id=" + curso.getId();
 		}
 
 		dao.altera(curso);
-		return "redirect:listaCursos";
+		return "redirect:lista";
 	}
 
 }

@@ -48,10 +48,12 @@
 	<security:authorize access="hasRole('ROLE_Administrador')">
 		<div align="center">
 			<!-- Cadastrar -->
-			<a href="novoProfissionalSaude" class="btn btn-primary btn-lg"><span
+			<a href="<c:url value="/profissional/novo" />"
+				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 			<!-- Editar -->
-			<a href="editaProfissionalSaude?id=${profissional_saude.id}"
+			<a
+				href="<c:url value="/profissional/edita?id=${profissional_saude.id}" />"
 				class="btn btn-info btn-lg"><span
 				class="glyphicon glyphicon-edit"></span> Editar </a>
 			<!-- Excluir -->
@@ -72,11 +74,12 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Deseja realmente excluir o Profissional da Saúde
+						<p>Deseja realmente excluir o Profissional da Saúde ID
 							(${profissional_saude.id}) -> ${profissional_saude.nome}?</p>
 					</div>
 					<div class="modal-footer">
-						<a href="removeProfissionalSaude?id=${profissional_saude.id}"
+						<a
+							href="<c:url value="/profissional/remove?id=${profissional_saude.id}" />"
 							class="btn btn-danger"><span
 							class="glyphicon glyphicon-trash"></span> Excluir</a>
 						<button type="button" class="btn btn-secondary"
@@ -88,7 +91,7 @@
 			</div>
 		</div>
 	</security:authorize>
-	<a class="btn btn-success" href="listaProfissionaisSaude"><span
+	<a class="btn btn-success" href="<c:url value="/profissional/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
 

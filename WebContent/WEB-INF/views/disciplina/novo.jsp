@@ -18,8 +18,7 @@
 	</div>
 </div>
 <div class="container">
-	<form:form action="adicionaDisciplina" method="POST"
-		modelAttribute="disciplina">
+	<form:form action="adiciona" method="POST" modelAttribute="disciplina">
 
 		<!-- NOME -->
 		<div class="form-group">

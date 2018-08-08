@@ -16,7 +16,7 @@
 	</div>
 </div>
 <div class="container">
-	<form action="alteraUsuario" method="POST">
+	<form action="altera" method="POST">
 
 		<!-- ID -->
 		<input type="hidden" name="id" value="${usuario.id}" />
@@ -68,7 +68,8 @@
 		<!-- OBTIGATÓRIO -->
 		<label for="obrigatorio">(*) Campos obrigatórios</label>
 		<div>
-			<a href="listaUsuarios" class="btn btn-secondary btn-lg"> <span
+			<a href="<c:url value="/usuario/lista" />"
+				class="btn btn-secondary btn-lg"> <span
 				class="glyphicon glyphicon-remove"></span> Cancelar
 			</a>
 			<button type="submit" class="btn btn-primary btn-lg">
@@ -78,6 +79,6 @@
 	</form>
 </div>
 
-<script src="resources/js/confirma_senha.js"></script>
+<script src="<c:url value="/resources/js/confirma_senha.js" />"></script>
 
 <c:import url="../componentes/rodape.jsp" />

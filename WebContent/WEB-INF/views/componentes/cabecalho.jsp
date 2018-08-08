@@ -38,15 +38,16 @@
 					role="button" aria-haspopup="true" aria-expanded="false">Cadastro</a>
 					<div class="dropdown-menu" x-placement="bottom-start"
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
-						<a class="dropdown-item" href="usuario/novo">Usuário</a> <a
-							class="dropdown-item" href="novoAluno">Aluno</a> <a
-							class="dropdown-item" href="#">Docente</a> <a
+						<a class="dropdown-item" href="<c:url value="/usuario/novo" />">Usuário</a>
+						<a class="dropdown-item" href="<c:url value="/aluno/novo" />">Aluno</a>
+						<a class="dropdown-item" href="#">Docente</a> <a
 							class="dropdown-item" href="#">Monitor</a> <a
-							class="dropdown-item" href="novoProfissionalSaude">Profissional
-							da Saúde</a><a class="dropdown-item" href="novoServidor">Servidor</a>
+							class="dropdown-item" href="<c:url value="/profissional/novo" />">Profissional
+							da Saúde e Pedagogia</a><a class="dropdown-item"
+							href="<c:url value="/servidor/novo" />">Servidor</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="novoCurso">Curso</a> <a
-							class="dropdown-item" href="novaDisciplina">Disciplina</a>
+						<a class="dropdown-item" href="<c:url value="/curso/novo" />">Curso</a>
+						<a class="dropdown-item" href="<c:url value="/disciplina/nova" />">Disciplina</a>
 					</div></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
@@ -61,15 +62,18 @@
 					role="button" aria-haspopup="true" aria-expanded="false">Relatórios</a>
 					<div class="dropdown-menu" x-placement="bottom-start"
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
-						<a class="dropdown-item" href="listaUsuarios">Usuários</a> <a
-							class="dropdown-item" href="listaAlunos">Alunos</a> <a
-							class="dropdown-item" href="#">Docentes</a> <a
+						<a class="dropdown-item" href="<c:url value="/usuario/lista" />">Usuários</a>
+						<a class="dropdown-item" href="<c:url value="/aluno/lista" />">Alunos</a>
+						<a class="dropdown-item" href="#">Docentes</a> <a
 							class="dropdown-item" href="#">Monitores</a> <a
-							class="dropdown-item" href="listaProfissionaisSaude">Profissionais
-							da Saúde</a><a class="dropdown-item" href="listaServidores">Servidores</a>
+							class="dropdown-item"
+							href="<c:url value="/profissional/lista" />">Profissionais da
+							Saúde</a><a class="dropdown-item"
+							href="<c:url value="/servidor/lista" />">Servidores</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="listaCursos">Cursos</a> <a
-							class="dropdown-item" href="listaDisciplinas">Disciplinas</a>
+						<a class="dropdown-item" href="<c:url value="/curso/lista" />">Cursos</a>
+						<a class="dropdown-item"
+							href="<c:url value="/disciplina/lista" />">Disciplinas</a>
 					</div></li>
 			</ul>
 			<security:authorize access="isAuthenticated()">

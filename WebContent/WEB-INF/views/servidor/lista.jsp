@@ -43,12 +43,13 @@
 
 							<!-- AÇÕES -->
 							<td>
-								<!-- Exibir --> <a href="exibeServidor?id=${servidor.id}"
+								<!-- Exibir --> <a
+								href="<c:url value="/servidor/exibe?id=${servidor.id}" />"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
 									access="hasRole('ROLE_Administrador')">
 									<!-- Editar -->
-									<a href="editaServidor?id=${servidor.id}"
+									<a href="<c:url value="/servidor/edita?id=${servidor.id}" />"
 										class="btn btn-info btn-sm"><span
 										class="glyphicon glyphicon-edit"></span> Editar </a>
 									<button type="button" class="btn btn-danger btn-sm"
@@ -70,7 +71,8 @@
 														(${servidor.id}) -> ${servidor.nome}?</p>
 												</div>
 												<div class="modal-footer">
-													<a href="removeServidor?id=${servidor.id}"
+													<a
+														href="<c:url value="/servidor/remove?id=${servidor.id}" />"
 														class="btn btn-danger"><span
 														class="glyphicon glyphicon-trash"></span> Excluir</a>
 													<button type="button" class="btn btn-secondary"
@@ -92,7 +94,8 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="novoServidor" class="btn btn-primary btn-lg"><span
+			<a href="<c:url value="/servidor/novo" />"
+				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
 	</div>

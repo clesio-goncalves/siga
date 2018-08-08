@@ -17,6 +17,7 @@ import siga.capau.modelo.Aluno;
 
 @Transactional
 @Controller
+@RequestMapping("/aluno")
 public class AlunoController {
 
 	@Autowired
@@ -29,11 +30,11 @@ public class AlunoController {
 	UsuarioDao dao_usuario;
 
 	@Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("novoAluno")
+	@RequestMapping("/novo")
 	public String novoAluno(Model model) {
 		// Testa se há cursos cadastrados
 		if (dao_curso.lista().size() == 0) {
-			return "redirect:novoCurso";
+			return "redirect:/curso/novo";
 		}
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
@@ -41,11 +42,11 @@ public class AlunoController {
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("adicionaAluno")
+	@RequestMapping("/adiciona")
 	public String adiciona(@Valid Aluno aluno, BindingResult result) {
 
 		if (result.hasErrors()) {
-			return "redirect:novoAluno";
+			return "redirect:novo";
 		}
 
 		// Testa se o id do usuário é null
@@ -55,35 +56,35 @@ public class AlunoController {
 
 		// Adiciona no banco de dados
 		dao.adiciona(aluno);
-		return "redirect:listaAlunos";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("listaAlunos")
+	@RequestMapping("/lista")
 	public String lista(Model model) {
 		model.addAttribute("alunos", dao.lista());
 		return "aluno/lista";
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("removeAluno")
+	@RequestMapping("/remove")
 	public String remove(Aluno aluno) {
 		dao.remove(aluno);
-		return "redirect:listaAlunos";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("exibeAluno")
+	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("aluno", dao.buscaPorId(id));
 		return "aluno/exibe";
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("editaAluno")
+	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 
 		// Testa se há cursos cadastrados
 		if (dao_curso.lista().size() == 0) {
-			return "redirect:novoCurso";
+			return "redirect:/curso/novo";
 		}
 
 		model.addAttribute("aluno", dao.buscaPorId(id));
@@ -94,11 +95,11 @@ public class AlunoController {
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("alteraAluno")
+	@RequestMapping("/altera")
 	public String altera(@Valid Aluno aluno, BindingResult result) {
 
 		if (result.hasErrors()) {
-			return "redirect:editaAluno?id=" + aluno.getId();
+			return "redirect:edita?id=" + aluno.getId();
 		}
 
 		// Testa se o id do usuário é null
@@ -108,7 +109,7 @@ public class AlunoController {
 
 		// Altera no banco
 		dao.altera(aluno);
-		return "redirect:listaAlunos";
+		return "redirect:lista";
 
 	}
 }

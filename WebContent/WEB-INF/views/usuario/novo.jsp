@@ -74,6 +74,6 @@
 	</form>
 </div>
 
-<script src="resources/js/confirma_senha.js"></script>
+<script src="<c:url value="/resources/js/confirma_senha.js" />"></script>
 
 <c:import url="../componentes/rodape.jsp" />

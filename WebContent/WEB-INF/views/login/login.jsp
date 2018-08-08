@@ -12,8 +12,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>Login SIGA CAPAU</title>
 <link rel="stylesheet" type="text/css"
-	href="resources/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="resources/css/login.css">
+	href="<c:url value="/resources/css/bootstrap.min.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/login.css" />">
 </head>
 <body class="my-login-page">
 	<section class="h-100">
@@ -21,7 +22,7 @@
 			<div class="row justify-content-md-center h-100">
 				<div class="card-wrapper">
 					<div class="brand">
-						<img src="resources/imagens/logo.jpg">
+						<img src="<c:url value="/resources/imagens/logo.jpg" />">
 					</div>
 					<div class="card fat">
 						<div class="card-body">
@@ -78,8 +79,11 @@
 		</div>
 	</section>
 
-	<script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="resources/js/login.js"></script>
+	<script type="text/javascript"
+		src="<c:url value="/resources/js/jquery-3.3.1.min.js" />"></script>
+	<script type="text/javascript"
+		src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
+	<script type="text/javascript"
+		src="<c:url value="/resources/js/login.js"/>"></script>
 </body>
 </html>

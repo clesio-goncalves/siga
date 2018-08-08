@@ -5,7 +5,7 @@ $(document).ready(function() {
 	$('input[type=radio]').change(function() {
 		$.ajax({
 			type : "POST",
-			url : "filtrarUsuariosServidor",
+			url : "filtro",
 			cache : false,
 			data : {
 				funcao : $("input[name='funcao']:checked").val()

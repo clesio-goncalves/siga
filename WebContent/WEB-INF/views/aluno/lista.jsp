@@ -56,12 +56,14 @@
 
 							<!-- AÇÕES -->
 							<td>
-								<!-- Exibir --> <a href="exibeAluno?id=${aluno.id}"
+								<!-- Exibir --> <a
+								href="<c:url value="/aluno/exibe?id=${aluno.id}" />"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
 									access="hasRole('ROLE_Administrador')">
 									<!-- Editar -->
-									<a href="editaAluno?id=${aluno.id}" class="btn btn-info btn-sm"><span
+									<a href="<c:url value="/aluno/edita?id=${aluno.id}" />"
+										class="btn btn-info btn-sm"><span
 										class="glyphicon glyphicon-edit"></span> Editar </a>
 									<button type="button" class="btn btn-danger btn-sm"
 										data-toggle="modal" data-target="#modal${aluno.id}">
@@ -78,11 +80,12 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o aluno (${aluno.id}) ->
+													<p>Deseja realmente excluir o aluno ID (${aluno.id}) ->
 														${aluno.nome}?</p>
 												</div>
 												<div class="modal-footer">
-													<a href="removeAluno?id=${aluno.id}" class="btn btn-danger"><span
+													<a href="<c:url value="/aluno/remove?id=${aluno.id}" />"
+														class="btn btn-danger"><span
 														class="glyphicon glyphicon-trash"></span> Excluir</a>
 													<button type="button" class="btn btn-secondary"
 														data-dismiss="modal">
@@ -103,7 +106,8 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="novoAluno" class="btn btn-primary btn-lg"><span
+			<a href="<c:url value="/aluno/novo" />"
+				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
 	</div>

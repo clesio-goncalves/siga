@@ -19,7 +19,7 @@
 	</div>
 </div>
 <div class="container">
-	<form action="adicionaProfissionalSaude" method="POST">
+	<form action="adiciona" method="POST">
 
 		<!-- NOME -->
 		<div class="form-group">
@@ -84,7 +84,8 @@
 	</form>
 </div>
 
-<script type="text/javascript" src="resources/js/SomenteNumero.js"></script>
 <script type="text/javascript"
-	src="resources/js/filtro_cadastro/filtroCadProfSaude.js"></script>
+	src="<c:url value="/resources/js/SomenteNumero.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/filtro_cadastro/filtroCadProfissional.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

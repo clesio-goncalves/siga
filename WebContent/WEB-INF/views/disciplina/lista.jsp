@@ -34,12 +34,14 @@
 							<td>${disciplina.id}</td>
 							<td>${disciplina.nome}</td>
 							<td>
-								<!-- Exibir --> <a href="exibeDisciplina?id=${disciplina.id}"
+								<!-- Exibir --> <a
+								href="<c:url value="/disciplina/exibe?id=${disciplina.id}" />"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
 									access="hasRole('ROLE_Administrador')">
 									<!-- Editar -->
-									<a href="editaDisciplina?id=${disciplina.id}"
+									<a
+										href="<c:url value="/disciplina/edita?id=${disciplina.id}" />"
 										class="btn btn-info btn-sm"><span
 										class="glyphicon glyphicon-edit"></span> Editar </a>
 									<button type="button" class="btn btn-danger btn-sm"
@@ -61,7 +63,8 @@
 														(${disciplina.id}) -> ${disciplina.nome}?</p>
 												</div>
 												<div class="modal-footer">
-													<a href="removeDisciplina?id=${disciplina.id}"
+													<a
+														href="<c:url value="/disciplina/remove?id=${disciplina.id}" />"
 														class="btn btn-danger"><span
 														class="glyphicon glyphicon-trash"></span> Excluir</a>
 													<button type="button" class="btn btn-secondary"
@@ -83,7 +86,8 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="novaDisciplina" class="btn btn-primary btn-lg"><span
+			<a href="<c:url value="/profissional/novo" />"
+				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
 	</div>

@@ -18,6 +18,7 @@ import siga.capau.modelo.ProfissionalSaude;
 
 @Transactional
 @Controller
+@RequestMapping("/profissional")
 public class ProfissionalSaudeController {
 
 	@Autowired
@@ -26,65 +27,65 @@ public class ProfissionalSaudeController {
 	@Autowired
 	UsuarioDao dao_usuario;
 
-	@RequestMapping("novoProfissionalSaude")
+	@RequestMapping("/novo")
 	public String novoProfissionalSaude(Model model) {
 
 		// Testa se há usuários cadastrados
 		if (dao_usuario.listaUsuarioProfissionalSaudeSemVinculo().size() == 0) {
-			return "redirect:novoUsuario";
+			return "redirect:/usuario/novo";
 		} else {
 			model.addAttribute("usuarios", dao_usuario.listaUsuarioProfissionalSaudeSemVinculo("Psicólogo"));
 			return "profissional_saude/novo";
 		}
 	}
 
-	@RequestMapping("adicionaProfissionalSaude")
+	@RequestMapping("/adiciona")
 	public String adiciona(@Valid ProfissionalSaude profissionalSaude, BindingResult result) {
 		if (result.hasErrors()) {
-			return "redirect:novoProfissionalSaude";
+			return "redirect:novo";
 		}
 
 		// Adiciona no banco de dados
 		dao.adiciona(profissionalSaude);
-		return "redirect:listaProfissionaisSaude";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("listaProfissionaisSaude")
+	@RequestMapping("/lista")
 	public String lista(Model model) {
 		model.addAttribute("profissionais_saude", dao.lista());
 		return "profissional_saude/lista";
 	}
 
-	@RequestMapping("removeProfissionalSaude")
+	@RequestMapping("/remove")
 	public String remove(ProfissionalSaude profissionalSaude) {
 		dao.remove(profissionalSaude);
-		return "redirect:listaProfissionalSaude";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("exibeProfissionalSaude")
+	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("profissional_saude", dao.buscaPorId(id));
 		return "profissional_saude/exibe";
 	}
 
-	@RequestMapping("editaProfissionalSaude")
+	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 		model.addAttribute("profissional_saude", dao.buscaPorId(id));
 		return "profissional_saude/edita";
 	}
 
-	@RequestMapping("alteraProfissionalSaude")
+	@RequestMapping("/altera")
 	public String altera(@Valid ProfissionalSaude profissionalSaude, BindingResult result) {
 		if (result.hasErrors()) {
-			return "redirect:editaProfissionalSaude?id=" + profissionalSaude.getId();
+			return "redirect:edita?id=" + profissionalSaude.getId();
 		}
 
 		// Altera no banco
 		dao.altera(profissionalSaude);
-		return "redirect:listaProfissionaisSaude";
+		return "redirect:lista";
 	}
 
-	@RequestMapping(value = "filtrarUsuariosProfissionalSaude", method = RequestMethod.POST)
+	@RequestMapping(value = "/filtro", method = RequestMethod.POST)
 	public String filtrar(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		model.addAttribute("usuarios",
 				dao_usuario.listaUsuarioProfissionalSaudeSemVinculo(request.getParameter("tipo_profissional")));

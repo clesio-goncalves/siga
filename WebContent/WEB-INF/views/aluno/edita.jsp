@@ -16,7 +16,7 @@
 	</div>
 </div>
 <div class="container">
-	<form action="alteraAluno" method="POST">
+	<form action="altera" method="POST">
 
 		<!-- ID -->
 		<input type="hidden" name="id" value="${aluno.id}" />
@@ -70,7 +70,8 @@
 		<label>(*) Campos obrigatórios</label>
 
 		<div>
-			<a href="listaAlunos" class="btn btn-secondary btn-lg"> <span
+			<a href="<c:url value="/aluno/lista" />"
+				class="btn btn-secondary btn-lg"> <span
 				class="glyphicon glyphicon-remove"></span> Cancelar
 			</a>
 			<button type="submit" class="btn btn-primary btn-lg">

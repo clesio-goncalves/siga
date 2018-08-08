@@ -17,7 +17,7 @@
 	</div>
 </div>
 <div class="container">
-	<form action="adicionaCurso" method="POST">
+	<form action="adiciona" method="POST">
 
 		<!-- NOME -->
 		<div class="form-group">

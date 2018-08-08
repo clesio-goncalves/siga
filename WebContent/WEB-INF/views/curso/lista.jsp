@@ -34,12 +34,13 @@
 							<td>${curso.id}</td>
 							<td>${curso.nome}</td>
 							<td>
-								<!-- Exibir --> <a href="exibeCurso?id=${curso.id}"
+								<!-- Exibir --> <a
+								href="<c:url value="/curso/exibe?id=${curso.id}" />"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
 									access="hasRole('ROLE_Administrador')">
 									<!-- Editar -->
-									<a href="editaCurso?id=${curso.id}"
+									<a href="<c:url value="/curso/edita?id=${curso.id}" />"
 										class="btn btn-info btn-sm"><span
 										class="glyphicon glyphicon-edit"></span> Editar </a>
 									<button type="button" class="btn btn-danger btn-sm"
@@ -57,11 +58,11 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o curso (${curso.id}) ->
+													<p>Deseja realmente excluir o curso ID (${curso.id}) ->
 														${curso.nome}?</p>
 												</div>
 												<div class="modal-footer">
-													<a href="removeCurso?id=${curso.id}"
+													<a href="<c:url value="/curso/remove?id=${curso.id}" />"
 														class="btn btn-danger"><span
 														class="glyphicon glyphicon-trash"></span> Excluir</a>
 													<button type="button" class="btn btn-secondary"
@@ -83,7 +84,8 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="novoCurso" class="btn btn-primary btn-lg"><span
+			<a href="<c:url value="/curso/novo" />"
+				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
 	</div>

@@ -32,7 +32,8 @@
 				<c:forEach var="curso" items="${disciplina.curso}">
 					<li
 						class="list-group-item d-flex justify-content-between align-items-center">
-						<a href="exibeCurso?id=${curso.id}" class="alert-link">${curso.nome}</a>
+						<a href="<c:url value="/curso/exibe?id=${curso.id}" />"
+						class="alert-link">${curso.nome}</a>
 					</li>
 				</c:forEach>
 			</ul>
@@ -41,10 +42,11 @@
 	</div>
 	<div align="center">
 		<!-- Cadastrar -->
-		<a href="novaDisciplina" class="btn btn-primary btn-lg"><span
+		<a href="<c:url value="/disciplina/nova" />"
+			class="btn btn-primary btn-lg"><span
 			class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		<!-- Editar -->
-		<a href="editaDisciplina?id=${disciplina.id}"
+		<a href="<c:url value="/disciplina/edita?id=${disciplina.id}" />"
 			class="btn btn-info btn-lg"><span
 			class="glyphicon glyphicon-edit"></span> Editar </a>
 		<!-- Excluir -->
@@ -69,7 +71,7 @@
 						${disciplina.nome}?</p>
 				</div>
 				<div class="modal-footer">
-					<a href="removeDisciplina?id=${disciplina.id}"
+					<a href="<c:url value="/disciplina/remove?id=${disciplina.id}" />"
 						class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
 						Excluir</a>
 					<button type="button" class="btn btn-secondary"
@@ -80,7 +82,7 @@
 			</div>
 		</div>
 	</div>
-	<a class="btn btn-success" href="listaDisciplinas"><span
+	<a class="btn btn-success" href="<c:url value="/disciplina/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
 

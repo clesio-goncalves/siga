@@ -16,7 +16,7 @@
 	</div>
 </div>
 <div class="container">
-	<form action="adicionaAluno" method="POST">
+	<form action="adiciona" method="POST">
 
 		<!-- NOME -->
 		<div class="form-group">
@@ -37,9 +37,8 @@
 			<c:forEach var="curso" items="${cursos}">
 				<div class="custom-control custom-radio">
 					<input type="radio" id="${curso.id}" name="curso.id"
-						value="${curso.id}" class="custom-control-input" checked
-						required> <label class="custom-control-label"
-						for="${curso.id}">${curso.nome}</label>
+						value="${curso.id}" class="custom-control-input" checked required>
+					<label class="custom-control-label" for="${curso.id}">${curso.nome}</label>
 				</div>
 			</c:forEach>
 		</div>

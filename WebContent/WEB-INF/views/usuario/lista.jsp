@@ -46,12 +46,13 @@
 
 							<td>${usuario.perfil.nome}</td>
 							<td>
-								<!-- Exibir --> <a href="exibeUsuario?id=${usuario.id}"
+								<!-- Exibir --> <a
+								href="<c:url value="/usuario/exibe?id=${usuario.id}" />"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
 									access="hasRole('ROLE_Administrador')">
 									<!-- Editar -->
-									<a href="editaUsuario?id=${usuario.id}"
+									<a href="<c:url value="/usuario/edita?id=${usuario.id}" />"
 										class="btn btn-info btn-sm"><span
 										class="glyphicon glyphicon-edit"></span> Editar </a>
 									<!-- Button to Open the Modal -->
@@ -70,11 +71,12 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o usuário ID (${usuario.id})
-														-> ${usuario.email}?</p>
+													<p>Deseja realmente excluir o usuário ID
+														(${usuario.id}) -> ${usuario.email}?</p>
 												</div>
 												<div class="modal-footer">
-													<a href="removeUsuario?id=${usuario.id}"
+													<a
+														href="<c:url value="/usuario/remove?id=${usuario.id}" />"
 														class="btn btn-danger"><span
 														class="glyphicon glyphicon-trash"></span> Excluir</a>
 													<button type="button" class="btn btn-secondary"
@@ -96,7 +98,8 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="novoUsuario" class="btn btn-primary btn-lg"><span
+			<a href="<c:url value="/usuario/novo" />"
+				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
 	</div>

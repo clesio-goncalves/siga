@@ -20,6 +20,7 @@ import siga.capau.modelo.Disciplina;
 
 @Transactional
 @Controller
+@RequestMapping("/disciplina")
 public class DisciplinaController {
 
 	private List<Curso> lista_curso;
@@ -37,12 +38,12 @@ public class DisciplinaController {
 	@Autowired
 	CursoDisciplinaDao dao_curso_disciplina;
 
-	@RequestMapping("novaDisciplina")
+	@RequestMapping("/nova")
 	public String disciplina(Disciplina disciplina, Model model) {
 		this.lista_curso = dao_curso.lista();
 
 		if (this.lista_curso.size() == 0) {
-			return "redirect:novoCurso";
+			return "redirect:/curso/novo";
 		}
 
 		disciplina.setCurso(this.lista_curso);
@@ -50,12 +51,12 @@ public class DisciplinaController {
 		return "disciplina/novo";
 	}
 
-	@RequestMapping("adicionaDisciplina")
+	@RequestMapping("/adiciona")
 	public String adiciona(@Valid Disciplina disciplina, BindingResult result) {
 
 		if (result.hasErrors() || dao.buscaPorNome(disciplina.getNome()).size() > 0
 				|| disciplina.getLista_cursos().size() == 0) {
-			return "redirect:novaDisciplina";
+			return "redirect:nova";
 		}
 
 		// Adiciona disciplina
@@ -72,23 +73,23 @@ public class DisciplinaController {
 			this.dao_curso_disciplina.adiciona(this.curso_disciplina);
 		}
 
-		return "redirect:listaDisciplinas";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("listaDisciplinas")
+	@RequestMapping("/lista")
 	public String lista(Model model) {
 		model.addAttribute("disciplinas", dao.lista());
 		return "disciplina/lista";
 	}
 
-	@RequestMapping("removeDisciplina")
+	@RequestMapping("/remove")
 	public String remove(Disciplina disciplina) {
 		dao_curso_disciplina.removeCursoDisciplinaPelaDisciplinaId(disciplina.getId());
 		dao.remove(disciplina);
-		return "redirect:listaDisciplinas";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("exibeDisciplina")
+	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		this.disciplina = dao.buscaPorId(id);
 		this.disciplina.setCurso(dao_curso.buscaCursoPorDisciplinaId(id));
@@ -97,7 +98,7 @@ public class DisciplinaController {
 		return "disciplina/exibe";
 	}
 
-	@RequestMapping("editaDisciplina")
+	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 
 		// Pega a disciplina com todos os cursos
@@ -112,15 +113,15 @@ public class DisciplinaController {
 		return "disciplina/edita";
 	}
 
-	@RequestMapping("alteraDisciplina")
+	@RequestMapping("/altera")
 	public String altera(@Valid Disciplina disciplina, BindingResult result) {
 		this.lista_disciplina = dao.buscaPorNome(disciplina.getNome());
 		if (result.hasErrors()) {
-			return "redirect:editaDisciplina?id=" + disciplina.getId();
+			return "redirect:edita?id=" + disciplina.getId();
 		} else if (disciplina.getLista_cursos().size() == 0) {
-			return "redirect:editaDisciplina?id=" + disciplina.getId();
+			return "redirect:edita?id=" + disciplina.getId();
 		} else if (this.lista_disciplina.size() > 0 && this.lista_disciplina.get(0).getId() != disciplina.getId()) {
-			return "redirect:editaDisciplina?id=" + disciplina.getId();
+			return "redirect:edita?id=" + disciplina.getId();
 		}
 
 		// Altera a disciplina
@@ -149,7 +150,7 @@ public class DisciplinaController {
 			this.dao_curso_disciplina.adiciona(this.curso_disciplina);
 		}
 
-		return "redirect:listaDisciplinas";
+		return "redirect:lista";
 	}
 
 }

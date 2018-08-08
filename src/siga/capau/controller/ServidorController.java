@@ -18,6 +18,7 @@ import siga.capau.modelo.Servidor;
 
 @Transactional
 @Controller
+@RequestMapping("/servidor")
 public class ServidorController {
 	@Autowired
 	ServidorDao dao;
@@ -25,64 +26,64 @@ public class ServidorController {
 	@Autowired
 	UsuarioDao dao_usuario;
 
-	@RequestMapping("novoServidor")
+	@RequestMapping("/novo")
 	public String novoServidor(Model model) {
 		// Testa se há usuários cadastrados
 		if (dao_usuario.listaUsuarioServidorSemVinculo().size() == 0) {
-			return "redirect:novoUsuario";
+			return "redirect:/usuario/novo";
 		} else {
 			model.addAttribute("usuarios", dao_usuario.listaUsuarioServidorSemVinculo("Coordenador"));
 			return "servidor/novo";
 		}
 	}
 
-	@RequestMapping("adicionaServidor")
+	@RequestMapping("/adiciona")
 	public String adiciona(@Valid Servidor servidor, BindingResult result) {
 		if (result.hasErrors()) {
-			return "redirect:novoServidor";
+			return "redirect:novo";
 		}
 
 		// Adiciona no banco de dados
 		dao.adiciona(servidor);
-		return "redirect:listaServidores";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("listaServidores")
+	@RequestMapping("/lista")
 	public String lista(Model model) {
 		model.addAttribute("servidores", dao.lista());
 		return "servidor/lista";
 	}
 
-	@RequestMapping("removeServidor")
+	@RequestMapping("/remove")
 	public String remove(Servidor servidor) {
 		dao.remove(servidor);
-		return "redirect:listaServidores";
+		return "redirect:lista";
 	}
 
-	@RequestMapping("exibeServidor")
+	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("servidor", dao.buscaPorId(id));
 		return "servidor/exibe";
 	}
 
-	@RequestMapping("editaServidor")
+	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 		model.addAttribute("servidor", dao.buscaPorId(id));
 		return "servidor/edita";
 	}
 
-	@RequestMapping("alteraServidor")
+	@RequestMapping("/altera")
 	public String altera(@Valid Servidor servidor, BindingResult result) {
 		if (result.hasErrors()) {
-			return "redirect:editaServidor?id=" + servidor.getId();
+			return "redirect:edita?id=" + servidor.getId();
 		}
 
 		// Altera no banco
 		dao.altera(servidor);
-		return "redirect:listaServidores";
+		return "redirect:lista";
 	}
 
-	@RequestMapping(value = "filtrarUsuariosServidor", method = RequestMethod.POST)
+	@RequestMapping(value = "/filtro", method = RequestMethod.POST)
 	public String filtrar(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioServidorSemVinculo(request.getParameter("funcao")));
 		return "servidor/lista_usuarios";

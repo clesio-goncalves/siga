@@ -18,8 +18,7 @@
 	</div>
 </div>
 <div class="container">
-	<form:form action="alteraDisciplina" method="POST"
-		modelAttribute="disciplina">
+	<form:form action="altera" method="POST" modelAttribute="disciplina">
 
 		<!-- ID -->
 		<input type="hidden" name="id" value="${disciplina.id}">
@@ -49,7 +48,8 @@
 		<!-- OBTIGATÓRIO -->
 		<label for="obrigatorio">(*) Campo obrigatório</label>
 		<div>
-			<a href="listaDisciplinas" class="btn btn-secondary btn-lg"> <span
+			<a href="<c:url value="/disciplina/lista" />"
+				class="btn btn-secondary btn-lg"> <span
 				class="glyphicon glyphicon-remove"></span> Cancelar
 			</a>
 			<button type="submit" class="btn btn-primary btn-lg">

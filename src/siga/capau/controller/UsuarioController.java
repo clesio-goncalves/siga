@@ -69,14 +69,14 @@ public class UsuarioController {
 		return "redirect:lista";
 	}
 
-	@RequestMapping("exibeUsuario")
+	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("usuario", dao.buscaPorId(id));
 		return "usuario/exibe";
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("editaUsuario")
+	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 
 		model.addAttribute("usuario", dao.buscaPorId(id));
@@ -85,15 +85,15 @@ public class UsuarioController {
 	}
 
 	@Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("alteraUsuario")
+	@RequestMapping("/altera")
 	public String altera(@Valid Usuario usuario, BindingResult result) {
 		this.lista_usuario = dao.buscaPorEmail(usuario.getEmail());
 		if (result.hasErrors()) {
-			return "redirect:editaUsuario?id=" + usuario.getId();
+			return "redirect:edita?id=" + usuario.getId();
 		} else if (usuario.comparaSenhas() == false) {
-			return "redirect:editaUsuario?id=" + usuario.getId();
+			return "redirect:edita?id=" + usuario.getId();
 		} else if (this.lista_usuario.size() > 0 && this.lista_usuario.get(0).getId() != usuario.getId()) {
-			return "redirect:editaUsuario?id=" + usuario.getId();
+			return "redirect:edita?id=" + usuario.getId();
 		}
 
 		// aplica o hash a senha fornecida
@@ -101,7 +101,7 @@ public class UsuarioController {
 
 		// Altera no banco
 		dao.altera(usuario);
-		return "redirect:listaUsuarios";
+		return "redirect:lista";
 
 	}
 

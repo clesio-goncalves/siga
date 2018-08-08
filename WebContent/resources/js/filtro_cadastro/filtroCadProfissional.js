@@ -5,7 +5,7 @@ $(document).ready(function() {
 	$('input[type=radio]').change(function() {
 		$.ajax({
 			type : "POST",
-			url : "filtrarUsuariosProfissionalSaude",
+			url : "filtro",
 			cache : false,
 			data : {
 				tipo_profissional : $("input[name='tipo_profissional']:checked").val()

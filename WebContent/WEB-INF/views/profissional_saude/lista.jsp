@@ -42,12 +42,13 @@
 							<!-- AÇÕES -->
 							<td>
 								<!-- Exibir --> <a
-								href="exibeProfissionalSaude?id=${profissional_saude.id}"
+								href="<c:url value="/profissional/exibe?id=${profissional_saude.id}" />"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
 									access="hasRole('ROLE_Administrador')">
 									<!-- Editar -->
-									<a href="editaProfissionalSaude?id=${profissional_saude.id}"
+									<a
+										href="<c:url value="/profissional/edita?id=${profissional_saude.id}" />"
 										class="btn btn-info btn-sm"><span
 										class="glyphicon glyphicon-edit"></span> Editar </a>
 									<button type="button" class="btn btn-danger btn-sm"
@@ -67,12 +68,12 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o Profissional da Saúde
+													<p>Deseja realmente excluir o Profissional da Saúde ID
 														(${profissional_saude.id}) -> ${profissional_saude.nome}?</p>
 												</div>
 												<div class="modal-footer">
 													<a
-														href="removeProfissionalSaude?id=${profissional_saude.id}"
+														href="<c:url value="/profissional/remove?id=${profissional_saude.id}" />"
 														class="btn btn-danger"><span
 														class="glyphicon glyphicon-trash"></span> Excluir</a>
 													<button type="button" class="btn btn-secondary"
@@ -94,7 +95,8 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="novoProfissionalSaude" class="btn btn-primary btn-lg"><span
+			<a href="<c:url value="/profissional/novo" />"
+				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
 	</div>

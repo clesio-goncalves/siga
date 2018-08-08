@@ -20,7 +20,7 @@
 	</div>
 </div>
 <div class="container">
-	<form action="alteraProfissionalSaude" method="POST">
+	<form action="altera" method="POST">
 
 		<!-- ID -->
 		<input type="hidden" name="id" value="${profissional_saude.id}" />
@@ -67,8 +67,9 @@
 		<!-- OBTIGATÓRIO -->
 		<label for="obrigatorio">(*) Campos obrigatórios</label>
 		<div>
-			<a href="listaProfissionaisSaude" class="btn btn-secondary btn-lg">
-				<span class="glyphicon glyphicon-remove"></span> Cancelar
+			<a href="<c:url value="/profissional/lista" />"
+				class="btn btn-secondary btn-lg"> <span
+				class="glyphicon glyphicon-remove"></span> Cancelar
 			</a>
 			<button type="submit" class="btn btn-primary btn-lg">
 				<span class="glyphicon glyphicon-refresh"></span> Atualizar
@@ -77,5 +78,6 @@
 	</form>
 </div>
 
-<script type="text/javascript" src="resources/js/SomenteNumero.js"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/SomenteNumero.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

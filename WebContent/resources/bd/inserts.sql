@@ -1,5 +1,3 @@
--- BUG: ALTERAR DISCIPLINA PARA O NOME DE UMA QUE JA EXISTE
-
 insert into Perfil (id, nome)
 values (1, 'Administrador');
 
