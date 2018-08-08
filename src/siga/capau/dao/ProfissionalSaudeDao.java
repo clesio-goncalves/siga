@@ -27,6 +27,11 @@ public class ProfissionalSaudeDao {
 		return manager.createQuery("select p from ProfissionalSaude p", ProfissionalSaude.class).getResultList();
 	}
 
+	public List<ProfissionalSaude> buscaPorSiape(int siape) {
+		return manager.createQuery("select p from ProfissionalSaude p where p.siape = :siape", ProfissionalSaude.class)
+				.setParameter("siape", siape).getResultList();
+	}
+
 	public ProfissionalSaude buscaPorId(Long id) {
 		return manager.find(ProfissionalSaude.class, id);
 	}

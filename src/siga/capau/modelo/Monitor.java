@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Servidor {
+public class Monitor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,16 +20,14 @@ public class Servidor {
 
 	@NotNull
 	@Column(unique = true)
-	private int siape;
+	private String matricula;
 
 	@NotNull
-	private String funcao;
-
-	@NotNull
-	private String descricao_funcao;
-
 	@OneToOne
+	private Disciplina disciplina;
+
 	@NotNull
+	@OneToOne
 	private Usuario usuario;
 
 	public Long getId() {
@@ -48,28 +46,20 @@ public class Servidor {
 		this.nome = nome;
 	}
 
-	public int getSiape() {
-		return siape;
+	public String getMatricula() {
+		return matricula;
 	}
 
-	public void setSiape(int siape) {
-		this.siape = siape;
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 
-	public String getFuncao() {
-		return funcao;
+	public Disciplina getDisciplina() {
+		return disciplina;
 	}
 
-	public void setFuncao(String funcao) {
-		this.funcao = funcao;
-	}
-
-	public String getDescricao_funcao() {
-		return descricao_funcao;
-	}
-
-	public void setDescricao_funcao(String descricao_funcao) {
-		this.descricao_funcao = descricao_funcao;
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
 	}
 
 	public Usuario getUsuario() {

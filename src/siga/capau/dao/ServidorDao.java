@@ -27,6 +27,11 @@ public class ServidorDao {
 		return manager.createQuery("select s from Servidor s", Servidor.class).getResultList();
 	}
 
+	public List<Servidor> buscaPorSiape(int siape) {
+		return manager.createQuery("select s from Servidor s where s.siape = :siape", Servidor.class)
+				.setParameter("siape", siape).getResultList();
+	}
+
 	public Servidor buscaPorId(Long id) {
 		return manager.find(Servidor.class, id);
 	}

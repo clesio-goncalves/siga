@@ -1,5 +1,7 @@
 package siga.capau.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -20,6 +22,9 @@ import siga.capau.modelo.Servidor;
 @Controller
 @RequestMapping("/servidor")
 public class ServidorController {
+
+	private List<Servidor> lista_servidor;
+
 	@Autowired
 	ServidorDao dao;
 
@@ -40,6 +45,8 @@ public class ServidorController {
 	@RequestMapping("/adiciona")
 	public String adiciona(@Valid Servidor servidor, BindingResult result) {
 		if (result.hasErrors()) {
+			return "redirect:novo";
+		} else if (dao.buscaPorSiape(servidor.getSiape()).size() > 0) {
 			return "redirect:novo";
 		}
 
@@ -74,7 +81,10 @@ public class ServidorController {
 
 	@RequestMapping("/altera")
 	public String altera(@Valid Servidor servidor, BindingResult result) {
+		this.lista_servidor = dao.buscaPorSiape(servidor.getSiape());
 		if (result.hasErrors()) {
+			return "redirect:edita?id=" + servidor.getId();
+		} else if (this.lista_servidor.size() > 0 && this.lista_servidor.get(0).getId() != servidor.getId()) {
 			return "redirect:edita?id=" + servidor.getId();
 		}
 

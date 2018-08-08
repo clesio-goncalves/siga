@@ -36,7 +36,9 @@ public class CursoController {
 	@RequestMapping("/adiciona")
 	public String adiciona(@Valid Curso curso, BindingResult result) {
 
-		if (result.hasErrors() || dao.buscaPorNome(curso.getNome()).size() > 0) {
+		if (result.hasErrors()) {
+			return "redirect:novo";
+		} else if (dao.buscaPorNome(curso.getNome()).size() > 0) {
 			return "redirect:novo";
 		}
 

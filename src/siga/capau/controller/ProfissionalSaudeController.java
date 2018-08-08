@@ -1,5 +1,7 @@
 package siga.capau.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -21,6 +23,8 @@ import siga.capau.modelo.ProfissionalSaude;
 @RequestMapping("/profissional")
 public class ProfissionalSaudeController {
 
+	private List<ProfissionalSaude> profissional_saude;
+
 	@Autowired
 	ProfissionalSaudeDao dao;
 
@@ -33,15 +37,17 @@ public class ProfissionalSaudeController {
 		// Testa se há usuários cadastrados
 		if (dao_usuario.listaUsuarioProfissionalSaudeSemVinculo().size() == 0) {
 			return "redirect:/usuario/novo";
-		} else {
-			model.addAttribute("usuarios", dao_usuario.listaUsuarioProfissionalSaudeSemVinculo("Psicólogo"));
-			return "profissional_saude/novo";
 		}
+		model.addAttribute("usuarios", dao_usuario.listaUsuarioProfissionalSaudeSemVinculo("Psicólogo"));
+		return "profissional_saude/novo";
+
 	}
 
 	@RequestMapping("/adiciona")
 	public String adiciona(@Valid ProfissionalSaude profissionalSaude, BindingResult result) {
 		if (result.hasErrors()) {
+			return "redirect:novo";
+		} else if (dao.buscaPorSiape(profissionalSaude.getSiape()).size() > 0) {
 			return "redirect:novo";
 		}
 
@@ -76,7 +82,11 @@ public class ProfissionalSaudeController {
 
 	@RequestMapping("/altera")
 	public String altera(@Valid ProfissionalSaude profissionalSaude, BindingResult result) {
+		this.profissional_saude = dao.buscaPorSiape(profissionalSaude.getSiape());
 		if (result.hasErrors()) {
+			return "redirect:edita?id=" + profissionalSaude.getId();
+		} else if (this.profissional_saude.size() > 0
+				&& this.profissional_saude.get(0).getId() != profissionalSaude.getId()) {
 			return "redirect:edita?id=" + profissionalSaude.getId();
 		}
 
