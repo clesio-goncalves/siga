@@ -44,6 +44,12 @@ public class UsuarioDao implements UserDetailsService {
 				Usuario.class).getResultList();
 	}
 
+	public List<Usuario> listaUsuarioDocenteSemVinculo() {
+		return manager.createQuery(
+				"select u from Usuario u where u.perfil.nome like 'Docente' and u.id not in (select d.usuario.id from Docente as d where d.usuario.id is not null)",
+				Usuario.class).getResultList();
+	}
+
 	public List<Usuario> listaUsuarioProfissionalSaudeSemVinculo(String tipo_profissional) {
 		return manager.createQuery(
 				"select u from Usuario u where u.perfil.nome like :tipo_profissional and u.id not in (select ps.usuario.id from ProfissionalSaude as ps)",
