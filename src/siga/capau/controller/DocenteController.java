@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import siga.capau.dao.DocenteDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Docente;
+import siga.capau.modelo.Usuario;
 
 @Transactional
 @Controller
@@ -21,6 +22,7 @@ import siga.capau.modelo.Docente;
 public class DocenteController {
 
 	private List<Docente> lista_docente;
+	private List<Usuario> lista_usuario;
 
 	@Autowired
 	DocenteDao dao;
@@ -30,10 +32,11 @@ public class DocenteController {
 
 	@RequestMapping("/novo")
 	public String novoDocente(Model model) {
-		// Testa se há usuários cadastrados
-		if (dao_usuario.listaUsuarioDocenteSemVinculo().size() == 0) {
+		this.lista_usuario = dao_usuario.listaUsuarioDocenteSemVinculo();
+		if (this.lista_usuario.size() == 0) {
 			return "redirect:/usuario/novo";
 		} else {
+			model.addAttribute("usuarios", this.lista_usuario);
 			return "docente/novo";
 		}
 	}

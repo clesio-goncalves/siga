@@ -6,14 +6,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Listar Servidores</title>
+<title>Listar Docentes</title>
 <c:import url="../componentes/css_data_table.jsp" />
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
 
 	<div class="card border-light mb-3">
-		<div class="card-header">Listagem de Servidores</div>
+		<div class="card-header">Listagem de Docentes</div>
 
 		<!-- Table -->
 		<div class="card-body">
@@ -25,54 +25,50 @@
 						<th>ID</th>
 						<th>Nome Completo</th>
 						<th>SIAPE</th>
-						<th>Função</th>
-						<th>Descrição da Função</th>
 						<th>Usuário</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="servidor" items="${servidores}">
+					<c:forEach var="docente" items="${docentes}">
 						<tr>
-							<td>${servidor.id}</td>
-							<td>${servidor.nome}</td>
-							<td>${servidor.siape}</td>
-							<td>${servidor.funcao}</td>
-							<td>${servidor.descricao_funcao}</td>
-							<td>${servidor.usuario.email}</td>
+							<td>${docente.id}</td>
+							<td>${docente.nome}</td>
+							<td>${docente.siape}</td>
+							<td>${docente.usuario.email}</td>
 
 							<!-- AÇÕES -->
 							<td>
 								<!-- Exibir --> <a
-								href="<c:url value="/servidor/exibe?id=${servidor.id}" />"
+								href="<c:url value="/docente/exibe?id=${docente.id}" />"
 								class="btn btn-secondary btn-sm"><span
 									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
 									access="hasRole('ROLE_Administrador')">
 									<!-- Editar -->
-									<a href="<c:url value="/servidor/edita?id=${servidor.id}" />"
+									<a href="<c:url value="/docente/edita?id=${docente.id}" />"
 										class="btn btn-info btn-sm"><span
 										class="glyphicon glyphicon-edit"></span> Editar </a>
 									<button type="button" class="btn btn-danger btn-sm"
-										data-toggle="modal" data-target="#modal${servidor.id}">
+										data-toggle="modal" data-target="#modal${docente.id}">
 										<span class="glyphicon glyphicon-trash"></span> Excluir
 									</button>
-									<div class="modal fade" id="modal${servidor.id}">
+									<div class="modal fade" id="modal${docente.id}">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title">Exclusão do Servidor</h5>
+													<h5 class="modal-title">Exclusão do Docente</h5>
 													<button type="button" class="close" data-dismiss="modal"
 														aria-label="Close">
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o Servidor ID
-														(${servidor.id}) -> ${servidor.nome}?</p>
+													<p>Deseja realmente excluir o Docente ID
+														(${docente.id}) -> ${docente.nome}?</p>
 												</div>
 												<div class="modal-footer">
 													<a
-														href="<c:url value="/servidor/remove?id=${servidor.id}" />"
+														href="<c:url value="/docente/remove?id=${docente.id}" />"
 														class="btn btn-danger"><span
 														class="glyphicon glyphicon-trash"></span> Excluir</a>
 													<button type="button" class="btn btn-secondary"
@@ -94,7 +90,7 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="<c:url value="/servidor/novo" />"
+			<a href="<c:url value="/docente/novo" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>

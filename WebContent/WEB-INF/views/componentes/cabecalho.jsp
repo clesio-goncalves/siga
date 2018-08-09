@@ -40,8 +40,8 @@
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
 						<a class="dropdown-item" href="<c:url value="/usuario/novo" />">Usuário</a>
 						<a class="dropdown-item" href="<c:url value="/aluno/novo" />">Aluno</a>
-						<a class="dropdown-item" href="#">Docente</a> <a
-							class="dropdown-item" href="<c:url value="/monitor/novo" />">Monitor</a>
+						<a class="dropdown-item" href="<c:url value="/docente/novo" />">Docente</a>
+						<a class="dropdown-item" href="<c:url value="/monitor/novo" />">Monitor</a>
 						<a class="dropdown-item"
 							href="<c:url value="/profissional/novo" />">Profissional da
 							Saúde e Pedagogia</a><a class="dropdown-item"
@@ -65,8 +65,8 @@
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
 						<a class="dropdown-item" href="<c:url value="/usuario/lista" />">Usuários</a>
 						<a class="dropdown-item" href="<c:url value="/aluno/lista" />">Alunos</a>
-						<a class="dropdown-item" href="#">Docentes</a> <a
-							class="dropdown-item" href="<c:url value="/monitor/lista" />">Monitores</a>
+						<a class="dropdown-item" href="<c:url value="/docente/lista" />">Docentes</a>
+						<a class="dropdown-item" href="<c:url value="/monitor/lista" />">Monitores</a>
 						<a class="dropdown-item"
 							href="<c:url value="/profissional/lista" />">Profissionais da
 							Saúde</a><a class="dropdown-item"
