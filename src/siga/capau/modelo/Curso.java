@@ -34,5 +34,4 @@ public class Curso {
 		this.nome = nome;
 	}
 
-
 }

@@ -28,7 +28,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!-- percorre cursos montando as linhas da tabela -->
 					<c:forEach var="disciplina" items="${disciplinas}">
 						<tr>
 							<td>${disciplina.id}</td>
@@ -86,7 +85,7 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="<c:url value="/profissional/novo" />"
+			<a href="<c:url value="/disciplina/nova" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>

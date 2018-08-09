@@ -58,9 +58,15 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o curso ID (${curso.id}) ->
-														${curso.nome}?</p>
+
+													<p>
+														Deseja realmente excluir o curso<br> ID (${curso.id})
+														-> ${curso.nome}?
+													</p>
+													<strong>A exclusão não é permitida caso haja
+														turmas vinculadas a este curso</strong> <br>
 												</div>
+
 												<div class="modal-footer">
 													<a href="<c:url value="/curso/remove?id=${curso.id}" />"
 														class="btn btn-danger"><span

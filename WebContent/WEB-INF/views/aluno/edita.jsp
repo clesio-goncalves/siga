@@ -35,15 +35,15 @@
 				value="${aluno.matricula}">
 		</div>
 
-		<!-- CURSO -->
+		<!-- TURMA -->
 		<div class="form-group">
-			<label for="curso.id" class="col-form-label">Curso*</label>
-			<c:forEach var="curso" items="${cursos}">
+			<label for="turma.id" class="col-form-label">Turma*</label>
+			<c:forEach var="turma" items="${turmas}">
 				<div class="custom-control custom-radio">
-					<input type="radio" id="${curso.id}" name="curso.id"
-						class="custom-control-input" required value="${curso.id}"
-						${curso.id == aluno.curso.id ? 'checked' : ''}> <label
-						class="custom-control-label" for="${curso.id}">${curso.nome}</label>
+					<input type="radio" id="${turma.id}" name="turma.id"
+						class="custom-control-input" required value="${turma.id}"
+						${turma.id == aluno.turma.id ? 'checked' : ''}> <label
+						class="custom-control-label" for="${turma.id}">${turma.nome}</label>
 				</div>
 			</c:forEach>
 		</div>

@@ -27,14 +27,14 @@
 				MAXLENGTH="255" required>
 		</div>
 
-		<!-- CURSO -->
+		<!-- TURMA -->
 		<div class="form-group">
-			<label for="lista_cursos" class="col-form-label">Cursos*</label>
-			<c:forEach var="curso" items="${disciplina.curso}">
+			<label for="lista_turmas" class="col-form-label">Turmas*</label>
+			<c:forEach var="turma" items="${disciplina.turma}">
 				<div class="custom-control custom-checkbox">
-					<form:checkbox path="lista_cursos" value="${curso.id}"
-						class="custom-control-input" id="curso${curso.id}" />
-					<label class="custom-control-label" for="curso${curso.id}">${curso.nome}</label>
+					<form:checkbox path="lista_turmas" value="${turma.id}"
+						class="custom-control-input" id="turma${turma.id}" />
+					<label class="custom-control-label" for="turma${turma.id}">${turma.nome}</label>
 				</div>
 			</c:forEach>
 		</div>

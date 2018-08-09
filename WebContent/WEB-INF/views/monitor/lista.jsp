@@ -65,7 +65,7 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o monitor ID
+													<p>Deseja realmente excluir o monitor <br>ID
 														(${monitor.id}) -> ${monitor.nome}?</p>
 												</div>
 												<div class="modal-footer">

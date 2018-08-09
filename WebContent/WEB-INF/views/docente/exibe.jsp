@@ -65,7 +65,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Deseja realmente excluir o Docente ID (${docente.id}) ->
+						<p>Deseja realmente excluir o Docente <br>ID (${docente.id}) ->
 							${docente.nome}?</p>
 					</div>
 					<div class="modal-footer">

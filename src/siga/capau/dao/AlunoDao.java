@@ -35,9 +35,9 @@ public class AlunoDao {
 		manager.remove(buscaPorId(aluno.getId()));
 	}
 
-	public List<Aluno> buscaAlunosPorCurso(Long id) {
-		return manager.createQuery("select a from Aluno as a where a.curso.id = :idCurso", Aluno.class)
-				.setParameter("idCurso", id).getResultList();
+	public List<Aluno> buscaAlunosPorTurma(Long id) {
+		return manager.createQuery("select a from Aluno as a where a.turma.id = :id", Aluno.class)
+				.setParameter("id", id).getResultList();
 	}
 
 }

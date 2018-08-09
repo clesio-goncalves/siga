@@ -1,17 +1,16 @@
 package siga.capau.modelo;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Disciplina {
+public class Turma {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +20,15 @@ public class Disciplina {
 	@Column(unique = true)
 	private String nome;
 
-	@Transient
-	private List<String> lista_turmas;
+	@NotNull
+	@ManyToOne
+	private Curso curso;
 
 	@Transient
-	private List<Turma> turma;
+	private int ano_ingresso;
+
+	@Transient
+	private int periodo_ingresso;
 
 	public Long getId() {
 		return id;
@@ -43,20 +46,28 @@ public class Disciplina {
 		this.nome = nome;
 	}
 
-	public List<String> getLista_turmas() {
-		return lista_turmas;
+	public Curso getCurso() {
+		return curso;
 	}
 
-	public void setLista_turmas(List<String> lista_turmas) {
-		this.lista_turmas = lista_turmas;
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
 
-	public List<Turma> getTurma() {
-		return turma;
+	public int getAno_ingresso() {
+		return ano_ingresso;
 	}
 
-	public void setTurma(List<Turma> turma) {
-		this.turma = turma;
+	public void setAno_ingresso(int ano_ingresso) {
+		this.ano_ingresso = ano_ingresso;
+	}
+
+	public int getPeriodo_ingresso() {
+		return periodo_ingresso;
+	}
+
+	public void setPeriodo_ingresso(int periodo_ingresso) {
+		this.periodo_ingresso = periodo_ingresso;
 	}
 
 }

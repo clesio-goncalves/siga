@@ -6,23 +6,23 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 
 @Entity
-@IdClass(CursoDisciplinaPK.class)
-public class CursoDisciplina {
+@IdClass(TurmaDisciplinaPK.class)
+public class TurmaDisciplina {
 
 	@Id
 	@ManyToOne
-	private Curso curso;
+	private Turma turma;
 
 	@Id
 	@ManyToOne
 	private Disciplina disciplina;
 
-	public Curso getCurso() {
-		return curso;
+	public Turma getTurma() {
+		return turma;
 	}
 
-	public void setCurso(Curso curso) {
-		this.curso = curso;
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
 
 	public Disciplina getDisciplina() {

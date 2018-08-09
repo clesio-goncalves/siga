@@ -6,12 +6,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Exibe os dados da disciplina</title>
+<title>Exibe os dados do turma</title>
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
 	<div class="card border-light mb-3">
-		<div class="card-header">Exibe os dados da disciplina</div>
+		<div class="card-header">Exibe os dados do turma</div>
 		<!-- Table -->
 		<div class="card-body">
 			<div class="table-responsive">
@@ -19,59 +19,48 @@
 					class="table table-striped table-bordered dt-responsive nowrap">
 					<tr>
 						<th width="300">ID</th>
-						<td>${disciplina.id}</td>
+						<td>${turma.id}</td>
 					</tr>
+
 					<tr>
 						<th>Nome</th>
-						<td>${disciplina.nome}</td>
+						<td>${turma.nome}</td>
 					</tr>
 				</table>
 			</div>
-			<h3>Turmas vinculadas</h3>
-			<ul class="list-group">
-				<c:forEach var="turma" items="${disciplina.turma}">
-					<li
-						class="list-group-item d-flex justify-content-between align-items-center">
-						<a href="<c:url value="/turma/exibe?id=${turma.id}" />"
-						class="alert-link">${turma.nome}</a>
-					</li>
-				</c:forEach>
-			</ul>
-
 		</div>
 	</div>
 	<div align="center">
 		<!-- Cadastrar -->
-		<a href="<c:url value="/disciplina/nova" />"
-			class="btn btn-primary btn-lg"><span
+		<a href="<c:url value="/turma/nova" />" class="btn btn-primary btn-lg"><span
 			class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		<!-- Editar -->
-		<a href="<c:url value="/disciplina/edita?id=${disciplina.id}" />"
+		<a href="<c:url value="/turma/edita?id=${turma.id}" />"
 			class="btn btn-info btn-lg"><span
 			class="glyphicon glyphicon-edit"></span> Editar </a>
 		<!-- Excluir -->
 		<button type="button" class="btn btn-danger btn-lg"
-			data-toggle="modal" data-target="#modal${disciplina.id}">
+			data-toggle="modal" data-target="#modal${turma.id}">
 			<span class="glyphicon glyphicon-trash"></span> Excluir
 		</button>
 	</div>
 	<!-- Modal -->
-	<div class="modal fade" id="modal${disciplina.id}">
+	<div class="modal fade" id="modal${turma.id}">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Exclusão da disciplina</h5>
+					<h5 class="modal-title">Exclusão do turma</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<p>Deseja realmente excluir a disciplina ID (${disciplina.id}) ->
-						${disciplina.nome}?</p>
+					<p>Deseja realmente excluir o turma ID <br>(${turma.id}) ->
+						${turma.nome}?</p>
 				</div>
 				<div class="modal-footer">
-					<a href="<c:url value="/disciplina/remove?id=${disciplina.id}" />"
+					<a href="<c:url value="/turma/remove?id=${turma.id}" />"
 						class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
 						Excluir</a>
 					<button type="button" class="btn btn-secondary"
@@ -82,7 +71,7 @@
 			</div>
 		</div>
 	</div>
-	<a class="btn btn-success" href="<c:url value="/disciplina/lista" />"><span
+	<a class="btn btn-success" href="<c:url value="/turma/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
 

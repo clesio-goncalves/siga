@@ -11,8 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import siga.capau.dao.AlunoDao;
 import siga.capau.dao.CursoDao;
+import siga.capau.dao.TurmaDao;
 import siga.capau.modelo.Curso;
 
 @Transactional
@@ -26,7 +26,7 @@ public class CursoController {
 	CursoDao dao;
 
 	@Autowired
-	AlunoDao dao_aluno;
+	TurmaDao dao_turma;
 
 	@RequestMapping("/novo")
 	public String curso() {
@@ -56,8 +56,8 @@ public class CursoController {
 	@RequestMapping("/remove")
 	public String remove(Curso curso) {
 
-		// Remove o curso caso não haja alunos cadastrados nesse curso
-		if (dao_aluno.buscaAlunosPorCurso(curso.getId()).size() > 0) {
+		// Remove o curso caso não haja turmas cadastrados nesse curso
+		if (dao_turma.buscaTurmaPorCurso(curso.getId()).size() > 0) {
 			return "redirect:lista";
 		}
 

@@ -48,6 +48,7 @@
 							href="<c:url value="/servidor/novo" />">Servidor</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="<c:url value="/curso/novo" />">Curso</a>
+						<a class="dropdown-item" href="<c:url value="/turma/nova" />">Turma</a>
 						<a class="dropdown-item" href="<c:url value="/disciplina/nova" />">Disciplina</a>
 					</div></li>
 				<li class="nav-item dropdown"><a
@@ -73,6 +74,7 @@
 							href="<c:url value="/servidor/lista" />">Servidores</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="<c:url value="/curso/lista" />">Cursos</a>
+						<a class="dropdown-item" href="<c:url value="/turma/lista" />">Turmas</a>
 						<a class="dropdown-item"
 							href="<c:url value="/disciplina/lista" />">Disciplinas</a>
 					</div></li>

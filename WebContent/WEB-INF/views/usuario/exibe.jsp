@@ -72,7 +72,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Deseja realmente excluir o usuário ID (${usuario.id}) ->
+						<p>Deseja realmente excluir o usuário <br>ID (${usuario.id}) ->
 							${usuario.email}?</p>
 					</div>
 					<div class="modal-footer">

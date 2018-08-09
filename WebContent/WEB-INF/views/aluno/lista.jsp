@@ -25,7 +25,7 @@
 						<th>ID</th>
 						<th>Nome Completo</th>
 						<th>Matrícula</th>
-						<th>Curso</th>
+						<th>Turma</th>
 						<th>Usuário</th>
 						<th>Ações</th>
 					</tr>
@@ -44,7 +44,7 @@
 								<td>${aluno.matricula}</td>
 							</c:if>
 
-							<td>${aluno.curso.nome}</td>
+							<td>${aluno.turma.nome}</td>
 
 							<!-- Usuário -->
 							<c:if test="${aluno.usuario == null}">
@@ -80,7 +80,7 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o aluno ID (${aluno.id}) ->
+													<p>Deseja realmente excluir o aluno <br>ID (${aluno.id}) ->
 														${aluno.nome}?</p>
 												</div>
 												<div class="modal-footer">

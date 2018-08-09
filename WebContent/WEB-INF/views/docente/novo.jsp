@@ -29,7 +29,7 @@
 		<!-- SIAPE -->
 		<div class="form-group" class="col-form-label">
 			<label for="siape">SIAPE*</label> <input type="number"
-				class="form-control" name=siape MAXLENGTH="10" required
+				class="form-control" name="siape" MAXLENGTH="10" required
 				onkeypress='return SomenteNumero(event)'>
 		</div>
 

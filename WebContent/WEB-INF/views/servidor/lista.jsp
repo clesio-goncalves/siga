@@ -67,7 +67,7 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o Servidor ID
+													<p>Deseja realmente excluir o Servidor ID<br>
 														(${servidor.id}) -> ${servidor.nome}?</p>
 												</div>
 												<div class="modal-footer">

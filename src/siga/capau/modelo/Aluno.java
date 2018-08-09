@@ -22,7 +22,7 @@ public class Aluno {
 
 	@NotNull
 	@ManyToOne
-	private Curso curso;
+	private Turma turma;
 
 	@OneToOne
 	private Usuario usuario;
@@ -51,12 +51,12 @@ public class Aluno {
 		this.matricula = matricula;
 	}
 
-	public Curso getCurso() {
-		return curso;
+	public Turma getTurma() {
+		return turma;
 	}
 
-	public void setCurso(Curso curso) {
-		this.curso = curso;
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
 
 	public Usuario getUsuario() {

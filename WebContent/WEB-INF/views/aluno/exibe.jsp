@@ -40,8 +40,8 @@
 					</tr>
 
 					<tr>
-						<th>Curso</th>
-						<td>${aluno.curso.nome}</td>
+						<th>Turma</th>
+						<td>${aluno.turma.nome}</td>
 					</tr>
 
 					<tr>
@@ -86,7 +86,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Deseja realmente excluir o aluno ID (${aluno.id}) ->
+						<p>Deseja realmente excluir o aluno <br>ID (${aluno.id}) ->
 							${aluno.nome}?</p>
 					</div>
 					<div class="modal-footer">

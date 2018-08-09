@@ -1,5 +1,7 @@
 package siga.capau.controller;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -11,20 +13,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import siga.capau.dao.AlunoDao;
-import siga.capau.dao.CursoDao;
+import siga.capau.dao.TurmaDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Aluno;
+import siga.capau.modelo.Turma;
 
 @Transactional
 @Controller
 @RequestMapping("/aluno")
 public class AlunoController {
 
+	private List<Turma> lista_turma;
+
 	@Autowired
 	AlunoDao dao;
 
 	@Autowired
-	CursoDao dao_curso;
+	TurmaDao dao_turma;
 
 	@Autowired
 	UsuarioDao dao_usuario;
@@ -32,11 +37,11 @@ public class AlunoController {
 	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/novo")
 	public String novoAluno(Model model) {
-		// Testa se há cursos cadastrados
-		if (dao_curso.lista().size() == 0) {
-			return "redirect:/curso/novo";
+		this.lista_turma = dao_turma.lista();
+		if (this.lista_turma.size() == 0) {
+			return "redirect:/turma/nova";
 		}
-		model.addAttribute("cursos", dao_curso.lista());
+		model.addAttribute("turmas", this.lista_turma);
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
 		return "aluno/novo";
 	}
@@ -82,13 +87,13 @@ public class AlunoController {
 	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 
-		// Testa se há cursos cadastrados
-		if (dao_curso.lista().size() == 0) {
-			return "redirect:/curso/novo";
+		// Testa se há turmas cadastrados
+		if (dao_turma.lista().size() == 0) {
+			return "redirect:/turma/nova";
 		}
 
 		model.addAttribute("aluno", dao.buscaPorId(id));
-		model.addAttribute("cursos", dao_curso.lista());
+		model.addAttribute("turmas", dao_turma.lista());
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
 		return "aluno/edita";
 

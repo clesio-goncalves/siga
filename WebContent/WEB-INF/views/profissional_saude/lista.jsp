@@ -68,7 +68,7 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<p>Deseja realmente excluir o Profissional da Saúde ID
+													<p>Deseja realmente excluir o Profissional da Saúde <br>ID
 														(${profissional_saude.id}) -> ${profissional_saude.nome}?</p>
 												</div>
 												<div class="modal-footer">
