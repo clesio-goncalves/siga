@@ -19,16 +19,25 @@
 <div class="container">
 	<form action="adiciona" method="POST">
 
-		<div class="row">
+		<div class="form-row">
 			<!-- ANO INGRESSO -->
-			<div class="form-group col-sm-7" class="col-form-label">
-				<label for="ano_ingresso">Ano*</label> <input type="text"
-					class="form-control" name="ano_ingresso" MAXLENGTH="4" required
-					onkeypress='return SomenteNumero(event)' autofocus>
+			<div class="col-md-7 form-group">
+				<label class="col-form-label" for="ano_ingresso">Ano*</label>
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<input type="text" class="form-control" name="ano_ingresso"
+							MAXLENGTH="4" required onkeypress='return SomenteNumero(event)'
+							autofocus>
+					</div>
+				</div>
 			</div>
 
-			<!-- PERIODO INGRESSO -->
-			<div class="form-group col-sm-5" class="col-form-label">
+			<!-- PERIODO-->
+			<div class="col-md-5 form-group">
 				<label for="periodo_ingresso" class="col-form-label">Período*</label>
 				<select class="custom-select" name="periodo_ingresso" required>
 					<option value="1">1º Semestre</option>
@@ -66,6 +75,7 @@
 		</div>
 	</form>
 </div>
+
 <script type="text/javascript"
 	src="<c:url value="/resources/js/SomenteNumero.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

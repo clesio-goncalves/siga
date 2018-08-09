@@ -21,14 +21,52 @@
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${turma.id}">
+		<input type="hidden" name="id" value="${turma.id}" />
 
-		<!-- NOME -->
-		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome*</label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required value="${turma.nome}">
+		<div class="form-row">
+			<!-- ANO INGRESSO -->
+			<div class="col-md-7 form-group">
+				<label class="col-form-label" for="ano_ingresso">Ano*</label>
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<input type="text" class="form-control" name="ano_ingresso"
+							MAXLENGTH="4" required onkeypress='return SomenteNumero(event)'
+							autofocus value="${turma.ano_ingresso}">
+					</div>
+				</div>
+			</div>
+
+			<!-- PERIODO-->
+			<div class="col-md-5 form-group">
+				<label for="periodo_ingresso" class="col-form-label">Período*</label>
+				<select class="custom-select" name="periodo_ingresso" required>
+					<option value="1" ${turma.periodo_ingresso==1 ? 'selected' : ''}>1º
+						Semestre</option>
+					<option value="2" ${turma.periodo_ingresso==2 ? 'selected' : ''}>2º
+						Semestre</option>
+				</select>
+			</div>
+
 		</div>
+
+		<!-- CURSO -->
+		<div class="form-group">
+			<label for="curso.id" class="col-form-label">Curso*</label>
+			<c:forEach var="curso" items="${cursos}">
+				<div class="custom-control custom-radio">
+					<input type="radio" id="${curso.id}" name="curso.id"
+						class="custom-control-input" value="${curso.id}"
+						${curso.id==turma.curso.id ? 'checked' : ''}> <label
+						class="custom-control-label" for="${curso.id}">${curso.nome}</label>
+				</div>
+			</c:forEach>
+		</div>
+
+		<input type="hidden" name="nome" value="nome">
 
 		<security:csrfInput />
 

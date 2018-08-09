@@ -20,9 +20,14 @@
 
 		<!-- EMAIL -->
 		<div class="form-group">
-			<label for="email" class="col-form-label">E-mail*</label> <input
-				type="email" class="form-control" name="email" MAXLENGTH="50"
-				required autofocus>
+			<label for="email" class="col-form-label">E-mail*</label>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">@</span>
+				</div>
+				<input type="email" class="form-control" name="email" MAXLENGTH="50"
+					required autofocus>
+			</div>
 		</div>
 
 		<!-- SENHA -->

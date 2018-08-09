@@ -24,6 +24,7 @@ public class TurmaController {
 
 	private List<Turma> lista_turma;
 	private List<Curso> lista_curso;
+	private Turma turma;
 
 	@Autowired
 	TurmaDao dao;
@@ -88,7 +89,16 @@ public class TurmaController {
 
 	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
-		model.addAttribute("turma", dao.buscaPorId(id));
+
+		// Busca a turma e altera o ano e periodo de ingresso
+		this.turma = dao.buscaPorId(id);
+		String nome[] = this.turma.getNome().replace(".", "#").split(" - ");
+		String ingresso[] = nome[1].split("#");
+		this.turma.setAno_ingresso(Integer.parseInt(ingresso[0]));
+		this.turma.setPeriodo_ingresso(Integer.parseInt(ingresso[1]));
+
+		model.addAttribute("cursos", dao_curso.lista());
+		model.addAttribute("turma", this.turma);
 		return "turma/edita";
 	}
 
