@@ -35,7 +35,8 @@
 			<ul class="navbar-nav mr-auto">
 			</ul>
 			<ul class="navbar-nav navbar-right">
-				<li><a href="logout" class="btn btn-secondary"><span
+				<li><a href="<c:url value="/logout" />"
+					class="btn btn-secondary"><span
 						class="glyphicon glyphicon-log-out"></span> Sair</a></li>
 			</ul>
 		</div>

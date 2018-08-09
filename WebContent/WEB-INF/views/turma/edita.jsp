@@ -25,7 +25,7 @@
 
 		<div class="form-row">
 			<!-- ANO INGRESSO -->
-			<div class="col-md-7 form-group">
+			<div class="col-md-6 form-group">
 				<label class="col-form-label" for="ano_ingresso">Ano*</label>
 				<div class="form-group">
 					<div class="input-group mb-3">
@@ -33,15 +33,19 @@
 							<span class="input-group-text"><span
 								class="glyphicon glyphicon-calendar"></span></span>
 						</div>
-						<input type="text" class="form-control" name="ano_ingresso"
-							MAXLENGTH="4" required onkeypress='return SomenteNumero(event)'
-							autofocus value="${turma.ano_ingresso}">
+						<select class="custom-select" name="ano_ingresso" required
+							autofocus>
+							<c:forEach var="ano" items="${lista_anos}">
+								<option value="${ano}"
+									${turma.ano_ingresso==ano ? 'selected' : ''}>${ano}</option>
+							</c:forEach>
+						</select>
 					</div>
 				</div>
 			</div>
 
 			<!-- PERIODO-->
-			<div class="col-md-5 form-group">
+			<div class="col-md-6 form-group">
 				<label for="periodo_ingresso" class="col-form-label">Período*</label>
 				<select class="custom-select" name="periodo_ingresso" required>
 					<option value="1" ${turma.periodo_ingresso==1 ? 'selected' : ''}>1º

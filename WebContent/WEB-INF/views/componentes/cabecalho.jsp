@@ -89,7 +89,7 @@
 							style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
 							<a class="dropdown-item" href="#"><span
 								class="glyphicon glyphicon-info-sign"></span> Perfil</a> <a
-								class="dropdown-item" href="logout"><span
+								class="dropdown-item" href="<c:url value="/logout" />"><span
 								class="glyphicon glyphicon-log-out"></span> Sair</a>
 						</div></li>
 				</ul>

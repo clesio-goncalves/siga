@@ -1,5 +1,7 @@
 package siga.capau.controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -24,7 +26,13 @@ public class TurmaController {
 
 	private List<Turma> lista_turma;
 	private List<Curso> lista_curso;
+	private List<Integer> lista_anos;
 	private Turma turma;
+
+	public TurmaController() {
+		this.lista_anos = new ArrayList<>();
+		listaUltimosCincoAnos();
+	}
 
 	@Autowired
 	TurmaDao dao;
@@ -42,6 +50,7 @@ public class TurmaController {
 			return "redirect:/curso/novo";
 		}
 
+		model.addAttribute("lista_anos", this.lista_anos);
 		model.addAttribute("cursos", this.lista_curso);
 		return "turma/novo";
 	}
@@ -99,6 +108,7 @@ public class TurmaController {
 
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("turma", this.turma);
+		model.addAttribute("lista_anos", this.lista_anos);
 		return "turma/edita";
 	}
 
@@ -117,6 +127,16 @@ public class TurmaController {
 
 		dao.altera(turma);
 		return "redirect:lista";
+	}
+
+	private List<Integer> listaUltimosCincoAnos() {
+		int ano = Calendar.getInstance().get(Calendar.YEAR);
+
+		for (int i = 0; i < 6; i++) {
+			this.lista_anos.add(ano);
+			ano = ano - 1;
+		}
+		return this.lista_anos;
 	}
 
 }

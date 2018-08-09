@@ -21,7 +21,7 @@
 
 		<div class="form-row">
 			<!-- ANO INGRESSO -->
-			<div class="col-md-7 form-group">
+			<div class="col-md-6 form-group">
 				<label class="col-form-label" for="ano_ingresso">Ano*</label>
 				<div class="form-group">
 					<div class="input-group mb-3">
@@ -29,15 +29,18 @@
 							<span class="input-group-text"><span
 								class="glyphicon glyphicon-calendar"></span></span>
 						</div>
-						<input type="text" class="form-control" name="ano_ingresso"
-							MAXLENGTH="4" required onkeypress='return SomenteNumero(event)'
+						<select class="custom-select" name="ano_ingresso" required
 							autofocus>
+							<c:forEach var="ano" items="${lista_anos}">
+								<option value="${ano}">${ano}</option>
+							</c:forEach>
+						</select>
 					</div>
 				</div>
 			</div>
 
 			<!-- PERIODO-->
-			<div class="col-md-5 form-group">
+			<div class="col-md-6 form-group">
 				<label for="periodo_ingresso" class="col-form-label">Período*</label>
 				<select class="custom-select" name="periodo_ingresso" required>
 					<option value="1">1º Semestre</option>
@@ -76,6 +79,4 @@
 	</form>
 </div>
 
-<script type="text/javascript"
-	src="<c:url value="/resources/js/SomenteNumero.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />
