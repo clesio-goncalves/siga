@@ -27,6 +27,9 @@ public class Disciplina {
 	@Transient
 	private List<Turma> turma;
 
+	@Transient
+	private List<Docente> docente;
+
 	public Long getId() {
 		return id;
 	}
@@ -57,6 +60,14 @@ public class Disciplina {
 
 	public void setTurma(List<Turma> turma) {
 		this.turma = turma;
+	}
+
+	public List<Docente> getDocente() {
+		return docente;
+	}
+
+	public void setDocente(List<Docente> docente) {
+		this.docente = docente;
 	}
 
 }

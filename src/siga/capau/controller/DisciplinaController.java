@@ -11,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import siga.capau.dao.TurmaDao;
-import siga.capau.dao.TurmaDisciplinaDao;
 import siga.capau.dao.DisciplinaDao;
-import siga.capau.modelo.Turma;
-import siga.capau.modelo.TurmaDisciplina;
+import siga.capau.dao.DocenteDao;
+import siga.capau.dao.TurmaDao;
+import siga.capau.dao.TurmaDisciplinaDocenteDao;
 import siga.capau.modelo.Disciplina;
+import siga.capau.modelo.Docente;
+import siga.capau.modelo.Turma;
+import siga.capau.modelo.TurmaDisciplinaDocente;
 
 @Transactional
 @Controller
@@ -25,8 +27,9 @@ public class DisciplinaController {
 
 	private List<Turma> lista_turma;
 	private List<Disciplina> lista_disciplina;
+	private List<Docente> lista_docente;
 	private Turma turma;
-	private TurmaDisciplina turma_disciplina;
+	private TurmaDisciplinaDocente turma_disciplina_docente;
 	private Disciplina disciplina;
 
 	@Autowired
@@ -36,16 +39,23 @@ public class DisciplinaController {
 	TurmaDao dao_turma;
 
 	@Autowired
-	TurmaDisciplinaDao dao_turma_disciplina;
+	DocenteDao dao_docente;
+
+	@Autowired
+	TurmaDisciplinaDocenteDao dao_turma_disciplina_docente;
 
 	@RequestMapping("/nova")
 	public String disciplina(Disciplina disciplina, Model model) {
+		this.lista_docente = dao_docente.lista();
 		this.lista_turma = dao_turma.lista();
 
-		if (this.lista_turma.size() == 0) {
-			return "redirect:/turma/novo";
+		if (this.lista_docente.size() == 0) {
+			return "redirect:/docente/novo";
+		} else if (this.lista_turma.size() == 0) {
+			return "redirect:/turma/nova";
 		}
 
+		disciplina.setDocente(this.lista_docente);
 		disciplina.setTurma(this.lista_turma);
 		model.addAttribute("disciplina", disciplina);
 		return "disciplina/novo";
@@ -67,10 +77,10 @@ public class DisciplinaController {
 			this.turma = dao_turma.buscaPorId(Long.parseLong(id_turma));
 
 			// Adiciona os relacionamentos na tabela TurmaDisciplina
-			this.turma_disciplina = new TurmaDisciplina();
-			this.turma_disciplina.setDisciplina(this.disciplina);
-			this.turma_disciplina.setTurma(this.turma);
-			this.dao_turma_disciplina.adiciona(this.turma_disciplina);
+			this.turma_disciplina_docente = new TurmaDisciplinaDocente();
+			this.turma_disciplina_docente.setDisciplina(this.disciplina);
+			this.turma_disciplina_docente.setTurma(this.turma);
+			this.dao_turma_disciplina_docente.adiciona(this.turma_disciplina_docente);
 		}
 
 		return "redirect:lista";
@@ -84,7 +94,7 @@ public class DisciplinaController {
 
 	@RequestMapping("/remove")
 	public String remove(Disciplina disciplina) {
-		dao_turma_disciplina.removeTurmaDisciplinaPelaDisciplinaId(disciplina.getId());
+		dao_turma_disciplina_docente.removeTurmaDisciplinaDocentePelaDisciplinaId(disciplina.getId());
 		dao.remove(disciplina);
 		return "redirect:lista";
 	}
@@ -134,7 +144,7 @@ public class DisciplinaController {
 		// cadastrados
 		for (Turma turma : this.lista_turma) {
 			if (!disciplina.getLista_turmas().contains(turma.getNome())) {
-				dao_turma_disciplina.removeTurmaDisciplina(turma.getId(), disciplina.getId());
+				dao_turma_disciplina_docente.removeTurmaDisciplinaDocente(turma.getId(), disciplina.getId(), null);
 			} else {
 				disciplina.getLista_turmas().remove(disciplina.getLista_turmas().indexOf(turma.getNome()));
 			}
@@ -144,10 +154,10 @@ public class DisciplinaController {
 		for (String nome_turma : disciplina.getLista_turmas()) {
 			this.turma = dao_turma.buscaTurmaPorNome(nome_turma);
 			// Adiciona os relacionamentos na tabela TurmaDisciplina
-			this.turma_disciplina = new TurmaDisciplina();
-			this.turma_disciplina.setDisciplina(disciplina);
-			this.turma_disciplina.setTurma(this.turma);
-			this.dao_turma_disciplina.adiciona(this.turma_disciplina);
+			this.turma_disciplina_docente = new TurmaDisciplinaDocente();
+			this.turma_disciplina_docente.setDisciplina(disciplina);
+			this.turma_disciplina_docente.setTurma(this.turma);
+			this.dao_turma_disciplina_docente.adiciona(this.turma_disciplina_docente);
 		}
 
 		return "redirect:lista";

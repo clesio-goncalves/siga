@@ -6,8 +6,8 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 
 @Entity
-@IdClass(TurmaDisciplinaPK.class)
-public class TurmaDisciplina {
+@IdClass(TurmaDisciplinaDocentePK.class)
+public class TurmaDisciplinaDocente {
 
 	@Id
 	@ManyToOne
@@ -16,6 +16,10 @@ public class TurmaDisciplina {
 	@Id
 	@ManyToOne
 	private Disciplina disciplina;
+
+	@Id
+	@ManyToOne
+	private Docente docente;
 
 	public Turma getTurma() {
 		return turma;
@@ -31,6 +35,14 @@ public class TurmaDisciplina {
 
 	public void setDisciplina(Disciplina disciplina) {
 		this.disciplina = disciplina;
+	}
+
+	public Docente getDocente() {
+		return docente;
+	}
+
+	public void setDocente(Docente docente) {
+		this.docente = docente;
 	}
 
 }

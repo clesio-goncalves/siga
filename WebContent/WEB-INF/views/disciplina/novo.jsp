@@ -22,11 +22,21 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome*</label> <input
+			<label for="nome" class="col-form-label">Disciplina*</label> <input
 				type="text" class="form-control" name="nome" autofocus
 				MAXLENGTH="255" required>
 		</div>
 
+		<!-- DOCENTE 
+		<div class="form-group">
+			<label for="docente" class="col-form-label">Docente*</label> <select
+				class="custom-select" name="docente" required>
+				<c:forEach var="docente" items="${disciplina.docente}">
+					<option value="${docente.id}">${docente.nome}</option>
+				</c:forEach>
+			</select>
+		</div>
+-->
 		<!-- TURMA -->
 		<div class="form-group">
 			<label for="lista_turmas" class="col-form-label">Turmas*</label>
