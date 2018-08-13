@@ -25,6 +25,9 @@ public class Disciplina {
 	private List<String> lista_turmas;
 
 	@Transient
+	private List<String> lista_docentes;
+
+	@Transient
 	private List<Turma> turma;
 
 	@Transient
@@ -52,6 +55,14 @@ public class Disciplina {
 
 	public void setLista_turmas(List<String> lista_turmas) {
 		this.lista_turmas = lista_turmas;
+	}
+
+	public List<String> getLista_docentes() {
+		return lista_docentes;
+	}
+
+	public void setLista_docentes(List<String> lista_docentes) {
+		this.lista_docentes = lista_docentes;
 	}
 
 	public List<Turma> getTurma() {

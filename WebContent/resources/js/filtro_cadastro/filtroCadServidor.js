@@ -10,9 +10,9 @@ $(document).ready(function() {
 			data : {
 				funcao : $("input[name='funcao']:checked").val()
 			},
-			beforeSend: function(xhr) {
-	            xhr.setRequestHeader(header, token);
-	        },
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
 			success : function(response) {
 				$('#lista_usuarios').html(response);
 			},

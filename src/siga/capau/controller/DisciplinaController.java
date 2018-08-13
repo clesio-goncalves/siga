@@ -2,6 +2,8 @@ package siga.capau.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.DocenteDao;
@@ -61,27 +64,49 @@ public class DisciplinaController {
 		return "disciplina/novo";
 	}
 
-	@RequestMapping("/adiciona")
-	public String adiciona(@Valid Disciplina disciplina, BindingResult result) {
+	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
+	public void filtrar(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		System.out.println("Nome: " + request.getParameter("nome"));
+		System.out.println("Turma Docente: " + request.getParameter("turma_docente"));
+	}
 
-		if (result.hasErrors() || dao.buscaPorNome(disciplina.getNome()).size() > 0
-				|| disciplina.getLista_turmas().size() == 0) {
-			return "redirect:nova";
+	@RequestMapping("/adiciona2")
+	public String adiciona2(@Valid Disciplina disciplina, BindingResult result) {
+
+		System.out.println("Disciplina: " + disciplina.getNome());
+
+		System.out.println("----------------------------------------------------------------");
+
+		for (String turma : disciplina.getLista_turmas()) {
+			System.out.println("Turma: " + turma);
 		}
 
-		// Adiciona disciplina
-		this.disciplina = dao.adiciona(disciplina);
+		System.out.println("----------------------------------------------------------------");
 
-		// Intera sobre os IDs dos turmas recebidos da view
-		for (String id_turma : disciplina.getLista_turmas()) {
-			this.turma = dao_turma.buscaPorId(Long.parseLong(id_turma));
-
-			// Adiciona os relacionamentos na tabela TurmaDisciplina
-			this.turma_disciplina_docente = new TurmaDisciplinaDocente();
-			this.turma_disciplina_docente.setDisciplina(this.disciplina);
-			this.turma_disciplina_docente.setTurma(this.turma);
-			this.dao_turma_disciplina_docente.adiciona(this.turma_disciplina_docente);
+		for (String docente : disciplina.getLista_docentes()) {
+			System.out.println("Turma: " + docente);
 		}
+
+		System.out.println("----------------------------------------------------------------");
+
+//		if (result.hasErrors() || dao.buscaPorNome(disciplina.getNome()).size() > 0
+//				|| disciplina.getLista_turmas().size() == 0) {
+//			return "redirect:nova";
+//		}
+//
+//		// Adiciona disciplina
+//		this.disciplina = dao.adiciona(disciplina);
+//
+//		// Intera sobre os IDs dos turmas recebidos da view
+//		for (String id_turma : disciplina.getLista_turmas()) {
+//			this.turma = dao_turma.buscaPorId(Long.parseLong(id_turma));
+//
+//			// Adiciona os relacionamentos na tabela TurmaDisciplina
+//			this.turma_disciplina_docente = new TurmaDisciplinaDocente();
+//			this.turma_disciplina_docente.setDisciplina(this.disciplina);
+//			this.turma_disciplina_docente.setTurma(this.turma);
+//			this.dao_turma_disciplina_docente.adiciona(this.turma_disciplina_docente);
+//		}
 
 		return "redirect:lista";
 	}
