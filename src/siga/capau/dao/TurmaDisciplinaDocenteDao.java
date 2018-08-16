@@ -28,6 +28,11 @@ public class TurmaDisciplinaDocenteDao {
 				.getResultList();
 	}
 
+	public List<TurmaDisciplinaDocente> buscaTurmaDisciplinaDocentePorDisciplinaId(Long id) {
+		return manager.createQuery("select tdd from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :id",
+				TurmaDisciplinaDocente.class).setParameter("id", id).getResultList();
+	}
+
 	public TurmaDisciplinaDocente buscaPorId(Long id) {
 		return manager.find(TurmaDisciplinaDocente.class, id);
 	}

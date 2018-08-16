@@ -2,7 +2,7 @@ $(document).ready(
 		function() {
 
 			// Handle form submission event
-			$('#cadastro_disciplina').on(
+			$('#disciplina').on(
 					'submit',
 					function(e) {
 

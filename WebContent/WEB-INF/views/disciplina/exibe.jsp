@@ -27,14 +27,15 @@
 					</tr>
 				</table>
 			</div>
-			<h3>Turmas vinculadas</h3>
+			<h3>Turmas e Docentes</h3>
 			<ul class="list-group">
-				<c:forEach var="turma" items="${disciplina.turma}">
-					<li
-						class="list-group-item d-flex justify-content-between align-items-center">
-						<a href="<c:url value="/turma/exibe?id=${turma.id}" />"
-						class="alert-link">${turma.nome}</a>
-					</li>
+				<c:forEach var="turma_docente" items="${turmas_docentes}">
+					<li class="list-group-item d-flex align-items-center"><a
+						href="<c:url value="/turma/exibe?id=${turma_docente.turma.id}" />"
+						class="alert-link">${turma_docente.turma.nome}</a> &emsp; <span
+						class="glyphicon glyphicon-arrow-right"></span>&emsp; <a
+						href="<c:url value="/docente/exibe?id=${turma_docente.docente.id}" />"
+						class="alert-link">${turma_docente.docente.nome}</a></li>
 				</c:forEach>
 			</ul>
 
@@ -67,8 +68,8 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<p>Deseja realmente excluir a disciplina ID (${disciplina.id}) ->
-						${disciplina.nome}?</p>
+					<p>Deseja realmente excluir a disciplina ID (${disciplina.id})
+						-> ${disciplina.nome}?</p>
 				</div>
 				<div class="modal-footer">
 					<a href="<c:url value="/disciplina/remove?id=${disciplina.id}" />"

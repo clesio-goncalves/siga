@@ -110,24 +110,25 @@ public class DisciplinaController {
 
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
-		this.disciplina = dao.buscaPorId(id);
-		// this.disciplina.setTurma(dao_turma.buscaTurmaPorDisciplinaId(id));
-
-		model.addAttribute("disciplina", this.disciplina);
+		model.addAttribute("disciplina", dao.buscaPorId(id));
+		model.addAttribute("turmas_docentes",
+				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorDisciplinaId(id));
 		return "disciplina/exibe";
 	}
 
 	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 
-		// Pega a disciplina com todos os turmas
-		this.disciplina = dao.buscaPorId(id);
-		// this.disciplina.setLista_turmas(dao_turma.buscaTurmaPorDisciplinaIdString(id));
-		model.addAttribute("disciplina", this.disciplina);
+		// Pega a disciplina
+		model.addAttribute("disciplina", dao.buscaPorId(id));
 
-		// Pega todos os turmas
-		this.lista_turma = dao_turma.lista();
-		model.addAttribute("lista_todos_turmas", this.lista_turma);
+		// Pega as turmas e docentes
+		model.addAttribute("turmas_docentes",
+				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorDisciplinaId(id));
+
+		// Pega todas as turmas e docentes
+		model.addAttribute("turmas", dao_turma.lista());
+		model.addAttribute("docentes", dao_docente.lista());
 
 		return "disciplina/edita";
 	}
@@ -147,7 +148,7 @@ public class DisciplinaController {
 		dao.altera(disciplina);
 
 		// Buscar todos os turmas por disciplina
-		this.lista_turma = dao_turma.buscaTurmaPorDisciplinaId(disciplina.getId());
+		// this.lista_turma = dao_turma.buscaTurmaPorDisciplinaId(disciplina.getId());
 
 		// Remove todos os TurmaDisciplina que não foram passados pela view e estão
 		// cadastrados

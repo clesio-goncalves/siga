@@ -32,23 +32,6 @@ public class TurmaDao {
 				.getResultList();
 	}
 
-	public List<Turma> buscaTurmaPorDisciplinaId(Long id) {
-		return manager.createQuery(
-				"select t from Turma t inner join TurmaDisciplina td on td.turma.id = t.id inner join Disciplina d on d.id = td.disciplina.id where d.id = :id",
-				Turma.class).setParameter("id", id).getResultList();
-	}
-
-	public List<String> buscaTurmaPorDisciplinaIdString(Long id) {
-		return manager.createQuery(
-				"select t.nome from Turma t inner join TurmaDisciplina td on td.turma.id = t.id inner join Disciplina d on d.id = td.disciplina.id where d.id = :id",
-				String.class).setParameter("id", id).getResultList();
-	}
-
-	public Turma buscaTurmaPorNome(String nome) {
-		return manager.createQuery("select t from Turma t where t.nome = :nome", Turma.class).setParameter("nome", nome)
-				.getSingleResult();
-	}
-
 	public List<Turma> buscaTurmaPorCurso(Long id) {
 		return manager.createQuery("select t from Turma as t where t.curso.id = :id", Turma.class)
 				.setParameter("id", id).getResultList();

@@ -19,7 +19,7 @@
 	</div>
 </div>
 <div class="container">
-	<form action="adiciona" method="POST" id="cadastro_disciplina">
+	<form action="adiciona" method="POST" id="disciplina">
 
 		<!-- NOME -->
 		<div class="form-group">
@@ -28,6 +28,7 @@
 				MAXLENGTH="255" required>
 		</div>
 
+		<!-- TURMAS E DOCENTES -->
 		<div class="form-group">
 			<label for="nome" class="col-form-label">Turma-Docente*</label>
 			<table class="table table-bordered  dt-responsive nowrap"
