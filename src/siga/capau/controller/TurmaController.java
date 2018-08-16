@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.TurmaDao;
+import siga.capau.dao.TurmaDisciplinaDocenteDao;
 import siga.capau.modelo.Curso;
 import siga.capau.modelo.Turma;
 
@@ -42,6 +43,9 @@ public class TurmaController {
 
 	@Autowired
 	CursoDao dao_curso;
+
+	@Autowired
+	TurmaDisciplinaDocenteDao dao_turma_disciplina_docente;
 
 	@RequestMapping("/nova")
 	public String novaTurma(Model model) {
@@ -86,6 +90,7 @@ public class TurmaController {
 			return "redirect:lista";
 		}
 
+		dao_turma_disciplina_docente.removeTurmaDisciplinaDocentePelaTurmaId(turma.getId());
 		dao.remove(turma);
 		return "redirect:lista";
 	}

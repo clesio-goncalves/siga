@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import siga.capau.dao.DocenteDao;
+import siga.capau.dao.TurmaDisciplinaDocenteDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Docente;
 import siga.capau.modelo.Usuario;
@@ -29,6 +30,9 @@ public class DocenteController {
 
 	@Autowired
 	UsuarioDao dao_usuario;
+
+	@Autowired
+	TurmaDisciplinaDocenteDao dao_turma_disciplina_docente;
 
 	@RequestMapping("/novo")
 	public String novoDocente(Model model) {
@@ -62,6 +66,7 @@ public class DocenteController {
 
 	@RequestMapping("/remove")
 	public String remove(Docente docente) {
+		dao_turma_disciplina_docente.removeTurmaDisciplinaDocentePeloDocenteId(docente.getId());
 		dao.remove(docente);
 		return "redirect:lista";
 	}

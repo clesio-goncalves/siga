@@ -44,4 +44,14 @@ public class TurmaDisciplinaDocenteDao {
 				.setParameter("id", id).executeUpdate();
 	}
 
+	public void removeTurmaDisciplinaDocentePelaTurmaId(Long id) {
+		manager.createQuery("delete from TurmaDisciplinaDocente tdd where tdd.turma.id = :id").setParameter("id", id)
+				.executeUpdate();
+	}
+
+	public void removeTurmaDisciplinaDocentePeloDocenteId(Long id) {
+		manager.createQuery("delete from TurmaDisciplinaDocente tdd where tdd.docente.id = :id").setParameter("id", id)
+				.executeUpdate();
+	}
+
 }

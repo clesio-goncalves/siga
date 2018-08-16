@@ -2,8 +2,6 @@ package siga.capau.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -32,8 +30,11 @@ public class DisciplinaController {
 	private List<Disciplina> lista_disciplina;
 	private List<Docente> lista_docente;
 	private Turma turma;
-	private TurmaDisciplinaDocente turma_disciplina_docente;
 	private Disciplina disciplina;
+	private Docente docente;
+	private TurmaDisciplinaDocente turma_disciplina_docente;
+	private String[] turmas_id;
+	private String[] docentes_id;
 
 	@Autowired
 	DisciplinaDao dao;
@@ -58,55 +59,38 @@ public class DisciplinaController {
 			return "redirect:/turma/nova";
 		}
 
-		disciplina.setDocente(this.lista_docente);
-		disciplina.setTurma(this.lista_turma);
-		model.addAttribute("disciplina", disciplina);
+		model.addAttribute("turmas", this.lista_turma);
+		model.addAttribute("docentes", this.lista_docente);
 		return "disciplina/novo";
 	}
 
 	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
-	public void filtrar(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-		System.out.println("Nome: " + request.getParameter("nome"));
-		System.out.println("Turma Docente: " + request.getParameter("turma_docente"));
-	}
+	public String adiciona(@Valid Disciplina disciplina, BindingResult result) throws Exception {
 
-	@RequestMapping("/adiciona2")
-	public String adiciona2(@Valid Disciplina disciplina, BindingResult result) {
-
-		System.out.println("Disciplina: " + disciplina.getNome());
-
-		System.out.println("----------------------------------------------------------------");
-
-		for (String turma : disciplina.getLista_turmas()) {
-			System.out.println("Turma: " + turma);
+		if (result.hasErrors() || dao.buscaPorNome(disciplina.getNome()).size() > 0 || disciplina.getTurmas() == null
+				|| disciplina.getDocentes() == null) {
+			return "redirect:nova";
 		}
 
-		System.out.println("----------------------------------------------------------------");
+		// Adiciona disciplina
+		this.disciplina = dao.adiciona(disciplina);
 
-		for (String docente : disciplina.getLista_docentes()) {
-			System.out.println("Turma: " + docente);
+		// Pega as turmas e diciplinas enviadas
+		this.turmas_id = disciplina.getTurmas().split(",");
+		this.docentes_id = disciplina.getDocentes().split(",");
+
+		// Intera sobre os IDs dos turmas recebidos da view
+		for (int i = 0; i < turmas_id.length; i++) {
+			this.turma = dao_turma.buscaPorId(Long.parseLong(this.turmas_id[i]));
+			this.docente = dao_docente.buscaPorId(Long.parseLong(this.docentes_id[i]));
+
+			// Adiciona os relacionamentos na tabela TurmaDisciplinaDocente
+			this.turma_disciplina_docente = new TurmaDisciplinaDocente();
+			this.turma_disciplina_docente.setDisciplina(this.disciplina);
+			this.turma_disciplina_docente.setTurma(this.turma);
+			this.turma_disciplina_docente.setDocente(this.docente);
+			this.dao_turma_disciplina_docente.adiciona(this.turma_disciplina_docente);
 		}
-
-		System.out.println("----------------------------------------------------------------");
-
-//		if (result.hasErrors() || dao.buscaPorNome(disciplina.getNome()).size() > 0
-//				|| disciplina.getLista_turmas().size() == 0) {
-//			return "redirect:nova";
-//		}
-//
-//		// Adiciona disciplina
-//		this.disciplina = dao.adiciona(disciplina);
-//
-//		// Intera sobre os IDs dos turmas recebidos da view
-//		for (String id_turma : disciplina.getLista_turmas()) {
-//			this.turma = dao_turma.buscaPorId(Long.parseLong(id_turma));
-//
-//			// Adiciona os relacionamentos na tabela TurmaDisciplina
-//			this.turma_disciplina_docente = new TurmaDisciplinaDocente();
-//			this.turma_disciplina_docente.setDisciplina(this.disciplina);
-//			this.turma_disciplina_docente.setTurma(this.turma);
-//			this.dao_turma_disciplina_docente.adiciona(this.turma_disciplina_docente);
-//		}
 
 		return "redirect:lista";
 	}
@@ -127,7 +111,7 @@ public class DisciplinaController {
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		this.disciplina = dao.buscaPorId(id);
-		this.disciplina.setTurma(dao_turma.buscaTurmaPorDisciplinaId(id));
+		// this.disciplina.setTurma(dao_turma.buscaTurmaPorDisciplinaId(id));
 
 		model.addAttribute("disciplina", this.disciplina);
 		return "disciplina/exibe";
@@ -138,7 +122,7 @@ public class DisciplinaController {
 
 		// Pega a disciplina com todos os turmas
 		this.disciplina = dao.buscaPorId(id);
-		this.disciplina.setLista_turmas(dao_turma.buscaTurmaPorDisciplinaIdString(id));
+		// this.disciplina.setLista_turmas(dao_turma.buscaTurmaPorDisciplinaIdString(id));
 		model.addAttribute("disciplina", this.disciplina);
 
 		// Pega todos os turmas
@@ -153,8 +137,8 @@ public class DisciplinaController {
 		this.lista_disciplina = dao.buscaPorNome(disciplina.getNome());
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + disciplina.getId();
-		} else if (disciplina.getLista_turmas().size() == 0) {
-			return "redirect:edita?id=" + disciplina.getId();
+//		} else if (disciplina.getLista_turmas().size() == 0) {
+//			return "redirect:edita?id=" + disciplina.getId();
 		} else if (this.lista_disciplina.size() > 0 && this.lista_disciplina.get(0).getId() != disciplina.getId()) {
 			return "redirect:edita?id=" + disciplina.getId();
 		}
@@ -167,23 +151,23 @@ public class DisciplinaController {
 
 		// Remove todos os TurmaDisciplina que não foram passados pela view e estão
 		// cadastrados
-		for (Turma turma : this.lista_turma) {
-			if (!disciplina.getLista_turmas().contains(turma.getNome())) {
-				dao_turma_disciplina_docente.removeTurmaDisciplinaDocente(turma.getId(), disciplina.getId(), null);
-			} else {
-				disciplina.getLista_turmas().remove(disciplina.getLista_turmas().indexOf(turma.getNome()));
-			}
-		}
+//		for (Turma turma : this.lista_turma) {
+//			if (!disciplina.getLista_turmas().contains(turma.getNome())) {
+//				dao_turma_disciplina_docente.removeTurmaDisciplinaDocente(turma.getId(), disciplina.getId(), null);
+//			} else {
+//				disciplina.getLista_turmas().remove(disciplina.getLista_turmas().indexOf(turma.getNome()));
+//			}
+//		}
 
-		// Insere novos turmas para a disciplina que foram recebidos da view
-		for (String nome_turma : disciplina.getLista_turmas()) {
-			this.turma = dao_turma.buscaTurmaPorNome(nome_turma);
-			// Adiciona os relacionamentos na tabela TurmaDisciplina
-			this.turma_disciplina_docente = new TurmaDisciplinaDocente();
-			this.turma_disciplina_docente.setDisciplina(disciplina);
-			this.turma_disciplina_docente.setTurma(this.turma);
-			this.dao_turma_disciplina_docente.adiciona(this.turma_disciplina_docente);
-		}
+//		// Insere novos turmas para a disciplina que foram recebidos da view
+//		for (String nome_turma : disciplina.getLista_turmas()) {
+//			this.turma = dao_turma.buscaTurmaPorNome(nome_turma);
+//			// Adiciona os relacionamentos na tabela TurmaDisciplina
+//			this.turma_disciplina_docente = new TurmaDisciplinaDocente();
+//			this.turma_disciplina_docente.setDisciplina(disciplina);
+//			this.turma_disciplina_docente.setTurma(this.turma);
+//			this.dao_turma_disciplina_docente.adiciona(this.turma_disciplina_docente);
+//		}
 
 		return "redirect:lista";
 	}
