@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +36,7 @@
 					</tr>
 
 					<tr>
-						<th>UsuÃ¡rio</th>
+						<th>Usuário</th>
 						<td>${profissional_saude.usuario.email}</td>
 					</tr>
 				</table>
@@ -54,7 +52,7 @@
 			<!-- Editar -->
 			<a
 				href="<c:url value="/profissional/edita?id=${profissional_saude.id}" />"
-				class="btn btn-info btn-lg"><span
+				class="btn btn-warning btn-lg"><span
 				class="glyphicon glyphicon-edit"></span> Editar </a>
 			<!-- Excluir -->
 			<button type="button" class="btn btn-danger btn-lg"
@@ -67,14 +65,14 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">ExclusÃ£o do Profissional da SaÃºde</h5>
+						<h5 class="modal-title">Exclusão do Profissional da Saúde</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Deseja realmente excluir o Profissional da SaÃºde <br>ID
+						<p>Deseja realmente excluir o Profissional da Saúde <br>ID
 							(${profissional_saude.id}) -> ${profissional_saude.nome}?</p>
 					</div>
 					<div class="modal-footer">

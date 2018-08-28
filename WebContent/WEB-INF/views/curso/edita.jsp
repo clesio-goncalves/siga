@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +11,8 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1 class="display-3">Editar Curso</h1>
-		<p class="lead">Preencha o formul√°rio abaixo para realizar a
-			altera√ß√£o do curso no sistema.</p>
+		<p class="lead">Preencha o formul·rio abaixo para realizar a
+			alteraÁ„o do curso no sistema.</p>
 	</div>
 </div>
 <div class="container">
@@ -25,15 +23,15 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome*</label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required value="${curso.nome}">
+			<label for="nome" class="col-form-label">Nome<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required value="${curso.nome}">
 		</div>
 
 		<security:csrfInput />
 
-		<!-- OBTIGAT√ìRIO -->
-		<label for="obrigatorio">(*) Campo obrigat√≥rio</label>
+		<!-- OBTIGAT”RIO -->
+		<label for="obrigatorio">(*) Campo obrigatÛrio</label>
 		<div>
 			<a href="<c:url value="/curso/lista" />"
 				class="btn btn-secondary btn-lg"> <span

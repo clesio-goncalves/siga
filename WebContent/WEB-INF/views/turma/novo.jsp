@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +10,7 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1 class="display-3">Cadastrar Turma</h1>
-		<p class="lead">Preencha o formulÃ¡rio abaixo para realizar o
+		<p class="lead">Preencha o formulário abaixo para realizar o
 			cadastro do turma no sistema.</p>
 	</div>
 </div>
@@ -22,7 +20,7 @@
 		<div class="form-row">
 			<!-- ANO INGRESSO -->
 			<div class="col-md-6 form-group">
-				<label class="col-form-label" for="ano_ingresso">Ano*</label>
+				<label class="col-form-label" for="ano_ingresso">Ano<span class="obrigatorio">*</span></label>
 				<div class="form-group">
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
@@ -41,10 +39,10 @@
 
 			<!-- PERIODO-->
 			<div class="col-md-6 form-group">
-				<label for="periodo_ingresso" class="col-form-label">PerÃ­odo*</label>
+				<label for="periodo_ingresso" class="col-form-label">Período<span class="obrigatorio">*</span></label>
 				<select class="custom-select" name="periodo_ingresso" required>
-					<option value="1">1Âº Semestre</option>
-					<option value="2">2Âº Semestre</option>
+					<option value="1">1º Semestre</option>
+					<option value="2">2º Semestre</option>
 				</select>
 			</div>
 
@@ -52,7 +50,7 @@
 
 		<!-- CURSO -->
 		<div class="form-group">
-			<label for="curso.id" class="col-form-label">Curso*</label>
+			<label for="curso.id" class="col-form-label">Curso<span class="obrigatorio">*</span></label>
 			<c:forEach var="curso" items="${cursos}">
 				<div class="custom-control custom-radio">
 					<input type="radio" id="${curso.id}" name="curso.id"
@@ -66,14 +64,14 @@
 
 		<security:csrfInput />
 
-		<!-- OBTIGATÃ“RIO -->
-		<label for="obrigatorio">(*) Campo obrigatÃ³rio</label>
+		<!-- OBTIGATÓRIO -->
+		<label for="obrigatorio">(*) Campo obrigatório</label>
 		<div>
 			<button type="reset" class="btn btn-secondary btn-lg">
 				<span class="glyphicon glyphicon-trash"></span> Limpar
 			</button>
 			<button type="submit" class="btn btn-primary btn-lg">
-				<span class="glyphicon glyphicon-saved"></span> Salvar
+				<span class="glyphicon glyphicon-floppy-disk"></span> Salvar
 			</button>
 		</div>
 	</form>

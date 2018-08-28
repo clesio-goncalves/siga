@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +10,7 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1 class="display-3">Cadastrar Curso</h1>
-		<p class="lead">Preencha o formul√°rio abaixo para realizar o
+		<p class="lead">Preencha o formul·rio abaixo para realizar o
 			cadastro do curso no sistema.</p>
 	</div>
 </div>
@@ -21,21 +19,21 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome*</label> <input
+			<label for="nome" class="col-form-label">Nome<span class="obrigatorio">*</span></label> <input
 				type="text" class="form-control" name="nome" autofocus
 				MAXLENGTH="255" required>
 		</div>
 
 		<security:csrfInput />
 
-		<!-- OBTIGAT√ìRIO -->
-		<label for="obrigatorio">(*) Campo obrigat√≥rio</label>
+		<!-- OBTIGAT”RIO -->
+		<label for="obrigatorio">(*) Campo obrigatÛrio</label>
 		<div>
 			<button type="reset" class="btn btn-secondary btn-lg">
 				<span class="glyphicon glyphicon-trash"></span> Limpar
 			</button>
 			<button type="submit" class="btn btn-primary btn-lg">
-				<span class="glyphicon glyphicon-saved"></span> Salvar
+				<span class="glyphicon glyphicon-floppy-disk"></span> Salvar
 			</button>
 		</div>
 	</form>

@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +12,7 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1 class="display-3">Cadastrar Servidor</h1>
-		<p class="lead">Preencha o formul√°rio abaixo para realizar o
+		<p class="lead">Preencha o formul·rio abaixo para realizar o
 			cadastro do Servidor no sistema.</p>
 	</div>
 </div>
@@ -23,21 +21,21 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo*</label> <input
+			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
 				type="text" class="form-control" name="nome" autofocus
 				MAXLENGTH="255" required>
 		</div>
 
 		<!-- SIAPE -->
-		<div class="form-group" class="col-form-label">
-			<label for="siape">SIAPE*</label> <input type="number"
-				class="form-control" name="siape" MAXLENGTH="10" required
-				onkeypress='return SomenteNumero(event)'>
+		<div class="form-group">
+			<label for="siape" class="col-form-label">SIAPE<span class="obrigatorio">*</span></label> <input
+				type="number" class="form-control" name="siape" MAXLENGTH="10"
+				required onkeypress='return SomenteNumero(event)'>
 		</div>
 
 		<!-- FUNCAO -->
 		<div class="form-group">
-			<label for="funcao" class="col-form-label">Fun√ß√£o*</label>
+			<label for="funcao" class="col-form-label">FunÁ„o<span class="obrigatorio">*</span></label>
 			<div class="custom-control custom-radio">
 				<input type="radio" id="customRadio1" name="funcao"
 					class="custom-control-input" checked="checked" required
@@ -56,28 +54,28 @@
 			</div>
 		</div>
 
-		<!-- DESCRICAO FUN√á√ÉO -->
+		<!-- DESCRICAO FUN«√O -->
 		<div class="form-group">
-			<label for="descricao_funcao" class="col-form-label">Descri√ß√£o
-				da Fun√ß√£o*</label> <input type="text" class="form-control"
+			<label for="descricao_funcao" class="col-form-label">DescriÁ„o
+				da FunÁ„o<span class="obrigatorio">*</span></label> <input type="text" class="form-control"
 				name="descricao_funcao" MAXLENGTH="255" required>
 		</div>
 
-		<!-- USU√ÅRIO-->
+		<!-- USU¡RIO-->
 		<div class="form-group" id="lista_usuarios">
 			<jsp:include page="lista_usuarios.jsp"></jsp:include>
 		</div>
 
 		<security:csrfInput />
 
-		<!-- OBTIGAT√ìRIO -->
-		<label>(*) Campos obrigat√≥rios</label>
+		<!-- OBTIGAT”RIO -->
+		<label>(*) Campos obrigatÛrios</label>
 		<div>
 			<button type="reset" class="btn btn-secondary btn-lg">
 				<span class="glyphicon glyphicon-trash"></span> Limpar
 			</button>
 			<button type="submit" class="btn btn-primary btn-lg">
-				<span class="glyphicon glyphicon-saved"></span> Salvar
+				<span class="glyphicon glyphicon-floppy-disk"></span> Salvar
 			</button>
 		</div>
 	</form>

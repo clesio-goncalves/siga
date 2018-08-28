@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +12,8 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1 class="display-3">Editar Disciplina</h1>
-		<p class="lead">Preencha o formul√°rio abaixo para realizar a
-			altera√ß√£o do disciplina no sistema.</p>
+		<p class="lead">Preencha o formul·rio abaixo para realizar a
+			alteraÁ„o do disciplina no sistema.</p>
 	</div>
 </div>
 <div class="container">
@@ -26,14 +24,14 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Disciplina*</label> <input
+			<label for="nome" class="col-form-label">Disciplina<span class="obrigatorio">*</span></label> <input
 				type="text" class="form-control" name="nome" id="nome" autofocus
 				MAXLENGTH="255" required value="${disciplina.nome}">
 		</div>
 
 		<!-- TURMAS E DOCENTES -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Turma-Docente*</label>
+			<label for="nome" class="col-form-label">Turma-Docente<span class="obrigatorio">*</span></label>
 			<table class="table table-bordered  dt-responsive nowrap"
 				style="width: 100%" id="table">
 				<thead>
@@ -68,8 +66,8 @@
 		</div>
 		<security:csrfInput />
 
-		<!-- OBTIGAT√ìRIO -->
-		<label for="obrigatorio">(*) Campo obrigat√≥rio</label>
+		<!-- OBTIGAT”RIO -->
+		<label for="obrigatorio">(*) Campo obrigatÛrio</label>
 		<div>
 			<a href="<c:url value="/disciplina/lista" />"
 				class="btn btn-secondary btn-lg"> <span

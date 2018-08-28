@@ -1,0 +1,18 @@
+body {
+	padding-top: 80px;
+}
+
+.obrigatorio {
+	color: red;
+	font-weight: bold;
+}
+
+legend {
+	border-bottom: 1px solid #ced4da;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+#form-group {
+	margin-bottom: 0.5rem;
+}

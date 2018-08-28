@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +22,7 @@
 					<tr>
 						<th>ID</th>
 						<th>Nome</th>
-						<th>Ações</th>
+						<th>A��es</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -35,51 +33,47 @@
 							<td>${curso.nome}</td>
 							<td>
 								<!-- Exibir --> <a
-								href="<c:url value="/curso/exibe?id=${curso.id}" />"
-								class="btn btn-secondary btn-sm"><span
-									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
-									access="hasRole('ROLE_Administrador')">
-									<!-- Editar -->
-									<a href="<c:url value="/curso/edita?id=${curso.id}" />"
-										class="btn btn-info btn-sm"><span
-										class="glyphicon glyphicon-edit"></span> Editar </a>
-									<button type="button" class="btn btn-danger btn-sm"
-										data-toggle="modal" data-target="#modal${curso.id}">
-										<span class="glyphicon glyphicon-trash"></span> Excluir
-									</button>
-									<div class="modal fade" id="modal${curso.id}">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title">Exclusão do curso</h5>
-													<button type="button" class="close" data-dismiss="modal"
-														aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body">
-
-													<p>
-														Deseja realmente excluir o curso<br> ID (${curso.id})
-														-> ${curso.nome}?
-													</p>
-													<strong>A exclusão não é permitida caso haja
-														turmas vinculadas a este curso</strong> <br>
-												</div>
-
-												<div class="modal-footer">
-													<a href="<c:url value="/curso/remove?id=${curso.id}" />"
-														class="btn btn-danger"><span
-														class="glyphicon glyphicon-trash"></span> Excluir</a>
-													<button type="button" class="btn btn-secondary"
-														data-dismiss="modal">
-														<span class="glyphicon glyphicon-log-out"></span> Fechar
-													</button>
-												</div>
+								href="<c:url value="/curso/exibe?id=${curso.id}"/>"
+								class="btn btn-info btn-sm" data-tooltip="tooltip"
+								data-placement="bottom" title="Exibir"> <span
+									class="glyphicon glyphicon-search"></span></a> <!-- Editar --> <a
+								href="<c:url value="/curso/edita?id=${curso.id}" />"
+								class="btn btn-warning btn-sm" data-tooltip="tooltip"
+								data-placement="bottom" title="Editar"><span
+									class="glyphicon glyphicon-pencil"></span> </a> <!-- Excluir -->
+								<button type="button" class="btn btn-danger btn-sm"
+									data-tooltip="tooltip" data-placement="bottom" title="Excluir"
+									data-toggle="modal" data-target="#modal${curso.id}">
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+								<div class="modal fade" id="modal${curso.id}">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title">Exclus�o do curso</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<p>
+													Deseja realmente excluir o Curso <br>ID (${curso.id})
+													-> ${curso.nome}?
+												</p>
+											</div>
+											<div class="modal-footer">
+												<a href="<c:url value="/curso/remove?id=${curso.id}" />"
+													class="btn btn-danger"><span
+													class="glyphicon glyphicon-trash"></span> Excluir</a>
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">
+													<span class="glyphicon glyphicon-log-out"></span> Fechar
+												</button>
 											</div>
 										</div>
 									</div>
-								</security:authorize>
+								</div>
 							</td>
 						</tr>
 					</c:forEach>

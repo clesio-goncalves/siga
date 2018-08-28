@@ -1,12 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -31,7 +29,7 @@
 								<c:if test="${param.error != null}">
 									<div class="alert alert-dismissible alert-danger">
 										<button type="button" class="close" data-dismiss="alert">&times;</button>
-										<strong>Erro!</strong> Usu√°rio e/ou senha inv√°lido. Ou usu√°rio
+										<strong>Erro!</strong> Usu·rio e/ou senha inv·lido. Ou usu·rio
 										inativo.
 									</div>
 								</c:if>

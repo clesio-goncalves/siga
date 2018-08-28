@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,10 +23,10 @@
 						<th>ID</th>
 						<th>Nome Completo</th>
 						<th>SIAPE</th>
-						<th>Fun√ß√£o</th>
-						<th>Descri√ß√£o da Fun√ß√£o</th>
-						<th>Usu√°rio</th>
-						<th>A√ß√µes</th>
+						<th>FunÁ„o</th>
+						<th>DescriÁ„o da FunÁ„o</th>
+						<th>Usu·rio</th>
+						<th>AÁıes</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -41,49 +39,51 @@
 							<td>${servidor.descricao_funcao}</td>
 							<td>${servidor.usuario.email}</td>
 
-							<!-- A√á√ïES -->
+							<!-- A«’ES -->
 							<td>
 								<!-- Exibir --> <a
-								href="<c:url value="/servidor/exibe?id=${servidor.id}" />"
-								class="btn btn-secondary btn-sm"><span
-									class="glyphicon glyphicon-zoom-in"></span> Exibir</a> <security:authorize
-									access="hasRole('ROLE_Administrador')">
-									<!-- Editar -->
-									<a href="<c:url value="/servidor/edita?id=${servidor.id}" />"
-										class="btn btn-info btn-sm"><span
-										class="glyphicon glyphicon-edit"></span> Editar </a>
-									<button type="button" class="btn btn-danger btn-sm"
-										data-toggle="modal" data-target="#modal${servidor.id}">
-										<span class="glyphicon glyphicon-trash"></span> Excluir
-									</button>
-									<div class="modal fade" id="modal${servidor.id}">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title">Exclus√£o do Servidor</h5>
-													<button type="button" class="close" data-dismiss="modal"
-														aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body">
-													<p>Deseja realmente excluir o Servidor ID<br>
-														(${servidor.id}) -> ${servidor.nome}?</p>
-												</div>
-												<div class="modal-footer">
-													<a
-														href="<c:url value="/servidor/remove?id=${servidor.id}" />"
-														class="btn btn-danger"><span
-														class="glyphicon glyphicon-trash"></span> Excluir</a>
-													<button type="button" class="btn btn-secondary"
-														data-dismiss="modal">
-														<span class="glyphicon glyphicon-log-out"></span> Fechar
-													</button>
-												</div>
+								href="<c:url value="/servidor/exibe?id=${servidor.id}"/>"
+								class="btn btn-info btn-sm" data-tooltip="tooltip"
+								data-placement="bottom" title="Exibir"> <span
+									class="glyphicon glyphicon-search"></span></a> <!-- Editar --> <a
+								href="<c:url value="/servidor/edita?id=${servidor.id}" />"
+								class="btn btn-warning btn-sm" data-tooltip="tooltip"
+								data-placement="bottom" title="Editar"><span
+									class="glyphicon glyphicon-pencil"></span> </a> <!-- Excluir -->
+								<button type="button" class="btn btn-danger btn-sm"
+									data-tooltip="tooltip" data-placement="bottom" title="Excluir"
+									data-toggle="modal" data-target="#modal${servidor.id}">
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+								<div class="modal fade" id="modal${servidor.id}">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title">Exclus„o do servidor</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<p>
+													Deseja realmente excluir o Servidor <br>ID
+													(${servidor.id}) -> ${servidor.nome}?
+												</p>
+											</div>
+											<div class="modal-footer">
+												<a
+													href="<c:url value="/servidor/remove?id=${servidor.id}" />"
+													class="btn btn-danger"><span
+													class="glyphicon glyphicon-trash"></span> Excluir</a>
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">
+													<span class="glyphicon glyphicon-log-out"></span> Fechar
+												</button>
 											</div>
 										</div>
 									</div>
-								</security:authorize>
+								</div>
 							</td>
 						</tr>
 					</c:forEach>

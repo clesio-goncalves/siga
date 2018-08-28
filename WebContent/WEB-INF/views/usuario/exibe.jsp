@@ -1,17 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Exibe os dados do usuÃ¡rio</title>
+<title>Exibe os dados do usuário</title>
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
 	<div class="card border-light mb-3">
-		<div class="card-header">Exibe os dados do usuÃ¡rio</div>
+		<div class="card-header">Exibe os dados do usuário</div>
 		<!-- Table -->
 		<div class="card-body">
 			<div class="table-responsive">
@@ -33,7 +31,7 @@
 							<td>Sim</td>
 						</c:if>
 						<c:if test="${usuario.ativo eq false}">
-							<td>NÃ£o</td>
+							<td>Não</td>
 						</c:if>
 					</tr>
 					<tr>
@@ -52,7 +50,7 @@
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 			<!-- Editar -->
 			<a href="<c:url value="/usuario/edita?id=${usuario.id}" />"
-				class="btn btn-info btn-lg"><span
+				class="btn btn-warning btn-lg"><span
 				class="glyphicon glyphicon-edit"></span> Editar </a>
 			<!-- Excluir -->
 			<button type="button" class="btn btn-danger btn-lg"
@@ -65,15 +63,17 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">ExclusÃ£o do usuÃ¡rio</h5>
+						<h5 class="modal-title">Exclusão do usuário</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Deseja realmente excluir o usuÃ¡rio <br>ID (${usuario.id}) ->
-							${usuario.email}?</p>
+						<p>
+							Deseja realmente excluir o usuário <br>ID (${usuario.id}) ->
+							${usuario.email}?
+						</p>
 					</div>
 					<div class="modal-footer">
 						<a href="<c:url value="/usuario/remove?id=${usuario.id}" />"

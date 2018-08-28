@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +6,7 @@
 <c:import url="../componentes/cabecalho_erro.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">A p√°gina acessada n√£o existe.</h1>
+		<h1 class="display-3">A p·gina acessada n„o existe.</h1>
 		<p class="lead">Entre em contato com a CTI - Campus Paulistana
 			para solucionar o problema. E-mail: cti.capau@ifpi.edu.br.</p>
 	</div>

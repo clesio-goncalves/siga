@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,15 +28,15 @@
 						<td>${servidor.siape}</td>
 					</tr>
 					<tr>
-						<th>Fun√ß√£o</th>
+						<th>FunÁ„o</th>
 						<td>${servidor.funcao}</td>
 					</tr>
 					<tr>
-						<th>Descri√ß√£o Fun√ß√£o</th>
+						<th>DescriÁ„o FunÁ„o</th>
 						<td>${servidor.descricao_funcao}</td>
 					</tr>
 					<tr>
-						<th>Usu√°rio</th>
+						<th>Usu·rio</th>
 						<td>${servidor.usuario.email}</td>
 					</tr>
 				</table>
@@ -53,7 +51,7 @@
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 			<!-- Editar -->
 			<a href="<c:url value="/servidor/edita?id=${servidor.id}" />"
-				class="btn btn-info btn-lg"><span
+				class="btn btn-warning btn-lg"><span
 				class="glyphicon glyphicon-edit"></span> Editar </a>
 			<!-- Excluir -->
 			<button type="button" class="btn btn-danger btn-lg"
@@ -66,7 +64,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Exclus√£o do Servidor</h5>
+						<h5 class="modal-title">Exclus„o do Servidor</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>

@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +9,9 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1 class="display-3">Editar Monitor</h1>
-		<p class="lead">Preencha o formul√°rio abaixo para realizar a
-			altera√ß√£o do monitor no sistema. N√£o √© permitida a altera√ß√£o do campo
-			Usu√°rio, com o objetivo de mater a consist√™ncia dos dados.</p>
+		<p class="lead">Preencha o formul·rio abaixo para realizar a
+			alteraÁ„o do monitor no sistema. N„o È permitida a alteraÁ„o do campo
+			Usu·rio, com o objetivo de mater a consistÍncia dos dados.</p>
 	</div>
 </div>
 <div class="container">
@@ -24,7 +22,7 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo*</label> <input
+			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
 				type="text" class="form-control" name="nome" autofocus
 				MAXLENGTH="255" required="required" value="${monitor.nome}">
 		</div>
@@ -38,7 +36,7 @@
 
 		<!-- DISCIPLINA -->
 		<div class="form-group">
-			<label for="disciplina.id" class="col-form-label">Disciplina*</label>
+			<label for="disciplina.id" class="col-form-label">Disciplina<span class="obrigatorio">*</span></label>
 			<select class="custom-select" name="disciplina.id"
 				required="required">
 				<c:forEach var="disciplina" items="${disciplinas}">
@@ -48,10 +46,10 @@
 			</select>
 		</div>
 
-		<!-- USU√ÅRIO-->
+		<!-- USU¡RIO-->
 		<input type="hidden" name="usuario.id" value="${monitor.usuario.id}" />
 		<div class="form-group">
-			<label class="col-form-label">Usu√°rio*</label> <select
+			<label class="col-form-label">Usu·rio<span class="obrigatorio">*</span></label> <select
 				class="custom-select" required="required" disabled="disabled">
 				<option value="" selected>${monitor.usuario.email}</option>
 			</select>
@@ -59,8 +57,8 @@
 
 		<security:csrfInput />
 
-		<!-- OBTIGAT√ìRIO -->
-		<label>(*) Campos obrigat√≥rios</label>
+		<!-- OBTIGAT”RIO -->
+		<label>(*) Campos obrigatÛrios</label>
 
 		<div>
 			<a href="<c:url value="/monitor/lista" />"
