@@ -25,24 +25,26 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required value="${profissional_saude.nome}">
+			<label for="nome" class="col-form-label">Nome Completo<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required
+				value="${profissional_saude.nome}">
 		</div>
 
 		<!-- SIAPE -->
 		<div class="form-group">
-			<label for="siape" class="col-form-label">SIAPE<span class="obrigatorio">*</span></label> <input
-				type="number" class="form-control" name="siape" MAXLENGTH="10"
-				required onkeypress='return SomenteNumero(event)'
-				value="${profissional_saude.siape}">
+			<label for="siape" class="col-form-label">SIAPE<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="siape" MAXLENGTH="11" required
+				value="${profissional_saude.siape}" data-mask="99999999999">
 		</div>
 
 		<!-- TIPO DE PROFISSIONAL -->
 		<input type="hidden" name="tipo_profissional"
 			value="${profissional_saude.tipo_profissional}" />
 		<div class="form-group">
-			<label class="col-form-label">Tipo de Profissional<span class="obrigatorio">*</span></label>
+			<label class="col-form-label">Tipo de Profissional<span
+				class="obrigatorio">*</span></label>
 			<div class="custom-control custom-radio">
 				<input type="radio" id="customRadio1" class="custom-control-input"
 					checked disabled="disabled" required value=""> <label
@@ -54,8 +56,9 @@
 		<input type="hidden" name="usuario.id"
 			value="${profissional_saude.usuario.id}" />
 		<div class="form-group">
-			<label class="col-form-label">Usuário<span class="obrigatorio">*</span></label> <select
-				class="custom-select" required disabled="disabled">
+			<label class="col-form-label">Usuário<span
+				class="obrigatorio">*</span></label> <select class="custom-select" required
+				disabled="disabled">
 				<option value="" selected>${profissional_saude.usuario.email}</option>
 			</select>
 		</div>
@@ -76,6 +79,4 @@
 	</form>
 </div>
 
-<script type="text/javascript"
-	src="<c:url value="/resources/js/SomenteNumero.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

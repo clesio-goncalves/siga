@@ -26,9 +26,8 @@
 
 		<!-- SIAPE -->
 		<div class="form-group">
-			<label for="siape" class="col-form-label">SIAPE<span class="obrigatorio">*</span></label> <input type="number"
-				class="form-control" name="siape" MAXLENGTH="10" required
-				onkeypress='return SomenteNumero(event)'>
+			<label for="siape" class="col-form-label">SIAPE<span class="obrigatorio">*</span></label> <input type="text"
+				class="form-control" name="siape" MAXLENGTH="11" required data-mask="99999999999">
 		</div>
 
 		<!-- USUÁRIO-->

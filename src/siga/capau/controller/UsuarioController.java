@@ -6,7 +6,6 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,14 +29,14 @@ public class UsuarioController {
 	@Autowired
 	PerfilDao dao_perfil;
 
-	@Secured("hasRole('ROLE_Administrador')")
+	// @Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/novo")
 	public String novoUsuario(Model model) {
 		model.addAttribute("perfis", dao_perfil.lista());
 		return "usuario/novo";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
+	// @Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/adiciona")
 	public String adiciona(@Valid Usuario usuario, BindingResult result) {
 
@@ -62,7 +61,7 @@ public class UsuarioController {
 		return "usuario/lista";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
+	// @Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/remove")
 	public String remove(Usuario usuario) {
 		dao.remove(usuario);
@@ -75,7 +74,7 @@ public class UsuarioController {
 		return "usuario/exibe";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
+	// @Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 
@@ -84,7 +83,7 @@ public class UsuarioController {
 		return "usuario/edita";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
+	// @Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/altera")
 	public String altera(@Valid Usuario usuario, BindingResult result) {
 		this.lista_usuario = dao.buscaPorEmail(usuario.getEmail());

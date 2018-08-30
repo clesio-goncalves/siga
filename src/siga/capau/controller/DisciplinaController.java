@@ -27,6 +27,7 @@ import siga.capau.modelo.TurmaDisciplinaDocente;
 public class DisciplinaController {
 
 	private List<Turma> lista_turma;
+	private List<Long> lista_id_turma;
 	private List<Disciplina> lista_disciplina;
 	private List<Docente> lista_docente;
 	private Turma turma;
@@ -67,8 +68,13 @@ public class DisciplinaController {
 	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
 	public String adiciona(@Valid Disciplina disciplina, BindingResult result) throws Exception {
 
-		if (result.hasErrors() || dao.buscaPorNome(disciplina.getNome()).size() > 0 || disciplina.getTurmas() == null
-				|| disciplina.getDocentes() == null) {
+		if (result.hasErrors()) {
+			return "redirect:nova";
+		} else if (dao.buscaPorNome(disciplina.getNome()).size() > 0) {
+			return "redirect:nova";
+		} else if (disciplina.getTurmas() == null) {
+			return "redirect:nova";
+		} else if (disciplina.getDocentes() == null) {
 			return "redirect:nova";
 		}
 
@@ -126,31 +132,82 @@ public class DisciplinaController {
 		model.addAttribute("turmas_docentes",
 				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorDisciplinaId(id));
 
-		// Pega todas as turmas e docentes
-		model.addAttribute("turmas", dao_turma.lista());
-		model.addAttribute("docentes", dao_docente.lista());
+		// Pega todas as turmas e docentes sem vinculo com TurmaDisciplinaDocente
+		model.addAttribute("turmas_sem_vinculo", dao_turma.buscaTurmaSemVinculoEmTurmaDisciplinaDocente());
+		model.addAttribute("docentes_sem_vinculo", dao_docente.buscaDocenteSemVinculoEmTurmaDisciplinaDocente());
 
 		return "disciplina/edita";
 	}
 
-	@RequestMapping("/altera")
+	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	public String altera(@Valid Disciplina disciplina, BindingResult result) {
 		this.lista_disciplina = dao.buscaPorNome(disciplina.getNome());
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + disciplina.getId();
-//		} else if (disciplina.getLista_turmas().size() == 0) {
-//			return "redirect:edita?id=" + disciplina.getId();
 		} else if (this.lista_disciplina.size() > 0 && this.lista_disciplina.get(0).getId() != disciplina.getId()) {
+			return "redirect:edita?id=" + disciplina.getId();
+		} else if (disciplina.getTurmas() == null) {
+			return "redirect:edita?id=" + disciplina.getId();
+		} else if (disciplina.getDocentes() == null) {
 			return "redirect:edita?id=" + disciplina.getId();
 		}
 
 		// Altera a disciplina
 		dao.altera(disciplina);
 
-		// Buscar todos os turmas por disciplina
+		// Pega as turmas e diciplinas enviadas
+		this.turmas_id = disciplina.getTurmas().split(",");
+		this.docentes_id = disciplina.getDocentes().split(",");
+
+		// Buscar todos as turmas ID por disciplina
+		this.lista_id_turma = dao_turma_disciplina_docente.buscaTurmaPorDisciplinaId(disciplina.getId());
+
+		// Adiciona ou altera todos as TurmaDisciplinaDocente foram passados pela view e
+		for (int i = 0; i < turmas_id.length; i++) {
+			this.turma = dao_turma.buscaPorId(Long.parseLong(this.turmas_id[i]));
+			this.docente = dao_docente.buscaPorId(Long.parseLong(this.docentes_id[i]));
+
+			// Se a turma tiver cadastrada, só altera o docente
+			if (this.lista_id_turma.contains(Long.parseLong(this.turmas_id[i]))) {
+
+			} else { // Se a turma não tiver cadastrada, cadastrá-la
+
+				// Adiciona os relacionamentos na tabela TurmaDisciplinaDocente
+				this.turma_disciplina_docente = new TurmaDisciplinaDocente();
+				this.turma_disciplina_docente.setDisciplina(this.lista_disciplina.get(0));
+				this.turma_disciplina_docente.setTurma(this.turma);
+				this.turma_disciplina_docente.setDocente(this.docente);
+				this.dao_turma_disciplina_docente.adiciona(this.turma_disciplina_docente);
+			}
+
+			// Remove da lista_id_turma
+			this.lista_id_turma.remove(this.lista_id_turma.indexOf(Long.parseLong(this.turmas_id[i])));
+		}
+
+		// -------------
+
+		// Intera sobre os IDs dos turmas recebidos da view
+		for (int i = 0; i < turmas_id.length; i++) {
+
+			// Remove todos as TurmaDisciplinaDocente que não foram passados pela view e
+			// estão cadastradas
+
+			this.turma = dao_turma.buscaPorId(Long.parseLong(this.turmas_id[i]));
+			this.docente = dao_docente.buscaPorId(Long.parseLong(this.docentes_id[i]));
+
+			// Adiciona os relacionamentos na tabela TurmaDisciplinaDocente
+			this.turma_disciplina_docente = new TurmaDisciplinaDocente();
+			this.turma_disciplina_docente.setDisciplina(this.lista_disciplina.get(0));
+			this.turma_disciplina_docente.setTurma(this.turma);
+			this.turma_disciplina_docente.setDocente(this.docente);
+			this.dao_turma_disciplina_docente.adiciona(this.turma_disciplina_docente);
+		}
+
+		// Buscar todos as turmas por disciplina
 		// this.lista_turma = dao_turma.buscaTurmaPorDisciplinaId(disciplina.getId());
 
-		// Remove todos os TurmaDisciplina que não foram passados pela view e estão
+		// Remove todos as TurmaDisciplinaDocente que não foram passados pela view e
+		// estão
 		// cadastrados
 //		for (Turma turma : this.lista_turma) {
 //			if (!disciplina.getLista_turmas().contains(turma.getNome())) {

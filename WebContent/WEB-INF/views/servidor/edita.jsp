@@ -25,17 +25,18 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required value="${servidor.nome}">
+			<label for="nome" class="col-form-label">Nome Completo<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required
+				value="${servidor.nome}">
 		</div>
 
 		<!-- SIAPE -->
 		<div class="form-group">
-			<label for="siape" class="col-form-label">SIAPE<span class="obrigatorio">*</span></label> <input
-				type="number" class="form-control" name="siape" MAXLENGTH="10"
-				required onkeypress='return SomenteNumero(event)'
-				value="${servidor.siape}">
+			<label for="siape" class="col-form-label">SIAPE<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="siape" MAXLENGTH="11" required value="${servidor.siape}"
+				data-mask="99999999999">
 		</div>
 
 		<!-- FUNCAO -->
@@ -52,16 +53,17 @@
 		<!-- DESCRICAO FUNÇÃO -->
 		<div class="form-group">
 			<label for="descricao_funcao" class="col-form-label">Descrição
-				da Função<span class="obrigatorio">*</span></label> <input type="text" class="form-control"
-				name="descricao_funcao" MAXLENGTH="255" required
-				value="${servidor.descricao_funcao}">
+				da Função<span class="obrigatorio">*</span>
+			</label> <input type="text" class="form-control" name="descricao_funcao"
+				MAXLENGTH="255" required value="${servidor.descricao_funcao}">
 		</div>
 
 		<!-- USUÁRIO -->
 		<input type="hidden" name="usuario.id" value="${servidor.usuario.id}" />
 		<div class="form-group">
-			<label class="col-form-label">Usuário<span class="obrigatorio">*</span></label> <select
-				class="custom-select" required disabled>
+			<label class="col-form-label">Usuário<span
+				class="obrigatorio">*</span></label> <select class="custom-select" required
+				disabled>
 				<option value="" selected>${servidor.usuario.email}</option>
 			</select>
 		</div>
@@ -82,6 +84,4 @@
 	</form>
 </div>
 
-<script type="text/javascript"
-	src="<c:url value="/resources/js/SomenteNumero.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

@@ -21,14 +21,15 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Disciplina<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" id="nome" autofocus
-				MAXLENGTH="255" required>
+			<label for="nome" class="col-form-label">Disciplina<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" id="nome" autofocus MAXLENGTH="255" required>
 		</div>
 
 		<!-- TURMAS E DOCENTES -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Turma-Docente<span class="obrigatorio">*</span></label>
+			<label for="nome" class="col-form-label">Turma-Docente<span
+				class="obrigatorio">*</span></label>
 			<table class="table table-bordered  dt-responsive nowrap"
 				style="width: 100%" id="table">
 				<thead>
@@ -42,7 +43,7 @@
 						<tr>
 							<td>
 								<div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input"
+									<input type="checkbox" class="custom-control-input checkBox"
 										id="turma${turma.id}" name="turmas" value="${turma.id}">
 									<label class="custom-control-label" for="turma${turma.id}">${turma.nome}</label>
 								</div>
@@ -51,7 +52,7 @@
 								class="selectpicker show-tick form-control"
 								data-live-search="true" multiple data-max-options="1"
 								title="Selecione um docente"
-								data-live-search-placeholder="Pesquisar">
+								data-live-search-placeholder="Pesquisar" id="docente${turma.id}">
 									<c:forEach var="docente" items="${docentes}">
 										<option value="${docente.id}">${docente.siape}-${docente.nome}</option>
 									</c:forEach>

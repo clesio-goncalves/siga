@@ -24,24 +24,26 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required value="${docente.nome}">
+			<label for="nome" class="col-form-label">Nome Completo<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required
+				value="${docente.nome}">
 		</div>
 
 		<!-- SIAPE -->
 		<div class="form-group">
-			<label for="siape" class="col-form-label">SIAPE<span class="obrigatorio">*</span></label> <input
-				type="number" class="form-control" name="siape" MAXLENGTH="10"
-				required onkeypress='return SomenteNumero(event)'
-				value="${docente.siape}">
+			<label for="siape" class="col-form-label">SIAPE<span
+				class="obrigatorio">*</span></label> <input type="text"
+				class="form-control" name="siape" MAXLENGTH="10" required
+				data-mask="99999999999" value="${docente.siape}">
 		</div>
 
 		<!-- USUÁRIO -->
 		<input type="hidden" name="usuario.id" value="${docente.usuario.id}" />
 		<div class="form-group">
-			<label class="col-form-label">Usuário<span class="obrigatorio">*</span></label> <select
-				class="custom-select" required disabled>
+			<label class="col-form-label">Usuário<span
+				class="obrigatorio">*</span></label> <select class="custom-select" required
+				disabled>
 				<option value="" selected>${docente.usuario.email}</option>
 			</select>
 		</div>

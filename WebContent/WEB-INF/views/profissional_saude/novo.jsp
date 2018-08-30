@@ -21,22 +21,23 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required>
+			<label for="nome" class="col-form-label">Nome Completo<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required>
 		</div>
 
 		<!-- SIAPE -->
 		<div class="form-group">
-			<label for="siape" class="col-form-label">SIAPE<span class="obrigatorio">*</span></label> <input
-				type="number" class="form-control" name="siape" MAXLENGTH="10"
-				required onkeypress='return SomenteNumero(event)'>
+			<label for="siape" class="col-form-label">SIAPE<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="siape" MAXLENGTH="11" required data-mask="99999999999">
 		</div>
 
 		<!-- TIPO PROFISSIONAL -->
 		<div class="form-group">
 			<label for="tipo_profissional" class="col-form-label">Tipo de
-				Profissional<span class="obrigatorio">*</span></label>
+				Profissional<span class="obrigatorio">*</span>
+			</label>
 			<div class="custom-control custom-radio">
 				<input type="radio" id="customRadio1" name="tipo_profissional"
 					class="custom-control-input" checked="checked" required
@@ -82,8 +83,6 @@
 	</form>
 </div>
 
-<script type="text/javascript"
-	src="<c:url value="/resources/js/SomenteNumero.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/filtro_cadastro/filtroCadProfissional.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

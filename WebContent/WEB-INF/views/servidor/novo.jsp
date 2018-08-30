@@ -21,21 +21,22 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required>
+			<label for="nome" class="col-form-label">Nome Completo<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required>
 		</div>
 
 		<!-- SIAPE -->
 		<div class="form-group">
-			<label for="siape" class="col-form-label">SIAPE<span class="obrigatorio">*</span></label> <input
-				type="number" class="form-control" name="siape" MAXLENGTH="10"
-				required onkeypress='return SomenteNumero(event)'>
+			<label for="siape" class="col-form-label">SIAPE<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="siape" MAXLENGTH="11" required data-mask="99999999999">
 		</div>
 
 		<!-- FUNCAO -->
 		<div class="form-group">
-			<label for="funcao" class="col-form-label">Função<span class="obrigatorio">*</span></label>
+			<label for="funcao" class="col-form-label">Função<span
+				class="obrigatorio">*</span></label>
 			<div class="custom-control custom-radio">
 				<input type="radio" id="customRadio1" name="funcao"
 					class="custom-control-input" checked="checked" required
@@ -57,8 +58,9 @@
 		<!-- DESCRICAO FUNÇÃO -->
 		<div class="form-group">
 			<label for="descricao_funcao" class="col-form-label">Descrição
-				da Função<span class="obrigatorio">*</span></label> <input type="text" class="form-control"
-				name="descricao_funcao" MAXLENGTH="255" required>
+				da Função<span class="obrigatorio">*</span>
+			</label> <input type="text" class="form-control" name="descricao_funcao"
+				MAXLENGTH="255" required>
 		</div>
 
 		<!-- USUÁRIO-->
@@ -81,8 +83,6 @@
 	</form>
 </div>
 
-<script type="text/javascript"
-	src="<c:url value="/resources/js/SomenteNumero.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/filtro_cadastro/filtroCadServidor.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

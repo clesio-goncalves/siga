@@ -33,15 +33,13 @@ public class TurmaDisciplinaDocenteDao {
 				TurmaDisciplinaDocente.class).setParameter("id", id).getResultList();
 	}
 
-	public TurmaDisciplinaDocente buscaPorId(Long id) {
-		return manager.find(TurmaDisciplinaDocente.class, id);
+	public List<Long> buscaTurmaPorDisciplinaId(Long id) {
+		return manager.createQuery("select tdd.turma.id from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :id",
+				Long.class).setParameter("id", id).getResultList();
 	}
 
-	public void removeTurmaDisciplinaDocente(Long turma_id, Long disciplina_id, Long docente_id) {
-		manager.createQuery(
-				"delete from TurmaDisciplinaDocente tdd where tdd.turma.id = :turma_id and tdd.disciplina.id = :disciplina_id and tdd.docente.id = :docente_id")
-				.setParameter("turma_id", turma_id).setParameter("disciplina_id", disciplina_id)
-				.setParameter("docente_id", docente_id).executeUpdate();
+	public TurmaDisciplinaDocente buscaPorId(Long id) {
+		return manager.find(TurmaDisciplinaDocente.class, id);
 	}
 
 	public void removeTurmaDisciplinaDocentePelaDisciplinaId(Long id) {

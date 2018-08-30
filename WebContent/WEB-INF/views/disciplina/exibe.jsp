@@ -13,10 +13,11 @@
 		<!-- Table -->
 		<div class="card-body">
 			<div class="table-responsive">
+				<legend style="margin-top: 0;">INFORMAÇÕES DA DISCIPLINA</legend>
 				<table
 					class="table table-striped table-bordered dt-responsive nowrap">
 					<tr>
-						<th width="300">ID</th>
+						<th width="30%">ID</th>
 						<td>${disciplina.id}</td>
 					</tr>
 					<tr>
@@ -25,18 +26,30 @@
 					</tr>
 				</table>
 			</div>
-			<h3>Turmas e Docentes</h3>
-			<ul class="list-group">
-				<c:forEach var="turma_docente" items="${turmas_docentes}">
-					<li class="list-group-item d-flex align-items-center"><a
-						href="<c:url value="/turma/exibe?id=${turma_docente.turma.id}" />"
-						class="alert-link">${turma_docente.turma.nome}</a> &emsp; <span
-						class="glyphicon glyphicon-arrow-right"></span>&emsp; <a
-						href="<c:url value="/docente/exibe?id=${turma_docente.docente.id}" />"
-						class="alert-link">${turma_docente.docente.nome}</a></li>
-				</c:forEach>
-			</ul>
-
+			<legend>TURMAS E DISCIPLINAS</legend>
+			<div class="table-responsive">
+				<table class="table table-hover table-bordered dt-responsive nowrap"
+					style="width: 100%; margin-top: 10px;">
+					<thead>
+						<tr>
+							<th width="50%">Turma</th>
+							<th>Docente</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="turma_docente" items="${turmas_docentes}">
+							<tr>
+								<td><a
+									href="<c:url value="/turma/exibe?id=${turma_docente.turma.id}" />"
+									class="alert-link">${turma_docente.turma.nome}</a></td>
+								<td><a
+									href="<c:url value="/docente/exibe?id=${turma_docente.docente.id}" />"
+									class="alert-link">${turma_docente.docente.nome}</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	<div align="center">

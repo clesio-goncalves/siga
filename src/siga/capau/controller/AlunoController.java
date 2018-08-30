@@ -6,7 +6,6 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,7 +33,6 @@ public class AlunoController {
 	@Autowired
 	UsuarioDao dao_usuario;
 
-	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/novo")
 	public String novoAluno(Model model) {
 		this.lista_turma = dao_turma.lista();
@@ -46,7 +44,6 @@ public class AlunoController {
 		return "aluno/novo";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/adiciona")
 	public String adiciona(@Valid Aluno aluno, BindingResult result) {
 
@@ -70,7 +67,6 @@ public class AlunoController {
 		return "aluno/lista";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/remove")
 	public String remove(Aluno aluno) {
 		dao.remove(aluno);
@@ -83,7 +79,6 @@ public class AlunoController {
 		return "aluno/exibe";
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 
@@ -99,7 +94,6 @@ public class AlunoController {
 
 	}
 
-	@Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/altera")
 	public String altera(@Valid Aluno aluno, BindingResult result) {
 

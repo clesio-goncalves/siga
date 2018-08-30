@@ -32,6 +32,12 @@ public class DocenteDao {
 				.setParameter("siape", siape).getResultList();
 	}
 
+	public List<Docente> buscaDocenteSemVinculoEmTurmaDisciplinaDocente() {
+		return manager.createQuery(
+				"select d from Docente d where d.id not in (select tdd.docente.id from TurmaDisciplinaDocente tdd)",
+				Docente.class).getResultList();
+	}
+
 	public Docente buscaPorId(Long id) {
 		return manager.find(Docente.class, id);
 	}
