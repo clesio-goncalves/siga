@@ -64,7 +64,7 @@ public class UsuarioController {
 	// @Secured("hasRole('ROLE_Administrador')")
 	@RequestMapping("/remove")
 	public String remove(Usuario usuario) {
-		dao.remove(usuario);
+		dao.remove(usuario.getId());
 		return "redirect:lista";
 	}
 

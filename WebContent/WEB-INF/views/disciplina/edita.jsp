@@ -75,10 +75,10 @@
 							<td>
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
-										id="turma_sem_vinculo${turma_sem_vinculo.id}" name="turmas"
-										value="${turmas_docente.turma.id}"> <label
+										id="turma${turma_sem_vinculo.id}" name="turmas"
+										value="${turma_sem_vinculo.id}"> <label
 										class="custom-control-label"
-										for="turma_sem_vinculo${turma_sem_vinculo.id}">${turma_sem_vinculo.nome}</label>
+										for="turma${turma_sem_vinculo.id}">${turma_sem_vinculo.nome}</label>
 								</div>
 							</td>
 							<td><select name="docentes"

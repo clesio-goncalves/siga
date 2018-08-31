@@ -37,8 +37,8 @@ public class DisciplinaDao {
 		return manager.find(Disciplina.class, id);
 	}
 
-	public void remove(Disciplina disciplina) {
-		manager.remove(buscaPorId(disciplina.getId()));
+	public void remove(Long id) {
+		manager.createQuery("delete from Disciplina d where d.id = :id").setParameter("id", id).executeUpdate();
 	}
 
 }

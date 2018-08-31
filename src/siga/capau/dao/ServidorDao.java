@@ -36,8 +36,8 @@ public class ServidorDao {
 		return manager.find(Servidor.class, id);
 	}
 
-	public void remove(Servidor servidor) {
-		manager.remove(buscaPorId(servidor.getId()));
+	public void remove(Long id) {
+		manager.createQuery("delete from Servidor s where s.id = :id").setParameter("id", id).executeUpdate();
 	}
 
 }

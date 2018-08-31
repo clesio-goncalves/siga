@@ -74,7 +74,7 @@ public class MonitorController {
 
 	@RequestMapping("/remove")
 	public String remove(Monitor monitor) {
-		dao.remove(monitor);
+		dao.remove(monitor.getId());
 		return "redirect:lista";
 	}
 

@@ -69,7 +69,7 @@ public class AlunoController {
 
 	@RequestMapping("/remove")
 	public String remove(Aluno aluno) {
-		dao.remove(aluno);
+		dao.remove(aluno.getId());
 		return "redirect:lista";
 	}
 

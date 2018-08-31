@@ -91,7 +91,7 @@ public class TurmaController {
 		}
 
 		dao_turma_disciplina_docente.removeTurmaDisciplinaDocentePelaTurmaId(turma.getId());
-		dao.remove(turma);
+		dao.remove(turma.getId());
 		return "redirect:lista";
 	}
 

@@ -36,8 +36,8 @@ public class ProfissionalSaudeDao {
 		return manager.find(ProfissionalSaude.class, id);
 	}
 
-	public void remove(ProfissionalSaude profissional_saude) {
-		manager.remove(buscaPorId(profissional_saude.getId()));
+	public void remove(Long id) {
+		manager.createQuery("delete from ProfissionalSaude p where p.id = :id").setParameter("id", id).executeUpdate();
 	}
 
 }

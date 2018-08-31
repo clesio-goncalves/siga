@@ -15,17 +15,18 @@ public class TurmaDisciplinaDocenteDao {
 	@PersistenceContext
 	private EntityManager manager;
 
-	public void adiciona(TurmaDisciplinaDocente turma_disciplina_docente) {
-		manager.persist(turma_disciplina_docente);
+	public void adiciona(Long disicplina_id, Long turma_id, Long docente_id) {
+		manager.createNativeQuery(
+				"insert into TurmaDisciplinaDocente (disciplina_id, turma_id, docente_id) values (:disicplina_id, :turma_id, :docente_id)")
+				.setParameter("disicplina_id", disicplina_id).setParameter("turma_id", turma_id)
+				.setParameter("docente_id", docente_id).executeUpdate();
 	}
 
-	public void altera(TurmaDisciplinaDocente turma_disciplina_docente) {
-		manager.merge(turma_disciplina_docente);
-	}
-
-	public List<TurmaDisciplinaDocente> lista() {
-		return manager.createQuery("select tdd from TurmaDisciplinaDocente tdd", TurmaDisciplinaDocente.class)
-				.getResultList();
+	public void alteraDocente(Long disicplina_id, Long turma_id, Long docente_id) {
+		manager.createQuery(
+				"update TurmaDisciplinaDocente tdd set tdd.docente.id = :docente_id where tdd.disciplina.id = :disicplina_id and tdd.turma.id = :turma_id")
+				.setParameter("docente_id", docente_id).setParameter("disicplina_id", disicplina_id)
+				.setParameter("turma_id", turma_id).executeUpdate();
 	}
 
 	public List<TurmaDisciplinaDocente> buscaTurmaDisciplinaDocentePorDisciplinaId(Long id) {
@@ -36,10 +37,6 @@ public class TurmaDisciplinaDocenteDao {
 	public List<Long> buscaTurmaPorDisciplinaId(Long id) {
 		return manager.createQuery("select tdd.turma.id from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :id",
 				Long.class).setParameter("id", id).getResultList();
-	}
-
-	public TurmaDisciplinaDocente buscaPorId(Long id) {
-		return manager.find(TurmaDisciplinaDocente.class, id);
 	}
 
 	public void removeTurmaDisciplinaDocentePelaDisciplinaId(Long id) {
@@ -55,6 +52,12 @@ public class TurmaDisciplinaDocenteDao {
 	public void removeTurmaDisciplinaDocentePeloDocenteId(Long id) {
 		manager.createQuery("delete from TurmaDisciplinaDocente tdd where tdd.docente.id = :id").setParameter("id", id)
 				.executeUpdate();
+	}
+
+	public void removeTurmaDisciplinaDocentePelaDisciplinaIdAndTurmaId(Long disciplina_id, Long turma_id) {
+		manager.createQuery(
+				"delete from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :disciplina_id and tdd.turma.id = :turma_id")
+				.setParameter("disciplina_id", disciplina_id).setParameter("turma_id", turma_id).executeUpdate();
 	}
 
 }

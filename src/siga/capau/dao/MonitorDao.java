@@ -36,8 +36,8 @@ public class MonitorDao {
 		return manager.find(Monitor.class, id);
 	}
 
-	public void remove(Monitor monitor) {
-		manager.remove(buscaPorId(monitor.getId()));
+	public void remove(Long id) {
+		manager.createQuery("delete from Monitor m where m.id = :id").setParameter("id", id).executeUpdate();
 	}
 
 }

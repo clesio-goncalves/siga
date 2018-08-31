@@ -63,7 +63,7 @@ public class ServidorController {
 
 	@RequestMapping("/remove")
 	public String remove(Servidor servidor) {
-		dao.remove(servidor);
+		dao.remove(servidor.getId());
 		return "redirect:lista";
 	}
 

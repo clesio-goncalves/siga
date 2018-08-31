@@ -64,7 +64,7 @@ public class ProfissionalSaudeController {
 
 	@RequestMapping("/remove")
 	public String remove(ProfissionalSaude profissionalSaude) {
-		dao.remove(profissionalSaude);
+		dao.remove(profissionalSaude.getId());
 		return "redirect:lista";
 	}
 

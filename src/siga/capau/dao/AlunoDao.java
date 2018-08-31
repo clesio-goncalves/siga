@@ -30,9 +30,9 @@ public class AlunoDao {
 	public Aluno buscaPorId(Long id) {
 		return manager.find(Aluno.class, id);
 	}
-
-	public void remove(Aluno aluno) {
-		manager.remove(buscaPorId(aluno.getId()));
+	
+	public void remove(Long id) {
+		manager.createQuery("delete from Aluno a where a.id = :id").setParameter("id", id).executeUpdate();
 	}
 
 	public List<Aluno> buscaAlunosPorTurma(Long id) {

@@ -32,18 +32,18 @@ public class DocenteDao {
 				.setParameter("siape", siape).getResultList();
 	}
 
-	public List<Docente> buscaDocenteSemVinculoEmTurmaDisciplinaDocente() {
+	public List<Docente> buscaDocenteSemVinculoEmTurmaDisciplinaDocente(Long disciplina_id) {
 		return manager.createQuery(
-				"select d from Docente d where d.id not in (select tdd.docente.id from TurmaDisciplinaDocente tdd)",
-				Docente.class).getResultList();
+				"select d from Docente d where d.id not in (select tdd.docente.id from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :disciplina_id)",
+				Docente.class).setParameter("disciplina_id", disciplina_id).getResultList();
 	}
 
 	public Docente buscaPorId(Long id) {
 		return manager.find(Docente.class, id);
 	}
 
-	public void remove(Docente docente) {
-		manager.remove(buscaPorId(docente.getId()));
+	public void remove(Long id) {
+		manager.createQuery("delete from Docente d where d.id = :id").setParameter("id", id).executeUpdate();
 	}
 
 }

@@ -67,7 +67,7 @@ public class DocenteController {
 	@RequestMapping("/remove")
 	public String remove(Docente docente) {
 		dao_turma_disciplina_docente.removeTurmaDisciplinaDocentePeloDocenteId(docente.getId());
-		dao.remove(docente);
+		dao.remove(docente.getId());
 		return "redirect:lista";
 	}
 

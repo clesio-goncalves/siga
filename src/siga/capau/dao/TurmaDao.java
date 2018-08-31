@@ -36,9 +36,11 @@ public class TurmaDao {
 		return manager.createQuery("select t from Turma as t where t.curso.id = :id", Turma.class)
 				.setParameter("id", id).getResultList();
 	}
-	
-	public List<Turma> buscaTurmaSemVinculoEmTurmaDisciplinaDocente(){
-		return manager.createQuery("select t from Turma t where t.id not in (select tdd.turma.id from TurmaDisciplinaDocente tdd)", Turma.class).getResultList();
+
+	public List<Turma> buscaTurmaSemVinculoEmTurmaDisciplinaDocente(Long disciplina_id) {
+		return manager.createQuery(
+				"select t from Turma t where t.id not in (select tdd.turma.id from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :disciplina_id)",
+				Turma.class).setParameter("disciplina_id", disciplina_id).getResultList();
 	}
 
 	// Pode ser usada no futuro
@@ -52,8 +54,8 @@ public class TurmaDao {
 		return manager.find(Turma.class, id);
 	}
 
-	public void remove(Turma turma) {
-		manager.remove(buscaPorId(turma.getId()));
+	public void remove(Long id) {
+		manager.createQuery("delete from Turma t where t.id = :id").setParameter("id", id).executeUpdate();
 	}
 
 }

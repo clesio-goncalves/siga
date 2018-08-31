@@ -88,8 +88,8 @@ public class UsuarioDao implements UserDetailsService {
 		return manager.find(Usuario.class, id);
 	}
 
-	public void remove(Usuario usuario) {
-		manager.remove(buscaPorId(usuario.getId()));
+	public void remove(Long id) {
+		manager.createQuery("delete from Usuario u where u.id = :id").setParameter("id", id).executeUpdate();
 	}
 
 	@Override

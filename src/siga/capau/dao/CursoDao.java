@@ -41,8 +41,8 @@ public class CursoDao {
 		return manager.find(Curso.class, id);
 	}
 
-	public void remove(Curso curso) {
-		manager.remove(buscaPorId(curso.getId()));
+	public void remove(Long id) {
+		manager.createQuery("delete from Curso c where c.id = :id").setParameter("id", id).executeUpdate();
 	}
 
 }

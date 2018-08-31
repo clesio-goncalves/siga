@@ -61,7 +61,7 @@ public class CursoController {
 			return "redirect:lista";
 		}
 
-		dao.remove(curso);
+		dao.remove(curso.getId());
 		return "redirect:lista";
 	}
 
