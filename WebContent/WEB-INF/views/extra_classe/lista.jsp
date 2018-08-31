@@ -4,14 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Listar Turmas</title>
+<title>Atendimentos Extra Classes</title>
 <c:import url="../componentes/css_data_table.jsp" />
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
 
 	<div class="card border-light mb-3">
-		<div class="card-header">Listagem de Turmas</div>
+		<div class="card-header">Listagem de Atendimentos do Extra
+			Classe</div>
 
 		<!-- Table -->
 		<div class="card-body">
@@ -21,38 +22,41 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Nome</th>
-						<th>Curso</th>
+						<th>Aluno</th>
+						<th>Disciplina</th>
+						<th>Docente</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
-					<!-- percorre turmas montando as linhas da tabela -->
-					<c:forEach var="turma" items="${turmas}">
+					<c:forEach var="extra_classe" items="${extra_classes}">
 						<tr>
-							<td>${turma.id}</td>
-							<td>${turma.nome}</td>
-							<td>${turma.curso.nome}</td>
+							<td>${extra_classe.id}</td>
+							<td>${extra_classe.aluno.nome}</td>
+							<td>${extra_classe.disciplina.nome}</td>
+							<td>${extra_classe.docente.nome}</td>
+
 							<td>
 								<!-- Exibir --> <a
-								href="<c:url value="/turma/exibe?id=${turma.id}"/>"
+								href="<c:url value="/atendimento/extra-classe/exibe?id=${extra_classe.id}"/>"
 								class="btn btn-info btn-sm" data-tooltip="tooltip"
 								data-placement="bottom" title="Exibir"> <span
 									class="glyphicon glyphicon-search"></span></a> <!-- Editar --> <a
-								href="<c:url value="/turma/edita?id=${turma.id}" />"
+								href="<c:url value="/atendimento/extra-classe/edita?id=${extra_classe.id}" />"
 								class="btn btn-warning btn-sm" data-tooltip="tooltip"
 								data-placement="bottom" title="Editar"><span
 									class="glyphicon glyphicon-pencil"></span> </a> <!-- Excluir -->
 								<button type="button" class="btn btn-danger btn-sm"
 									data-tooltip="tooltip" data-placement="bottom" title="Excluir"
-									data-toggle="modal" data-target="#modal${turma.id}">
+									data-toggle="modal" data-target="#modal${extra_classe.id}">
 									<span class="glyphicon glyphicon-trash"></span>
 								</button>
-								<div class="modal fade" id="modal${turma.id}">
+								<div class="modal fade" id="modal${extra_classe.id}">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h5 class="modal-title">Exclusão da turma</h5>
+												<h5 class="modal-title">Exclusão do Atendimento Extra
+													Classe</h5>
 												<button type="button" class="close" data-dismiss="modal"
 													aria-label="Close">
 													<span aria-hidden="true">&times;</span>
@@ -60,12 +64,13 @@
 											</div>
 											<div class="modal-body">
 												<p>
-													Deseja realmente excluir a turma <br>ID (${turma.id})
-													-> ${turma.nome}?
+													Deseja realmente excluir o Atendimento Extra Classe <br>ID
+													(${extra_classe.id}) -> ${extra_classe.aluno.nome}?
 												</p>
 											</div>
 											<div class="modal-footer">
-												<a href="<c:url value="/turma/remove?id=${turma.id}" />"
+												<a
+													href="<c:url value="/atendimento/extra-classe/remove?id=${extra_classe.id}" />"
 													class="btn btn-danger"><span
 													class="glyphicon glyphicon-trash"></span> Excluir</a>
 												<button type="button" class="btn btn-secondary"
@@ -86,12 +91,11 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="<c:url value="/turma/nova" />"
+			<a href="<c:url value="/atendimento/extra-classe/novo" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
 	</div>
 </div>
-
 <c:import url="../componentes/js_data_table.jsp" />
 <c:import url="../componentes/rodape.jsp" />

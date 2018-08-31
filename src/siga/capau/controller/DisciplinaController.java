@@ -121,7 +121,8 @@ public class DisciplinaController {
 		model.addAttribute("turmas_docentes",
 				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorDisciplinaId(id));
 
-		// Pega todas as turmas e docentes sem vinculo com na disciplina em TurmaDisciplinaDocente
+		// Pega todas as turmas e docentes sem vinculo com na disciplina em
+		// TurmaDisciplinaDocente
 		model.addAttribute("turmas_sem_vinculo", dao_turma.buscaTurmaSemVinculoEmTurmaDisciplinaDocente(id));
 		model.addAttribute("docentes_sem_vinculo", dao_docente.buscaDocenteSemVinculoEmTurmaDisciplinaDocente(id));
 

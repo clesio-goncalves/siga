@@ -1,9 +1,9 @@
 $(document).ready(function() {
 	$('#tabela_id').DataTable({
-		"order": [[ 0, "desc" ]],
 		"language" : {
 			"url" : "../resources/idioma/Portuguese-Brasil.json"
-		}
+		},
+		"order": [[ 0, "desc" ]]
 	});
 	$('[data-tooltip="tooltip"]').tooltip()
 });

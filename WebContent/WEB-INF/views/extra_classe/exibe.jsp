@@ -38,15 +38,8 @@
 					</tr>
 
 					<tr>
-						<th>Curso</th>
-						<td><a
-							href="<c:url value="/curso/exibe?id=${aluno.turma.curso.id}" />">${aluno.turma.curso.nome}</a></td>
-					</tr>
-
-					<tr>
 						<th>Turma</th>
-						<td><a
-							href="<c:url value="/turma/exibe?id=${aluno.turma.id}" />">${aluno.turma.nome}</a></td>
+						<td>${aluno.turma.nome}</td>
 					</tr>
 
 					<tr>
@@ -91,10 +84,8 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>
-							Deseja realmente excluir o aluno <br>ID (${aluno.id}) ->
-							${aluno.nome}?
-						</p>
+						<p>Deseja realmente excluir o aluno <br>ID (${aluno.id}) ->
+							${aluno.nome}?</p>
 					</div>
 					<div class="modal-footer">
 						<a href="<c:url value="/aluno/remove?id=${aluno.id}" />"

@@ -7,7 +7,7 @@
 <title>Cadastrar Disciplina</title>
 <c:import url="../componentes/cabecalho.jsp" />
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/resources/css/disciplina/bootstrap-select.min.css" />">
+	href="<c:url value="/resources/css/select/bootstrap-select.min.css" />">
 
 <div class="jumbotron">
 	<div class="container">
@@ -78,9 +78,9 @@
 </div>
 
 <script type="text/javascript"
-	src="<c:url value="/resources/js/disciplina/bootstrap-select.min.js" />"></script>
+	src="<c:url value="/resources/js/select/bootstrap-select.min.js" />"></script>
 <script type="text/javascript"
-	src="<c:url value="/resources/js/disciplina/defaults-pt_BR.min.js" />"></script>
+	src="<c:url value="/resources/js/select/defaults-pt_BR.min.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/disciplina/cad_edit_disciplina.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />
