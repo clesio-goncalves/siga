@@ -42,7 +42,7 @@ public class ServidorController {
 		}
 	}
 
-	@RequestMapping("/adiciona")
+	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
 	public String adiciona(@Valid Servidor servidor, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:novo";
@@ -79,7 +79,7 @@ public class ServidorController {
 		return "servidor/edita";
 	}
 
-	@RequestMapping("/altera")
+	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	public String altera(@Valid Servidor servidor, BindingResult result) {
 		this.lista_servidor = dao.buscaPorSiape(servidor.getSiape());
 		if (result.hasErrors()) {

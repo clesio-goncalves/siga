@@ -4,13 +4,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Editar Aluno</title>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
+<title>Editar Atendimento Extraclasse</title>
 <c:import url="../componentes/cabecalho.jsp" />
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/jquery-ui.min.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/jquery-ui-timepicker-addon.min.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/select/bootstrap-select.min.css" />">
+
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Aluno</h1>
-		<p class="lead">Preencha o formulário abaixo para realizar a
-			alteração do aluno no sistema.</p>
+		<h1 class="display-3">Editar Atendimento Extraclasse</h1>
+		<p class="lead">Preencha o formulário abaixo com os dados do
+			atendimento extraclasse para realizar a alteração no sistema.</p>
 	</div>
 </div>
 <div class="container">
@@ -19,64 +28,89 @@
 		<!-- ID -->
 		<input type="hidden" name="id" value="${aluno.id}" />
 
-		<!-- NOME -->
+		<!-- ALUNO -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required value="${aluno.nome}">
-		</div>
-
-		<!-- MATRICULA -->
-		<div class="form-group">
-			<label for="matricula" class="col-form-label">Matricula</label> <input
-				type="text" class="form-control" name="matricula" MAXLENGTH="50"
-				value="${aluno.matricula}">
-		</div>
-
-		<!-- TURMA -->
-		<div class="form-group">
-			<label for="turma.id" class="col-form-label">Turma<span class="obrigatorio">*</span></label>
-			<c:forEach var="turma" items="${turmas}">
-				<div class="custom-control custom-radio">
-					<input type="radio" id="${turma.id}" name="turma.id"
-						class="custom-control-input" required value="${turma.id}"
-						${turma.id == aluno.turma.id ? 'checked' : ''}> <label
-						class="custom-control-label" for="${turma.id}">${turma.nome}</label>
-				</div>
-			</c:forEach>
-		</div>
-
-		<!-- USUÁRIO-->
-		<div class="form-group">
-			<label for="usuario.id" class="col-form-label">Usuário</label> <select
-				class="custom-select" name="usuario.id">
-				<option value="">Não informar</option>
-				<c:if test="${aluno.usuario != null}">
-					<option value="${aluno.usuario.id}" selected>${aluno.usuario.email}</option>
-				</c:if>
-				<c:if test="${aluno.usuario == null}">
-					<c:forEach var="usuario" items="${usuarios}">
-						<option value="${usuario.id}">${usuario.email}</option>
-					</c:forEach>
-				</c:if>
+			<label for="aluno.id" class="col-form-label">Aluno<span
+				class="obrigatorio">*</span></label> <select name="aluno.id"
+				class="selectpicker show-tick form-control" data-live-search="true"
+				multiple data-max-options="1" title="Selecione um aluno"
+				data-live-search-placeholder="Pesquisar" required
+				autofocus="autofocus" onchange="alteraAluno()">
+				<c:forEach var="aluno" items="${alunos}">
+					<option value="${aluno.id}">${aluno.nome}</option>
+				</c:forEach>
 			</select>
+		</div>
+
+		<!-- DISCIPLINA -->
+		<div class="form-group" id="lista_disciplinas">
+			<jsp:include page="import_novo_edita/disciplina.jsp"></jsp:include>
+		</div>
+
+		<!-- DOCENTE -->
+		<div class="form-group" id="lista_docentes">
+			<jsp:include page="import_novo_edita/docente.jsp"></jsp:include>
+		</div>
+
+		<div class="row">
+
+			<!-- Data -->
+			<div class="form-group col-6">
+				<label for="data" class="col-form-label">Data do atendimento<span
+					class="obrigatorio">*</span>
+				</label> <input type="text" class="form-control maskData" name="data"
+					required>
+			</div>
+
+			<!-- Horário -->
+			<div class="form-group col-6">
+				<label for="horario" class="col-form-label">Horário<span
+					class="obrigatorio">*</span>
+				</label> <input type="text" class="form-control maskHorario" name="horario"
+					required>
+			</div>
+		</div>
+
+		<!-- LOCAL -->
+		<div class="form-group">
+			<label for="local" class="col-form-label">Local<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="local" MAXLENGTH="255" required>
+		</div>
+
+		<!-- CONTEUDO -->
+		<div class="form-group">
+			<label for="conteudo">Conteúdo<span class="obrigatorio">*</span></label>
+			<textarea class="form-control" name="conteudo" rows="3" required
+				maxlength="3000"></textarea>
 		</div>
 
 		<security:csrfInput />
 
 		<!-- OBTIGATÓRIO -->
 		<label>(*) Campos obrigatórios</label>
-
 		<div>
-			<a href="<c:url value="/aluno/lista" />"
-				class="btn btn-secondary btn-lg"> <span
-				class="glyphicon glyphicon-remove"></span> Cancelar
-			</a>
+			<button type="reset" class="btn btn-secondary btn-lg">
+				<span class="glyphicon glyphicon-trash"></span> Limpar
+			</button>
 			<button type="submit" class="btn btn-primary btn-lg">
-				<span class="glyphicon glyphicon-refresh"></span> Atualizar
+				<span class="glyphicon glyphicon-floppy-disk"></span> Salvar
 			</button>
 		</div>
 	</form>
 </div>
+
+<script type="text/javascript"
+	src="<c:url value="/resources/js/jquery-ui.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/jquery.mask.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/jquery-ui-timepicker-addon.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/select/bootstrap-select.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/select/defaults-pt_BR.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/extra_classe/extra_classe.js" />"></script>
 
 <c:import url="../componentes/rodape.jsp" />

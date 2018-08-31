@@ -27,6 +27,16 @@ public class ExtraClasseDao {
 		return manager.createQuery("select e from ExtraClasse e", ExtraClasse.class).getResultList();
 	}
 
+	public List<ExtraClasse> buscaPeloAlunoId(Long aluno_id) {
+		return manager.createQuery("select e from ExtraClasse e where e.aluno.id = :aluno_id", ExtraClasse.class)
+				.setParameter("aluno_id", aluno_id).getResultList();
+	}
+
+	public List<ExtraClasse> buscaPeloDocenteId(Long docente_id) {
+		return manager.createQuery("select e from ExtraClasse e where e.docente.id = :docente_id", ExtraClasse.class)
+				.setParameter("docente_id", docente_id).getResultList();
+	}
+
 	public ExtraClasse buscaPorId(Long id) {
 		return manager.find(ExtraClasse.class, id);
 	}

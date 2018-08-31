@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
+<%@	taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +13,12 @@
 		<div class="card-header">Exibe os dados do aluno</div>
 		<!-- Table -->
 		<div class="card-body">
+			<legend style="margin-top: 0;">INFORMAÇÕES DO ALUNO</legend>
 			<div class="table-responsive">
 				<table
 					class="table table-striped table-bordered dt-responsive nowrap">
 					<tr>
-						<th width="300">ID</th>
+						<th width="30%">ID</th>
 						<td>${aluno.id}</td>
 					</tr>
 
@@ -60,6 +62,39 @@
 							<td>${aluno.usuario.email}</td>
 						</c:if>
 					</tr>
+				</table>
+			</div>
+			<legend>ATENDIMENTO EXTRACLASSE</legend>
+			<div class="table-responsive">
+				<table class="table table-hover table-bordered dt-responsive nowrap"
+					style="width: 100%; margin-top: 10px;">
+					<thead>
+						<tr>
+							<th>Data</th>
+							<th>Horário</th>
+							<th>Disciplina</th>
+							<th>Docente</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="atendimento_extraclasse"
+							items="${atendimentos_extraclasse}">
+							<tr>
+								<td><fmt:formatDate value="${atendimento_extraclasse.data}" /></td>
+								<td>${atendimento_extraclasse.horario}</td>
+								<td>${atendimento_extraclasse.disciplina.nome}</td>
+								<td>${atendimento_extraclasse.docente.nome}</td>
+								<td>
+									<!-- Exibir --> <a
+									href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"
+									class="btn btn-info btn-sm" data-tooltip="tooltip"
+									data-placement="bottom" title="Exibir"> <span
+										class="glyphicon glyphicon-search"></span></a>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 		</div>

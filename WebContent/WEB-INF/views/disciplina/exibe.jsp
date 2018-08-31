@@ -12,8 +12,8 @@
 		<div class="card-header">Exibe os dados da disciplina</div>
 		<!-- Table -->
 		<div class="card-body">
+			<legend style="margin-top: 0;">INFORMAÇÕES DA DISCIPLINA</legend>
 			<div class="table-responsive">
-				<legend style="margin-top: 0;">INFORMAÇÕES DA DISCIPLINA</legend>
 				<table
 					class="table table-striped table-bordered dt-responsive nowrap">
 					<tr>
@@ -26,7 +26,7 @@
 					</tr>
 				</table>
 			</div>
-			<legend>TURMAS E DISCIPLINAS</legend>
+			<legend>TURMAS E DOCENTES</legend>
 			<div class="table-responsive">
 				<table class="table table-hover table-bordered dt-responsive nowrap"
 					style="width: 100%; margin-top: 10px;">

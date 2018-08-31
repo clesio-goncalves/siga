@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import siga.capau.dao.AlunoDao;
+import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Aluno;
@@ -32,6 +34,9 @@ public class AlunoController {
 
 	@Autowired
 	UsuarioDao dao_usuario;
+	
+	@Autowired
+	ExtraClasseDao dao_extraclasse;
 
 	@RequestMapping("/novo")
 	public String novoAluno(Model model) {
@@ -44,7 +49,7 @@ public class AlunoController {
 		return "aluno/novo";
 	}
 
-	@RequestMapping("/adiciona")
+	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
 	public String adiciona(@Valid Aluno aluno, BindingResult result) {
 
 		if (result.hasErrors()) {
@@ -76,6 +81,7 @@ public class AlunoController {
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("aluno", dao.buscaPorId(id));
+		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPeloAlunoId(id));
 		return "aluno/exibe";
 	}
 
@@ -94,7 +100,7 @@ public class AlunoController {
 
 	}
 
-	@RequestMapping("/altera")
+	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	public String altera(@Valid Aluno aluno, BindingResult result) {
 
 		if (result.hasErrors()) {

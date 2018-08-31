@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
+import siga.capau.modelo.Docente;
 import siga.capau.modelo.TurmaDisciplinaDocente;
 
 @Repository
@@ -27,6 +28,12 @@ public class TurmaDisciplinaDocenteDao {
 				"update TurmaDisciplinaDocente tdd set tdd.docente.id = :docente_id where tdd.disciplina.id = :disicplina_id and tdd.turma.id = :turma_id")
 				.setParameter("docente_id", docente_id).setParameter("disicplina_id", disicplina_id)
 				.setParameter("turma_id", turma_id).executeUpdate();
+	}
+
+	public List<Docente> buscaDocentesVinculados() {
+		return manager
+				.createQuery("select tdd.docente from TurmaDisciplinaDocente tdd group by tdd.docente", Docente.class)
+				.getResultList();
 	}
 
 	public List<TurmaDisciplinaDocente> buscaTurmaDisciplinaDocentePorDisciplinaId(Long id) {

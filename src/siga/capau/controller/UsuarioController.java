@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import siga.capau.dao.PerfilDao;
 import siga.capau.dao.UsuarioDao;
@@ -37,7 +38,7 @@ public class UsuarioController {
 	}
 
 	// @Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("/adiciona")
+	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
 	public String adiciona(@Valid Usuario usuario, BindingResult result) {
 
 		if (result.hasErrors()) {
@@ -84,7 +85,7 @@ public class UsuarioController {
 	}
 
 	// @Secured("hasRole('ROLE_Administrador')")
-	@RequestMapping("/altera")
+	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	public String altera(@Valid Usuario usuario, BindingResult result) {
 		this.lista_usuario = dao.buscaPorEmail(usuario.getEmail());
 		if (result.hasErrors()) {

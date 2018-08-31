@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <title>Atendimento Extraclasse</title>
 <c:import url="../componentes/cabecalho.jsp" />
 <link rel="stylesheet" type="text/css"
@@ -30,7 +32,7 @@
 				class="selectpicker show-tick form-control" data-live-search="true"
 				multiple data-max-options="1" title="Selecione um aluno"
 				data-live-search-placeholder="Pesquisar" required
-				autofocus="autofocus">
+				autofocus="autofocus" onchange="alteraAluno()">
 				<c:forEach var="aluno" items="${alunos}">
 					<option value="${aluno.id}">${aluno.nome}</option>
 				</c:forEach>
@@ -38,31 +40,14 @@
 		</div>
 
 		<!-- DISCIPLINA -->
-		<div class="form-group">
-			<label for="disciplina.id" class="col-form-label">Disciplina<span
-				class="obrigatorio">*</span></label> <select name="disciplina.id"
-				class="selectpicker show-tick form-control" data-live-search="true"
-				multiple data-max-options="1" title="Selecione uma disciplina"
-				data-live-search-placeholder="Pesquisar" required>
-				<c:forEach var="disciplina" items="${disciplinas}">
-					<option value="${disciplina.id}">${disciplina.nome}</option>
-				</c:forEach>
-			</select>
+		<div class="form-group" id="lista_disciplinas">
+			<jsp:include page="import_novo_edita/disciplina.jsp"></jsp:include>
 		</div>
 
 		<!-- DOCENTE -->
-		<div class="form-group">
-			<label for="docente.id" class="col-form-label">Docente<span
-				class="obrigatorio">*</span></label> <select name="docente.id"
-				class="selectpicker show-tick form-control" data-live-search="true"
-				multiple data-max-options="1" title="Selecione um docente"
-				data-live-search-placeholder="Pesquisar" required>
-				<c:forEach var="docente" items="${docentes}">
-					<option value="${docente.id}">${docente.nome}</option>
-				</c:forEach>
-			</select>
+		<div class="form-group" id="lista_docentes">
+			<jsp:include page="import_novo_edita/docente.jsp"></jsp:include>
 		</div>
-
 
 		<div class="row">
 
@@ -119,9 +104,10 @@
 <script type="text/javascript"
 	src="<c:url value="/resources/js/jquery-ui-timepicker-addon.min.js" />"></script>
 <script type="text/javascript"
-	src="<c:url value="/resources/js/extra_classe/extra_classe.js" />"></script>
-<script type="text/javascript"
 	src="<c:url value="/resources/js/select/bootstrap-select.min.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/select/defaults-pt_BR.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/extra_classe/extra_classe.js" />"></script>
+
 <c:import url="../componentes/rodape.jsp" />

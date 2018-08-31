@@ -7,7 +7,7 @@
 <title>Editar Disciplina</title>
 <c:import url="../componentes/cabecalho.jsp" />
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/resources/css/disciplina/bootstrap-select.min.css" />">
+	href="<c:url value="/resources/css/select/bootstrap-select.min.css" />">
 
 <div class="jumbotron">
 	<div class="container">
@@ -86,12 +86,8 @@
 								data-live-search="true" multiple data-max-options="1"
 								title="Selecione um docente"
 								data-live-search-placeholder="Pesquisar">
-									<c:forEach var="turmas_docente" items="${turmas_docentes}">
-										<option value="${turmas_docente.docente.id}">${turmas_docente.docente.siape}-${turmas_docente.docente.nome}</option>
-									</c:forEach>
-									<c:forEach var="docente_sem_vinculo"
-										items="${docentes_sem_vinculo}">
-										<option value="${docente_sem_vinculo.id}">${docente_sem_vinculo.siape}-${docente_sem_vinculo.nome}</option>
+									<c:forEach var="docente" items="${docentes}">
+										<option value="${docente.id}">${docente.siape}-${docente.nome}</option>
 									</c:forEach>
 							</select></td>
 						</tr>
@@ -116,9 +112,9 @@
 </div>
 
 <script type="text/javascript"
-	src="<c:url value="/resources/js/disciplina/bootstrap-select.min.js" />"></script>
+	src="<c:url value="/resources/js/select/bootstrap-select.min.js" />"></script>
 <script type="text/javascript"
-	src="<c:url value="/resources/js/disciplina/defaults-pt_BR.min.js" />"></script>
+	src="<c:url value="/resources/js/select/defaults-pt_BR.min.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/disciplina/cad_edit_disciplina.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

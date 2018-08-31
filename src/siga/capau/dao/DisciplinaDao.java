@@ -28,6 +28,12 @@ public class DisciplinaDao {
 		return manager.createQuery("select d from Disciplina d", Disciplina.class).getResultList();
 	}
 
+	public List<Disciplina> listaDisciplinasPorTurmaId(Long turma_id) {
+		return manager.createQuery(
+				"select d from Disciplina d inner join TurmaDisciplinaDocente tdd on tdd.disciplina.id = d.id where tdd.turma.id = :turma_id",
+				Disciplina.class).setParameter("turma_id", turma_id).getResultList();
+	}
+
 	public List<Disciplina> buscaPorNome(String nome) {
 		return manager.createQuery("select d from Disciplina d where d.nome = :nome", Disciplina.class)
 				.setParameter("nome", nome).getResultList();

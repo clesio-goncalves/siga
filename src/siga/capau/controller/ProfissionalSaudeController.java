@@ -43,7 +43,7 @@ public class ProfissionalSaudeController {
 
 	}
 
-	@RequestMapping("/adiciona")
+	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
 	public String adiciona(@Valid ProfissionalSaude profissionalSaude, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:novo";
@@ -80,7 +80,7 @@ public class ProfissionalSaudeController {
 		return "profissional_saude/edita";
 	}
 
-	@RequestMapping("/altera")
+	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	public String altera(@Valid ProfissionalSaude profissionalSaude, BindingResult result) {
 		this.profissional_saude = dao.buscaPorSiape(profissionalSaude.getSiape());
 		if (result.hasErrors()) {

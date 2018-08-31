@@ -16,7 +16,7 @@
 				<table
 					class="table table-striped table-bordered dt-responsive nowrap">
 					<tr>
-						<th width="300">ID</th>
+						<th width="30%">ID</th>
 						<td>${monitor.id}</td>
 					</tr>
 					<tr>

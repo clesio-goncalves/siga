@@ -113,7 +113,6 @@ public class DisciplinaController {
 
 	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
-
 		// Pega a disciplina
 		model.addAttribute("disciplina", dao.buscaPorId(id));
 
@@ -125,6 +124,7 @@ public class DisciplinaController {
 		// TurmaDisciplinaDocente
 		model.addAttribute("turmas_sem_vinculo", dao_turma.buscaTurmaSemVinculoEmTurmaDisciplinaDocente(id));
 		model.addAttribute("docentes_sem_vinculo", dao_docente.buscaDocenteSemVinculoEmTurmaDisciplinaDocente(id));
+		model.addAttribute("docentes", dao_docente.lista());
 
 		return "disciplina/edita";
 	}

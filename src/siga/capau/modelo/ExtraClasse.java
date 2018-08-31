@@ -1,6 +1,6 @@
 package siga.capau.modelo;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,14 +22,14 @@ public class ExtraClasse {
 	private Long id;
 
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private Calendar data;
+	private Date data;
 
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIME)
 	@DateTimeFormat(pattern = "HH:mm")
-	private Calendar horario;
+	private Date horario;
 
 	@NotNull
 	private String local;
@@ -58,19 +58,19 @@ public class ExtraClasse {
 		this.id = id;
 	}
 
-	public Calendar getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(Calendar data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 
-	public Calendar getHorario() {
+	public Date getHorario() {
 		return horario;
 	}
 
-	public void setHorario(Calendar horario) {
+	public void setHorario(Date horario) {
 		this.horario = horario;
 	}
 

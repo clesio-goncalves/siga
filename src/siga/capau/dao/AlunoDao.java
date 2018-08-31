@@ -27,10 +27,15 @@ public class AlunoDao {
 		return manager.createQuery("select a from Aluno a", Aluno.class).getResultList();
 	}
 
+	public Long buscaTurmaIdPorAlunoId(Long aluno_id) {
+		return manager.createQuery("select a.turma.id from Aluno a where a.id = :aluno_id", Long.class)
+				.setParameter("aluno_id", aluno_id).getSingleResult();
+	}
+
 	public Aluno buscaPorId(Long id) {
 		return manager.find(Aluno.class, id);
 	}
-	
+
 	public void remove(Long id) {
 		manager.createQuery("delete from Aluno a where a.id = :id").setParameter("id", id).executeUpdate();
 	}

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.MonitorDao;
@@ -53,7 +54,7 @@ public class MonitorController {
 		return "monitor/novo";
 	}
 
-	@RequestMapping("/adiciona")
+	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
 	public String adiciona(@Valid Monitor monitor, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:novo";
@@ -91,7 +92,7 @@ public class MonitorController {
 		return "monitor/edita";
 	}
 
-	@RequestMapping("/altera")
+	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	public String altera(@Valid Monitor monitor, BindingResult result) {
 		this.lista_monitor = dao.buscaPorMatricula(monitor.getMatricula());
 		if (result.hasErrors()) {

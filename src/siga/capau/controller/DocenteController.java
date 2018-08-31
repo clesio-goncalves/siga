@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import siga.capau.dao.DocenteDao;
+import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.TurmaDisciplinaDocenteDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Docente;
@@ -33,6 +35,9 @@ public class DocenteController {
 
 	@Autowired
 	TurmaDisciplinaDocenteDao dao_turma_disciplina_docente;
+	
+	@Autowired
+	ExtraClasseDao dao_extraclasse;
 
 	@RequestMapping("/novo")
 	public String novoDocente(Model model) {
@@ -45,7 +50,7 @@ public class DocenteController {
 		}
 	}
 
-	@RequestMapping("/adiciona")
+	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
 	public String adiciona(@Valid Docente docente, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:novo";
@@ -74,6 +79,7 @@ public class DocenteController {
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("docente", dao.buscaPorId(id));
+		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPeloAlunoId(id));
 		return "docente/exibe";
 	}
 
@@ -83,7 +89,7 @@ public class DocenteController {
 		return "docente/edita";
 	}
 
-	@RequestMapping("/altera")
+	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	public String altera(@Valid Docente docente, BindingResult result) {
 		this.lista_docente = dao.buscaPorSiape(docente.getSiape());
 		if (result.hasErrors()) {
