@@ -21,7 +21,7 @@
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${profissional_saude.id}" />
+		<input type="hidden" name="id" value="${profissional_saude.id}" required/>
 
 		<!-- NOME -->
 		<div class="form-group">

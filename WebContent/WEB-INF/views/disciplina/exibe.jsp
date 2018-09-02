@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
+<%@	taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
 					</tr>
 					<tr>
 						<th>Nome</th>
-						<td>${disciplina.nome}</td>
+						<td style="font-weight: bold; color: red;">${disciplina.nome}</td>
 					</tr>
 				</table>
 			</div>
@@ -40,11 +41,42 @@
 						<c:forEach var="turma_docente" items="${turmas_docentes}">
 							<tr>
 								<td><a
-									href="<c:url value="/turma/exibe?id=${turma_docente.turma.id}" />"
-									class="alert-link">${turma_docente.turma.nome}</a></td>
+									href="<c:url value="/turma/exibe?id=${turma_docente.turma.id}" />">${turma_docente.turma.nome}</a></td>
 								<td><a
-									href="<c:url value="/docente/exibe?id=${turma_docente.docente.id}" />"
-									class="alert-link">${turma_docente.docente.nome}</a></td>
+									href="<c:url value="/docente/exibe?id=${turma_docente.docente.id}" />">${turma_docente.docente.nome}</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+			<legend>ATENDIMENTO EXTRACLASSE</legend>
+			<div class="table-responsive">
+				<table class="table table-hover table-bordered dt-responsive nowrap"
+					style="width: 100%; margin-top: 10px;">
+					<thead>
+						<tr>
+							<th>Data</th>
+							<th>Turma</th>
+							<th>Docente</th>
+							<th>Aluno</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="atendimento_extraclasse"
+							items="${atendimentos_extraclasse}">
+							<tr>
+								<td><fmt:formatDate value="${atendimento_extraclasse.data}" /></td>
+								<td>${atendimento_extraclasse.aluno.turma.nome}</td>
+								<td>${atendimento_extraclasse.docente.nome}</td>
+								<td>${atendimento_extraclasse.aluno.nome}</td>
+								<td>
+									<!-- Exibir --> <a
+									href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"
+									class="btn btn-info btn-sm" data-tooltip="tooltip"
+									data-placement="bottom" title="Exibir"> <span
+										class="glyphicon glyphicon-search"></span></a>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -98,4 +130,6 @@
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
 
+<script type="text/javascript"
+	src="<c:url value="/resources/js/tooltip.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

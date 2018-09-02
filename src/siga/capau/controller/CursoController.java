@@ -58,7 +58,7 @@ public class CursoController {
 	public String remove(Curso curso) {
 
 		// Remove o curso caso não haja turmas cadastrados nesse curso
-		if (dao_turma.buscaTurmaPorCurso(curso.getId()).size() > 0) {
+		if (dao_turma.buscaTurmaPorCursoId(curso.getId()).size() > 0) {
 			return "redirect:lista";
 		}
 
@@ -68,6 +68,7 @@ public class CursoController {
 
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
+		model.addAttribute("turmas_curso", dao_turma.buscaTurmaPorCursoId(id));
 		model.addAttribute("curso", dao.buscaPorId(id));
 		return "curso/exibe";
 	}

@@ -64,7 +64,7 @@
 											<div class="modal-body">
 												<p>
 													Deseja realmente excluir o Atendimento Extraclasse <br>ID
-													(${extra_classe.id}) -> ${extra_classe.aluno.nome}?
+													(${extra_classe.id}) - Aluno: ${extra_classe.aluno.nome}?
 												</p>
 											</div>
 											<div class="modal-footer">

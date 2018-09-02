@@ -22,6 +22,7 @@
 					<tr>
 						<th>ID</th>
 						<th>Nome</th>
+						<th>Qnt Alunos</th>
 						<th>Curso</th>
 						<th>Ações</th>
 					</tr>
@@ -32,6 +33,7 @@
 						<tr>
 							<td>${turma.id}</td>
 							<td>${turma.nome}</td>
+							<td>${turma.qnt_alunos}</td>
 							<td>${turma.curso.nome}</td>
 							<td>
 								<!-- Exibir --> <a

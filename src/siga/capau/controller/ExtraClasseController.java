@@ -24,6 +24,7 @@ import siga.capau.modelo.ExtraClasse;
 public class ExtraClasseController {
 
 	private Long turma_id;
+	private ExtraClasse extra_classe;
 
 	@Autowired
 	ExtraClasseDao dao;
@@ -75,7 +76,13 @@ public class ExtraClasseController {
 
 	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
-		model.addAttribute("extra_classe", dao.buscaPorId(id));
+		this.extra_classe = dao.buscaPorId(id);
+		model.addAttribute("extra_classe", this.extra_classe);
+		model.addAttribute("alunos", dao_aluno.lista());
+		model.addAttribute("disciplinas",
+				dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
+		model.addAttribute("docentes",
+				dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
 		return "extra_classe/edita";
 	}
 
@@ -97,7 +104,11 @@ public class ExtraClasseController {
 			this.turma_id = dao_aluno.buscaTurmaIdPorAlunoId(Long.parseLong(request.getParameter("aluno_id")));
 			model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasPorTurmaId(this.turma_id));
 		}
-		return "extra_classe/import_novo_edita/disciplina";
+		if (request.getParameter("contexto").equals("edita")) {
+			return "extra_classe/import_edita/disciplina";
+		} else {
+			return "extra_classe/import_novo/disciplina";
+		}
 	}
 
 	@RequestMapping(value = "/filtro_docente", method = RequestMethod.POST)
@@ -107,7 +118,11 @@ public class ExtraClasseController {
 			model.addAttribute("docentes",
 					dao_docente.listaDocentesPorDisciplinaId(Long.parseLong(request.getParameter("disciplina_id"))));
 		}
-		return "extra_classe/import_novo_edita/docente";
+		if (request.getParameter("contexto").equals("edita")) {
+			return "extra_classe/import_edita/docente";
+		} else {
+			return "extra_classe/import_novo/docente";
+		}
 	}
 
 }

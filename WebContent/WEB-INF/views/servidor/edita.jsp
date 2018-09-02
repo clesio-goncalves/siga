@@ -21,7 +21,7 @@
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${servidor.id}" />
+		<input type="hidden" name="id" value="${servidor.id}" required/>
 
 		<!-- NOME -->
 		<div class="form-group">

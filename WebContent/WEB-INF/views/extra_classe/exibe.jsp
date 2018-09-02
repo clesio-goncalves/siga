@@ -28,6 +28,11 @@
 							style="font-weight: bold; color: red;">${extra_classe.aluno.nome}</a></td>
 					</tr>
 					<tr>
+						<th>Curso</th>
+						<td><a
+							href="<c:url value="/curso/exibe?id=${extra_classe.aluno.turma.curso.id}" />">${extra_classe.aluno.turma.curso.nome}</a></td>
+					</tr>
+					<tr>
 						<th>Turma</th>
 						<td><a
 							href="<c:url value="/turma/exibe?id=${extra_classe.aluno.turma.id}" />">${extra_classe.aluno.turma.nome}</a></td>
@@ -93,7 +98,7 @@
 					<div class="modal-body">
 						<p>
 							Deseja realmente excluir o Atendimento Extraclasse <br>ID
-							(${extra_classe.id}) -> ${extra_classe.aluno.nome}?
+							(${extra_classe.id}) - Aluno: ${extra_classe.aluno.nome}?
 						</p>
 					</div>
 					<div class="modal-footer">

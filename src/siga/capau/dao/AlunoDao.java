@@ -32,6 +32,16 @@ public class AlunoDao {
 				.setParameter("aluno_id", aluno_id).getSingleResult();
 	}
 
+	public List<Aluno> buscaAlunosPorTurmaId(Long turma_id) {
+		return manager.createQuery("select a from Aluno a where a.turma.id = :turma_id", Aluno.class)
+				.setParameter("turma_id", turma_id).getResultList();
+	}
+
+	public Long buscaQntAlunosPorTurmaId(Long turma_id) {
+		return manager.createQuery("select count(a.turma.id) from Aluno a where a.turma.id = :turma_id", Long.class)
+				.setParameter("turma_id", turma_id).getSingleResult();
+	}
+
 	public Aluno buscaPorId(Long id) {
 		return manager.find(Aluno.class, id);
 	}

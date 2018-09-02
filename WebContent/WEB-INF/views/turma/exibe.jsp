@@ -12,6 +12,7 @@
 		<div class="card-header">Exibe os dados do turma</div>
 		<!-- Table -->
 		<div class="card-body">
+			<legend style="margin-top: 0;">INFORMAÇÕES DA TURMA</legend>
 			<div class="table-responsive">
 				<table
 					class="table table-striped table-bordered dt-responsive nowrap">
@@ -19,17 +20,87 @@
 						<th width="30%">ID</th>
 						<td>${turma.id}</td>
 					</tr>
-
 					<tr>
 						<th>Nome</th>
-						<td>${turma.nome}</td>
+						<td style="font-weight: bold; color: red;">${turma.nome}</td>
 					</tr>
-
 					<tr>
 						<th>Curso</th>
 						<td><a
 							href="<c:url value="/curso/exibe?id=${turma.curso.id}" />">${turma.curso.nome}</a></td>
 					</tr>
+					<tr>
+						<th>Quantidade de Alunos</th>
+						<td>${qnt_alunos}</td>
+					</tr>
+				</table>
+			</div>
+			<legend>DISCIPLINAS E DOCENTES</legend>
+			<div class="table-responsive">
+				<table class="table table-hover table-bordered dt-responsive nowrap"
+					style="width: 100%; margin-top: 10px;">
+					<thead>
+						<tr>
+							<th width="50%">Disciplina</th>
+							<th>Docente</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="disciplina_docente" items="${disciplinas_docente}">
+							<tr>
+								<td><a
+									href="<c:url value="/disciplina/exibe?id=${disciplina_docente.disciplina.id}" />">${disciplina_docente.disciplina.nome}</a></td>
+								<td><a
+									href="<c:url value="/docente/exibe?id=${disciplina_docente.docente.id}" />">${disciplina_docente.docente.nome}</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+			<legend>ALUNOS</legend>
+			<div class="table-responsive">
+				<table class="table table-hover table-bordered dt-responsive nowrap"
+					style="width: 100%; margin-top: 10px;">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+							<th>Matrícula</th>
+							<th>Usuário</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="aluno_turma" items="${alunos_turma}">
+							<tr>
+								<td>${aluno_turma.id}</td>
+								<td>${aluno_turma.nome}</td>
+
+								<!-- Matricula -->
+								<c:if test="${aluno_turma.matricula eq \"\"}">
+									<td>Não informada</td>
+								</c:if>
+								<c:if test="${aluno_turma.matricula ne \"\"}">
+									<td>${aluno_turma.matricula}</td>
+								</c:if>
+
+								<!-- Usuário -->
+								<c:if test="${aluno_turma.usuario == null}">
+									<td>Não informado</td>
+								</c:if>
+								<c:if test="${aluno_turma.usuario != null}">
+									<td>${aluno_turma.usuario.email}</td>
+								</c:if>
+								<td>
+									<!-- Exibir --> <a
+									href="<c:url value="/aluno/exibe?id=${aluno_turma.id}"/>"
+									class="btn btn-info btn-sm" data-tooltip="tooltip"
+									data-placement="bottom" title="Exibir"> <span
+										class="glyphicon glyphicon-search"></span></a>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -80,5 +151,6 @@
 	<a class="btn btn-success" href="<c:url value="/turma/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
-
+<script type="text/javascript"
+	src="<c:url value="/resources/js/tooltip.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

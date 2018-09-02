@@ -36,9 +36,21 @@ public class TurmaDisciplinaDocenteDao {
 				.getResultList();
 	}
 
-	public List<TurmaDisciplinaDocente> buscaTurmaDisciplinaDocentePorDisciplinaId(Long id) {
-		return manager.createQuery("select tdd from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :id",
-				TurmaDisciplinaDocente.class).setParameter("id", id).getResultList();
+	public List<TurmaDisciplinaDocente> buscaTurmaDisciplinaDocentePorDisciplinaId(Long disciplina_id) {
+		return manager
+				.createQuery("select tdd from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :disciplina_id",
+						TurmaDisciplinaDocente.class)
+				.setParameter("disciplina_id", disciplina_id).getResultList();
+	}
+
+	public List<TurmaDisciplinaDocente> buscaTurmaDisciplinaDocentePorTurmaId(Long turma_id) {
+		return manager.createQuery("select tdd from TurmaDisciplinaDocente tdd where tdd.turma.id = :turma_id",
+				TurmaDisciplinaDocente.class).setParameter("turma_id", turma_id).getResultList();
+	}
+
+	public List<TurmaDisciplinaDocente> buscaTurmaDisciplinaDocentePorDocenteId(Long docente_id) {
+		return manager.createQuery("select tdd from TurmaDisciplinaDocente tdd where tdd.docente.id = :docente_id",
+				TurmaDisciplinaDocente.class).setParameter("docente_id", docente_id).getResultList();
 	}
 
 	public List<Long> buscaTurmaPorDisciplinaId(Long id) {

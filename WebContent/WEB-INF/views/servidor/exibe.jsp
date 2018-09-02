@@ -21,7 +21,7 @@
 					</tr>
 					<tr>
 						<th>Nome Completo</th>
-						<td>${servidor.nome}</td>
+						<td style="font-weight: bold; color: red;">${servidor.nome}</td>
 					</tr>
 					<tr>
 						<th>SIAPE</th>
@@ -71,8 +71,10 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Deseja realmente excluir o Servidor <br>ID (${servidor.id}) ->
-							${servidor.nome}?</p>
+						<p>
+							Deseja realmente excluir o Servidor <br>ID (${servidor.id})
+							-> ${servidor.nome}?
+						</p>
 					</div>
 					<div class="modal-footer">
 						<a href="<c:url value="/servidor/remove?id=${servidor.id}" />"

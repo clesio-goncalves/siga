@@ -37,6 +37,12 @@ public class ExtraClasseDao {
 				.setParameter("docente_id", docente_id).getResultList();
 	}
 
+	public List<ExtraClasse> buscaPelaDisciplinaId(Long disciplina_id) {
+		return manager
+				.createQuery("select e from ExtraClasse e where e.disciplina.id = :disciplina_id", ExtraClasse.class)
+				.setParameter("disciplina_id", disciplina_id).getResultList();
+	}
+
 	public ExtraClasse buscaPorId(Long id) {
 		return manager.find(ExtraClasse.class, id);
 	}

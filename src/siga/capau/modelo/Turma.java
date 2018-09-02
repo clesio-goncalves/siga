@@ -30,6 +30,9 @@ public class Turma {
 	@Transient
 	private int periodo_ingresso;
 
+	@Transient
+	private Long qnt_alunos;
+
 	public Long getId() {
 		return id;
 	}
@@ -68,6 +71,14 @@ public class Turma {
 
 	public void setPeriodo_ingresso(int periodo_ingresso) {
 		this.periodo_ingresso = periodo_ingresso;
+	}
+
+	public Long getQnt_alunos() {
+		return qnt_alunos;
+	}
+
+	public void setQnt_alunos(Long qnt_alunos) {
+		this.qnt_alunos = qnt_alunos;
 	}
 
 }

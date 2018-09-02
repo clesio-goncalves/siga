@@ -23,7 +23,7 @@
 					</tr>
 					<tr>
 						<th>Nome Completo</th>
-						<td>${docente.nome}</td>
+						<td style="font-weight: bold; color: red;">${docente.nome}</td>
 					</tr>
 					<tr>
 						<th>SIAPE</th>
@@ -33,6 +33,28 @@
 						<th>Usuário</th>
 						<td>${docente.usuario.email}</td>
 					</tr>
+				</table>
+			</div>
+			<legend>DISCIPLINAS E TURMAS</legend>
+			<div class="table-responsive">
+				<table class="table table-hover table-bordered dt-responsive nowrap"
+					style="width: 100%; margin-top: 10px;">
+					<thead>
+						<tr>
+							<th width="50%">Disciplina</th>
+							<th>Turma</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="disciplina_turma" items="${disciplinas_turma}">
+							<tr>
+								<td><a
+									href="<c:url value="/disciplina/exibe?id=${disciplina_turma.disciplina.id}" />">${disciplina_turma.disciplina.nome}</a></td>
+								<td><a
+									href="<c:url value="/turma/exibe?id=${disciplina_turma.turma.id}" />">${disciplina_turma.turma.nome}</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 			<legend>ATENDIMENTO EXTRACLASSE</legend>
@@ -55,7 +77,7 @@
 								<td><fmt:formatDate value="${atendimento_extraclasse.data}" /></td>
 								<td>${atendimento_extraclasse.aluno.turma.nome}</td>
 								<td>${atendimento_extraclasse.disciplina.nome}</td>
-								<td>${atendimento_extraclasse.docente.nome}</td>
+								<td>${atendimento_extraclasse.aluno.nome}</td>
 								<td>
 									<!-- Exibir --> <a
 									href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"
@@ -120,4 +142,6 @@
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
 
+<script type="text/javascript"
+	src="<c:url value="/resources/js/tooltip.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

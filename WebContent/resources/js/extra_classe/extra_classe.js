@@ -56,12 +56,13 @@ function configDatePicker() {
  * Busca as disciplinas com base na turma do aluno
  * @returns {undefined}
  */
-function alteraAluno(){
+function alteraAluno(contexto){
 	$.ajax({
 		type : "POST",
 		url : "filtro_disciplina",
 		cache : false,
 		data : {
+			contexto : contexto,
 			aluno_id : $("select[name='aluno.id'] :selected").val()
 		},
 		beforeSend : function(xhr) {
@@ -71,6 +72,8 @@ function alteraAluno(){
 			$('#lista_disciplinas').html(response);
 			$('#disciplina').removeAttr('disabled');
 			$('#disciplina').selectpicker('refresh');
+			$('#docente option').remove();
+			$('#docente').selectpicker('refresh');
 		},
 		error : function() {
 			alert("Ocorreu um erro");
@@ -82,12 +85,13 @@ function alteraAluno(){
  * Busca os docentes com base na turma do aluno e na disciplina selecionada
  * @returns {undefined}
  */
-function alteraDisciplina(){
+function alteraDisciplina(contexto){
 	$.ajax({
 		type : "POST",
 		url : "filtro_docente",
 		cache : false,
 		data : {
+			contexto : contexto,
 			aluno_id : $("select[name='aluno.id'] :selected").val(),
 			disciplina_id : $("select[name='disciplina.id'] :selected").val()
 		},

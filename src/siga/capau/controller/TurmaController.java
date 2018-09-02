@@ -79,7 +79,12 @@ public class TurmaController {
 
 	@RequestMapping("/lista")
 	public String lista(Model model) {
-		model.addAttribute("turmas", dao.lista());
+		this.lista_turma = dao.lista();
+		for (Turma turma : this.lista_turma) {
+			turma.setQnt_alunos(dao_aluno.buscaQntAlunosPorTurmaId(turma.getId()));
+		}
+
+		model.addAttribute("turmas", this.lista_turma);
 		return "turma/lista";
 	}
 
@@ -99,6 +104,10 @@ public class TurmaController {
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("turma", dao.buscaPorId(id));
+		model.addAttribute("qnt_alunos", dao_aluno.buscaQntAlunosPorTurmaId(id));
+		model.addAttribute("disciplinas_docente",
+				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorTurmaId(id));
+		model.addAttribute("alunos_turma", dao_aluno.buscaAlunosPorTurmaId(id));
 		return "turma/exibe";
 	}
 

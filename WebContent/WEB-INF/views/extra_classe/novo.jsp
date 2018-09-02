@@ -32,7 +32,7 @@
 				class="selectpicker show-tick form-control" data-live-search="true"
 				multiple data-max-options="1" title="Selecione um aluno"
 				data-live-search-placeholder="Pesquisar" required
-				autofocus="autofocus" onchange="alteraAluno()">
+				autofocus="autofocus" onchange="alteraAluno('novo')">
 				<c:forEach var="aluno" items="${alunos}">
 					<option value="${aluno.id}">${aluno.nome}</option>
 				</c:forEach>
@@ -41,12 +41,12 @@
 
 		<!-- DISCIPLINA -->
 		<div class="form-group" id="lista_disciplinas">
-			<jsp:include page="import_novo_edita/disciplina.jsp"></jsp:include>
+			<jsp:include page="import_novo/disciplina.jsp"></jsp:include>
 		</div>
 
 		<!-- DOCENTE -->
 		<div class="form-group" id="lista_docentes">
-			<jsp:include page="import_novo_edita/docente.jsp"></jsp:include>
+			<jsp:include page="import_novo/docente.jsp"></jsp:include>
 		</div>
 
 		<div class="row">

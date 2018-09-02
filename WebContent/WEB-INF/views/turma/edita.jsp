@@ -19,7 +19,7 @@
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${turma.id}" />
+		<input type="hidden" name="id" value="${turma.id}" required/>
 
 		<div class="form-row">
 			<!-- ANO INGRESSO -->

@@ -35,7 +35,7 @@ public class DocenteController {
 
 	@Autowired
 	TurmaDisciplinaDocenteDao dao_turma_disciplina_docente;
-	
+
 	@Autowired
 	ExtraClasseDao dao_extraclasse;
 
@@ -79,7 +79,9 @@ public class DocenteController {
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("docente", dao.buscaPorId(id));
-		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPeloAlunoId(id));
+		model.addAttribute("disciplinas_turma",
+				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorDocenteId(id));
+		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPeloDocenteId(id));
 		return "docente/exibe";
 	}
 

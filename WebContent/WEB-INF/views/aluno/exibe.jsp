@@ -24,7 +24,7 @@
 
 					<tr>
 						<th>Nome Completo</th>
-						<td>${aluno.nome}</td>
+						<td style="font-weight: bold; color: red;">${aluno.nome}</td>
 					</tr>
 
 					<tr>

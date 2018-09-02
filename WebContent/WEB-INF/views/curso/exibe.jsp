@@ -22,8 +22,39 @@
 
 					<tr>
 						<th>Nome</th>
-						<td>${curso.nome}</td>
+						<td style="font-weight: bold; color: red;">${curso.nome}</td>
 					</tr>
+				</table>
+			</div>
+			<legend>TURMAS</legend>
+			<div class="table-responsive">
+				<table class="table table-hover table-bordered dt-responsive nowrap"
+					style="width: 100%; margin-top: 10px;">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+							<th>Turma</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="turma_curso" items="${turmas_curso}">
+							<tr>
+								<td>${turma_curso.id}</td>
+								<td>${turma_curso.nome}</td>
+								<td>${turma_curso.nome}</td>
+
+								<td>
+									<!-- Exibir --> <a
+									href="<c:url value="/turma/exibe?id=${turma_curso.id}"/>"
+									class="btn btn-info btn-sm" data-tooltip="tooltip"
+									data-placement="bottom" title="Exibir"> <span
+										class="glyphicon glyphicon-search"></span></a>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -54,8 +85,10 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<p>Deseja realmente excluir o curso <br>ID (${curso.id}) ->
-						${curso.nome}?</p>
+					<p>
+						Deseja realmente excluir o curso <br>ID (${curso.id}) ->
+						${curso.nome}?
+					</p>
 				</div>
 				<div class="modal-footer">
 					<a href="<c:url value="/curso/remove?id=${curso.id}" />"
@@ -72,5 +105,6 @@
 	<a class="btn btn-success" href="<c:url value="/curso/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
-
+<script type="text/javascript"
+	src="<c:url value="/resources/js/tooltip.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

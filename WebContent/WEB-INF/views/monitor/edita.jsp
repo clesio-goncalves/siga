@@ -18,7 +18,7 @@
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${monitor.id}" />
+		<input type="hidden" name="id" value="${monitor.id}" required/>
 
 		<!-- NOME -->
 		<div class="form-group">

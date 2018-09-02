@@ -22,7 +22,7 @@
 
 					<tr>
 						<th>Nome Completo</th>
-						<td>${profissional_saude.nome}</td>
+						<td style="font-weight: bold; color: red;">${profissional_saude.nome}</td>
 					</tr>
 
 					<tr>
@@ -72,8 +72,10 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Deseja realmente excluir o Profissional da Saúde <br>ID
-							(${profissional_saude.id}) -> ${profissional_saude.nome}?</p>
+						<p>
+							Deseja realmente excluir o Profissional da Saúde <br>ID
+							(${profissional_saude.id}) -> ${profissional_saude.nome}?
+						</p>
 					</div>
 					<div class="modal-footer">
 						<a

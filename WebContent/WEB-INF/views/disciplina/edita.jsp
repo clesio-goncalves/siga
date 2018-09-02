@@ -20,7 +20,7 @@
 	<form action="altera" method="POST" id="disciplina">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${disciplina.id}">
+		<input type="hidden" name="id" value="${disciplina.id}" required>
 
 		<!-- NOME -->
 		<div class="form-group">

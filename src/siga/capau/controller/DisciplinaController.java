@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.DocenteDao;
+import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.dao.TurmaDisciplinaDocenteDao;
 import siga.capau.modelo.Disciplina;
@@ -44,6 +45,9 @@ public class DisciplinaController {
 
 	@Autowired
 	TurmaDisciplinaDocenteDao dao_turma_disciplina_docente;
+
+	@Autowired
+	ExtraClasseDao dao_extraclasse;
 
 	@RequestMapping("/nova")
 	public String disciplina(Disciplina disciplina, Model model) {
@@ -108,6 +112,7 @@ public class DisciplinaController {
 		model.addAttribute("disciplina", dao.buscaPorId(id));
 		model.addAttribute("turmas_docentes",
 				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorDisciplinaId(id));
+		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPelaDisciplinaId(id));
 		return "disciplina/exibe";
 	}
 
