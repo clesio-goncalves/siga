@@ -30,17 +30,6 @@
 				required="required">
 		</div>
 
-		<!-- DISCIPLINA -->
-		<div class="form-group">
-			<label for="disciplina.id" class="col-form-label">Disciplina<span class="obrigatorio">*</span></label>
-			<select class="custom-select" name="disciplina.id"
-				required="required">
-				<c:forEach var="disciplina" items="${disciplinas}">
-					<option value="${disciplina.id}">${disciplina.nome}</option>
-				</c:forEach>
-			</select>
-		</div>
-
 		<!-- USUÁRIO-->
 		<div class="form-group">
 			<label for="usuario.id" class="col-form-label">Usuário<span class="obrigatorio">*</span></label> <select

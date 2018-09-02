@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +19,9 @@ public class Disciplina {
 	@NotNull
 	@Column(unique = true)
 	private String nome;
+
+	@ManyToOne
+	private Monitor monitor;
 
 	@Transient
 	private String turmas;
@@ -39,6 +43,14 @@ public class Disciplina {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Monitor getMonitor() {
+		return monitor;
+	}
+
+	public void setMonitor(Monitor monitor) {
+		this.monitor = monitor;
 	}
 
 	public String getTurmas() {

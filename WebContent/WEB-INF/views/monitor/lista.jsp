@@ -23,7 +23,6 @@
 						<th>ID</th>
 						<th>Nome Completo</th>
 						<th>Matrícula</th>
-						<th>Disciplina</th>
 						<th>Usuário</th>
 						<th>Ações</th>
 					</tr>
@@ -34,7 +33,6 @@
 							<td>${monitor.id}</td>
 							<td>${monitor.nome}</td>
 							<td>${monitor.matricula}</td>
-							<td>${monitor.disciplina.nome}</td>
 							<td>${monitor.usuario.email}</td>
 
 							<!-- AÇÕES -->

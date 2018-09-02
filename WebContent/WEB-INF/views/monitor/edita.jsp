@@ -34,18 +34,6 @@
 				required="required" value="${monitor.matricula}">
 		</div>
 
-		<!-- DISCIPLINA -->
-		<div class="form-group">
-			<label for="disciplina.id" class="col-form-label">Disciplina<span class="obrigatorio">*</span></label>
-			<select class="custom-select" name="disciplina.id"
-				required="required">
-				<c:forEach var="disciplina" items="${disciplinas}">
-					<option value="${disciplina.id}"
-						${disciplina.id==monitor.disciplina.id ? 'selected' : ''}>${disciplina.nome}</option>
-				</c:forEach>
-			</select>
-		</div>
-
 		<!-- USUÁRIO-->
 		<input type="hidden" name="usuario.id" value="${monitor.usuario.id}" />
 		<div class="form-group">

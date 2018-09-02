@@ -12,6 +12,7 @@
 		<div class="card-header">Exibe os dados do monitor</div>
 		<!-- Table -->
 		<div class="card-body">
+			<legend style="margin-top: 0;">INFORMAÇÕES DO MONITOR</legend>
 			<div class="table-responsive">
 				<table
 					class="table table-striped table-bordered dt-responsive nowrap">
@@ -28,14 +29,39 @@
 						<td>${monitor.matricula}</td>
 					</tr>
 					<tr>
-						<th>Disciplina</th>
-						<td>${monitor.disciplina.nome}</td>
-					</tr>
-
-					<tr>
 						<th>Usuário</th>
-						<td>${monitor.usuario.email}</td>
+						<td><a
+							href="<c:url value="/usuario/exibe?id=${monitor.usuario.id}" />">${monitor.usuario.email}</a></td>
 					</tr>
+				</table>
+			</div>
+
+			<legend>DISCIPLINAS</legend>
+			<div class="table-responsive">
+				<table class="table table-hover table-bordered dt-responsive nowrap"
+					style="width: 100%; margin-top: 10px;">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="disciplina_monitor" items="${disciplinas_monitor}">
+							<tr>
+								<td>${disciplina_monitor.id}</td>
+								<td>${disciplina_monitor.nome}</td>
+								<td>
+									<!-- Exibir --> <a
+									href="<c:url value="/disciplina/exibe?id=${disciplina_monitor.id}"/>"
+									class="btn btn-info btn-sm" data-tooltip="tooltip"
+									data-placement="bottom" title="Exibir"> <span
+										class="glyphicon glyphicon-search"></span></a>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -67,8 +93,10 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Deseja realmente excluir o monitor <br>ID (${monitor.id}) ->
-							${monitor.nome}?</p>
+						<p>
+							Deseja realmente excluir o monitor <br>ID (${monitor.id}) ->
+							${monitor.nome}?
+						</p>
 					</div>
 					<div class="modal-footer">
 						<a href="<c:url value="/monitor/remove?id=${monitor.id}" />"
@@ -88,5 +116,6 @@
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 
 </div>
-
+<script type="text/javascript"
+	src="<c:url value="/resources/js/tooltip.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

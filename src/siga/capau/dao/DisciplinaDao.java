@@ -34,6 +34,11 @@ public class DisciplinaDao {
 				Disciplina.class).setParameter("turma_id", turma_id).getResultList();
 	}
 
+	public List<Disciplina> listaDisciplinasPorMonitorId(Long monitor_id) {
+		return manager.createQuery("select d from Disciplina d where d.monitor.id = :monitor_id", Disciplina.class)
+				.setParameter("monitor_id", monitor_id).getResultList();
+	}
+
 	public List<Disciplina> buscaPorNome(String nome) {
 		return manager.createQuery("select d from Disciplina d where d.nome = :nome", Disciplina.class)
 				.setParameter("nome", nome).getResultList();

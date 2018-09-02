@@ -22,6 +22,7 @@
 					<tr>
 						<th>ID</th>
 						<th>Nome</th>
+						<th>Monitor</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
@@ -30,6 +31,14 @@
 						<tr>
 							<td>${disciplina.id}</td>
 							<td>${disciplina.nome}</td>
+							
+							<!-- Monitor -->
+							<c:if test="${disciplina.monitor == null}">
+								<td>Não informado</td>
+							</c:if>
+							<c:if test="${disciplina.monitor != null}">
+								<td>${disciplina.monitor.nome}</td>
+							</c:if>
 							<td>
 								<!-- Exibir --> <a
 								href="<c:url value="/disciplina/exibe?id=${disciplina.id}"/>"

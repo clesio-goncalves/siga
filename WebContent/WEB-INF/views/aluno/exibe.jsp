@@ -59,7 +59,8 @@
 							<td>Não informado</td>
 						</c:if>
 						<c:if test="${aluno.usuario != null}">
-							<td>${aluno.usuario.email}</td>
+							<td><a
+								href="<c:url value="/usuario/exibe?id=${aluno.usuario.id}" />">${aluno.usuario.email}</a></td>
 						</c:if>
 					</tr>
 				</table>

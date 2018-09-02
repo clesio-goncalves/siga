@@ -36,7 +36,7 @@
 					</tr>
 					<tr>
 						<th>Perfil</th>
-						<td>${usuario.perfil.nome}</td>
+						<td style="font-weight: bold; color: red;">${usuario.perfil.nome}</td>
 					</tr>
 				</table>
 			</div>

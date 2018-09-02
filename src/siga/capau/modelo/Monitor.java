@@ -24,10 +24,6 @@ public class Monitor {
 
 	@NotNull
 	@OneToOne
-	private Disciplina disciplina;
-
-	@NotNull
-	@OneToOne
 	private Usuario usuario;
 
 	public Long getId() {
@@ -52,14 +48,6 @@ public class Monitor {
 
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
-	}
-
-	public Disciplina getDisciplina() {
-		return disciplina;
-	}
-
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
 	}
 
 	public Usuario getUsuario() {

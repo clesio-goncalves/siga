@@ -25,6 +25,16 @@
 						<th>Nome</th>
 						<td style="font-weight: bold; color: red;">${disciplina.nome}</td>
 					</tr>
+					<tr>
+						<th>Monitor</th>
+						<c:if test="${disciplina.monitor == null}">
+							<td>Não informado</td>
+						</c:if>
+						<c:if test="${disciplina.monitor != null}">
+							<td><a
+								href="<c:url value="/monitor/exibe?id=${disciplina.monitor.id}" />">${disciplina.monitor.nome}</a></td>
+						</c:if>
+					</tr>
 				</table>
 			</div>
 			<legend>TURMAS E DOCENTES</legend>

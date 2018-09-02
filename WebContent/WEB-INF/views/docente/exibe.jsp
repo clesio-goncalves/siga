@@ -31,7 +31,8 @@
 					</tr>
 					<tr>
 						<th>Usuário</th>
-						<td>${docente.usuario.email}</td>
+						<td><a
+							href="<c:url value="/usuario/exibe?id=${docente.usuario.id}" />">${docente.usuario.email}</a></td>
 					</tr>
 				</table>
 			</div>

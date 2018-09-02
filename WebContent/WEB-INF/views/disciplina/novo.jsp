@@ -26,6 +26,19 @@
 				name="nome" id="nome" autofocus MAXLENGTH="255" required>
 		</div>
 
+		<!-- MONITOR -->
+		<div class="form-group">
+			<label for="monitor.id" class="col-form-label">Monitor</label> <select
+				name="monitor.id" class="selectpicker show-tick form-control"
+				data-live-search="true" multiple data-max-options="1"
+				title="Selecione um monitor"
+				data-live-search-placeholder="Pesquisar">
+				<c:forEach var="monitor" items="${monitores}">
+					<option value="${monitor.id}">${monitor.matricula}-${monitor.nome}</option>
+				</c:forEach>
+			</select>
+		</div>
+
 		<!-- TURMAS E DOCENTES -->
 		<div class="form-group">
 			<label for="nome" class="col-form-label">Turma-Docente<span

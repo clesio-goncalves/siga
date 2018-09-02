@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.MonitorDao;
 import siga.capau.dao.UsuarioDao;
-import siga.capau.modelo.Disciplina;
 import siga.capau.modelo.Monitor;
 import siga.capau.modelo.Usuario;
 
@@ -25,7 +24,6 @@ import siga.capau.modelo.Usuario;
 public class MonitorController {
 
 	private List<Usuario> lista_usuario;
-	private List<Disciplina> lista_disciplina;
 	private List<Monitor> lista_monitor;
 
 	@Autowired
@@ -40,16 +38,12 @@ public class MonitorController {
 	@RequestMapping("/novo")
 	public String novoMonitor(Model model) {
 		this.lista_usuario = dao_usuario.listaUsuarioMonitorSemVinculo();
-		this.lista_disciplina = dao_disciplina.lista();
 
 		// Testa se há usuários do tipo monitor ou disciplinas cadastradas
 		if (this.lista_usuario.size() == 0) {
 			return "redirect:/usuario/novo";
-		} else if (this.lista_disciplina.size() == 0) {
-			return "redirect:/disciplina/nova";
 		}
 
-		model.addAttribute("disciplinas", this.lista_disciplina);
 		model.addAttribute("usuarios", this.lista_usuario);
 		return "monitor/novo";
 	}
@@ -82,13 +76,13 @@ public class MonitorController {
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("monitor", dao.buscaPorId(id));
+		model.addAttribute("disciplinas_monitor", dao_disciplina.listaDisciplinasPorMonitorId(id));
 		return "monitor/exibe";
 	}
 
 	@RequestMapping("/edita")
 	public String edita(Long id, Model model) {
 		model.addAttribute("monitor", dao.buscaPorId(id));
-		model.addAttribute("disciplinas", dao_disciplina.lista());
 		return "monitor/edita";
 	}
 
