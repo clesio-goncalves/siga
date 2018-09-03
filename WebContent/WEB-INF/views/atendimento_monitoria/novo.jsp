@@ -39,6 +39,10 @@
 			<jsp:include page="import_novo/disciplina.jsp"></jsp:include>
 		</div>
 
+		<!-- MONITOR -->
+		<div class="form-group" id="monitor_disciplina">
+			<jsp:include page="import_novo/monitor.jsp"></jsp:include>
+		</div>
 		<div class="row">
 
 			<!-- Data -->
@@ -74,10 +78,11 @@
 
 		<!-- DIFICULDADES DIAGNOSTICADAS -->
 		<div class="form-group">
-			<label for="dificuldades_diagnosticadas">Dificuldades diagnosticadas<span
-				class="obrigatorio">*</span></label>
-			<textarea class="form-control" name="dificuldades_diagnosticadas" rows="3" required
-				maxlength="3000"></textarea>
+			<label for="dificuldades_diagnosticadas">Dificuldades
+				diagnosticadas<span class="obrigatorio">*</span>
+			</label>
+			<textarea class="form-control" name="dificuldades_diagnosticadas"
+				rows="3" required maxlength="3000"></textarea>
 		</div>
 
 		<security:csrfInput />

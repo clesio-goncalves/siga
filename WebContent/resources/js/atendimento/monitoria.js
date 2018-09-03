@@ -21,6 +21,31 @@ function alteraAluno(contexto){
 			$('#lista_disciplinas').html(response);
 			$('#disciplina').removeAttr('disabled');
 			$('#disciplina').selectpicker('refresh');
+			alteraDisciplina();
+		},
+		error : function() {
+			alert("Ocorreu um erro");
+		}
+	});
+}
+
+/**
+ * Busca os docentes com base na turma do aluno e na disciplina selecionada
+ * @returns {undefined}
+ */
+function alteraDisciplina(){
+	$.ajax({
+		type : "POST",
+		url : "filtro_monitor",
+		cache : false,
+		data : {
+			disciplina_id : $("select[name='disciplina.id'] :selected").val()
+		},
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		success : function(response) {
+			$('#monitor_disciplina').html(response);
 		},
 		error : function() {
 			alert("Ocorreu um erro");

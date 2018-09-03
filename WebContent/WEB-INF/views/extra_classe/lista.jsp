@@ -5,86 +5,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <title>Atendimentos Extraclasses</title>
 <c:import url="../componentes/css_data_table.jsp" />
+<c:import url="../componentes/css_atendimento.jsp" />
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
 
+	<!-- Filtros -->
+	<jsp:include page="import_lista/filtro.jsp"></jsp:include>
+
 	<div class="card border-light mb-3">
 		<div class="card-header">Listagem de Atendimentos do Extraclasse</div>
-
 		<!-- Table -->
-		<div class="card-body">
-			<table id="tabela_id"
-				class="table table-striped table-bordered dt-responsive nowrap"
-				style="width: 100%">
-				<thead>
-					<tr>
-						<th>Data</th>
-						<th>Aluno</th>
-						<th>Disciplina</th>
-						<th>Docente</th>
-						<th>Ações</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="extra_classe" items="${extra_classes}">
-						<tr>
-							<td><fmt:formatDate value="${extra_classe.data}" /></td>
-							<td>${extra_classe.aluno.nome}</td>
-							<td>${extra_classe.disciplina.nome}</td>
-							<td>${extra_classe.docente.nome}</td>
-							<td>
-								<!-- Exibir --> <a
-								href="<c:url value="/atendimento/extra-classe/exibe?id=${extra_classe.id}"/>"
-								class="btn btn-info btn-sm" data-tooltip="tooltip"
-								data-placement="bottom" title="Exibir"> <span
-									class="glyphicon glyphicon-search"></span></a> <!-- Editar --> <a
-								href="<c:url value="/atendimento/extra-classe/edita?id=${extra_classe.id}" />"
-								class="btn btn-warning btn-sm" data-tooltip="tooltip"
-								data-placement="bottom" title="Editar"><span
-									class="glyphicon glyphicon-pencil"></span> </a> <!-- Excluir -->
-								<button type="button" class="btn btn-danger btn-sm"
-									data-tooltip="tooltip" data-placement="bottom" title="Excluir"
-									data-toggle="modal" data-target="#modal${extra_classe.id}">
-									<span class="glyphicon glyphicon-trash"></span>
-								</button>
-								<div class="modal fade" id="modal${extra_classe.id}">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title">Exclusão do Atendimento
-													Extraclasse</h5>
-												<button type="button" class="close" data-dismiss="modal"
-													aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<p>
-													Deseja realmente excluir o Atendimento Extraclasse <br>ID
-													(${extra_classe.id}) - Aluno: ${extra_classe.aluno.nome}?
-												</p>
-											</div>
-											<div class="modal-footer">
-												<a
-													href="<c:url value="/atendimento/extra-classe/remove?id=${extra_classe.id}" />"
-													class="btn btn-danger"><span
-													class="glyphicon glyphicon-trash"></span> Excluir</a>
-												<button type="button" class="btn btn-secondary"
-													data-dismiss="modal">
-													<span class="glyphicon glyphicon-log-out"></span> Fechar
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+		<div class="card-body" id="tabela">
+			<jsp:include page="import_lista/tabela.jsp"></jsp:include>
 		</div>
 	</div>
 
@@ -96,5 +33,8 @@
 		</security:authorize>
 	</div>
 </div>
+<c:import url="../componentes/js_atendimento.jsp" />
 <c:import url="../componentes/js_data_table_atendimento.jsp" />
+<script type="text/javascript"
+	src="<c:url value="/resources/js/atendimento/extra_classe_filtro.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

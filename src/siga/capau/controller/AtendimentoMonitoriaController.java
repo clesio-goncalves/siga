@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.DisciplinaDao;
+import siga.capau.dao.MonitorDao;
 import siga.capau.modelo.AtendimentoMonitoria;
+import siga.capau.modelo.FiltroAtendimentoMonitoria;
 
 @Transactional
 @Controller
@@ -24,6 +26,7 @@ public class AtendimentoMonitoriaController {
 
 	private Long turma_id;
 	private AtendimentoMonitoria atendimento_monitoria;
+	private FiltroAtendimentoMonitoria filtra_atendimento_monitoria;
 
 	@Autowired
 	AtendimentoMonitoriaDao dao;
@@ -33,6 +36,9 @@ public class AtendimentoMonitoriaController {
 
 	@Autowired
 	DisciplinaDao dao_disciplina;
+
+	@Autowired
+	MonitorDao dao_monitor;
 
 	@RequestMapping("/novo")
 	public String novoAtendimentoMonitoria(Model model) {
@@ -55,6 +61,9 @@ public class AtendimentoMonitoriaController {
 	@RequestMapping("/lista")
 	public String lista(Model model) {
 		model.addAttribute("atendimento_monitorias", dao.lista());
+		model.addAttribute("alunos", dao_aluno.lista());
+		model.addAttribute("disciplinas", dao_disciplina.lista());
+		model.addAttribute("monitores", dao_monitor.lista());
 		return "atendimento_monitoria/lista";
 	}
 
@@ -77,6 +86,7 @@ public class AtendimentoMonitoriaController {
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("disciplinas", dao_disciplina
 				.listaDisciplinasPorTurmaIdMonitorNotNull(this.atendimento_monitoria.getAluno().getTurma().getId()));
+		model.addAttribute("monitor_disciplina", this.atendimento_monitoria.getDisciplina().getMonitor().getNome());
 		return "atendimento_monitoria/edita";
 	}
 
@@ -102,6 +112,69 @@ public class AtendimentoMonitoriaController {
 			return "atendimento_monitoria/import_edita/disciplina";
 		} else {
 			return "atendimento_monitoria/import_novo/disciplina";
+		}
+	}
+
+	@RequestMapping(value = "/filtro_monitor", method = RequestMethod.POST)
+	public String filtrarMonitor(HttpServletRequest request, HttpServletResponse response, Model model)
+			throws Exception {
+		if (request.getParameter("disciplina_id") != null) {
+			model.addAttribute("monitor_disciplina",
+					dao_disciplina.buscaMonitorPelaDisciplinaId(Long.parseLong(request.getParameter("disciplina_id"))));
+		}
+		return "atendimento_monitoria/import_novo/monitor";
+	}
+
+	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
+	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
+		model.addAttribute("atendimento_monitorias", dao.filtraAtendimentoMonitoria(trataParametrosRequest(request)));
+		return "atendimento_monitoria/import_lista/tabela";
+	}
+
+	private FiltroAtendimentoMonitoria trataParametrosRequest(HttpServletRequest request) {
+		this.filtra_atendimento_monitoria = new FiltroAtendimentoMonitoria();
+		this.filtra_atendimento_monitoria.setData_inicial_atendimento(request.getParameter("data_inicial_atendimento"));
+		this.filtra_atendimento_monitoria.setData_final_atendimento(request.getParameter("data_final_atendimento"));
+		this.filtra_atendimento_monitoria
+				.setHorario_inicial_atendimento(request.getParameter("horario_inicial_atendimento"));
+		this.filtra_atendimento_monitoria
+				.setHorario_final_atendimento(request.getParameter("horario_final_atendimento"));
+		this.filtra_atendimento_monitoria.setAluno(request.getParameter("aluno"));
+		this.filtra_atendimento_monitoria.setDisciplina(request.getParameter("disciplina"));
+		this.filtra_atendimento_monitoria.setMonitor(request.getParameter("monitor"));
+		this.filtra_atendimento_monitoria
+				.setDificuldades_diagnosticadas(request.getParameter("dificuldades_diagnosticadas"));
+		this.filtra_atendimento_monitoria.setLocal(request.getParameter("local"));
+		this.filtra_atendimento_monitoria.setConteudo(request.getParameter("conteudo"));
+
+		trataDatas();
+
+		return this.filtra_atendimento_monitoria;
+	}
+
+	private void trataDatas() {
+		this.filtra_atendimento_monitoria.setData_inicial_atendimento(
+				trataDataInicial(this.filtra_atendimento_monitoria.getData_inicial_atendimento()));
+		this.filtra_atendimento_monitoria.setData_final_atendimento(
+				trataDataFinal(this.filtra_atendimento_monitoria.getData_final_atendimento()));
+	}
+
+	private String trataDataInicial(String data_inicial) {
+		// Se a data inicial não estiver sido informada, será atribuido 01/01/2018
+		if (data_inicial.equals("")) {
+			return "2018-01-01";
+		} else {
+			return this.filtra_atendimento_monitoria.formataData(data_inicial);
+		}
+	}
+
+	private String trataDataFinal(String data_final) {
+		// Se a data final não estiver sido informada, sera atribuido a data atual do
+		// servidor
+		if (data_final.equals("")) {
+			return this.filtra_atendimento_monitoria.retornaDataFinal();
+		} else {
+			return this.filtra_atendimento_monitoria.formataData(data_final);
 		}
 	}
 }

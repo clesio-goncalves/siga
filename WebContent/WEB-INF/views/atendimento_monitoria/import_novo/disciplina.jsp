@@ -5,7 +5,8 @@
 <select name="disciplina.id" id="disciplina"
 	class="selectpicker show-tick form-control" data-live-search="true"
 	multiple data-max-options="1" title="Selecione uma disciplina"
-	data-live-search-placeholder="Pesquisar" required disabled="disabled">
+	data-live-search-placeholder="Pesquisar" required disabled="disabled"
+	onchange="alteraDisciplina()">
 	<c:forEach var="disciplina" items="${disciplinas}">
 		<option value="${disciplina.id}">${disciplina.nome}</option>
 	</c:forEach>

@@ -44,6 +44,11 @@
 			<jsp:include page="import_edita/disciplina.jsp"></jsp:include>
 		</div>
 
+		<!-- MONITOR -->
+		<div class="form-group" id="monitor_disciplina">
+			<jsp:include page="import_novo/monitor.jsp"></jsp:include>
+		</div>
+
 		<div class="row">
 
 			<!-- Data -->

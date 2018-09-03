@@ -17,6 +17,7 @@ import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.DocenteDao;
 import siga.capau.dao.ExtraClasseDao;
 import siga.capau.modelo.ExtraClasse;
+import siga.capau.modelo.FiltroExtraClasse;
 
 @Transactional
 @Controller
@@ -25,6 +26,7 @@ public class ExtraClasseController {
 
 	private Long turma_id;
 	private ExtraClasse extra_classe;
+	private FiltroExtraClasse filtra_extra_classe;
 
 	@Autowired
 	ExtraClasseDao dao;
@@ -59,6 +61,9 @@ public class ExtraClasseController {
 	@RequestMapping("/lista")
 	public String lista(Model model) {
 		model.addAttribute("extra_classes", dao.lista());
+		model.addAttribute("alunos", dao_aluno.lista());
+		model.addAttribute("disciplinas", dao_disciplina.lista());
+		model.addAttribute("docentes", dao_docente.lista());
 		return "extra_classe/lista";
 	}
 
@@ -122,6 +127,55 @@ public class ExtraClasseController {
 			return "extra_classe/import_edita/docente";
 		} else {
 			return "extra_classe/import_novo/docente";
+		}
+	}
+
+	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
+	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
+		model.addAttribute("extra_classes", dao.filtraExtraClasse(trataParametrosRequest(request)));
+		return "extra_classe/import_lista/tabela";
+	}
+
+	private FiltroExtraClasse trataParametrosRequest(HttpServletRequest request) {
+		this.filtra_extra_classe = new FiltroExtraClasse();
+		this.filtra_extra_classe.setData_inicial_atendimento(request.getParameter("data_inicial_atendimento"));
+		this.filtra_extra_classe.setData_final_atendimento(request.getParameter("data_final_atendimento"));
+		this.filtra_extra_classe.setHorario_inicial_atendimento(request.getParameter("horario_inicial_atendimento"));
+		this.filtra_extra_classe.setHorario_final_atendimento(request.getParameter("horario_final_atendimento"));
+		this.filtra_extra_classe.setAluno(request.getParameter("aluno"));
+		this.filtra_extra_classe.setDisciplina(request.getParameter("disciplina"));
+		this.filtra_extra_classe.setDocente(request.getParameter("docente"));
+		this.filtra_extra_classe.setLocal(request.getParameter("local"));
+		this.filtra_extra_classe.setConteudo(request.getParameter("conteudo"));
+
+		trataDatas();
+
+		return this.filtra_extra_classe;
+	}
+
+	private void trataDatas() {
+		this.filtra_extra_classe
+				.setData_inicial_atendimento(trataDataInicial(this.filtra_extra_classe.getData_inicial_atendimento()));
+		this.filtra_extra_classe
+				.setData_final_atendimento(trataDataFinal(this.filtra_extra_classe.getData_final_atendimento()));
+	}
+
+	private String trataDataInicial(String data_inicial) {
+		// Se a data inicial não estiver sido informada, será atribuido 01/01/2018
+		if (data_inicial.equals("")) {
+			return "2018-01-01";
+		} else {
+			return this.filtra_extra_classe.formataData(data_inicial);
+		}
+	}
+
+	private String trataDataFinal(String data_final) {
+		// Se a data final não estiver sido informada, sera atribuido a data atual do
+		// servidor
+		if (data_final.equals("")) {
+			return this.filtra_extra_classe.retornaDataFinal();
+		} else {
+			return this.filtra_extra_classe.formataData(data_final);
 		}
 	}
 

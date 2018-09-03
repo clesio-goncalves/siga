@@ -8,12 +8,15 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import siga.capau.modelo.ExtraClasse;
+import siga.capau.modelo.FiltroExtraClasse;
 
 @Repository
 public class ExtraClasseDao {
 
 	@PersistenceContext
 	private EntityManager manager;
+
+	private String sql;
 
 	public void adiciona(ExtraClasse extraClasse) {
 		manager.persist(extraClasse);
@@ -49,6 +52,56 @@ public class ExtraClasseDao {
 
 	public void remove(Long id) {
 		manager.createQuery("delete from ExtraClasse a where a.id = :id").setParameter("id", id).executeUpdate();
+	}
+
+	public List<ExtraClasse> filtraExtraClasse(FiltroExtraClasse filtro_extra_classe) {
+
+		sql = "select e from ExtraClasse as e";
+
+		sql = sql + " where DATE(e.data) between '" + filtro_extra_classe.getData_inicial_atendimento() + "' and '"
+				+ filtro_extra_classe.getData_final_atendimento() + "'";
+
+		// Horario inicial atendimento
+		if (!filtro_extra_classe.getHorario_inicial_atendimento().equals("")) {
+			sql = sql + " and TIME(e.horario) >= '" + filtro_extra_classe.getHorario_inicial_atendimento() + ":00'";
+		}
+
+		// Horario final atendimento
+		if (!filtro_extra_classe.getHorario_final_atendimento().equals("")) {
+			sql = sql + " and TIME(e.horario) <= '" + filtro_extra_classe.getHorario_final_atendimento() + ":00'";
+		}
+
+		// Aluno
+		if (filtro_extra_classe.getAluno() != null) {
+			sql = sql + " and e.aluno.id = " + filtro_extra_classe.getAluno();
+		}
+
+		// disciplina
+		if (filtro_extra_classe.getDisciplina() != null) {
+			sql = sql + " and e.disciplina.id = " + filtro_extra_classe.getDisciplina();
+		}
+
+		// docente
+		if (filtro_extra_classe.getDocente() != null) {
+			sql = sql + " and e.docente.id = " + filtro_extra_classe.getDocente();
+		}
+
+		// local
+		if (!filtro_extra_classe.getLocal().equals("")) {
+			sql = sql + " and e.local like '%" + filtro_extra_classe.getLocal() + "%'";
+		}
+
+		// conteudo
+		if (!filtro_extra_classe.getConteudo().equals("")) {
+			sql = sql + " and e.conteudo like '%" + filtro_extra_classe.getConteudo() + "%'";
+		}
+
+		System.out.println("------------------------------------------------------");
+		System.out.println(sql);
+		System.out.println("------------------------------------------------------");
+
+		return manager.createQuery(sql, ExtraClasse.class).getResultList();
+
 	}
 
 }
