@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.DocenteDao;
 import siga.capau.dao.ExtraClasseDao;
@@ -45,13 +46,16 @@ public class DisciplinaController {
 	DocenteDao dao_docente;
 
 	@Autowired
+	MonitorDao dao_monitor;
+
+	@Autowired
 	TurmaDisciplinaDocenteDao dao_turma_disciplina_docente;
 
 	@Autowired
 	ExtraClasseDao dao_extraclasse;
-	
+
 	@Autowired
-	MonitorDao dao_monitor;
+	AtendimentoMonitoriaDao dao_atendimento_monitoria;
 
 	@RequestMapping("/nova")
 	public String disciplina(Disciplina disciplina, Model model) {
@@ -119,6 +123,7 @@ public class DisciplinaController {
 		model.addAttribute("turmas_docentes",
 				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorDisciplinaId(id));
 		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPelaDisciplinaId(id));
+		model.addAttribute("atendimentos_monitoria", dao_atendimento_monitoria.buscaPelaDisciplinaId(id));
 		return "disciplina/exibe";
 	}
 
@@ -136,6 +141,7 @@ public class DisciplinaController {
 		model.addAttribute("turmas_sem_vinculo", dao_turma.buscaTurmaSemVinculoEmTurmaDisciplinaDocente(id));
 		model.addAttribute("docentes_sem_vinculo", dao_docente.buscaDocenteSemVinculoEmTurmaDisciplinaDocente(id));
 		model.addAttribute("docentes", dao_docente.lista());
+		model.addAttribute("monitores", dao_monitor.lista());
 
 		return "disciplina/edita";
 	}

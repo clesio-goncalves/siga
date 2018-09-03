@@ -34,6 +34,12 @@ public class DisciplinaDao {
 				Disciplina.class).setParameter("turma_id", turma_id).getResultList();
 	}
 
+	public List<Disciplina> listaDisciplinasPorTurmaIdMonitorNotNull(Long turma_id) {
+		return manager.createQuery(
+				"select d from Disciplina d inner join TurmaDisciplinaDocente tdd on tdd.disciplina.id = d.id where tdd.turma.id = :turma_id and d.monitor.id is not null",
+				Disciplina.class).setParameter("turma_id", turma_id).getResultList();
+	}
+
 	public List<Disciplina> listaDisciplinasPorMonitorId(Long monitor_id) {
 		return manager.createQuery("select d from Disciplina d where d.monitor.id = :monitor_id", Disciplina.class)
 				.setParameter("monitor_id", monitor_id).getResultList();

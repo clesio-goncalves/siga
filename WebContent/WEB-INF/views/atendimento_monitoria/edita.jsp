@@ -7,21 +7,22 @@
 <head>
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
-<title>Atendimento Extraclasse</title>
+<title>Atendimento de Monitoria</title>
 <c:import url="../componentes/cabecalho.jsp" />
 <c:import url="../componentes/css_atendimento.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Atendimento Extraclasse</h1>
+		<h1 class="display-3">Editar Atendimento de Monitoria</h1>
 		<p class="lead">Preencha o formulário abaixo com os dados do
-			atendimento extraclasse para realizar a alteração no sistema.</p>
+			atendimento de monitoria para realizar a alteração no sistema.</p>
 	</div>
 </div>
 <div class="container">
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${extra_classe.id}" required>
+		<input type="hidden" name="id" value="${atendimento_monitoria.id}"
+			required>
 
 		<!-- ALUNO -->
 		<div class="form-group">
@@ -33,7 +34,7 @@
 				onchange="alteraAluno('edita')">
 				<c:forEach var="aluno" items="${alunos}">
 					<option value="${aluno.id}"
-						${extra_classe.aluno.id == aluno.id ? 'selected' : ''}>${aluno.nome}</option>
+						${atendimento_monitoria.aluno.id == aluno.id ? 'selected' : ''}>${aluno.nome}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -43,11 +44,6 @@
 			<jsp:include page="import_edita/disciplina.jsp"></jsp:include>
 		</div>
 
-		<!-- DOCENTE -->
-		<div class="form-group" id="lista_docentes">
-			<jsp:include page="import_edita/docente.jsp"></jsp:include>
-		</div>
-
 		<div class="row">
 
 			<!-- Data -->
@@ -55,7 +51,8 @@
 				<label for="data" class="col-form-label">Data do atendimento<span
 					class="obrigatorio">*</span>
 				</label> <input type="text" class="form-control maskData" name="data"
-					required value="<fmt:formatDate value='${extra_classe.data}' />">
+					required
+					value="<fmt:formatDate value='${atendimento_monitoria.data}' />">
 			</div>
 
 			<!-- Horário -->
@@ -64,7 +61,7 @@
 					class="obrigatorio">*</span>
 				</label> <input type="text" class="form-control maskHorario" name="horario"
 					required
-					value="<fmt:formatDate type="time" value='${extra_classe.horario}' />">
+					value="<fmt:formatDate type="time" value='${atendimento_monitoria.horario}' />">
 			</div>
 		</div>
 
@@ -72,14 +69,24 @@
 		<div class="form-group">
 			<label for="local" class="col-form-label">Local<span
 				class="obrigatorio">*</span></label> <input type="text" class="form-control"
-				name="local" MAXLENGTH="255" required value="${extra_classe.local}">
+				name="local" MAXLENGTH="255" required
+				value="${atendimento_monitoria.local}">
 		</div>
 
 		<!-- CONTEUDO -->
 		<div class="form-group">
 			<label for="conteudo">Conteúdo<span class="obrigatorio">*</span></label>
 			<textarea class="form-control" name="conteudo" rows="2" required
-				maxlength="3000">${extra_classe.conteudo}</textarea>
+				maxlength="3000">${atendimento_monitoria.conteudo}</textarea>
+		</div>
+
+		<!-- DIFICULDADES DIAGNOSTICADAS -->
+		<div class="form-group">
+			<label for="dificuldades_diagnosticadas">Dificuldades
+				diagnosticadas<span class="obrigatorio">*</span>
+			</label>
+			<textarea class="form-control" name="dificuldades_diagnosticadas"
+				rows="3" required maxlength="3000">${atendimento_monitoria.dificuldades_diagnosticadas}</textarea>
 		</div>
 
 		<security:csrfInput />
@@ -87,7 +94,7 @@
 		<!-- OBTIGATÓRIO -->
 		<label>(*) Campos obrigatórios</label>
 		<div>
-			<a href="<c:url value="/atendimento/extra-classe/lista" />"
+			<a href="<c:url value="/atendimento/monitoria/lista" />"
 				class="btn btn-secondary btn-lg"> <span
 				class="glyphicon glyphicon-remove"></span> Cancelar
 			</a>
@@ -100,5 +107,5 @@
 
 <c:import url="../componentes/js_atendimento.jsp" />
 <script type="text/javascript"
-	src="<c:url value="/resources/js/atendimento/extra_classe.js" />"></script>
+	src="<c:url value="/resources/js/atendimento/monitoria.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

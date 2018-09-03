@@ -8,12 +8,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <title>Atendimento Extraclasse</title>
 <c:import url="../componentes/cabecalho.jsp" />
-<link rel="stylesheet" type="text/css"
-	href="<c:url value="/resources/css/jquery-ui.min.css" />">
-<link rel="stylesheet" type="text/css"
-	href="<c:url value="/resources/css/jquery-ui-timepicker-addon.min.css" />">
-<link rel="stylesheet" type="text/css"
-	href="<c:url value="/resources/css/select/bootstrap-select.min.css" />">
+<c:import url="../componentes/css_atendimento.jsp" />
 
 <div class="jumbotron">
 	<div class="container">
@@ -78,7 +73,7 @@
 		<!-- CONTEUDO -->
 		<div class="form-group">
 			<label for="conteudo">Conteúdo<span class="obrigatorio">*</span></label>
-			<textarea class="form-control" name="conteudo" rows="3" required
+			<textarea class="form-control" name="conteudo" rows="2" required
 				maxlength="3000"></textarea>
 		</div>
 
@@ -97,17 +92,8 @@
 	</form>
 </div>
 
+<c:import url="../componentes/js_atendimento.jsp" />
 <script type="text/javascript"
-	src="<c:url value="/resources/js/jquery-ui.min.js" />"></script>
-<script type="text/javascript"
-	src="<c:url value="/resources/js/jquery.mask.min.js" />"></script>
-<script type="text/javascript"
-	src="<c:url value="/resources/js/jquery-ui-timepicker-addon.min.js" />"></script>
-<script type="text/javascript"
-	src="<c:url value="/resources/js/select/bootstrap-select.min.js" />"></script>
-<script type="text/javascript"
-	src="<c:url value="/resources/js/select/defaults-pt_BR.min.js" />"></script>
-<script type="text/javascript"
-	src="<c:url value="/resources/js/extra_classe/extra_classe.js" />"></script>
+	src="<c:url value="/resources/js/atendimento/extra_classe.js" />"></script>
 
 <c:import url="../componentes/rodape.jsp" />

@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.MonitorDao;
 import siga.capau.dao.UsuarioDao;
@@ -34,6 +35,9 @@ public class MonitorController {
 
 	@Autowired
 	DisciplinaDao dao_disciplina;
+
+	@Autowired
+	AtendimentoMonitoriaDao dao_atendimento_monitoria;
 
 	@RequestMapping("/novo")
 	public String novoMonitor(Model model) {
@@ -77,6 +81,7 @@ public class MonitorController {
 	public String exibe(Long id, Model model) {
 		model.addAttribute("monitor", dao.buscaPorId(id));
 		model.addAttribute("disciplinas_monitor", dao_disciplina.listaDisciplinasPorMonitorId(id));
+		model.addAttribute("atendimentos_monitoria", dao_atendimento_monitoria.buscaPeloMonitorId(id));
 		return "monitor/exibe";
 	}
 
