@@ -6,6 +6,6 @@
 	multiple data-max-options="1" title="Selecione um docente"
 	data-live-search-placeholder="Pesquisar" required disabled="disabled">
 	<c:forEach var="docente" items="${docentes}">
-		<option value="${docente.id}">${docente.nome}</option>
+		<option value="${docente.id}">${docente.siape}-${docente.nome}</option>
 	</c:forEach>
 </select>

@@ -32,7 +32,7 @@ public class AlunoDao {
 				.setParameter("aluno_id", aluno_id).getSingleResult();
 	}
 
-	public List<Aluno> buscaAlunosPorTurmaId(Long turma_id) {
+	public List<Aluno> listaAlunosPorTurmaId(Long turma_id) {
 		return manager.createQuery("select a from Aluno a where a.turma.id = :turma_id", Aluno.class)
 				.setParameter("turma_id", turma_id).getResultList();
 	}

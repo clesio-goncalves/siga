@@ -24,7 +24,7 @@
 
 					<tr>
 						<th>Nome Completo</th>
-						<td style="font-weight: bold; color: red;">${aluno.nome}</td>
+						<td style="font-weight: bold; color: blue;">${aluno.nome}</td>
 					</tr>
 
 					<tr>
@@ -32,7 +32,7 @@
 
 						<!-- Matricula -->
 						<c:if test="${aluno.matricula eq \"\"}">
-							<td>Não informada</td>
+							<td>-</td>
 						</c:if>
 						<c:if test="${aluno.matricula ne \"\"}">
 							<td>${aluno.matricula}</td>
@@ -56,7 +56,7 @@
 
 						<!-- Usuário -->
 						<c:if test="${aluno.usuario == null}">
-							<td>Não informado</td>
+							<td>-</td>
 						</c:if>
 						<c:if test="${aluno.usuario != null}">
 							<td><a
@@ -84,7 +84,8 @@
 							<tr>
 								<td><fmt:formatDate value="${atendimento_extraclasse.data}" /></td>
 								<td><fmt:formatDate type="time"
-										value="${atendimento_extraclasse.horario}" pattern="HH:mm" /></td>
+										value="${atendimento_extraclasse.horario_inicial}" pattern="HH:mm" /> - <fmt:formatDate type="time"
+										value="${atendimento_extraclasse.horario_final}" pattern="HH:mm" /></td>
 								<td>${atendimento_extraclasse.disciplina.nome}</td>
 								<td>${atendimento_extraclasse.docente.nome}</td>
 								<td>

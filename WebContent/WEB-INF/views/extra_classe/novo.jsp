@@ -20,30 +20,44 @@
 <div class="container">
 	<form action="adiciona" method="POST">
 
+		<div class="row">
+			<!-- CURSO-->
+			<div class="form-group col-md-6">
+				<label for="curso.id" class="col-form-label">Curso<span
+					class="obrigatorio">*</span></label> <select name="curso.id" id="curso"
+					class="selectpicker show-tick form-control" data-live-search="true"
+					multiple data-max-options="1" title="Selecione um curso"
+					data-live-search-placeholder="Pesquisar" required
+					onchange="alteraCurso('novo')">
+					<c:forEach var="curso" items="${cursos}">
+						<option value="${curso.id}">${curso.nome}</option>
+					</c:forEach>
+				</select>
+			</div>
+
+			<!-- TURMA-->
+			<div class="form-group col-md-6" id="lista_turmas">
+				<jsp:include page="import_novo/turma.jsp"></jsp:include>
+			</div>
+		</div>
+
 		<!-- ALUNO -->
-		<div class="form-group">
-			<label for="aluno.id" class="col-form-label">Aluno<span
-				class="obrigatorio">*</span></label> <select name="aluno.id"
-				class="selectpicker show-tick form-control" data-live-search="true"
-				multiple data-max-options="1" title="Selecione um aluno"
-				data-live-search-placeholder="Pesquisar" required
-				autofocus="autofocus" onchange="alteraAluno('novo')">
-				<c:forEach var="aluno" items="${alunos}">
-					<option value="${aluno.id}">${aluno.nome}</option>
-				</c:forEach>
-			</select>
+		<div class="form-group" id="lista_alunos">
+			<jsp:include page="import_novo/aluno.jsp"></jsp:include>
 		</div>
 
-		<!-- DISCIPLINA -->
-		<div class="form-group" id="lista_disciplinas">
-			<jsp:include page="import_novo/disciplina.jsp"></jsp:include>
-		</div>
+		<div class="row">
 
-		<!-- DOCENTE -->
-		<div class="form-group" id="lista_docentes">
-			<jsp:include page="import_novo/docente.jsp"></jsp:include>
-		</div>
+			<!-- DISCIPLINA -->
+			<div class="col-md-6 form-group" id="lista_disciplinas">
+				<jsp:include page="import_novo/disciplina.jsp"></jsp:include>
+			</div>
 
+			<!-- DOCENTE -->
+			<div class="col-md-6 form-group" id="lista_docentes">
+				<jsp:include page="import_novo/docente.jsp"></jsp:include>
+			</div>
+		</div>
 		<div class="row">
 
 			<!-- Data -->
@@ -54,12 +68,20 @@
 					required>
 			</div>
 
-			<!-- Horário -->
-			<div class="form-group col-6">
-				<label for="horario" class="col-form-label">Horário<span
-					class="obrigatorio">*</span>
-				</label> <input type="text" class="form-control maskHorario" name="horario"
-					required>
+			<!-- Horário Inicial -->
+			<div class="form-group col-3">
+				<label for="horario_inicial" class="col-form-label">Horário
+					de inicial<span class="obrigatorio">*</span>
+				</label> <input type="text" class="form-control maskHorario"
+					name="horario_inicial" required>
+			</div>
+
+			<!-- Horário Final -->
+			<div class="form-group col-3">
+				<label for="horario_final" class="col-form-label">Horário
+					final<span class="obrigatorio">*</span>
+				</label> <input type="text" class="form-control maskHorario"
+					name="horario_final" required>
 			</div>
 		</div>
 
@@ -75,6 +97,17 @@
 			<label for="conteudo">Conteúdo<span class="obrigatorio">*</span></label>
 			<textarea class="form-control" name="conteudo" rows="2" required
 				maxlength="3000"></textarea>
+		</div>
+
+		<!-- STATUS ATENDIMENTO -->
+		<div class="form-group">
+			<div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input"
+					id="status_atendimento" name="status_atendimento"
+					onchange="alteraStatusAtendimento('novo')"> <label
+					class="custom-control-label" for="status_atendimento">Não
+					houve atendimento</label>
+			</div>
 		</div>
 
 		<security:csrfInput />

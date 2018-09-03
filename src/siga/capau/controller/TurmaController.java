@@ -107,7 +107,7 @@ public class TurmaController {
 		model.addAttribute("qnt_alunos", dao_aluno.buscaQntAlunosPorTurmaId(id));
 		model.addAttribute("disciplinas_docente",
 				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorTurmaId(id));
-		model.addAttribute("alunos_turma", dao_aluno.buscaAlunosPorTurmaId(id));
+		model.addAttribute("alunos_turma", dao_aluno.listaAlunosPorTurmaId(id));
 		return "turma/exibe";
 	}
 

@@ -17,8 +17,22 @@
 		<c:forEach var="extra_classe" items="${extra_classes}">
 			<tr>
 				<td><fmt:formatDate value="${extra_classe.data}" /></td>
-				<td>${extra_classe.aluno.nome}</td>
-				<td>${extra_classe.disciplina.nome}</td>
+
+				<!-- Aluno -->
+				<c:if test="${extra_classe.aluno == null}">
+					<td>-</td>
+				</c:if>
+				<c:if test="${extra_classe.aluno != null}">
+					<td>${extra_classe.aluno.nome}</td>
+				</c:if>
+
+				<!-- Disciplina -->
+				<c:if test="${extra_classe.disciplina == null}">
+					<td>-</td>
+				</c:if>
+				<c:if test="${extra_classe.disciplina != null}">
+					<td>${extra_classe.disciplina.nome}</td>
+				</c:if>
 				<td>${extra_classe.docente.nome}</td>
 				<td>
 					<!-- Exibir --> <a

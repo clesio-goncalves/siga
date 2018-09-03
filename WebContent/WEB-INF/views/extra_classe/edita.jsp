@@ -23,33 +23,48 @@
 		<!-- ID -->
 		<input type="hidden" name="id" value="${extra_classe.id}" required>
 
+		<div class="row">
+			<!-- CURSO-->
+			<div class="form-group col-md-6">
+				<label for="curso.id" class="col-form-label">Curso<span
+					class="obrigatorio">*</span></label> <select name="curso.id" id="curso"
+					class="selectpicker show-tick form-control" data-live-search="true"
+					multiple data-max-options="1" title="Selecione um curso"
+					data-live-search-placeholder="Pesquisar" required
+					onchange="alteraCurso('edita')"
+					${extra_classe.status_atendimento ? 'disabled' : ''}>
+					<c:forEach var="curso" items="${cursos}">
+						<option value="${curso.id}"
+							${extra_classe.aluno.turma.curso.id == curso.id ? 'selected' : ''}>${curso.nome}</option>
+					</c:forEach>
+				</select>
+			</div>
+
+			<!-- TURMA-->
+			<div class="form-group col-md-6" id="lista_turmas">
+				<jsp:include page="import_edita/turma.jsp"></jsp:include>
+			</div>
+		</div>
+
 		<!-- ALUNO -->
-		<div class="form-group">
-			<label for="aluno.id" class="col-form-label">Aluno<span
-				class="obrigatorio">*</span></label> <select name="aluno.id"
-				class="selectpicker show-tick form-control" data-live-search="true"
-				multiple data-max-options="1" title="Selecione um aluno"
-				data-live-search-placeholder="Pesquisar" required
-				onchange="alteraAluno('edita')">
-				<c:forEach var="aluno" items="${alunos}">
-					<option value="${aluno.id}"
-						${extra_classe.aluno.id == aluno.id ? 'selected' : ''}>${aluno.nome}</option>
-				</c:forEach>
-			</select>
-		</div>
-
-		<!-- DISCIPLINA -->
-		<div class="form-group" id="lista_disciplinas">
-			<jsp:include page="import_edita/disciplina.jsp"></jsp:include>
-		</div>
-
-		<!-- DOCENTE -->
-		<div class="form-group" id="lista_docentes">
-			<jsp:include page="import_edita/docente.jsp"></jsp:include>
+		<div class="form-group" id="lista_alunos">
+			<jsp:include page="import_edita/aluno.jsp"></jsp:include>
 		</div>
 
 		<div class="row">
 
+			<!-- DISCIPLINA -->
+			<div class="col-md-6 form-group" id="lista_disciplinas">
+				<jsp:include page="import_edita/disciplina.jsp"></jsp:include>
+			</div>
+
+			<!-- DOCENTE -->
+			<div class="col-md-6 form-group" id="lista_docentes">
+				<jsp:include page="import_edita/docente.jsp"></jsp:include>
+			</div>
+		</div>
+
+		<div class="row">
 			<!-- Data -->
 			<div class="form-group col-6">
 				<label for="data" class="col-form-label">Data do atendimento<span
@@ -58,13 +73,22 @@
 					required value="<fmt:formatDate value='${extra_classe.data}' />">
 			</div>
 
-			<!-- Horário -->
-			<div class="form-group col-6">
-				<label for="horario" class="col-form-label">Horário<span
-					class="obrigatorio">*</span>
-				</label> <input type="text" class="form-control maskHorario" name="horario"
-					required
-					value="<fmt:formatDate type="time" value='${extra_classe.horario}' />">
+			<!-- Horário Inicial -->
+			<div class="form-group col-3">
+				<label for="horario_inicial" class="col-form-label">Horário
+					de inicial<span class="obrigatorio">*</span>
+				</label> <input type="text" class="form-control maskHorario"
+					name="horario_inicial" required
+					value="<fmt:formatDate type="time" value='${extra_classe.horario_inicial}' />">
+			</div>
+
+			<!-- Horário Final -->
+			<div class="form-group col-3">
+				<label for="horario_final" class="col-form-label">Horário
+					final<span class="obrigatorio">*</span>
+				</label> <input type="text" class="form-control maskHorario"
+					name="horario_final" required
+					value="<fmt:formatDate type="time" value='${extra_classe.horario_final}' />">
 			</div>
 		</div>
 
@@ -79,7 +103,20 @@
 		<div class="form-group">
 			<label for="conteudo">Conteúdo<span class="obrigatorio">*</span></label>
 			<textarea class="form-control" name="conteudo" rows="2" required
-				maxlength="3000">${extra_classe.conteudo}</textarea>
+				maxlength="3000"
+				${extra_classe.status_atendimento ? 'readonly' : ''}>${extra_classe.conteudo}</textarea>
+		</div>
+
+		<!-- STATUS ATENDIMENTO -->
+		<div class="form-group">
+			<div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input"
+					id="status_atendimento" name="status_atendimento"
+					onchange="alteraStatusAtendimento('edita')"
+					${extra_classe.status_atendimento ? 'checked' : ''}> <label
+					class="custom-control-label" for="status_atendimento">Não
+					houve atendimento</label>
+			</div>
 		</div>
 
 		<security:csrfInput />

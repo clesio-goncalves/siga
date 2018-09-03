@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import siga.capau.dao.AlunoDao;
+import siga.capau.dao.CursoDao;
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.DocenteDao;
 import siga.capau.dao.ExtraClasseDao;
+import siga.capau.dao.TurmaDao;
 import siga.capau.modelo.ExtraClasse;
 import siga.capau.modelo.FiltroExtraClasse;
 
@@ -24,7 +26,6 @@ import siga.capau.modelo.FiltroExtraClasse;
 @RequestMapping("/atendimento/extra-classe")
 public class ExtraClasseController {
 
-	private Long turma_id;
 	private ExtraClasse extra_classe;
 	private FiltroExtraClasse filtra_extra_classe;
 
@@ -35,6 +36,12 @@ public class ExtraClasseController {
 	AlunoDao dao_aluno;
 
 	@Autowired
+	CursoDao dao_curso;
+
+	@Autowired
+	TurmaDao dao_turma;
+
+	@Autowired
 	DisciplinaDao dao_disciplina;
 
 	@Autowired
@@ -42,7 +49,7 @@ public class ExtraClasseController {
 
 	@RequestMapping("/novo")
 	public String novoExtraClasse(Model model) {
-		model.addAttribute("alunos", dao_aluno.lista());
+		model.addAttribute("cursos", dao_curso.lista());
 		return "extra_classe/novo";
 	}
 
@@ -50,6 +57,7 @@ public class ExtraClasseController {
 	public String adiciona(@Valid ExtraClasse extraClasse, BindingResult result) {
 
 		if (result.hasErrors()) {
+			System.out.println(result);
 			return "redirect:novo";
 		}
 
@@ -83,11 +91,19 @@ public class ExtraClasseController {
 	public String edita(Long id, Model model) {
 		this.extra_classe = dao.buscaPorId(id);
 		model.addAttribute("extra_classe", this.extra_classe);
-		model.addAttribute("alunos", dao_aluno.lista());
-		model.addAttribute("disciplinas",
-				dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-		model.addAttribute("docentes",
-				dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
+		model.addAttribute("cursos", dao_curso.lista());
+		if (this.extra_classe.isStatus_atendimento() == false) {
+			model.addAttribute("turmas",
+					dao_turma.listaTurmaPorCursoId(this.extra_classe.getAluno().getTurma().getCurso().getId()));
+			model.addAttribute("alunos",
+					dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
+			model.addAttribute("disciplinas",
+					dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
+			model.addAttribute("docentes",
+					dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
+		} else {
+			model.addAttribute("docentes", dao_docente.lista());
+		}
 		return "extra_classe/edita";
 	}
 
@@ -102,12 +118,38 @@ public class ExtraClasseController {
 		return "redirect:lista";
 	}
 
+	@RequestMapping(value = "/filtro_turma", method = RequestMethod.POST)
+	public String filtrarTurma(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		if (request.getParameter("curso_id") != null) {
+			model.addAttribute("turmas",
+					dao_turma.listaTurmaPorCursoId(Long.parseLong(request.getParameter("curso_id"))));
+		}
+		if (request.getParameter("contexto").equals("edita")) {
+			return "extra_classe/import_edita/turma";
+		} else {
+			return "extra_classe/import_novo/turma";
+		}
+	}
+
+	@RequestMapping(value = "/filtro_aluno", method = RequestMethod.POST)
+	public String filtrarAluno(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		if (request.getParameter("turma_id") != null) {
+			model.addAttribute("alunos",
+					dao_aluno.listaAlunosPorTurmaId(Long.parseLong(request.getParameter("turma_id"))));
+		}
+		if (request.getParameter("contexto").equals("edita")) {
+			return "extra_classe/import_edita/aluno";
+		} else {
+			return "extra_classe/import_novo/aluno";
+		}
+	}
+
 	@RequestMapping(value = "/filtro_disciplina", method = RequestMethod.POST)
 	public String filtrarDisciplina(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception {
-		if (request.getParameter("aluno_id") != null) {
-			this.turma_id = dao_aluno.buscaTurmaIdPorAlunoId(Long.parseLong(request.getParameter("aluno_id")));
-			model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasPorTurmaId(this.turma_id));
+		if (request.getParameter("turma_id") != null) {
+			model.addAttribute("disciplinas",
+					dao_disciplina.listaDisciplinasPorTurmaId(Long.parseLong(request.getParameter("turma_id"))));
 		}
 		if (request.getParameter("contexto").equals("edita")) {
 			return "extra_classe/import_edita/disciplina";
@@ -123,6 +165,16 @@ public class ExtraClasseController {
 			model.addAttribute("docentes",
 					dao_docente.listaDocentesPorDisciplinaId(Long.parseLong(request.getParameter("disciplina_id"))));
 		}
+		if (request.getParameter("contexto").equals("edita")) {
+			return "extra_classe/import_edita/docente";
+		} else {
+			return "extra_classe/import_novo/docente";
+		}
+	}
+
+	@RequestMapping(value = "/lista_docente", method = RequestMethod.POST)
+	public String listaDocente(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		model.addAttribute("docentes", dao_docente.lista());
 		if (request.getParameter("contexto").equals("edita")) {
 			return "extra_classe/import_edita/docente";
 		} else {

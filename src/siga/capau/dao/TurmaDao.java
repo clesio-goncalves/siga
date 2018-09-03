@@ -32,7 +32,7 @@ public class TurmaDao {
 				.getResultList();
 	}
 
-	public List<Turma> buscaTurmaPorCursoId(Long id) {
+	public List<Turma> listaTurmaPorCursoId(Long id) {
 		return manager.createQuery("select t from Turma as t where t.curso.id = :id", Turma.class)
 				.setParameter("id", id).getResultList();
 	}
