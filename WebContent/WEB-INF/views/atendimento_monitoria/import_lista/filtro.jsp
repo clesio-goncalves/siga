@@ -55,22 +55,37 @@
 		</div>
 
 		<div class="row">
-			<div class="col-7">
-				<!-- Aluno -->
+			<div class="col-4">
+				<!-- Curso -->
 				<div class="form-group">
-					<label for="aluno" class="col-form-label">Aluno</label> <select
-						name="aluno" class="selectpicker show-tick form-control"
+					<label for="curso" class="col-form-label">Curso</label> <select
+						name="curso" class="selectpicker show-tick form-control"
 						data-live-search="true" multiple data-max-options="1"
-						title="Selecione um aluno"
+						title="Selecione um curso"
 						data-live-search-placeholder="Pesquisar">
-						<c:forEach var="aluno" items="${alunos}">
-							<option value="${aluno.id}">${aluno.nome}</option>
+						<c:forEach var="curso" items="${cursos}">
+							<option value="${curso.id}">${curso.nome}</option>
 						</c:forEach>
 					</select>
 				</div>
 			</div>
 
-			<div class="col-5">
+			<div class="col-4">
+				<!-- Turma -->
+				<div class="form-group">
+					<label for="turma" class="col-form-label">Turma</label> <select
+						name="turma" class="selectpicker show-tick form-control"
+						data-live-search="true" multiple data-max-options="1"
+						title="Selecione uma turma"
+						data-live-search-placeholder="Pesquisar">
+						<c:forEach var="turma" items="${turmas}">
+							<option value="${turma.id}">${turma.nome}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-4">
 				<!-- Disciplina -->
 				<div class="form-group">
 					<label for="disciplina" class="col-form-label">Disciplina</label> <select
@@ -86,7 +101,22 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-6">
+			<div class="col-5">
+				<!-- Aluno -->
+				<div class="form-group">
+					<label for="aluno" class="col-form-label">Aluno</label> <select
+						name="aluno" class="selectpicker show-tick form-control"
+						data-live-search="true" multiple data-max-options="1"
+						title="Selecione um aluno"
+						data-live-search-placeholder="Pesquisar">
+						<c:forEach var="aluno" items="${alunos}">
+							<option value="${aluno.id}">${aluno.nome}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-4">
 				<!-- Monitor -->
 				<div class="form-group">
 					<label for="monitor" class="col-form-label">Monitor</label> <select
@@ -100,16 +130,6 @@
 					</select>
 				</div>
 			</div>
-			<div class="col-6">
-				<!-- Dificuldades Diagnosticadas -->
-				<div class="form-group">
-					<label for="dificuldades_diagnosticadas" class="col-form-label">Dificuldades
-						diagnosticadas</label> <input type="text" class="form-control"
-						name="dificuldades_diagnosticadas" MAXLENGTH="255">
-				</div>
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-3">
 				<!-- Local -->
 				<div class="form-group">
@@ -117,11 +137,34 @@
 						type="text" class="form-control" name="local" MAXLENGTH="255">
 				</div>
 			</div>
-			<div class="col-5">
+		</div>
+		<div class="row">
+
+			<div class="col-3">
 				<!-- Conteúdo -->
 				<div class="form-group">
 					<label for="conteudo" class="col-form-label">Conteúdo</label> <input
 						type="text" class="form-control" name="conteudo" MAXLENGTH="255">
+				</div>
+			</div>
+			<div class="col-3">
+				<!-- Dificuldades Diagnosticadas -->
+				<div class="form-group">
+					<label for="dificuldades_diagnosticadas" class="col-form-label">Dificuldades
+						diagnosticadas</label> <input type="text" class="form-control"
+						name="dificuldades_diagnosticadas" MAXLENGTH="255">
+				</div>
+			</div>
+			<div class="col-2">
+				<!-- Status Atendimento -->
+				<div class="form-group">
+					<label for="status_atendimento" class="col-form-label">Houve
+						atendimento?</label> <select class="custom-select"
+						name="status_atendimento" required>
+						<option value="" selected="selected">Todos</option>
+						<option value="nao">Não</option>
+						<option value="sim">Sim</option>
+					</select>
 				</div>
 			</div>
 			<div class="col-4">

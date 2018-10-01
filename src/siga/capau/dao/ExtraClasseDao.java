@@ -63,17 +63,23 @@ public class ExtraClasseDao {
 
 		// Horario inicial atendimento
 		if (!filtro_extra_classe.getHorario_inicial_atendimento().equals("")) {
-			sql = sql + " and TIME(e.horario) >= '" + filtro_extra_classe.getHorario_inicial_atendimento() + ":00'";
+			sql = sql + " and TIME(e.horario_inicial) >= '" + filtro_extra_classe.getHorario_inicial_atendimento()
+					+ ":00'";
 		}
 
 		// Horario final atendimento
 		if (!filtro_extra_classe.getHorario_final_atendimento().equals("")) {
-			sql = sql + " and TIME(e.horario) <= '" + filtro_extra_classe.getHorario_final_atendimento() + ":00'";
+			sql = sql + " and TIME(e.horario_final) <= '" + filtro_extra_classe.getHorario_final_atendimento() + ":00'";
 		}
 
-		// Aluno
-		if (filtro_extra_classe.getAluno() != null) {
-			sql = sql + " and e.aluno.id = " + filtro_extra_classe.getAluno();
+		// Curso
+		if (filtro_extra_classe.getCurso() != null) {
+			sql = sql + " and e.aluno.turma.curso.id = " + filtro_extra_classe.getCurso();
+		}
+
+		// Turma
+		if (filtro_extra_classe.getTurma() != null) {
+			sql = sql + " and e.aluno.turma.id = " + filtro_extra_classe.getTurma();
 		}
 
 		// disciplina
@@ -81,9 +87,23 @@ public class ExtraClasseDao {
 			sql = sql + " and e.disciplina.id = " + filtro_extra_classe.getDisciplina();
 		}
 
+		// Aluno
+		if (filtro_extra_classe.getAluno() != null) {
+			sql = sql + " and e.aluno.id = " + filtro_extra_classe.getAluno();
+		}
+
 		// docente
 		if (filtro_extra_classe.getDocente() != null) {
 			sql = sql + " and e.docente.id = " + filtro_extra_classe.getDocente();
+		}
+
+		// Status atendimento
+		if (!filtro_extra_classe.getStatus_atendimento().equals("")) {
+			if (filtro_extra_classe.getStatus_atendimento().equals("sim")) {
+				sql = sql + " and e.status_atendimento = false";
+			} else {
+				sql = sql + " and e.status_atendimento = true";
+			}
 		}
 
 		// local

@@ -36,7 +36,7 @@
 
 							<!-- Matricula -->
 							<c:if test="${aluno.matricula eq \"\"}">
-								<td>Não informada</td>
+								<td>-</td>
 							</c:if>
 							<c:if test="${aluno.matricula ne \"\"}">
 								<td>${aluno.matricula}</td>
@@ -46,7 +46,7 @@
 
 							<!-- Usuário -->
 							<c:if test="${aluno.usuario == null}">
-								<td>Não informado</td>
+								<td>-</td>
 							</c:if>
 							<c:if test="${aluno.usuario != null}">
 								<td>${aluno.usuario.email}</td>

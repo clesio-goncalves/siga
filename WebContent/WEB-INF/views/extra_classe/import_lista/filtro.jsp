@@ -56,21 +56,36 @@
 
 		<div class="row">
 			<div class="col-4">
-				<!-- Aluno -->
+				<!-- Curso -->
 				<div class="form-group">
-					<label for="aluno" class="col-form-label">Aluno</label> <select
-						name="aluno" class="selectpicker show-tick form-control"
+					<label for="curso" class="col-form-label">Curso</label> <select
+						name="curso" class="selectpicker show-tick form-control"
 						data-live-search="true" multiple data-max-options="1"
-						title="Selecione um aluno"
+						title="Selecione um curso"
 						data-live-search-placeholder="Pesquisar">
-						<c:forEach var="aluno" items="${alunos}">
-							<option value="${aluno.id}">${aluno.nome}</option>
+						<c:forEach var="curso" items="${cursos}">
+							<option value="${curso.id}">${curso.nome}</option>
 						</c:forEach>
 					</select>
 				</div>
 			</div>
 
-			<div class="col-3">
+			<div class="col-4">
+				<!-- Turma -->
+				<div class="form-group">
+					<label for="turma" class="col-form-label">Turma</label> <select
+						name="turma" class="selectpicker show-tick form-control"
+						data-live-search="true" multiple data-max-options="1"
+						title="Selecione uma turma"
+						data-live-search-placeholder="Pesquisar">
+						<c:forEach var="turma" items="${turmas}">
+							<option value="${turma.id}">${turma.nome}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-4">
 				<!-- Disciplina -->
 				<div class="form-group">
 					<label for="disciplina" class="col-form-label">Disciplina</label> <select
@@ -80,6 +95,22 @@
 						data-live-search-placeholder="Pesquisar">
 						<c:forEach var="disciplina" items="${disciplinas}">
 							<option value="${disciplina.id}">${disciplina.nome}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-5">
+				<!-- Aluno -->
+				<div class="form-group">
+					<label for="aluno" class="col-form-label">Aluno</label> <select
+						name="aluno" class="selectpicker show-tick form-control"
+						data-live-search="true" multiple data-max-options="1"
+						title="Selecione um aluno"
+						data-live-search-placeholder="Pesquisar">
+						<c:forEach var="aluno" items="${alunos}">
+							<option value="${aluno.id}">${aluno.nome}</option>
 						</c:forEach>
 					</select>
 				</div>
@@ -99,6 +130,20 @@
 					</select>
 				</div>
 			</div>
+
+			<div class="col-2">
+				<!-- Status Atendimento -->
+				<div class="form-group">
+					<label for="status_atendimento" class="col-form-label">Houve
+						atendimento?</label> <select class="custom-select"
+						name="status_atendimento" required>
+						<option value="" selected="selected">Todos</option>
+						<option value="nao">Não</option>
+						<option value="sim">Sim</option>
+					</select>
+				</div>
+			</div>
+
 		</div>
 		<div class="row">
 			<div class="col-3">

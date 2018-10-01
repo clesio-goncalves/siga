@@ -155,7 +155,7 @@ function alteraStatusAtendimento(contexto){
 		$('#docente').attr('disabled', "disabled");
 		$('#docente').selectpicker('refresh');
 		if (contexto == "novo"){
-			$("textarea[name='conteudo']").val("-");
+			$("textarea[name='conteudo']").val("");
 		}
 	}
 }

@@ -9,9 +9,12 @@ public class FiltroExtraClasse {
 	private String data_final_atendimento;
 	private String horario_inicial_atendimento;
 	private String horario_final_atendimento;
-	private String aluno;
+	private String curso;
+	private String turma;
 	private String disciplina;
+	private String aluno;
 	private String docente;
+	private String status_atendimento;
 	private String local;
 	private String conteudo;
 	private String[] data_formatada;
@@ -48,12 +51,20 @@ public class FiltroExtraClasse {
 		this.horario_final_atendimento = horario_final_atendimento;
 	}
 
-	public String getAluno() {
-		return aluno;
+	public String getCurso() {
+		return curso;
 	}
 
-	public void setAluno(String aluno) {
-		this.aluno = aluno;
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+
+	public String getTurma() {
+		return turma;
+	}
+
+	public void setTurma(String turma) {
+		this.turma = turma;
 	}
 
 	public String getDisciplina() {
@@ -64,12 +75,28 @@ public class FiltroExtraClasse {
 		this.disciplina = disciplina;
 	}
 
+	public String getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(String aluno) {
+		this.aluno = aluno;
+	}
+
 	public String getDocente() {
 		return docente;
 	}
 
 	public void setDocente(String docente) {
 		this.docente = docente;
+	}
+
+	public String getStatus_atendimento() {
+		return status_atendimento;
+	}
+
+	public void setStatus_atendimento(String status_atendimento) {
+		this.status_atendimento = status_atendimento;
 	}
 
 	public String getLocal() {

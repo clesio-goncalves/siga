@@ -119,7 +119,8 @@
 							<tr>
 								<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
 								<td><fmt:formatDate type="time"
-										value="${atendimento_monitoria.horario}" pattern="HH:mm" /></td>
+										value="${atendimento_monitoria.horario_inicial}" pattern="HH:mm" /> - <fmt:formatDate type="time"
+										value="${atendimento_monitoria.horario_final}" pattern="HH:mm" /></td>
 								<td>${atendimento_monitoria.disciplina.nome}</td>
 								<td>${atendimento_monitoria.disciplina.monitor.nome}</td>
 								<td>

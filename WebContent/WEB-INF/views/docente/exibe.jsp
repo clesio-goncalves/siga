@@ -23,7 +23,7 @@
 					</tr>
 					<tr>
 						<th>Nome Completo</th>
-						<td style="font-weight: bold; color: red;">${docente.nome}</td>
+						<td style="font-weight: bold; color: blue;">${docente.nome}</td>
 					</tr>
 					<tr>
 						<th>SIAPE</th>
@@ -76,9 +76,19 @@
 							items="${atendimentos_extraclasse}">
 							<tr>
 								<td><fmt:formatDate value="${atendimento_extraclasse.data}" /></td>
-								<td>${atendimento_extraclasse.aluno.turma.nome}</td>
-								<td>${atendimento_extraclasse.disciplina.nome}</td>
-								<td>${atendimento_extraclasse.aluno.nome}</td>
+
+								<!-- Turma -->
+								<c:if test="${atendimento_extraclasse.status_atendimento}">
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+								</c:if>
+								<c:if
+									test="${atendimento_extraclasse.status_atendimento == false}">
+									<td>${atendimento_extraclasse.aluno.turma.nome}</td>
+									<td>${atendimento_extraclasse.disciplina.nome}</td>
+									<td>${atendimento_extraclasse.aluno.nome}</td>
+								</c:if>
 								<td>
 									<!-- Exibir --> <a
 									href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"

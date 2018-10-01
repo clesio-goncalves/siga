@@ -22,7 +22,7 @@
 
 					<tr>
 						<th>Nome Completo</th>
-						<td style="font-weight: bold; color: red;">${profissional_saude.nome}</td>
+						<td style="font-weight: bold; color: blue;">${profissional_saude.nome}</td>
 					</tr>
 
 					<tr>

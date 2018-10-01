@@ -22,7 +22,7 @@
 					</tr>
 					<tr>
 						<th>Nome</th>
-						<td style="font-weight: bold; color: red;">${turma.nome}</td>
+						<td style="font-weight: bold; color: blue;">${turma.nome}</td>
 					</tr>
 					<tr>
 						<th>Curso</th>
@@ -78,7 +78,7 @@
 
 								<!-- Matricula -->
 								<c:if test="${aluno_turma.matricula eq \"\"}">
-									<td>Não informada</td>
+									<td>-</td>
 								</c:if>
 								<c:if test="${aluno_turma.matricula ne \"\"}">
 									<td>${aluno_turma.matricula}</td>
@@ -86,7 +86,7 @@
 
 								<!-- Usuário -->
 								<c:if test="${aluno_turma.usuario == null}">
-									<td>Não informado</td>
+									<td>-</td>
 								</c:if>
 								<c:if test="${aluno_turma.usuario != null}">
 									<td>${aluno_turma.usuario.email}</td>

@@ -18,7 +18,12 @@
 			items="${atendimento_monitorias}">
 			<tr>
 				<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
-				<td>${atendimento_monitoria.aluno.nome}</td>
+				<c:if test="${atendimento_monitoria.status_atendimento}">
+					<td>-</td>
+				</c:if>
+				<c:if test="${atendimento_monitoria.status_atendimento ==  false}">
+					<td>${atendimento_monitoria.aluno.nome}</td>
+				</c:if>
 				<td>${atendimento_monitoria.disciplina.nome}</td>
 				<td>${atendimento_monitoria.disciplina.monitor.nome}</td>
 				<td>

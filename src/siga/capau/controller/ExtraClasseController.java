@@ -69,6 +69,8 @@ public class ExtraClasseController {
 	@RequestMapping("/lista")
 	public String lista(Model model) {
 		model.addAttribute("extra_classes", dao.lista());
+		model.addAttribute("cursos", dao_curso.lista());
+		model.addAttribute("turmas", dao_turma.lista());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("disciplinas", dao_disciplina.lista());
 		model.addAttribute("docentes", dao_docente.lista());
@@ -92,6 +94,7 @@ public class ExtraClasseController {
 		this.extra_classe = dao.buscaPorId(id);
 		model.addAttribute("extra_classe", this.extra_classe);
 		model.addAttribute("cursos", dao_curso.lista());
+		// Se for informado que houve atendimento
 		if (this.extra_classe.isStatus_atendimento() == false) {
 			model.addAttribute("turmas",
 					dao_turma.listaTurmaPorCursoId(this.extra_classe.getAluno().getTurma().getCurso().getId()));
@@ -111,6 +114,11 @@ public class ExtraClasseController {
 	public String altera(@Valid ExtraClasse extraClasse, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + extraClasse.getId();
+		}
+
+		// Se na edição marcar atendimento como não realizado
+		if (extraClasse.isStatus_atendimento()) {
+			extraClasse.setConteudo("-");
 		}
 
 		// Altera no banco
@@ -194,11 +202,14 @@ public class ExtraClasseController {
 		this.filtra_extra_classe.setData_final_atendimento(request.getParameter("data_final_atendimento"));
 		this.filtra_extra_classe.setHorario_inicial_atendimento(request.getParameter("horario_inicial_atendimento"));
 		this.filtra_extra_classe.setHorario_final_atendimento(request.getParameter("horario_final_atendimento"));
+		this.filtra_extra_classe.setCurso(request.getParameter("curso"));
+		this.filtra_extra_classe.setTurma(request.getParameter("turma"));
 		this.filtra_extra_classe.setAluno(request.getParameter("aluno"));
 		this.filtra_extra_classe.setDisciplina(request.getParameter("disciplina"));
 		this.filtra_extra_classe.setDocente(request.getParameter("docente"));
 		this.filtra_extra_classe.setLocal(request.getParameter("local"));
 		this.filtra_extra_classe.setConteudo(request.getParameter("conteudo"));
+		this.filtra_extra_classe.setStatus_atendimento(request.getParameter("status_atendimento"));
 
 		trataDatas();
 

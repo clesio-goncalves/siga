@@ -18,7 +18,7 @@
 				<table
 					class="table table-striped table-bordered dt-responsive nowrap">
 					<!-- Aluno -->
-					<c:if test="${extra_classe.aluno == null}">
+					<c:if test="${extra_classe.status_atendimento}">
 						<tr>
 							<th width="30%">Aluno</th>
 							<td>-</td>
@@ -31,8 +31,12 @@
 							<th>Turma</th>
 							<td>-</td>
 						</tr>
+						<tr>
+							<th>Disciplina</th>
+							<td>-</td>
+						</tr>
 					</c:if>
-					<c:if test="${extra_classe.aluno != null}">
+					<c:if test="${extra_classe.status_atendimento == false}">
 						<tr>
 							<th width="30%">Aluno</th>
 							<td><a
@@ -49,17 +53,12 @@
 							<td><a
 								href="<c:url value="/turma/exibe?id=${extra_classe.aluno.turma.id}" />">${extra_classe.aluno.turma.nome}</a></td>
 						</tr>
-					</c:if>
-					<tr>
-						<th>Disciplina</th>
-						<c:if test="${extra_classe.aluno == null}">
-							<td>-</td>
-						</c:if>
-						<c:if test="${extra_classe.aluno != null}">
+						<tr>
+							<th>Disciplina</th>
 							<td><a
 								href="<c:url value="/disciplina/exibe?id=${extra_classe.disciplina.id}" />">${extra_classe.disciplina.nome}</a></td>
-						</c:if>
-					</tr>
+						</tr>
+					</c:if>
 					<tr>
 						<th>Docente</th>
 						<td><a
@@ -86,10 +85,10 @@
 					</tr>
 					<tr>
 						<th>Status</th>
-						<c:if test="${extra_classe.status_atendimento eq true}">
+						<c:if test="${extra_classe.status_atendimento}">
 							<td>Não houve atendimento</td>
 						</c:if>
-						<c:if test="${extra_classe.status_atendimento eq false}">
+						<c:if test="${extra_classe.status_atendimento == false}">
 							<td>Atendimento realizado</td>
 						</c:if>
 					</tr>

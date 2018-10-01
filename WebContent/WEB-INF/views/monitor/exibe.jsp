@@ -23,7 +23,7 @@
 					</tr>
 					<tr>
 						<th>Nome Completo</th>
-						<td style="font-weight: bold; color: red;">${monitor.nome}</td>
+						<td style="font-weight: bold; color: blue;">${monitor.nome}</td>
 					</tr>
 					<tr>
 						<th>Matrícula</th>

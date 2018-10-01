@@ -40,19 +40,24 @@ public class DisciplinaDao {
 				Disciplina.class).setParameter("turma_id", turma_id).getResultList();
 	}
 
+	public List<Disciplina> listaDisciplinasMonitorNotNull() {
+		return manager.createQuery("select d from Disciplina d where d.monitor.id is not null", Disciplina.class)
+				.getResultList();
+	}
+
 	public List<Disciplina> listaDisciplinasPorMonitorId(Long monitor_id) {
 		return manager.createQuery("select d from Disciplina d where d.monitor.id = :monitor_id", Disciplina.class)
 				.setParameter("monitor_id", monitor_id).getResultList();
 	}
 
-	public String buscaMonitorPelaDisciplinaId(Long disciplina_id) {
-		return manager.createQuery("select d.monitor.nome from Disciplina d where d.id = :disciplina_id", String.class)
-				.setParameter("disciplina_id", disciplina_id).getSingleResult();
-	}
-
 	public List<Disciplina> buscaPorNome(String nome) {
 		return manager.createQuery("select d from Disciplina d where d.nome = :nome", Disciplina.class)
 				.setParameter("nome", nome).getResultList();
+	}
+
+	public String buscaMonitorPorDisciplinaId(Long id) {
+		return manager.createQuery("select d.monitor.nome from Disciplina d where d.id = :id", String.class)
+				.setParameter("id", id).getSingleResult();
 	}
 
 	public Disciplina buscaPorId(Long id) {

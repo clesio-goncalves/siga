@@ -59,7 +59,6 @@
 			</div>
 		</div>
 		<div class="row">
-
 			<!-- Data -->
 			<div class="form-group col-6">
 				<label for="data" class="col-form-label">Data do atendimento<span
@@ -71,7 +70,7 @@
 			<!-- Horário Inicial -->
 			<div class="form-group col-3">
 				<label for="horario_inicial" class="col-form-label">Horário
-					de inicial<span class="obrigatorio">*</span>
+					inicial<span class="obrigatorio">*</span>
 				</label> <input type="text" class="form-control maskHorario"
 					name="horario_inicial" required>
 			</div>

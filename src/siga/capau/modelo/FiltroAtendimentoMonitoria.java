@@ -9,12 +9,15 @@ public class FiltroAtendimentoMonitoria {
 	private String data_final_atendimento;
 	private String horario_inicial_atendimento;
 	private String horario_final_atendimento;
-	private String aluno;
+	private String curso;
+	private String turma;
 	private String disciplina;
+	private String aluno;
 	private String monitor;
-	private String dificuldades_diagnosticadas;
 	private String local;
 	private String conteudo;
+	private String dificuldades_diagnosticadas;
+	private String status_atendimento;
 	private String[] data_formatada;
 
 	public String getData_inicial_atendimento() {
@@ -49,12 +52,20 @@ public class FiltroAtendimentoMonitoria {
 		this.horario_final_atendimento = horario_final_atendimento;
 	}
 
-	public String getAluno() {
-		return aluno;
+	public String getCurso() {
+		return curso;
 	}
 
-	public void setAluno(String aluno) {
-		this.aluno = aluno;
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+
+	public String getTurma() {
+		return turma;
+	}
+
+	public void setTurma(String turma) {
+		this.turma = turma;
 	}
 
 	public String getDisciplina() {
@@ -65,20 +76,20 @@ public class FiltroAtendimentoMonitoria {
 		this.disciplina = disciplina;
 	}
 
+	public String getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(String aluno) {
+		this.aluno = aluno;
+	}
+
 	public String getMonitor() {
 		return monitor;
 	}
 
 	public void setMonitor(String monitor) {
 		this.monitor = monitor;
-	}
-
-	public String getDificuldades_diagnosticadas() {
-		return dificuldades_diagnosticadas;
-	}
-
-	public void setDificuldades_diagnosticadas(String dificuldades_diagnosticadas) {
-		this.dificuldades_diagnosticadas = dificuldades_diagnosticadas;
 	}
 
 	public String getLocal() {
@@ -95,6 +106,22 @@ public class FiltroAtendimentoMonitoria {
 
 	public void setConteudo(String conteudo) {
 		this.conteudo = conteudo;
+	}
+
+	public String getDificuldades_diagnosticadas() {
+		return dificuldades_diagnosticadas;
+	}
+
+	public void setDificuldades_diagnosticadas(String dificuldades_diagnosticadas) {
+		this.dificuldades_diagnosticadas = dificuldades_diagnosticadas;
+	}
+
+	public String getStatus_atendimento() {
+		return status_atendimento;
+	}
+
+	public void setStatus_atendimento(String status_atendimento) {
+		this.status_atendimento = status_atendimento;
 	}
 
 	public String[] getData_formatada() {

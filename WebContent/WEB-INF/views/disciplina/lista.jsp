@@ -34,7 +34,7 @@
 							
 							<!-- Monitor -->
 							<c:if test="${disciplina.monitor == null}">
-								<td>Não informado</td>
+								<td>-</td>
 							</c:if>
 							<c:if test="${disciplina.monitor != null}">
 								<td>${disciplina.monitor.nome}</td>

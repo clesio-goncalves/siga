@@ -7,12 +7,15 @@ function limpar(){
 	$("input[name='data_final_atendimento']").val(""),
 	$("input[name='horario_inicial_atendimento']").val(""), 
 	$("input[name='horario_final_atendimento']").val(""),
-	$("select[name='aluno']").val("").selectpicker("refresh"),
+	$("select[name='curso']").val("").selectpicker("refresh"),
+	$("select[name='turma']").val("").selectpicker("refresh"),
 	$("select[name='disciplina']").val("").selectpicker("refresh"),
+	$("select[name='aluno']").val("").selectpicker("refresh"),
 	$("select[name='monitor']").val("").selectpicker("refresh"),
-	$("input[name='dificuldades_diagnosticadas']").val(""),
 	$("input[name='local']").val(""),
-	$("input[name='conteudo']").val("")
+	$("input[name='conteudo']").val(""),
+	$("input[name='dificuldades_diagnosticadas']").val(""),
+	$("select[name='status_atendimento']").val("")
 }
 
 // Filtro
@@ -26,12 +29,15 @@ function filtrar(){
 			data_final_atendimento : $("input[name='data_final_atendimento']").val(),
 			horario_inicial_atendimento : $("input[name='horario_inicial_atendimento']").val(), 
 			horario_final_atendimento : $("input[name='horario_final_atendimento']").val(),
-			aluno : $("select[name='aluno'] :selected").val(),
+			curso : $("select[name='curso'] :selected").val(),
+			turma : $("select[name='turma'] :selected").val(),
 			disciplina : $("select[name='disciplina'] :selected").val(),
+			aluno : $("select[name='aluno'] :selected").val(),
 			monitor : $("select[name='monitor'] :selected").val(),
-			dificuldades_diagnosticadas : $("input[name='dificuldades_diagnosticadas']").val(),
 			local : $("input[name='local']").val(),
-			conteudo : $("input[name='conteudo']").val()
+			conteudo : $("input[name='conteudo']").val(),
+			dificuldades_diagnosticadas : $("input[name='dificuldades_diagnosticadas']").val(),
+			status_atendimento : $("select[name='status_atendimento'] :selected").val()
 		},
 		beforeSend: function(xhr) {
             xhr.setRequestHeader(header, token);

@@ -76,7 +76,7 @@
 			<!-- Horário Inicial -->
 			<div class="form-group col-3">
 				<label for="horario_inicial" class="col-form-label">Horário
-					de inicial<span class="obrigatorio">*</span>
+					inicial<span class="obrigatorio">*</span>
 				</label> <input type="text" class="form-control maskHorario"
 					name="horario_inicial" required
 					value="<fmt:formatDate type="time" value='${extra_classe.horario_inicial}' />">

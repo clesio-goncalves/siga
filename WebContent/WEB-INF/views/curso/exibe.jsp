@@ -22,7 +22,7 @@
 
 					<tr>
 						<th>Nome</th>
-						<td style="font-weight: bold; color: red;">${curso.nome}</td>
+						<td style="font-weight: bold; color: blue;">${curso.nome}</td>
 					</tr>
 				</table>
 			</div>

@@ -17,26 +17,39 @@
 			<div class="table-responsive">
 				<table
 					class="table table-striped table-bordered dt-responsive nowrap">
-					<tr>
-						<th width="30%">ID</th>
-						<td>${atendimento_monitoria.id}</td>
-					</tr>
-					<tr>
-						<th>Aluno</th>
-						<td><a
-							href="<c:url value="/aluno/exibe?id=${atendimento_monitoria.aluno.id}" />"
-							style="font-weight: bold; color: red;">${atendimento_monitoria.aluno.nome}</a></td>
-					</tr>
-					<tr>
-						<th>Curso</th>
-						<td><a
-							href="<c:url value="/curso/exibe?id=${atendimento_monitoria.aluno.turma.curso.id}" />">${atendimento_monitoria.aluno.turma.curso.nome}</a></td>
-					</tr>
-					<tr>
-						<th>Turma</th>
-						<td><a
-							href="<c:url value="/turma/exibe?id=${atendimento_monitoria.aluno.turma.id}" />">${atendimento_monitoria.aluno.turma.nome}</a></td>
-					</tr>
+					<!-- Aluno -->
+					<c:if test="${atendimento_monitoria.status_atendimento}">
+						<tr>
+							<th width="30%">Aluno</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>Curso</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>Turma</th>
+							<td>-</td>
+						</tr>
+					</c:if>
+					<c:if test="${atendimento_monitoria.status_atendimento == false}">
+						<tr>
+							<th width="30%">Aluno</th>
+							<td><a
+								href="<c:url value="/aluno/exibe?id=${atendimento_monitoria.aluno.id}" />"
+								style="font-weight: bold; color: blue;">${atendimento_monitoria.aluno.nome}</a></td>
+						</tr>
+						<tr>
+							<th>Curso</th>
+							<td><a
+								href="<c:url value="/curso/exibe?id=${atendimento_monitoria.aluno.turma.curso.id}" />">${atendimento_monitoria.aluno.turma.curso.nome}</a></td>
+						</tr>
+						<tr>
+							<th>Turma</th>
+							<td><a
+								href="<c:url value="/turma/exibe?id=${atendimento_monitoria.aluno.turma.id}" />">${atendimento_monitoria.aluno.turma.nome}</a></td>
+						</tr>
+					</c:if>
 					<tr>
 						<th>Disciplina</th>
 						<td><a
@@ -54,7 +67,9 @@
 					<tr>
 						<th>Horário</th>
 						<td><fmt:formatDate type="time"
-								value="${atendimento_monitoria.horario}" pattern="HH:mm" /></td>
+								value="${atendimento_monitoria.horario_inicial}" pattern="HH:mm" />
+							- <fmt:formatDate type="time"
+								value="${atendimento_monitoria.horario_final}" pattern="HH:mm" /></td>
 					</tr>
 					<tr>
 						<th>Local</th>
@@ -67,6 +82,15 @@
 					<tr>
 						<th>Dificuldades diagnosticadas</th>
 						<td>${atendimento_monitoria.dificuldades_diagnosticadas}</td>
+					</tr>
+					<tr>
+						<th>Status</th>
+						<c:if test="${atendimento_monitoria.status_atendimento}">
+							<td>Não houve atendimento</td>
+						</c:if>
+						<c:if test="${atendimento_monitoria.status_atendimento == false}">
+							<td>Atendimento realizado</td>
+						</c:if>
 					</tr>
 				</table>
 			</div>

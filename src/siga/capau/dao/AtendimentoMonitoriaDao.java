@@ -76,9 +76,14 @@ public class AtendimentoMonitoriaDao {
 					+ ":00'";
 		}
 
-		// Aluno
-		if (filtro_atendimento_monitoria.getAluno() != null) {
-			sql = sql + " and am.aluno.id = " + filtro_atendimento_monitoria.getAluno();
+		// Curso
+		if (filtro_atendimento_monitoria.getCurso() != null) {
+			sql = sql + " and am.aluno.turma.curso.id = " + filtro_atendimento_monitoria.getCurso();
+		}
+
+		// Turma
+		if (filtro_atendimento_monitoria.getTurma() != null) {
+			sql = sql + " and am.aluno.turma.id = " + filtro_atendimento_monitoria.getTurma();
 		}
 
 		// disciplina
@@ -86,15 +91,14 @@ public class AtendimentoMonitoriaDao {
 			sql = sql + " and am.disciplina.id = " + filtro_atendimento_monitoria.getDisciplina();
 		}
 
+		// Aluno
+		if (filtro_atendimento_monitoria.getAluno() != null) {
+			sql = sql + " and am.aluno.id = " + filtro_atendimento_monitoria.getAluno();
+		}
+
 		// monitor
 		if (filtro_atendimento_monitoria.getMonitor() != null) {
 			sql = sql + " and am.disciplina.monitor.id = " + filtro_atendimento_monitoria.getMonitor();
-		}
-
-		// dificuldades_diagnosticadas
-		if (!filtro_atendimento_monitoria.getDificuldades_diagnosticadas().equals("")) {
-			sql = sql + " and am.dificuldades_diagnosticadas like '%"
-					+ filtro_atendimento_monitoria.getDificuldades_diagnosticadas() + "%'";
 		}
 
 		// local
@@ -105,6 +109,21 @@ public class AtendimentoMonitoriaDao {
 		// conteudo
 		if (!filtro_atendimento_monitoria.getConteudo().equals("")) {
 			sql = sql + " and am.conteudo like '%" + filtro_atendimento_monitoria.getConteudo() + "%'";
+		}
+
+		// dificuldades_diagnosticadas
+		if (!filtro_atendimento_monitoria.getDificuldades_diagnosticadas().equals("")) {
+			sql = sql + " and am.dificuldades_diagnosticadas like '%"
+					+ filtro_atendimento_monitoria.getDificuldades_diagnosticadas() + "%'";
+		}
+
+		// Status atendimento
+		if (!filtro_atendimento_monitoria.getStatus_atendimento().equals("")) {
+			if (filtro_atendimento_monitoria.getStatus_atendimento().equals("sim")) {
+				sql = sql + " and am.status_atendimento = false";
+			} else {
+				sql = sql + " and am.status_atendimento = true";
+			}
 		}
 
 		System.out.println("------------------------------------------------------");

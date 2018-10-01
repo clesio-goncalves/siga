@@ -29,7 +29,12 @@ public class AtendimentoMonitoria {
 	@NotNull
 	@Temporal(TemporalType.TIME)
 	@DateTimeFormat(pattern = "HH:mm")
-	private Date horario;
+	private Date horario_inicial;
+
+	@NotNull
+	@Temporal(TemporalType.TIME)
+	@DateTimeFormat(pattern = "HH:mm")
+	private Date horario_final;
 
 	@NotNull
 	private String local;
@@ -42,11 +47,12 @@ public class AtendimentoMonitoria {
 	@Column(columnDefinition = "TEXT")
 	private String dificuldades_diagnosticadas;
 
+	private boolean status_atendimento;
+
 	@NotNull
 	@ManyToOne
 	private Disciplina disciplina;
 
-	@NotNull
 	@ManyToOne
 	private Aluno aluno;
 
@@ -66,12 +72,20 @@ public class AtendimentoMonitoria {
 		this.data = data;
 	}
 
-	public Date getHorario() {
-		return horario;
+	public Date getHorario_inicial() {
+		return horario_inicial;
 	}
 
-	public void setHorario(Date horario) {
-		this.horario = horario;
+	public void setHorario_inicial(Date horario_inicial) {
+		this.horario_inicial = horario_inicial;
+	}
+
+	public Date getHorario_final() {
+		return horario_final;
+	}
+
+	public void setHorario_final(Date horario_final) {
+		this.horario_final = horario_final;
 	}
 
 	public String getLocal() {
@@ -96,6 +110,14 @@ public class AtendimentoMonitoria {
 
 	public void setDificuldades_diagnosticadas(String dificuldades_diagnosticadas) {
 		this.dificuldades_diagnosticadas = dificuldades_diagnosticadas;
+	}
+
+	public boolean isStatus_atendimento() {
+		return status_atendimento;
+	}
+
+	public void setStatus_atendimento(boolean status_atendimento) {
+		this.status_atendimento = status_atendimento;
 	}
 
 	public Disciplina getDisciplina() {

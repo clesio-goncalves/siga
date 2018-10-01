@@ -23,12 +23,12 @@
 					</tr>
 					<tr>
 						<th>Nome</th>
-						<td style="font-weight: bold; color: red;">${disciplina.nome}</td>
+						<td style="font-weight: bold; color: blue;">${disciplina.nome}</td>
 					</tr>
 					<tr>
 						<th>Monitor</th>
 						<c:if test="${disciplina.monitor == null}">
-							<td>Não informado</td>
+							<td>-</td>
 						</c:if>
 						<c:if test="${disciplina.monitor != null}">
 							<td><a
@@ -111,9 +111,18 @@
 							<tr>
 								<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
 								<td><fmt:formatDate type="time"
-										value="${atendimento_monitoria.horario}" pattern="HH:mm" /></td>
-								<td>${atendimento_monitoria.aluno.turma.nome}</td>
-								<td>${atendimento_monitoria.aluno.nome}</td>
+										value="${atendimento_monitoria.horario_inicial}"
+										pattern="HH:mm" /> - <fmt:formatDate type="time"
+										value="${atendimento_monitoria.horario_final}" pattern="HH:mm" /></td>
+								<c:if test="${atendimento_monitoria.status_atendimento}">
+									<td>-</td>
+									<td>-</td>
+								</c:if>
+								<c:if
+									test="${atendimento_monitoria.status_atendimento == false}">
+									<td>${atendimento_monitoria.aluno.turma.nome}</td>
+									<td>${atendimento_monitoria.aluno.nome}</td>
+								</c:if>
 								<td>
 									<!-- Exibir --> <a
 									href="<c:url value="/atendimento/monitoria/exibe?id=${atendimento_monitoria.id}"/>"

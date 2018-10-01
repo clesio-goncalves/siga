@@ -21,7 +21,7 @@
 					</tr>
 					<tr>
 						<th>Nome Completo</th>
-						<td style="font-weight: bold; color: red;">${servidor.nome}</td>
+						<td style="font-weight: bold; color: blue;">${servidor.nome}</td>
 					</tr>
 					<tr>
 						<th>SIAPE</th>
