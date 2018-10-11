@@ -66,13 +66,13 @@ public class AtendimentoMonitoriaDao {
 
 		// Horario inicial atendimento
 		if (!filtro_atendimento_monitoria.getHorario_inicial_atendimento().equals("")) {
-			sql = sql + " and TIME(am.horario) >= '" + filtro_atendimento_monitoria.getHorario_inicial_atendimento()
+			sql = sql + " and TIME(am.horario_inicial) >= '" + filtro_atendimento_monitoria.getHorario_inicial_atendimento()
 					+ ":00'";
 		}
 
 		// Horario final atendimento
 		if (!filtro_atendimento_monitoria.getHorario_final_atendimento().equals("")) {
-			sql = sql + " and TIME(am.horario) <= '" + filtro_atendimento_monitoria.getHorario_final_atendimento()
+			sql = sql + " and TIME(am.horario_final) <= '" + filtro_atendimento_monitoria.getHorario_final_atendimento()
 					+ ":00'";
 		}
 

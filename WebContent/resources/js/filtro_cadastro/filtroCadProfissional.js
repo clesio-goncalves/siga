@@ -8,7 +8,7 @@ $(document).ready(function() {
 			url : "filtro",
 			cache : false,
 			data : {
-				tipo_profissional : $("input[name='tipo_profissional']:checked").val()
+				tipo_atendimento : $("input[name='tipo_atendimento']:checked").val()
 			},
 			beforeSend: function(xhr) {
 	            xhr.setRequestHeader(header, token);

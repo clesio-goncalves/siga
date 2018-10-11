@@ -50,18 +50,18 @@ public class UsuarioDao implements UserDetailsService {
 				Usuario.class).getResultList();
 	}
 
-	public List<Usuario> listaUsuarioProfissionalSaudeSemVinculo(String tipo_profissional) {
+	public List<Usuario> listaUsuarioProfissionalSemVinculo(String tipo_atendimento) {
 		return manager.createQuery(
-				"select u from Usuario u where u.perfil.nome like :tipo_profissional and u.id not in (select ps.usuario.id from ProfissionalSaude as ps)",
-				Usuario.class).setParameter("tipo_profissional", tipo_profissional).getResultList();
+				"select u from Usuario u where u.perfil.nome like :tipo_atendimento and u.id not in (select p.usuario.id from Profissional as p)",
+				Usuario.class).setParameter("tipo_atendimento", tipo_atendimento).getResultList();
 	}
 
 	// seleciona todos os usuário do tipo Psicologo, Assistente Social, Enfermeiro
 	// ou Odontologo que ainda estão sem vinculo com algum desses profissionais da
 	// saúde
-	public List<Usuario> listaUsuarioProfissionalSaudeSemVinculo() {
+	public List<Usuario> listaUsuarioProfissionalSemVinculo() {
 		return manager.createQuery(
-				"select u from Usuario u where u.perfil.nome in ('Psicólogo', 'Assistente Social', 'Enfermeiro', 'Odontólogo') and u.id not in (select ps.usuario.id from ProfissionalSaude as ps)",
+				"select u from Usuario u where u.perfil.nome in ('Psicologia', 'Assistência Social', 'Enfermagem', 'Odontologia', 'Pedagogia') and u.id not in (select p.usuario.id from Profissional as p)",
 				Usuario.class).getResultList();
 	}
 

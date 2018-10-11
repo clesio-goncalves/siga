@@ -41,9 +41,8 @@
 						<a class="dropdown-item" href="<c:url value="/docente/novo" />">Docente</a>
 						<a class="dropdown-item" href="<c:url value="/monitor/novo" />">Monitor</a>
 						<a class="dropdown-item"
-							href="<c:url value="/profissional/novo" />">Profissional da
-							Saúde e Pedagogia</a><a class="dropdown-item"
-							href="<c:url value="/servidor/novo" />">Servidor</a>
+							href="<c:url value="/profissional/novo" />">Profissional</a><a
+							class="dropdown-item" href="<c:url value="/servidor/novo" />">Coordenação e Direção</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="<c:url value="/curso/novo" />">Curso</a>
 						<a class="dropdown-item" href="<c:url value="/turma/nova" />">Turma</a>
@@ -54,8 +53,13 @@
 					role="button" aria-haspopup="true" aria-expanded="false">Atendimento</a>
 					<div class="dropdown-menu" x-placement="bottom-start"
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
-						<a class="dropdown-item" href="<c:url value="/atendimento/extra-classe/lista" />">Extraclasse</a> <a
-							class="dropdown-item" href="<c:url value="/atendimento/monitoria/lista" />">Monitoria</a>
+						<a class="dropdown-item"
+							href="<c:url value="/atendimento/extra-classe/lista" />">Extraclasse</a>
+						<a class="dropdown-item"
+							href="<c:url value="/atendimento/monitoria/lista" />">Monitoria</a>
+						<a class="dropdown-item"
+							href="<c:url value="/atendimento/saude/lista" />">Serviços de
+							Saúde</a>
 					</div></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"

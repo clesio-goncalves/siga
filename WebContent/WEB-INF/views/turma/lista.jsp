@@ -87,11 +87,8 @@
 	</div>
 
 	<div align="center">
-		<security:authorize access="hasRole('ROLE_Administrador')">
-			<a href="<c:url value="/turma/nova" />"
-				class="btn btn-primary btn-lg"><span
-				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
-		</security:authorize>
+		<a href="<c:url value="/turma/nova" />" class="btn btn-primary btn-lg"><span
+			class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 	</div>
 </div>
 

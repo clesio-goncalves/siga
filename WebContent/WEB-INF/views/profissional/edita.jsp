@@ -21,45 +21,45 @@
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${profissional_saude.id}" required/>
+		<input type="hidden" name="id" value="${profissional.id}" required />
 
 		<!-- NOME -->
 		<div class="form-group">
 			<label for="nome" class="col-form-label">Nome Completo<span
 				class="obrigatorio">*</span></label> <input type="text" class="form-control"
 				name="nome" autofocus MAXLENGTH="255" required
-				value="${profissional_saude.nome}">
+				value="${profissional.nome}">
 		</div>
 
 		<!-- SIAPE -->
 		<div class="form-group">
 			<label for="siape" class="col-form-label">SIAPE<span
 				class="obrigatorio">*</span></label> <input type="text" class="form-control"
-				name="siape" MAXLENGTH="11" required
-				value="${profissional_saude.siape}" data-mask="99999999999">
+				name="siape" MAXLENGTH="11" required value="${profissional.siape}"
+				data-mask="99999999999">
 		</div>
 
 		<!-- TIPO DE PROFISSIONAL -->
-		<input type="hidden" name="tipo_profissional"
-			value="${profissional_saude.tipo_profissional}" />
+		<input type="hidden" name="tipo_atendimento"
+			value="${profissional.tipo_atendimento}" />
 		<div class="form-group">
-			<label class="col-form-label">Tipo de Profissional<span
+			<label class="col-form-label">Tipo de Atendimento<span
 				class="obrigatorio">*</span></label>
 			<div class="custom-control custom-radio">
 				<input type="radio" id="customRadio1" class="custom-control-input"
 					checked disabled="disabled" required value=""> <label
-					class="custom-control-label" for="customRadio1">${profissional_saude.tipo_profissional}</label>
+					class="custom-control-label" for="customRadio1">${profissional.tipo_atendimento}</label>
 			</div>
 		</div>
 
 		<!-- USUÁRIO -->
 		<input type="hidden" name="usuario.id"
-			value="${profissional_saude.usuario.id}" />
+			value="${profissional.usuario.id}" />
 		<div class="form-group">
 			<label class="col-form-label">Usuário<span
 				class="obrigatorio">*</span></label> <select class="custom-select" required
 				disabled="disabled">
-				<option value="" selected>${profissional_saude.usuario.email}</option>
+				<option value="" selected>${profissional.usuario.email}</option>
 			</select>
 		</div>
 

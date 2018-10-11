@@ -35,30 +35,35 @@
 
 		<!-- TIPO PROFISSIONAL -->
 		<div class="form-group">
-			<label for="tipo_profissional" class="col-form-label">Tipo de
-				Profissional<span class="obrigatorio">*</span>
+			<label for="tipo_atendimento" class="col-form-label">Tipo de
+				Atendimento<span class="obrigatorio">*</span>
 			</label>
 			<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio1" name="tipo_profissional"
+				<input type="radio" id="customRadio1" name="tipo_atendimento"
 					class="custom-control-input" checked="checked" required
-					value="Psicólogo"> <label class="custom-control-label"
-					for="customRadio1">Psicólogo</label>
+					value="Psicologia"> <label class="custom-control-label"
+					for="customRadio1">Psicologia</label>
 			</div>
 			<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio2" name="tipo_profissional"
-					class="custom-control-input" value="Assistente Social"> <label
-					class="custom-control-label" for="customRadio2">Assistente
+				<input type="radio" id="customRadio2" name="tipo_atendimento"
+					class="custom-control-input" value="Assistência Social"> <label
+					class="custom-control-label" for="customRadio2">Assistência
 					Social</label>
 			</div>
 			<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio3" name="tipo_profissional"
-					class="custom-control-input" value="Enfermeiro"> <label
-					class="custom-control-label" for="customRadio3">Enfermeiro</label>
+				<input type="radio" id="customRadio3" name="tipo_atendimento"
+					class="custom-control-input" value="Enfermagem"> <label
+					class="custom-control-label" for="customRadio3">Enfermagem</label>
 			</div>
 			<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio4" name="tipo_profissional"
-					class="custom-control-input" value="Odontólogo"> <label
-					class="custom-control-label" for="customRadio4">Odontólogo</label>
+				<input type="radio" id="customRadio4" name="tipo_atendimento"
+					class="custom-control-input" value="Odontologia"> <label
+					class="custom-control-label" for="customRadio4">Odontologia</label>
+			</div>
+			<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio5" name="tipo_atendimento"
+					class="custom-control-input" value="Pedagogia"> <label
+					class="custom-control-label" for="customRadio5">Pedagogia</label>
 			</div>
 
 		</div>

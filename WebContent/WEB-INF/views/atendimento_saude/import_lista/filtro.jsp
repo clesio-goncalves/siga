@@ -84,24 +84,23 @@
 					</select>
 				</div>
 			</div>
-
 			<div class="col-4">
-				<!-- Disciplina -->
+				<!-- Tipo de Atendimento -->
 				<div class="form-group">
-					<label for="disciplina" class="col-form-label">Disciplina</label> <select
-						name="disciplina" class="selectpicker show-tick form-control"
-						data-live-search="true" multiple data-max-options="1"
-						title="Selecione uma disciplina"
-						data-live-search-placeholder="Pesquisar">
-						<c:forEach var="disciplina" items="${disciplinas}">
-							<option value="${disciplina.id}">${disciplina.nome}</option>
-						</c:forEach>
+					<label for="tipo_atendimento" class="col-form-label">Tipo
+						de Atendimento</label> <select class="custom-select"
+						name="tipo_atendimento" required>
+						<option value="" selected="selected">Todos</option>
+						<option value="Psicologia">Psicologia</option>
+						<option value="Assistência Social">Assistência Social</option>
+						<option value="Enfermagem">Enfermagem</option>
+						<option value="Odontologia">Odontologia</option>
 					</select>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-5">
+			<div class="col-6">
 				<!-- Aluno -->
 				<div class="form-group">
 					<label for="aluno" class="col-form-label">Aluno</label> <select
@@ -115,49 +114,46 @@
 					</select>
 				</div>
 			</div>
-
-			<div class="col-5">
-				<!-- Docente -->
+			<div class="col-6">
+				<!-- Profissional -->
 				<div class="form-group">
-					<label for="docente" class="col-form-label">Docente</label> <select
-						name="docente" class="selectpicker show-tick form-control"
+					<label for="profissional" class="col-form-label">Profissional</label>
+					<select name="profissional"
+						class="selectpicker show-tick form-control"
 						data-live-search="true" multiple data-max-options="1"
-						title="Selecione um docente"
+						title="Selecione um profissional"
 						data-live-search-placeholder="Pesquisar">
-						<c:forEach var="docente" items="${docentes}">
-							<option value="${docente.id}">${docente.siape}-${docente.nome}</option>
+						<c:forEach var="profissional" items="${profissionais}">
+							<option value="${profissional.id}">${profissional.siape}-${profissional.nome}</option>
 						</c:forEach>
 					</select>
 				</div>
 			</div>
-
-			<div class="col-2">
-				<!-- Status Atendimento -->
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<!-- Possui alguma observação? -->
 				<div class="form-group">
-					<label for="status_atendimento" class="col-form-label">Houve
-						atendimento?</label> <select class="custom-select"
-						name="status_atendimento" required>
+					<label for="possui_problema" class="col-form-label">Possui
+						alguma observação?</label> <select class="custom-select"
+						name="possui_problema" required>
 						<option value="" selected="selected">Todos</option>
-						<option value="sim">Sim</option>
-						<option value="nao">Não</option>
+						<option value="Sim">Sim</option>
+						<option value="Não">Não</option>
 					</select>
 				</div>
 			</div>
-
-		</div>
-		<div class="row">
-			<div class="col-3">
-				<!-- Local -->
+			<div class="col-4">
+				<!-- esse_problema_dificulta_aprendizado -->
 				<div class="form-group">
-					<label for="local" class="col-form-label">Local</label> <input
-						type="text" class="form-control" name="local" MAXLENGTH="255">
-				</div>
-			</div>
-			<div class="col-5">
-				<!-- Conteúdo -->
-				<div class="form-group">
-					<label for="conteudo" class="col-form-label">Conteúdo</label> <input
-						type="text" class="form-control" name="conteudo" MAXLENGTH="255">
+					<label for="esse_problema_dificulta_aprendizado"
+						class="col-form-label">Essa observação dificulta o
+						aprendizado?</label> <select class="custom-select"
+						name="esse_problema_dificulta_aprendizado" required>
+						<option value="" selected="selected">Todos</option>
+						<option value="Sim">Sim</option>
+						<option value="Não">Não</option>
+					</select>
 				</div>
 			</div>
 			<div class="col-4">

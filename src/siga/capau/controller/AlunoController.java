@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
+import siga.capau.dao.AtendimentoSaudeDao;
 import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.dao.UsuarioDao;
@@ -35,12 +36,15 @@ public class AlunoController {
 
 	@Autowired
 	UsuarioDao dao_usuario;
-	
+
 	@Autowired
 	ExtraClasseDao dao_extraclasse;
-	
+
 	@Autowired
 	AtendimentoMonitoriaDao dao_atendimento_monitoria;
+
+	@Autowired
+	AtendimentoSaudeDao dao_atendimento_saude;
 
 	@RequestMapping("/novo")
 	public String novoAluno(Model model) {
@@ -87,6 +91,7 @@ public class AlunoController {
 		model.addAttribute("aluno", dao.buscaPorId(id));
 		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPeloAlunoId(id));
 		model.addAttribute("atendimentos_monitoria", dao_atendimento_monitoria.buscaPeloAlunoId(id));
+		model.addAttribute("atendimentos_saude", dao_atendimento_saude.buscaPeloAlunoId(id));
 		return "aluno/exibe";
 	}
 

@@ -162,8 +162,8 @@
 						atendimento?</label> <select class="custom-select"
 						name="status_atendimento" required>
 						<option value="" selected="selected">Todos</option>
-						<option value="nao">Não</option>
 						<option value="sim">Sim</option>
+						<option value="nao">Não</option>
 					</select>
 				</div>
 			</div>
