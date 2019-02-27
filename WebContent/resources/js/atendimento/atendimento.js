@@ -35,11 +35,20 @@ function configDatePicker() {
 				nextText : 'Pr&oacute;ximo',
 				prevText : 'Anterior',
 				language : 'pt-BR',
-			});
+				maxDate: '+0d'
+			}).on("change", function(e) {
+		        var curDate = $(this).datepicker("getDate");
+		        var maxDate = new Date();
+		        maxDate.setHours(0, 0, 0, 0);
+		        console.log(this.value, curDate, maxDate);
+		        if (curDate > maxDate) {
+		            $(this).datepicker("setDate", maxDate);
+		        }
+		    });
 	$(".maskHorario").timepicker({
 		timeFormat : 'HH:mm',
-		// hourMin : 7,
-		// hourMax : 22,
+		hourMin : 7,
+		hourMax : 22,
 		currentText : "Agora",
 		closeText : "Fechar",
 		timeOnlyTitle : "Selecionar Hor&aacute;rio",

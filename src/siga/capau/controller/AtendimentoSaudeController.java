@@ -77,6 +77,9 @@ public class AtendimentoSaudeController {
 	}
 
 	@RequestMapping("/lista")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+		"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+		"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		model.addAttribute("atendimentos_saude", dao.lista());
 		model.addAttribute("cursos", dao_curso.lista());
@@ -94,6 +97,9 @@ public class AtendimentoSaudeController {
 	}
 
 	@RequestMapping("/exibe")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+		"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+		"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("atendimento_saude", dao.buscaPorId(id));
 		return "atendimento_saude/exibe";
@@ -125,7 +131,6 @@ public class AtendimentoSaudeController {
 	}
 
 	@RequestMapping(value = "/filtro_turma", method = RequestMethod.POST)
-	@Secured({ "ROLE_Psicologia", "ROLE_Assistência Social", "ROLE_Enfermagem", "ROLE_Odontologia" })
 	public String filtrarTurma(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		if (request.getParameter("curso_id") != null) {
 			model.addAttribute("turmas",
@@ -139,7 +144,6 @@ public class AtendimentoSaudeController {
 	}
 
 	@RequestMapping(value = "/filtro_aluno", method = RequestMethod.POST)
-	@Secured({ "ROLE_Psicologia", "ROLE_Assistência Social", "ROLE_Enfermagem", "ROLE_Odontologia" })
 	public String filtrarAluno(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		if (request.getParameter("turma_id") != null) {
 			model.addAttribute("alunos",

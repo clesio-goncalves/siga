@@ -57,15 +57,17 @@
 							<td>
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input checkBox"
-										id="turma${turma.id}" name="turmas" value="${turma.id}">
-									<label class="custom-control-label" for="turma${turma.id}">${turma.nome}</label>
+										id="turma${turma.id}" name="turmas" value="${turma.id}"
+										onchange="selecionaTurma(${turma.id})"> <label
+										class="custom-control-label" for="turma${turma.id}">${turma.nome}</label>
 								</div>
 							</td>
 							<td><select name="docentes"
 								class="selectpicker show-tick form-control"
 								data-live-search="true" multiple data-max-options="1"
 								title="Selecione um docente"
-								data-live-search-placeholder="Pesquisar" id="docente${turma.id}">
+								data-live-search-placeholder="Pesquisar" id="docente${turma.id}"
+								disabled="disabled">
 									<c:forEach var="docente" items="${docentes}">
 										<option value="${docente.id}">${docente.siape}-${docente.nome}</option>
 									</c:forEach>
@@ -89,7 +91,6 @@
 		</div>
 	</form>
 </div>
-
 <script type="text/javascript"
 	src="<c:url value="/resources/js/select/bootstrap-select.min.js" />"></script>
 <script type="text/javascript"

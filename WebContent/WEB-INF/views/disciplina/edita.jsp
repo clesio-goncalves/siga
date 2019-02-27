@@ -64,7 +64,8 @@
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
 										id="turma${turmas_docente.turma.id}" name="turmas"
-										value="${turmas_docente.turma.id}" checked="checked">
+										value="${turmas_docente.turma.id}" checked="checked"
+										onchange="selecionaTurma(${turmas_docente.turma.id})">
 									<label class="custom-control-label"
 										for="turma${turmas_docente.turma.id}">${turmas_docente.turma.nome}</label>
 								</div>
@@ -73,7 +74,8 @@
 								class="selectpicker show-tick form-control"
 								data-live-search="true" multiple data-max-options="1"
 								title="Selecione um docente"
-								data-live-search-placeholder="Pesquisar">
+								data-live-search-placeholder="Pesquisar"
+								id="docente${turmas_docente.turma.id}">
 									<option value="${turmas_docente.docente.id}"
 										selected="selected">${turmas_docente.docente.siape}-${turmas_docente.docente.nome}</option>
 									<c:forEach var="docente_sem_vinculo"
@@ -90,7 +92,8 @@
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
 										id="turma${turma_sem_vinculo.id}" name="turmas"
-										value="${turma_sem_vinculo.id}"> <label
+										value="${turma_sem_vinculo.id}"
+										onchange="selecionaTurma(${turma_sem_vinculo.id})"> <label
 										class="custom-control-label"
 										for="turma${turma_sem_vinculo.id}">${turma_sem_vinculo.nome}</label>
 								</div>
@@ -99,7 +102,8 @@
 								class="selectpicker show-tick form-control"
 								data-live-search="true" multiple data-max-options="1"
 								title="Selecione um docente"
-								data-live-search-placeholder="Pesquisar">
+								data-live-search-placeholder="Pesquisar" disabled="disabled"
+								id="docente${turma_sem_vinculo.id}">
 									<c:forEach var="docente" items="${docentes}">
 										<option value="${docente.id}">${docente.siape}-${docente.nome}</option>
 									</c:forEach>

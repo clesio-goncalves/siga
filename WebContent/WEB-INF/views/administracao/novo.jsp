@@ -6,14 +6,14 @@
 <head>
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
-<title>Cadastrar Servidor</title>
+<title>Cadastrar Servidor da Administração</title>
 
 <c:import url="../componentes/cabecalho.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Cadastrar Servidor</h1>
+		<h1 class="display-3">Cadastrar Servidor Admin</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar o
-			cadastro do Servidor no sistema.</p>
+			cadastro do Servidor da Administração no sistema.</p>
 	</div>
 </div>
 <div class="container">

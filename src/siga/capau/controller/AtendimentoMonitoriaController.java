@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,12 +49,14 @@ public class AtendimentoMonitoriaController {
 	CursoDao dao_curso;
 
 	@RequestMapping("/novo")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
 	public String novoAtendimentoMonitoria(Model model) {
 		model.addAttribute("cursos", dao_curso.lista());
 		return "atendimento_monitoria/novo";
 	}
 
 	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
 	public String adiciona(@Valid AtendimentoMonitoria AtendimentoMonitoria, BindingResult result) {
 
 		if (result.hasErrors()) {
@@ -66,6 +69,9 @@ public class AtendimentoMonitoriaController {
 	}
 
 	@RequestMapping("/lista")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+		"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+		"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		model.addAttribute("atendimento_monitorias", dao.lista());
 		model.addAttribute("cursos", dao_curso.lista());
@@ -77,24 +83,29 @@ public class AtendimentoMonitoriaController {
 	}
 
 	@RequestMapping("/remove")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
 	public String remove(AtendimentoMonitoria AtendimentoMonitoria) {
 		dao.remove(AtendimentoMonitoria.getId());
 		return "redirect:lista";
 	}
 
 	@RequestMapping("/exibe")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+		"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+		"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("atendimento_monitoria", dao.buscaPorId(id));
 		return "atendimento_monitoria/exibe";
 	}
 
 	@RequestMapping("/edita")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
 	public String edita(Long id, Model model) {
 		this.atendimento_monitoria = dao.buscaPorId(id);
 		model.addAttribute("atendimento_monitoria", this.atendimento_monitoria);
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("monitor_disciplina", this.atendimento_monitoria.getDisciplina().getMonitor().getNome());
-		
+
 		// Se for informado que houve atendimento
 		if (this.atendimento_monitoria.isStatus_atendimento() == false) {
 			model.addAttribute("turmas", dao_turma
@@ -111,6 +122,7 @@ public class AtendimentoMonitoriaController {
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
 	public String altera(@Valid AtendimentoMonitoria atendimentoMonitoria, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + atendimentoMonitoria.getId();

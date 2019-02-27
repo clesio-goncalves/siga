@@ -6,14 +6,14 @@
 <head>
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
-<title>Cadastrar Profissional da Saúde</title>
+<title>Cadastrar Profissional</title>
 
 <c:import url="../componentes/cabecalho.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Cadastrar Profissional da Saúde</h1>
+		<h1 class="display-3">Cadastrar Profissional</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar o
-			cadastro do Profissional de Saúde no sistema.</p>
+			cadastro do Profissional no sistema.</p>
 	</div>
 </div>
 <div class="container">
@@ -64,6 +64,12 @@
 				<input type="radio" id="customRadio5" name="tipo_atendimento"
 					class="custom-control-input" value="Pedagogia"> <label
 					class="custom-control-label" for="customRadio5">Pedagogia</label>
+			</div>
+			<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio6" name="tipo_atendimento"
+					class="custom-control-input" value="Coordenação de Disciplina">
+				<label class="custom-control-label" for="customRadio6">Coordenação
+					de Disciplina</label>
 			</div>
 
 		</div>

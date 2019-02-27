@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Servidor {
+public class Administracao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

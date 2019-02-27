@@ -31,6 +31,9 @@ values (10, 'Monitor');
 insert into Perfil (id, nome)
 values (11, 'Aluno');
 
+insert into Perfil (id, nome)
+values (12, 'Coordenação de Disciplina');
+
 insert into Usuario(id, email, senha, ativo, perfil_id)
 values (1, 'clesio@clesio.com','$2a$10$bRHXvb97c2b4avC31ISmF.4xZkCgUsVMS./xsWvDL83OE8WIVpxX6', 1, 1);
 

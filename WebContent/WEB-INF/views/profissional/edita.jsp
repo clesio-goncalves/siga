@@ -4,17 +4,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Editar Profissional da saúde</title>
+<title>Editar Profissional</title>
 
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Profissional da Saúde</h1>
+		<h1 class="display-3">Editar Profissional</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
-			alteração do Profissional da Saúde no sistema. É permitida a
-			alteração somente dos campos Nome e SIAPE, com o objetivo de mater a
-			consistência dos dados.</p>
+			alteração do Profissional no sistema. É permitida a alteração somente
+			dos campos Nome e SIAPE, com o objetivo de mater a consistência dos
+			dados.</p>
 	</div>
 </div>
 <div class="container">

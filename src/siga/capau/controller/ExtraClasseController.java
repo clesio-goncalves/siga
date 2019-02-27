@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,16 +49,17 @@ public class ExtraClasseController {
 	DocenteDao dao_docente;
 
 	@RequestMapping("/novo")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String novoExtraClasse(Model model) {
 		model.addAttribute("cursos", dao_curso.lista());
 		return "extra_classe/novo";
 	}
 
 	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String adiciona(@Valid ExtraClasse extraClasse, BindingResult result) {
 
 		if (result.hasErrors()) {
-			System.out.println(result);
 			return "redirect:novo";
 		}
 
@@ -67,6 +69,9 @@ public class ExtraClasseController {
 	}
 
 	@RequestMapping("/lista")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		model.addAttribute("extra_classes", dao.lista());
 		model.addAttribute("cursos", dao_curso.lista());
@@ -78,18 +83,23 @@ public class ExtraClasseController {
 	}
 
 	@RequestMapping("/remove")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String remove(ExtraClasse extraClasse) {
 		dao.remove(extraClasse.getId());
 		return "redirect:lista";
 	}
 
 	@RequestMapping("/exibe")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("extra_classe", dao.buscaPorId(id));
 		return "extra_classe/exibe";
 	}
 
 	@RequestMapping("/edita")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String edita(Long id, Model model) {
 		this.extra_classe = dao.buscaPorId(id);
 		model.addAttribute("extra_classe", this.extra_classe);
@@ -102,8 +112,8 @@ public class ExtraClasseController {
 					dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
 			model.addAttribute("disciplinas",
 					dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-			model.addAttribute("docentes",
-					dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
+			model.addAttribute("docentes", dao_docente.listaDocentesPorDisciplinaIdTurmaId(
+					this.extra_classe.getDisciplina().getId(), this.extra_classe.getAluno().getTurma().getId()));
 		} else {
 			model.addAttribute("docentes", dao_docente.lista());
 		}
@@ -111,6 +121,7 @@ public class ExtraClasseController {
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String altera(@Valid ExtraClasse extraClasse, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + extraClasse.getId();
@@ -171,7 +182,9 @@ public class ExtraClasseController {
 			throws Exception {
 		if (request.getParameter("disciplina_id") != null) {
 			model.addAttribute("docentes",
-					dao_docente.listaDocentesPorDisciplinaId(Long.parseLong(request.getParameter("disciplina_id"))));
+					dao_docente.listaDocentesPorDisciplinaIdTurmaId(
+							Long.parseLong(request.getParameter("disciplina_id")),
+							Long.parseLong(request.getParameter("turma_id"))));
 		}
 		if (request.getParameter("contexto").equals("edita")) {
 			return "extra_classe/import_edita/docente";

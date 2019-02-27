@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,6 +50,8 @@ public class TurmaController {
 	TurmaDisciplinaDocenteDao dao_turma_disciplina_docente;
 
 	@RequestMapping("/nova")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
+			"ROLE_Coordenação de Disciplina" })
 	public String novaTurma(Model model) {
 		this.lista_curso = dao_curso.lista();
 		if (this.lista_curso.size() == 0) {
@@ -61,6 +64,8 @@ public class TurmaController {
 	}
 
 	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
+			"ROLE_Coordenação de Disciplina" })
 	public String adiciona(@Valid Turma turma, BindingResult result) {
 		// Altera o nome da turma
 		turma.setNome(dao_curso.buscaNomePorId(turma.getCurso().getId()) + " - " + turma.getAno_ingresso() + "."
@@ -78,6 +83,9 @@ public class TurmaController {
 	}
 
 	@RequestMapping("/lista")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		this.lista_turma = dao.lista();
 		for (Turma turma : this.lista_turma) {
@@ -89,6 +97,8 @@ public class TurmaController {
 	}
 
 	@RequestMapping("/remove")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
+			"ROLE_Coordenação de Disciplina" })
 	public String remove(Turma turma) {
 
 		// Remove o turma caso não haja alunos cadastrados nesse turma
@@ -102,6 +112,9 @@ public class TurmaController {
 	}
 
 	@RequestMapping("/exibe")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("turma", dao.buscaPorId(id));
 		model.addAttribute("qnt_alunos", dao_aluno.buscaQntAlunosPorTurmaId(id));
@@ -112,6 +125,8 @@ public class TurmaController {
 	}
 
 	@RequestMapping("/edita")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
+			"ROLE_Coordenação de Disciplina" })
 	public String edita(Long id, Model model) {
 
 		// Busca a turma e altera o ano e periodo de ingresso
@@ -128,6 +143,8 @@ public class TurmaController {
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
+			"ROLE_Coordenação de Disciplina" })
 	public String altera(@Valid Turma turma, BindingResult result) {
 		// Altera o nome da turma
 		turma.setNome(dao_curso.buscaNomePorId(turma.getCurso().getId()) + " - " + turma.getAno_ingresso() + "."

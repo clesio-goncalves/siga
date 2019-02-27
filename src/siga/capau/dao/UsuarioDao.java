@@ -66,16 +66,16 @@ public class UsuarioDao implements UserDetailsService {
 	}
 
 	// seleciona todos os usuário do tipo Diretor, Coordenador ou Administrador
-	// que ainda estão sem vinculo com algum desses servidores
-	public List<Usuario> listaUsuarioServidorSemVinculo() {
+	// que ainda estão sem vinculo com algum desses administracaoes
+	public List<Usuario> listaUsuarioAdministracaoSemVinculo() {
 		return manager.createQuery(
-				"select u from Usuario u where u.perfil.nome in ('Administrador', 'Coordenador', 'Diretor') and u.id not in (select s.usuario.id from Servidor as s)",
+				"select u from Usuario u where u.perfil.nome in ('Administrador', 'Coordenador', 'Diretor') and u.id not in (select s.usuario.id from Administracao as s)",
 				Usuario.class).getResultList();
 	}
 
-	public List<Usuario> listaUsuarioServidorSemVinculo(String funcao) {
+	public List<Usuario> listaUsuarioAdministracaoSemVinculo(String funcao) {
 		return manager.createQuery(
-				"select u from Usuario u where u.perfil.nome like :funcao and u.id not in (select s.usuario.id from Servidor as s)",
+				"select u from Usuario u where u.perfil.nome like :funcao and u.id not in (select s.usuario.id from Administracao as s)",
 				Usuario.class).setParameter("funcao", funcao).getResultList();
 	}
 

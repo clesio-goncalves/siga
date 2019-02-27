@@ -20,3 +20,12 @@ $(document).ready(function() {
 });
 
 
+function selecionaTurma(id){
+	if (document.getElementById("turma" + id).checked == true) {
+		$('#docente' + id).removeAttr('disabled');
+		$('#docente' + id).selectpicker('refresh');
+	} else {
+		$('#docente' + id).attr('disabled', "disabled");
+		$('#docente' + id).selectpicker('refresh');
+	}
+}

@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,6 +59,8 @@ public class DisciplinaController {
 	AtendimentoMonitoriaDao dao_atendimento_monitoria;
 
 	@RequestMapping("/nova")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
+			"ROLE_Coordenação de Disciplina" })
 	public String disciplina(Disciplina disciplina, Model model) {
 		this.lista_docente = dao_docente.lista();
 		this.lista_turma = dao_turma.lista();
@@ -75,6 +78,8 @@ public class DisciplinaController {
 	}
 
 	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
+			"ROLE_Coordenação de Disciplina" })
 	public String adiciona(@Valid Disciplina disciplina, BindingResult result) throws Exception {
 
 		if (result.hasErrors()) {
@@ -104,12 +109,17 @@ public class DisciplinaController {
 	}
 
 	@RequestMapping("/lista")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		model.addAttribute("disciplinas", dao.lista());
 		return "disciplina/lista";
 	}
 
 	@RequestMapping("/remove")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
+			"ROLE_Coordenação de Disciplina" })
 	public String remove(Disciplina disciplina) {
 		dao_turma_disciplina_docente.removeTurmaDisciplinaDocentePelaDisciplinaId(disciplina.getId());
 		dao.remove(disciplina.getId());
@@ -117,6 +127,9 @@ public class DisciplinaController {
 	}
 
 	@RequestMapping("/exibe")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("disciplina", dao.buscaPorId(id));
 		model.addAttribute("monitores", dao_monitor.lista());
@@ -128,6 +141,8 @@ public class DisciplinaController {
 	}
 
 	@RequestMapping("/edita")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
+			"ROLE_Coordenação de Disciplina" })
 	public String edita(Long id, Model model) {
 		// Pega a disciplina
 		model.addAttribute("disciplina", dao.buscaPorId(id));
@@ -147,6 +162,8 @@ public class DisciplinaController {
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
+			"ROLE_Coordenação de Disciplina" })
 	public String altera(@Valid Disciplina disciplina, BindingResult result) {
 		this.lista_disciplina = dao.buscaPorNome(disciplina.getNome());
 		if (result.hasErrors()) {

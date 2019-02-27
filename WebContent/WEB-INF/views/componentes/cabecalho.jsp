@@ -42,7 +42,7 @@
 						<a class="dropdown-item" href="<c:url value="/monitor/novo" />">Monitor</a>
 						<a class="dropdown-item"
 							href="<c:url value="/profissional/novo" />">Profissional</a><a
-							class="dropdown-item" href="<c:url value="/servidor/novo" />">Coordenação e Direção</a>
+							class="dropdown-item" href="<c:url value="/administracao/novo" />">Administração</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="<c:url value="/curso/novo" />">Curso</a>
 						<a class="dropdown-item" href="<c:url value="/turma/nova" />">Turma</a>
@@ -71,9 +71,8 @@
 						<a class="dropdown-item" href="<c:url value="/docente/lista" />">Docentes</a>
 						<a class="dropdown-item" href="<c:url value="/monitor/lista" />">Monitores</a>
 						<a class="dropdown-item"
-							href="<c:url value="/profissional/lista" />">Profissionais da
-							Saúde</a><a class="dropdown-item"
-							href="<c:url value="/servidor/lista" />">Servidores</a>
+							href="<c:url value="/profissional/lista" />">Profissional</a><a
+							class="dropdown-item" href="<c:url value="/administracao/lista" />">Administração</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="<c:url value="/curso/lista" />">Cursos</a>
 						<a class="dropdown-item" href="<c:url value="/turma/lista" />">Turmas</a>
