@@ -9,7 +9,8 @@
 
 <div class="container">
 	<div class="card border-light mb-3">
-		<div class="card-header">Exibe os dados do servidor da administração</div>
+		<div class="card-header">Exibe os dados do servidor da
+			administração</div>
 		<!-- Table -->
 		<div class="card-body">
 			<div class="table-responsive">
@@ -44,21 +45,27 @@
 			</div>
 		</div>
 	</div>
-	<security:authorize access="hasRole('ROLE_Administrador')">
+	<security:authorize
+		access="hasAnyRole('ROLE_Administrador', 'ROLE_Diretor')">
 		<div align="center">
 			<!-- Cadastrar -->
 			<a href="<c:url value="/administracao/novo" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
-			<!-- Editar -->
-			<a href="<c:url value="/administracao/edita?id=${administracao.id}" />"
-				class="btn btn-warning btn-lg"><span
-				class="glyphicon glyphicon-edit"></span> Editar </a>
-			<!-- Excluir -->
-			<button type="button" class="btn btn-danger btn-lg"
-				data-toggle="modal" data-target="#modal${administracao.id}">
-				<span class="glyphicon glyphicon-trash"></span> Excluir
-			</button>
+			<security:authentication property="principal" var="usuario_logado" />
+			<c:if
+				test="${usuario_logado.perfil.id == 1 or (usuario_logado.perfil.id == 3 and administracao.funcao eq 'Coordenador')}">
+				<!-- Editar -->
+				<a
+					href="<c:url value="/administracao/edita?id=${administracao.id}" />"
+					class="btn btn-warning btn-lg"><span
+					class="glyphicon glyphicon-edit"></span> Editar </a>
+				<!-- Excluir -->
+				<button type="button" class="btn btn-danger btn-lg"
+					data-toggle="modal" data-target="#modal${administracao.id}">
+					<span class="glyphicon glyphicon-trash"></span> Excluir
+				</button>
+			</c:if>
 		</div>
 		<!-- Modal -->
 		<div class="modal fade" id="modal${administracao.id}">
@@ -73,12 +80,13 @@
 					</div>
 					<div class="modal-body">
 						<p>
-							Deseja realmente excluir o Servidor <br>ID (${administracao.id})
-							-> ${administracao.nome}?
+							Deseja realmente excluir o Servidor <br>ID
+							(${administracao.id}) -> ${administracao.nome}?
 						</p>
 					</div>
 					<div class="modal-footer">
-						<a href="<c:url value="/administracao/remove?id=${administracao.id}" />"
+						<a
+							href="<c:url value="/administracao/remove?id=${administracao.id}" />"
 							class="btn btn-danger"><span
 							class="glyphicon glyphicon-trash"></span> Excluir</a>
 						<button type="button" class="btn btn-secondary"
@@ -90,7 +98,8 @@
 			</div>
 		</div>
 	</security:authorize>
-	<a class="btn btn-success" href="<c:url value="/administracao/lista" />"><span
+	<a class="btn btn-success"
+		href="<c:url value="/administracao/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
 

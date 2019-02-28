@@ -65,160 +65,173 @@
 					</tr>
 				</table>
 			</div>
-			<legend>ATENDIMENTO EXTRACLASSE</legend>
-			<div class="table-responsive">
-				<table class="table table-hover table-bordered dt-responsive nowrap"
-					style="width: 100%; margin-top: 10px;">
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Horário</th>
-							<th>Disciplina</th>
-							<th>Docente</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="atendimento_extraclasse"
-							items="${atendimentos_extraclasse}">
+			<security:authentication property="principal" var="usuario_logado" />
+			<c:if
+				test="${usuario_logado.perfil.id != 11 or usuario_logado.id == aluno.usuario.id}">
+				<legend>ATENDIMENTO EXTRACLASSE</legend>
+				<div class="table-responsive">
+					<table
+						class="table table-hover table-bordered dt-responsive nowrap"
+						style="width: 100%; margin-top: 10px;">
+						<thead>
 							<tr>
-								<td><fmt:formatDate value="${atendimento_extraclasse.data}" /></td>
-								<td><fmt:formatDate type="time"
-										value="${atendimento_extraclasse.horario_inicial}"
-										pattern="HH:mm" /> - <fmt:formatDate type="time"
-										value="${atendimento_extraclasse.horario_final}"
-										pattern="HH:mm" /></td>
-								<td>${atendimento_extraclasse.disciplina.nome}</td>
-								<td>${atendimento_extraclasse.docente.nome}</td>
-								<td>
-									<!-- Exibir --> <a
-									href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"
-									class="btn btn-info btn-sm" data-tooltip="tooltip"
-									data-placement="bottom" title="Exibir"> <span
-										class="glyphicon glyphicon-search"></span></a>
-								</td>
+								<th>Data</th>
+								<th>Horário</th>
+								<th>Disciplina</th>
+								<th>Docente</th>
+								<th>Ações</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-			<legend>ATENDIMENTO DE MONITORIA</legend>
-			<div class="table-responsive">
-				<table class="table table-hover table-bordered dt-responsive nowrap"
-					style="width: 100%; margin-top: 10px;">
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Horário</th>
-							<th>Disciplina</th>
-							<th>Monitor</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="atendimento_monitoria"
-							items="${atendimentos_monitoria}">
+						</thead>
+						<tbody>
+							<c:forEach var="atendimento_extraclasse"
+								items="${atendimentos_extraclasse}">
+								<tr>
+									<td><fmt:formatDate
+											value="${atendimento_extraclasse.data}" /></td>
+									<td><fmt:formatDate type="time"
+											value="${atendimento_extraclasse.horario_inicial}"
+											pattern="HH:mm" /> - <fmt:formatDate type="time"
+											value="${atendimento_extraclasse.horario_final}"
+											pattern="HH:mm" /></td>
+									<td>${atendimento_extraclasse.disciplina.nome}</td>
+									<td>${atendimento_extraclasse.docente.nome}</td>
+									<td>
+										<!-- Exibir --> <a
+										href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"
+										class="btn btn-info btn-sm" data-tooltip="tooltip"
+										data-placement="bottom" title="Exibir"> <span
+											class="glyphicon glyphicon-search"></span></a>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<legend>ATENDIMENTO DE MONITORIA</legend>
+				<div class="table-responsive">
+					<table
+						class="table table-hover table-bordered dt-responsive nowrap"
+						style="width: 100%; margin-top: 10px;">
+						<thead>
 							<tr>
-								<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
-								<td><fmt:formatDate type="time"
-										value="${atendimento_monitoria.horario_inicial}"
-										pattern="HH:mm" /> - <fmt:formatDate type="time"
-										value="${atendimento_monitoria.horario_final}" pattern="HH:mm" /></td>
-								<td>${atendimento_monitoria.disciplina.nome}</td>
-								<td>${atendimento_monitoria.disciplina.monitor.nome}</td>
-								<td>
-									<!-- Exibir --> <a
-									href="<c:url value="/atendimento/monitoria/exibe?id=${atendimento_monitoria.id}"/>"
-									class="btn btn-info btn-sm" data-tooltip="tooltip"
-									data-placement="bottom" title="Exibir"> <span
-										class="glyphicon glyphicon-search"></span></a>
-								</td>
+								<th>Data</th>
+								<th>Horário</th>
+								<th>Disciplina</th>
+								<th>Monitor</th>
+								<th>Ações</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-			<legend>ATENDIMENTO DE SERVIÇOS DE SAÚDE</legend>
-			<div class="table-responsive">
-				<table class="table table-hover table-bordered dt-responsive nowrap"
-					style="width: 100%; margin-top: 10px;">
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Horário</th>
-							<th>Tipo de Atendimento</th>
-							<th>Profissional</th>
-							<th>Possui Observação</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="atendimento_saude" items="${atendimentos_saude}">
+						</thead>
+						<tbody>
+							<c:forEach var="atendimento_monitoria"
+								items="${atendimentos_monitoria}">
+								<tr>
+									<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
+									<td><fmt:formatDate type="time"
+											value="${atendimento_monitoria.horario_inicial}"
+											pattern="HH:mm" /> - <fmt:formatDate type="time"
+											value="${atendimento_monitoria.horario_final}"
+											pattern="HH:mm" /></td>
+									<td>${atendimento_monitoria.disciplina.nome}</td>
+									<td>${atendimento_monitoria.disciplina.monitor.nome}</td>
+									<td>
+										<!-- Exibir --> <a
+										href="<c:url value="/atendimento/monitoria/exibe?id=${atendimento_monitoria.id}"/>"
+										class="btn btn-info btn-sm" data-tooltip="tooltip"
+										data-placement="bottom" title="Exibir"> <span
+											class="glyphicon glyphicon-search"></span></a>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<legend>ATENDIMENTO DE SERVIÇOS DE SAÚDE</legend>
+				<div class="table-responsive">
+					<table
+						class="table table-hover table-bordered dt-responsive nowrap"
+						style="width: 100%; margin-top: 10px;">
+						<thead>
 							<tr>
-								<td><fmt:formatDate value="${atendimento_saude.data}" /></td>
-								<td><fmt:formatDate type="time"
-										value="${atendimento_saude.horario_inicial}" pattern="HH:mm" />
-									- <fmt:formatDate type="time"
-										value="${atendimento_saude.horario_final}" pattern="HH:mm" /></td>
-								<td>${atendimento_saude.profissional.tipo_atendimento}</td>
-								<td>${atendimento_saude.profissional.nome}</td>
-								<td>${atendimento_saude.possui_problema}</td>
-								<td>
-									<!-- Exibir --> <a
-									href="<c:url value="/atendimento/saude/exibe?id=${atendimento_saude.id}"/>"
-									class="btn btn-info btn-sm" data-tooltip="tooltip"
-									data-placement="bottom" title="Exibir"> <span
-										class="glyphicon glyphicon-search"></span></a>
-								</td>
+								<th>Data</th>
+								<th>Horário</th>
+								<th>Tipo de Atendimento</th>
+								<th>Profissional</th>
+								<th>Possui Observação</th>
+								<th>Ações</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody>
+							<c:forEach var="atendimento_saude" items="${atendimentos_saude}">
+								<tr>
+									<td><fmt:formatDate value="${atendimento_saude.data}" /></td>
+									<td><fmt:formatDate type="time"
+											value="${atendimento_saude.horario_inicial}" pattern="HH:mm" />
+										- <fmt:formatDate type="time"
+											value="${atendimento_saude.horario_final}" pattern="HH:mm" /></td>
+									<td>${atendimento_saude.profissional.tipo_atendimento}</td>
+									<td>${atendimento_saude.profissional.nome}</td>
+									<td>${atendimento_saude.possui_problema}</td>
+									<td>
+										<!-- Exibir --> <a
+										href="<c:url value="/atendimento/saude/exibe?id=${atendimento_saude.id}"/>"
+										class="btn btn-info btn-sm" data-tooltip="tooltip"
+										data-placement="bottom" title="Exibir"> <span
+											class="glyphicon glyphicon-search"></span></a>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</c:if>
 		</div>
 	</div>
-	<div align="center">
-		<!-- Cadastrar -->
-		<a href="<c:url value="/aluno/novo" />" class="btn btn-primary btn-lg"><span
-			class="glyphicon glyphicon-plus"></span> Cadastrar</a>
-		<!-- Editar -->
-		<a href="<c:url value="/aluno/edita?id=${aluno.id}" />"
-			class="btn btn-warning btn-lg"><span
-			class="glyphicon glyphicon-edit"></span> Editar </a>
-		<!-- Excluir -->
-		<button type="button" class="btn btn-danger btn-lg"
-			data-toggle="modal" data-target="#modal${aluno.id}">
-			<span class="glyphicon glyphicon-trash"></span> Excluir
-		</button>
-	</div>
-	<div class="modal fade" id="modal${aluno.id}">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Exclusão do aluno</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p>
-						Deseja realmente excluir o aluno <br>ID (${aluno.id}) ->
-						${aluno.nome}?
-					</p>
-				</div>
-				<div class="modal-footer">
-					<a href="<c:url value="/aluno/remove?id=${aluno.id}" />"
-						class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
-						Excluir</a>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">
-						<span class="glyphicon glyphicon-log-out"></span> Fechar
-					</button>
+	<security:authorize
+		access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
+		<div align="center">
+			<!-- Cadastrar -->
+			<a href="<c:url value="/aluno/novo" />"
+				class="btn btn-primary btn-lg"><span
+				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
+			<!-- Editar -->
+			<a href="<c:url value="/aluno/edita?id=${aluno.id}" />"
+				class="btn btn-warning btn-lg"><span
+				class="glyphicon glyphicon-edit"></span> Editar </a>
+			<!-- Excluir -->
+			<button type="button" class="btn btn-danger btn-lg"
+				data-toggle="modal" data-target="#modal${aluno.id}">
+				<span class="glyphicon glyphicon-trash"></span> Excluir
+			</button>
+		</div>
+		<div class="modal fade" id="modal${aluno.id}">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Exclusão do aluno</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>
+							Deseja realmente excluir o aluno <br>ID (${aluno.id}) ->
+							${aluno.nome}?
+						</p>
+					</div>
+					<div class="modal-footer">
+						<a href="<c:url value="/aluno/remove?id=${aluno.id}" />"
+							class="btn btn-danger"><span
+							class="glyphicon glyphicon-trash"></span> Excluir</a>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">
+							<span class="glyphicon glyphicon-log-out"></span> Fechar
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</security:authorize>
 
 	<a class="btn btn-success" href="<c:url value="/aluno/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>

@@ -43,16 +43,19 @@
 					value="Coordenador"> <label class="custom-control-label"
 					for="customRadio1">Coordenador</label>
 			</div>
-			<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio2" name="funcao"
-					class="custom-control-input" value="Administrador"> <label
-					class="custom-control-label" for="customRadio2">Administrador</label>
-			</div>
-			<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio3" name="funcao"
-					class="custom-control-input" value="Diretor"> <label
-					class="custom-control-label" for="customRadio3">Diretor</label>
-			</div>
+			
+			<security:authorize	access="hasRole('ROLE_Administrador')">
+				<div class="custom-control custom-radio">
+					<input type="radio" id="customRadio2" name="funcao"
+						class="custom-control-input" value="Administrador"> <label
+						class="custom-control-label" for="customRadio2">Administrador</label>
+				</div>
+				<div class="custom-control custom-radio">
+					<input type="radio" id="customRadio3" name="funcao"
+						class="custom-control-input" value="Diretor"> <label
+						class="custom-control-label" for="customRadio3">Diretor</label>
+				</div>
+			</security:authorize>
 		</div>
 
 		<!-- DESCRICAO FUNÇÃO -->

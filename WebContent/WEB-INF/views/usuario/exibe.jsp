@@ -42,7 +42,8 @@
 			</div>
 		</div>
 	</div>
-	<security:authorize access="hasRole('ROLE_Administrador')">
+	<security:authorize
+		access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
 		<div align="center">
 			<!-- Cadastrar -->
 			<a href="<c:url value="/usuario/novo" />"

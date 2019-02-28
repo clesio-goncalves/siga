@@ -31,7 +31,7 @@
 						<tr>
 							<td>${disciplina.id}</td>
 							<td>${disciplina.nome}</td>
-							
+
 							<!-- Monitor -->
 							<c:if test="${disciplina.monitor == null}">
 								<td>-</td>
@@ -44,45 +44,50 @@
 								href="<c:url value="/disciplina/exibe?id=${disciplina.id}"/>"
 								class="btn btn-info btn-sm" data-tooltip="tooltip"
 								data-placement="bottom" title="Exibir"> <span
-									class="glyphicon glyphicon-search"></span></a> <!-- Editar --> <a
-								href="<c:url value="/disciplina/edita?id=${disciplina.id}" />"
-								class="btn btn-warning btn-sm" data-tooltip="tooltip"
-								data-placement="bottom" title="Editar"><span
-									class="glyphicon glyphicon-pencil"></span> </a> <!-- Excluir -->
-								<button type="button" class="btn btn-danger btn-sm"
-									data-tooltip="tooltip" data-placement="bottom" title="Excluir"
-									data-toggle="modal" data-target="#modal${disciplina.id}">
-									<span class="glyphicon glyphicon-trash"></span>
-								</button>
-								<div class="modal fade" id="modal${disciplina.id}">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title">Exclusão da disciplina</h5>
-												<button type="button" class="close" data-dismiss="modal"
-													aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<p>
-													Deseja realmente excluir a Disciplina <br>ID
-													(${disciplina.id}) -> ${disciplina.nome}?
-												</p>
-											</div>
-											<div class="modal-footer">
-												<a
-													href="<c:url value="/disciplina/remove?id=${disciplina.id}" />"
-													class="btn btn-danger"><span
-													class="glyphicon glyphicon-trash"></span> Excluir</a>
-												<button type="button" class="btn btn-secondary"
-													data-dismiss="modal">
-													<span class="glyphicon glyphicon-log-out"></span> Fechar
-												</button>
+									class="glyphicon glyphicon-search"></span></a> <security:authorize
+									access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Coordenação de Disciplina')">
+									<!-- Editar -->
+									<a
+										href="<c:url value="/disciplina/edita?id=${disciplina.id}" />"
+										class="btn btn-warning btn-sm" data-tooltip="tooltip"
+										data-placement="bottom" title="Editar"><span
+										class="glyphicon glyphicon-pencil"></span> </a>
+									<!-- Excluir -->
+									<button type="button" class="btn btn-danger btn-sm"
+										data-tooltip="tooltip" data-placement="bottom" title="Excluir"
+										data-toggle="modal" data-target="#modal${disciplina.id}">
+										<span class="glyphicon glyphicon-trash"></span>
+									</button>
+									<div class="modal fade" id="modal${disciplina.id}">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">Exclusão da disciplina</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<p>
+														Deseja realmente excluir a Disciplina <br>ID
+														(${disciplina.id}) -> ${disciplina.nome}?
+													</p>
+												</div>
+												<div class="modal-footer">
+													<a
+														href="<c:url value="/disciplina/remove?id=${disciplina.id}" />"
+														class="btn btn-danger"><span
+														class="glyphicon glyphicon-trash"></span> Excluir</a>
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">
+														<span class="glyphicon glyphicon-log-out"></span> Fechar
+													</button>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+								</security:authorize>
 							</td>
 						</tr>
 					</c:forEach>
@@ -92,7 +97,8 @@
 	</div>
 
 	<div align="center">
-		<security:authorize access="hasRole('ROLE_Administrador')">
+		<security:authorize
+			access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Coordenação de Disciplina')">
 			<a href="<c:url value="/disciplina/nova" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>

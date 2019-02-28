@@ -58,44 +58,47 @@
 								href="<c:url value="/aluno/exibe?id=${aluno.id}"/>"
 								class="btn btn-info btn-sm" data-tooltip="tooltip"
 								data-placement="bottom" title="Exibir"> <span
-									class="glyphicon glyphicon-search"></span></a> <!-- Editar --> <a
-								href="<c:url value="/aluno/edita?id=${aluno.id}" />"
-								class="btn btn-warning btn-sm" data-tooltip="tooltip"
-								data-placement="bottom" title="Editar"><span
-									class="glyphicon glyphicon-pencil"></span> </a> <!-- Excluir -->
-								<button type="button" class="btn btn-danger btn-sm"
-									data-tooltip="tooltip" data-placement="bottom" title="Excluir"
-									data-toggle="modal" data-target="#modal${aluno.id}">
-									<span class="glyphicon glyphicon-trash"></span>
-								</button>
-								<div class="modal fade" id="modal${aluno.id}">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title">Exclusão do aluno</h5>
-												<button type="button" class="close" data-dismiss="modal"
-													aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<p>
-													Deseja realmente excluir o Aluno <br>ID (${aluno.id})
-													-> ${aluno.nome}?
-												</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<c:url value="/aluno/remove?id=${aluno.id}" />"
-													class="btn btn-danger"><span
-													class="glyphicon glyphicon-trash"></span> Excluir</a>
-												<button type="button" class="btn btn-secondary"
-													data-dismiss="modal">
-													<span class="glyphicon glyphicon-log-out"></span> Fechar
-												</button>
+									class="glyphicon glyphicon-search"></span></a> <!-- Editar --> <security:authorize
+									access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
+									<a href="<c:url value="/aluno/edita?id=${aluno.id}" />"
+										class="btn btn-warning btn-sm" data-tooltip="tooltip"
+										data-placement="bottom" title="Editar"><span
+										class="glyphicon glyphicon-pencil"></span> </a>
+									<!-- Excluir -->
+									<button type="button" class="btn btn-danger btn-sm"
+										data-tooltip="tooltip" data-placement="bottom" title="Excluir"
+										data-toggle="modal" data-target="#modal${aluno.id}">
+										<span class="glyphicon glyphicon-trash"></span>
+									</button>
+									<div class="modal fade" id="modal${aluno.id}">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">Exclusão do aluno</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<p>
+														Deseja realmente excluir o Aluno <br>ID (${aluno.id})
+														-> ${aluno.nome}?
+													</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<c:url value="/aluno/remove?id=${aluno.id}" />"
+														class="btn btn-danger"><span
+														class="glyphicon glyphicon-trash"></span> Excluir</a>
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">
+														<span class="glyphicon glyphicon-log-out"></span> Fechar
+													</button>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+								</security:authorize>
 							</td>
 						</tr>
 					</c:forEach>
@@ -104,13 +107,15 @@
 		</div>
 	</div>
 
-	<div align="center">
-		<security:authorize access="hasRole('ROLE_Administrador')">
+	<security:authorize
+		access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
+		<div align="center">
 			<a href="<c:url value="/aluno/novo" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
-		</security:authorize>
-	</div>
+		</div>
+	</security:authorize>
+
 </div>
 <c:import url="../componentes/js_data_table.jsp" />
 <c:import url="../componentes/rodape.jsp" />

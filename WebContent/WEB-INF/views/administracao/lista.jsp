@@ -45,45 +45,55 @@
 								href="<c:url value="/administracao/exibe?id=${administracao.id}"/>"
 								class="btn btn-info btn-sm" data-tooltip="tooltip"
 								data-placement="bottom" title="Exibir"> <span
-									class="glyphicon glyphicon-search"></span></a> <!-- Editar --> <a
-								href="<c:url value="/administracao/edita?id=${administracao.id}" />"
-								class="btn btn-warning btn-sm" data-tooltip="tooltip"
-								data-placement="bottom" title="Editar"><span
-									class="glyphicon glyphicon-pencil"></span> </a> <!-- Excluir -->
-								<button type="button" class="btn btn-danger btn-sm"
-									data-tooltip="tooltip" data-placement="bottom" title="Excluir"
-									data-toggle="modal" data-target="#modal${administracao.id}">
-									<span class="glyphicon glyphicon-trash"></span>
-								</button>
-								<div class="modal fade" id="modal${administracao.id}">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title">Exclusão do administracao</h5>
-												<button type="button" class="close" data-dismiss="modal"
-													aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<p>
-													Deseja realmente excluir o Servidor <br>ID
-													(${administracao.id}) -> ${administracao.nome}?
-												</p>
-											</div>
-											<div class="modal-footer">
-												<a
-													href="<c:url value="/administracao/remove?id=${administracao.id}" />"
-													class="btn btn-danger"><span
-													class="glyphicon glyphicon-trash"></span> Excluir</a>
-												<button type="button" class="btn btn-secondary"
-													data-dismiss="modal">
-													<span class="glyphicon glyphicon-log-out"></span> Fechar
-												</button>
+									class="glyphicon glyphicon-search"></span></a> <!-- Editar --> <security:authorize
+									access="hasAnyRole('ROLE_Administrador', 'ROLE_Diretor')">
+									<security:authentication property="principal"
+										var="usuario_logado" />
+									<c:if
+										test="${usuario_logado.perfil.id == 1 or (usuario_logado.perfil.id == 3 and administracao.funcao eq 'Coordenador')}">
+										<a
+											href="<c:url value="/administracao/edita?id=${administracao.id}" />"
+											class="btn btn-warning btn-sm" data-tooltip="tooltip"
+											data-placement="bottom" title="Editar"><span
+											class="glyphicon glyphicon-pencil"></span> </a>
+										<!-- Excluir -->
+										<button type="button" class="btn btn-danger btn-sm"
+											data-tooltip="tooltip" data-placement="bottom"
+											title="Excluir" data-toggle="modal"
+											data-target="#modal${administracao.id}">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+										<div class="modal fade" id="modal${administracao.id}">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title">Exclusão do administracao</h5>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<p>
+															Deseja realmente excluir o Servidor <br>ID
+															(${administracao.id}) -> ${administracao.nome}?
+														</p>
+													</div>
+													<div class="modal-footer">
+														<a
+															href="<c:url value="/administracao/remove?id=${administracao.id}" />"
+															class="btn btn-danger"><span
+															class="glyphicon glyphicon-trash"></span> Excluir</a>
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">
+															<span class="glyphicon glyphicon-log-out"></span> Fechar
+														</button>
+													</div>
+												</div>
 											</div>
 										</div>
-									</div>
-								</div>
+									</c:if>
+								</security:authorize>
 							</td>
 						</tr>
 					</c:forEach>
@@ -92,13 +102,15 @@
 		</div>
 	</div>
 
-	<div align="center">
-		<security:authorize access="hasRole('ROLE_Administrador')">
+	<security:authorize
+		access="hasAnyRole('ROLE_Administrador', 'ROLE_Diretor')">
+		<div align="center">
 			<a href="<c:url value="/administracao/novo" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
-		</security:authorize>
-	</div>
+		</div>
+	</security:authorize>
+
 </div>
 <c:import url="../componentes/js_data_table.jsp" />
 <c:import url="../componentes/rodape.jsp" />

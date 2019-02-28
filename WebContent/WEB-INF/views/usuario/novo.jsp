@@ -42,7 +42,7 @@
 				name="repetir_senha" id="repetir_senha" MAXLENGTH="50" required>
 		</div>
 
-		<!-- PERMISSÃO -->
+		<!-- PERFIL -->
 		<div class="form-group">
 			<label for="perfil" class="col-form-label">Perfil<span class="obrigatorio">*</span></label> <select
 				class="custom-select" name="perfil.id" required>

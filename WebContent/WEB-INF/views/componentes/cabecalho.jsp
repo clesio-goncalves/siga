@@ -82,7 +82,9 @@
 					<div class="dropdown-menu" x-placement="bottom-start"
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
 						
-						<a class="dropdown-item" href="<c:url value="/usuario/lista" />">Usuários</a>
+						<security:authorize access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
+							<a class="dropdown-item" href="<c:url value="/usuario/lista" />">Usuários</a>
+						</security:authorize>
 						<a class="dropdown-item" href="<c:url value="/aluno/lista" />">Alunos</a>
 						<a class="dropdown-item" href="<c:url value="/docente/lista" />">Docentes</a>
 						<a class="dropdown-item" href="<c:url value="/monitor/lista" />">Monitores</a>

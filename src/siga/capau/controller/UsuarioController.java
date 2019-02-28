@@ -2,6 +2,7 @@ package siga.capau.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import siga.capau.dao.AdministracaoDao;
 import siga.capau.dao.PerfilDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Usuario;
@@ -30,6 +32,12 @@ public class UsuarioController {
 
 	@Autowired
 	PerfilDao dao_perfil;
+
+	@Autowired
+	AdministracaoDao dao_administracao;
+	
+	@Autowired
+	AdministracaoDao dao_coordenador;
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
@@ -74,7 +82,56 @@ public class UsuarioController {
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
-	public String remove(Usuario usuario) {
+	public String remove(Usuario usuario, HttpServletResponse response) {
+
+		switch (usuario.getPerfil().getNome()) {
+		case "Administrador":
+			if (dao_administracao.administradorVinculadoUsuario(usuario.getId()) == 0) {
+				response.setStatus(403);
+				return "redirect:/403";
+			}
+			break;
+		case "Coordenador":
+			if (dao_coordenador.administradorVinculadoUsuario(usuario.getId()) == 0) {
+				response.setStatus(403);
+				return "redirect:/403";
+			}
+			break;
+		case "Diretor":
+
+			break;
+		case "Psicologia":
+
+			break;
+		case "Assistência Social":
+
+			break;
+		case "Enfermagem":
+
+			break;
+		case "Pedagogia":
+
+			break;
+		case "Odontologia":
+
+			break;
+		case "Docente":
+
+			break;
+		case "Monitor":
+
+			break;
+		case "Aluno":
+
+			break;
+		case "Coordenação de Disciplina":
+
+			break;
+
+		default:
+			break;
+		}
+
 		dao.remove(usuario.getId());
 		return "redirect:lista";
 	}
@@ -93,7 +150,6 @@ public class UsuarioController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String edita(Long id, Model model) {
-
 		model.addAttribute("usuario", dao.buscaPorId(id));
 		model.addAttribute("perfis", dao_perfil.lista());
 		return "usuario/edita";

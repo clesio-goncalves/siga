@@ -58,52 +58,58 @@
 					</tbody>
 				</table>
 			</div>
-			<legend>ATENDIMENTO EXTRACLASSE</legend>
-			<div class="table-responsive">
-				<table class="table table-hover table-bordered dt-responsive nowrap"
-					style="width: 100%; margin-top: 10px;">
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Turma</th>
-							<th>Disciplina</th>
-							<th>Aluno</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="atendimento_extraclasse"
-							items="${atendimentos_extraclasse}">
+			<security:authorize
+				access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
+				<legend>ATENDIMENTO EXTRACLASSE</legend>
+				<div class="table-responsive">
+					<table
+						class="table table-hover table-bordered dt-responsive nowrap"
+						style="width: 100%; margin-top: 10px;">
+						<thead>
 							<tr>
-								<td><fmt:formatDate value="${atendimento_extraclasse.data}" /></td>
-
-								<!-- Turma -->
-								<c:if test="${atendimento_extraclasse.status_atendimento}">
-									<td>-</td>
-									<td>-</td>
-									<td>-</td>
-								</c:if>
-								<c:if
-									test="${atendimento_extraclasse.status_atendimento == false}">
-									<td>${atendimento_extraclasse.aluno.turma.nome}</td>
-									<td>${atendimento_extraclasse.disciplina.nome}</td>
-									<td>${atendimento_extraclasse.aluno.nome}</td>
-								</c:if>
-								<td>
-									<!-- Exibir --> <a
-									href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"
-									class="btn btn-info btn-sm" data-tooltip="tooltip"
-									data-placement="bottom" title="Exibir"> <span
-										class="glyphicon glyphicon-search"></span></a>
-								</td>
+								<th>Data</th>
+								<th>Turma</th>
+								<th>Disciplina</th>
+								<th>Aluno</th>
+								<th>Ações</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody>
+							<c:forEach var="atendimento_extraclasse"
+								items="${atendimentos_extraclasse}">
+								<tr>
+									<td><fmt:formatDate
+											value="${atendimento_extraclasse.data}" /></td>
+
+									<!-- Turma -->
+									<c:if test="${atendimento_extraclasse.status_atendimento}">
+										<td>-</td>
+										<td>-</td>
+										<td>-</td>
+									</c:if>
+									<c:if
+										test="${atendimento_extraclasse.status_atendimento == false}">
+										<td>${atendimento_extraclasse.aluno.turma.nome}</td>
+										<td>${atendimento_extraclasse.disciplina.nome}</td>
+										<td>${atendimento_extraclasse.aluno.nome}</td>
+									</c:if>
+									<td>
+										<!-- Exibir --> <a
+										href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"
+										class="btn btn-info btn-sm" data-tooltip="tooltip"
+										data-placement="bottom" title="Exibir"> <span
+											class="glyphicon glyphicon-search"></span></a>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</security:authorize>
 		</div>
 	</div>
-	<security:authorize access="hasRole('ROLE_Administrador')">
+	<security:authorize
+		access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Coordenação de Disciplina')">
 		<div align="center">
 			<!-- Cadastrar -->
 			<a href="<c:url value="/docente/novo" />"
