@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +36,7 @@ public class UsuarioController {
 
 	@Autowired
 	AdministracaoDao dao_administracao;
-	
+
 	@Autowired
 	AdministracaoDao dao_coordenador;
 
@@ -44,7 +45,45 @@ public class UsuarioController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String novoUsuario(Model model) {
-		model.addAttribute("perfis", dao_perfil.lista());
+		switch (retornaUsuarioLogado().getPerfil().getNome()) {
+		case "ROLE_Administrador":
+			model.addAttribute("perfis", dao_perfil.lista());
+			break;
+		case "ROLE_Coordenador":
+
+			break;
+		case "ROLE_Diretor":
+
+			break;
+		case "ROLE_Psicologia":
+
+			break;
+		case "ROLE_Assistência Social":
+
+			break;
+		case "ROLE_Enfermagem":
+
+			break;
+		case "ROLE_Pedagogia":
+
+			break;
+		case "ROLE_Odontologia":
+
+			break;
+		case "ROLE_Docente":
+
+			break;
+		case "ROLE_Monitor":
+
+			break;
+		case "ROLE_Coordenação de Disciplina":
+
+			break;
+
+		default:
+			break;
+		}
+
 		return "usuario/novo";
 	}
 
@@ -83,55 +122,6 @@ public class UsuarioController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String remove(Usuario usuario, HttpServletResponse response) {
-
-		switch (usuario.getPerfil().getNome()) {
-		case "Administrador":
-			if (dao_administracao.administradorVinculadoUsuario(usuario.getId()) == 0) {
-				response.setStatus(403);
-				return "redirect:/403";
-			}
-			break;
-		case "Coordenador":
-			if (dao_coordenador.administradorVinculadoUsuario(usuario.getId()) == 0) {
-				response.setStatus(403);
-				return "redirect:/403";
-			}
-			break;
-		case "Diretor":
-
-			break;
-		case "Psicologia":
-
-			break;
-		case "Assistência Social":
-
-			break;
-		case "Enfermagem":
-
-			break;
-		case "Pedagogia":
-
-			break;
-		case "Odontologia":
-
-			break;
-		case "Docente":
-
-			break;
-		case "Monitor":
-
-			break;
-		case "Aluno":
-
-			break;
-		case "Coordenação de Disciplina":
-
-			break;
-
-		default:
-			break;
-		}
-
 		dao.remove(usuario.getId());
 		return "redirect:lista";
 	}
@@ -176,6 +166,10 @@ public class UsuarioController {
 		dao.altera(usuario);
 		return "redirect:lista";
 
+	}
+
+	private Usuario retornaUsuarioLogado() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 }

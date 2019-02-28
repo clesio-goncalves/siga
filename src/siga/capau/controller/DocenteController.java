@@ -65,6 +65,8 @@ public class DocenteController {
 
 		// Adiciona no banco de dados
 		dao.adiciona(docente);
+
+		// Ativa o status de vinculado
 		return "redirect:lista";
 	}
 

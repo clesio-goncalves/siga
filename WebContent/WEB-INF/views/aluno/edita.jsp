@@ -17,13 +17,13 @@
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${aluno.id}" required/>
+		<input type="hidden" name="id" value="${aluno.id}" required />
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required value="${aluno.nome}">
+			<label for="nome" class="col-form-label">Nome Completo<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required value="${aluno.nome}">
 		</div>
 
 		<!-- MATRICULA -->
@@ -35,7 +35,8 @@
 
 		<!-- TURMA -->
 		<div class="form-group">
-			<label for="turma.id" class="col-form-label">Turma<span class="obrigatorio">*</span></label>
+			<label for="turma.id" class="col-form-label">Turma<span
+				class="obrigatorio">*</span></label>
 			<c:forEach var="turma" items="${turmas}">
 				<div class="custom-control custom-radio">
 					<input type="radio" id="${turma.id}" name="turma.id"
@@ -48,18 +49,20 @@
 
 		<!-- USUÁRIO-->
 		<div class="form-group">
-			<label for="usuario.id" class="col-form-label">Usuário</label> <select
-				class="custom-select" name="usuario.id">
-				<option value="">Não informar</option>
-				<c:if test="${aluno.usuario != null}">
+			<label for="usuario.id" class="col-form-label">Usuário</label>
+			<c:if test="${aluno.usuario != null}">
+				<select class="custom-select" name="usuario.id" disabled="disabled">
 					<option value="${aluno.usuario.id}" selected>${aluno.usuario.email}</option>
-				</c:if>
-				<c:if test="${aluno.usuario == null}">
+				</select>
+			</c:if>
+			<c:if test="${aluno.usuario == null}">
+				<select class="custom-select" name="usuario.id">
+					<option value="">Não informar</option>
 					<c:forEach var="usuario" items="${usuarios}">
 						<option value="${usuario.id}">${usuario.email}</option>
 					</c:forEach>
-				</c:if>
-			</select>
+				</select>
+			</c:if>
 		</div>
 
 		<security:csrfInput />

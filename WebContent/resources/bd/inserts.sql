@@ -55,7 +55,7 @@ values (6, 'enfermagem@enfermagem.com','$2a$10$C0VoDrsnPXO2FHf1dhj3Z.IeGGhtuUcdf
 insert into Usuario(id, email, senha, ativo, perfil_id)
 values (7, 'pedagogia@pedagogia.com','$2a$10$nXD1lk8SjQmO6KBXKvBrFOT8odQNdUOv6k0PR6Mse5stccQHxDdNm', 1, 7);
 
-insert into Usuario(id, email, senha, ativo, perfil_id)
+insert into Usuario(id, email, senha, ativo,  perfil_id)
 values (8, 'odontologia@odontologia.com','$2a$10$0joNG6nMLyT.JsqzQ6rjde3yRejgUPvCLQ4zFWgaxvKwPSZhJ4Fzq', 1, 8);
 
 insert into Usuario(id, email, senha, ativo, perfil_id)
