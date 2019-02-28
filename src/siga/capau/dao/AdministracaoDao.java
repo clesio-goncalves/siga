@@ -32,6 +32,11 @@ public class AdministracaoDao {
 				.setParameter("siape", siape).getResultList();
 	}
 
+	public Long buscarPerfilIdPelaAdministracaoId(Long id) {
+		return manager.createQuery("select a.usuario.perfil.id from Administracao a where a.id = :id", Long.class)
+				.setParameter("id", id).getSingleResult();
+	}
+
 	public Administracao buscaPorId(Long id) {
 		return manager.find(Administracao.class, id);
 	}

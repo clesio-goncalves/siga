@@ -10,7 +10,9 @@
 	<div class="container">
 		<h1 class="display-3">Editar Aluno</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
-			alteração do aluno no sistema.</p>
+			alteração do aluno no sistema. Não é permitida a alteração do campo
+			Usuário (anteriormente vinculado), com o objetivo de mater a
+			consistência dos dados.</p>
 	</div>
 </div>
 <div class="container">

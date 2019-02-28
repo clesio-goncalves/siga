@@ -27,6 +27,8 @@ import siga.capau.modelo.Usuario;
 public class UsuarioController {
 
 	private List<Usuario> lista_usuario;
+	private Usuario usuario;
+	private Long perfil_id;
 
 	@Autowired
 	UsuarioDao dao;
@@ -45,45 +47,7 @@ public class UsuarioController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String novoUsuario(Model model) {
-		switch (retornaUsuarioLogado().getPerfil().getNome()) {
-		case "ROLE_Administrador":
-			model.addAttribute("perfis", dao_perfil.lista());
-			break;
-		case "ROLE_Coordenador":
-
-			break;
-		case "ROLE_Diretor":
-
-			break;
-		case "ROLE_Psicologia":
-
-			break;
-		case "ROLE_Assistência Social":
-
-			break;
-		case "ROLE_Enfermagem":
-
-			break;
-		case "ROLE_Pedagogia":
-
-			break;
-		case "ROLE_Odontologia":
-
-			break;
-		case "ROLE_Docente":
-
-			break;
-		case "ROLE_Monitor":
-
-			break;
-		case "ROLE_Coordenação de Disciplina":
-
-			break;
-
-		default:
-			break;
-		}
-
+		model.addAttribute("perfis", dao_perfil.lista());
 		return "usuario/novo";
 	}
 
@@ -92,7 +56,6 @@ public class UsuarioController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String adiciona(@Valid Usuario usuario, BindingResult result) {
-
 		if (result.hasErrors()) {
 			return "redirect:novo";
 		} else if (usuario.comparaSenhas() == false) {
@@ -113,8 +76,7 @@ public class UsuarioController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
-		model.addAttribute("usuarios", dao.lista());
-		return "usuario/lista";
+		return retornaListaUsuariosManipulaveis(model);
 	}
 
 	@RequestMapping("/remove")
@@ -122,50 +84,173 @@ public class UsuarioController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String remove(Usuario usuario, HttpServletResponse response) {
-		dao.remove(usuario.getId());
-		return "redirect:lista";
+		if (possuiPermissaoUsuario(usuario.getId())) {
+			dao.remove(usuario.getId());
+			return "redirect:lista";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping("/exibe")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
-	public String exibe(Long id, Model model) {
-		model.addAttribute("usuario", dao.buscaPorId(id));
-		return "usuario/exibe";
+	public String exibe(Long id, Model model, HttpServletResponse response) {
+		if (possuiPermissaoUsuario(id)) {
+			model.addAttribute("usuario", dao.buscaPorId(id));
+			return "usuario/exibe";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping("/edita")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
-	public String edita(Long id, Model model) {
-		model.addAttribute("usuario", dao.buscaPorId(id));
-		model.addAttribute("perfis", dao_perfil.lista());
-		return "usuario/edita";
+	public String edita(Long id, Model model, HttpServletResponse response) {
+		if (possuiPermissaoUsuario(id)) {
+			model.addAttribute("usuario", dao.buscaPorId(id));
+			return "usuario/edita";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
-	public String altera(@Valid Usuario usuario, BindingResult result) {
-		this.lista_usuario = dao.buscaPorEmail(usuario.getEmail());
-		if (result.hasErrors()) {
-			return "redirect:edita?id=" + usuario.getId();
-		} else if (usuario.comparaSenhas() == false) {
-			return "redirect:edita?id=" + usuario.getId();
-		} else if (this.lista_usuario.size() > 0 && this.lista_usuario.get(0).getId() != usuario.getId()) {
-			return "redirect:edita?id=" + usuario.getId();
+	public String altera(@Valid Usuario usuario, BindingResult result, HttpServletResponse response) {
+		if (possuiPermissaoUsuario(usuario.getId())) {
+			this.lista_usuario = dao.buscaPorEmail(usuario.getEmail());
+			if (result.hasErrors()) {
+				return "redirect:edita?id=" + usuario.getId();
+			} else if (usuario.comparaSenhas() == false) {
+				return "redirect:edita?id=" + usuario.getId();
+			} else if (this.lista_usuario.size() > 0 && this.lista_usuario.get(0).getId() != usuario.getId()) {
+				return "redirect:edita?id=" + usuario.getId();
+			}
+
+			// aplica o hash a senha fornecida
+			usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+
+			// Altera no banco
+			dao.altera(usuario);
+			return "redirect:lista";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
+	}
+
+	private String retornaListaUsuariosManipulaveis(Model model) {
+		this.usuario = retornaUsuarioLogado();
+		switch (this.usuario.getPerfil().getNome()) {
+		case "ROLE_Administrador":
+			model.addAttribute("usuarios_manipulaveis", dao.lista());
+			break;
+		case "ROLE_Coordenador":
+			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioManipulavelPorCoordenadorPedagogia());
+			break;
+		case "ROLE_Diretor":
+			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioManipulavelPorDiretor());
+			break;
+		case "ROLE_Psicologia":
+			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioAlunoManipulavel());
+			break;
+		case "ROLE_Assistência Social":
+			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioAlunoManipulavel());
+			break;
+		case "ROLE_Enfermagem":
+			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioAlunoManipulavel());
+			break;
+		case "ROLE_Odontologia":
+			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioAlunoManipulavel());
+			break;
+		case "ROLE_Pedagogia":
+			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioManipulavelPorCoordenadorPedagogia());
+			break;
+		case "ROLE_Docente":
+			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioManipulavelPorDocente());
+			break;
+		case "ROLE_Monitor":
+			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioAlunoManipulavel());
+			break;
+		case "ROLE_Coordenação de Disciplina":
+			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioManipulavelPorCD());
+			break;
+		default:
+			break;
 		}
 
-		// aplica o hash a senha fornecida
-		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+		return "usuario/lista";
+	}
 
-		// Altera no banco
-		dao.altera(usuario);
-		return "redirect:lista";
-
+	private boolean possuiPermissaoUsuario(Long id) {
+		this.usuario = retornaUsuarioLogado(); // Pego o usuário logado
+		this.perfil_id = dao.buscarPerfilIdPeloUsuarioId(id);
+		// possui permissão de editar o usuário, caso seja ele mesmo ou seu subordinado
+		switch (this.usuario.getPerfil().getNome()) {
+		case "ROLE_Administrador":
+			return true;
+		case "ROLE_Coordenador":
+			if (this.perfil_id == 9 || this.perfil_id == 10 || this.perfil_id == 11) {
+				return true;
+			}
+			return false;
+		case "ROLE_Diretor":
+			if (this.perfil_id == 1 || this.perfil_id == 3) {
+				return false;
+			}
+			return true;
+		case "ROLE_Psicologia":
+			if (this.perfil_id == 11) {
+				return true;
+			}
+			return false;
+		case "ROLE_Assistência Social":
+			if (this.perfil_id == 11) {
+				return true;
+			}
+			return false;
+		case "ROLE_Enfermagem":
+			if (this.perfil_id == 11) {
+				return true;
+			}
+			return false;
+		case "ROLE_Odontologia":
+			if (this.perfil_id == 11) {
+				return true;
+			}
+			return false;
+		case "ROLE_Pedagogia":
+			if (this.perfil_id == 9 || this.perfil_id == 10 || this.perfil_id == 11) {
+				return true;
+			}
+			return false;
+		case "ROLE_Docente":
+			if (this.perfil_id == 10 || this.perfil_id == 11) {
+				return true;
+			}
+			return false;
+		case "ROLE_Monitor":
+			if (this.perfil_id == 11) {
+				return true;
+			}
+			return false;
+		case "ROLE_Coordenação de Disciplina":
+			if (this.perfil_id == 9 || this.perfil_id == 11) {
+				return true;
+			}
+			return false;
+		default:
+			return false;
+		}
 	}
 
 	private Usuario retornaUsuarioLogado() {

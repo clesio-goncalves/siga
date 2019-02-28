@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import siga.capau.dao.AdministracaoDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Administracao;
+import siga.capau.modelo.Usuario;
 
 @Transactional
 @Controller
@@ -25,6 +27,7 @@ import siga.capau.modelo.Administracao;
 public class AdministracaoController {
 
 	private List<Administracao> lista_administracao;
+	private Usuario usuario;
 
 	@Autowired
 	AdministracaoDao dao;
@@ -66,9 +69,14 @@ public class AdministracaoController {
 
 	@RequestMapping("/remove")
 	@Secured({ "ROLE_Administrador", "ROLE_Diretor" })
-	public String remove(Administracao administracao) {
-		dao.remove(administracao.getId());
-		return "redirect:lista";
+	public String remove(Administracao administracao, HttpServletResponse response) {
+		if (possuiPermissaoAdministracao(administracao.getId())) {
+			dao.remove(administracao.getId());
+			return "redirect:lista";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping("/exibe")
@@ -79,31 +87,61 @@ public class AdministracaoController {
 
 	@RequestMapping("/edita")
 	@Secured({ "ROLE_Administrador", "ROLE_Diretor" })
-	public String edita(Long id, Model model) {
-		model.addAttribute("administracao", dao.buscaPorId(id));
-		return "administracao/edita";
+	public String edita(Long id, Model model, HttpServletResponse response) {
+		if (possuiPermissaoAdministracao(id)) {
+			model.addAttribute("administracao", dao.buscaPorId(id));
+			return "administracao/edita";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	@Secured({ "ROLE_Administrador", "ROLE_Diretor" })
-	public String altera(@Valid Administracao administracao, BindingResult result) {
-		this.lista_administracao = dao.buscaPorSiape(administracao.getSiape());
-		if (result.hasErrors()) {
-			return "redirect:edita?id=" + administracao.getId();
-		} else if (this.lista_administracao.size() > 0
-				&& this.lista_administracao.get(0).getId() != administracao.getId()) {
-			return "redirect:edita?id=" + administracao.getId();
-		}
+	public String altera(@Valid Administracao administracao, BindingResult result, HttpServletResponse response) {
+		if (possuiPermissaoAdministracao(administracao.getId())) {
+			this.lista_administracao = dao.buscaPorSiape(administracao.getSiape());
+			if (result.hasErrors()) {
+				return "redirect:edita?id=" + administracao.getId();
+			} else if (this.lista_administracao.size() > 0
+					&& this.lista_administracao.get(0).getId() != administracao.getId()) {
+				return "redirect:edita?id=" + administracao.getId();
+			}
 
-		// Altera no banco
-		dao.altera(administracao);
-		return "redirect:lista";
+			// Altera no banco
+			dao.altera(administracao);
+			return "redirect:lista";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping(value = "/filtro", method = RequestMethod.POST)
 	public String filtrar(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAdministracaoSemVinculo(request.getParameter("funcao")));
 		return "administracao/lista_usuarios";
+	}
+
+	private boolean possuiPermissaoAdministracao(Long id) {
+		this.usuario = retornaUsuarioLogado(); // Pego o usuário logado
+		// O diretor só realiza a ação se o usuário não for igual a administrador ou
+		// diretor
+		if (this.usuario.getPerfil().getNome().equals("ROLE_Diretor")) {
+			Long perfil_id = dao.buscarPerfilIdPelaAdministracaoId(id);
+			if (perfil_id == 1 || perfil_id == 3) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+
+	private Usuario retornaUsuarioLogado() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 }

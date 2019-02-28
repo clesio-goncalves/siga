@@ -24,7 +24,6 @@
 						<th>Nome Completo</th>
 						<th>SIAPE</th>
 						<th>Função</th>
-						<th>Descrição da Função</th>
 						<th>Usuário</th>
 						<th>Ações</th>
 					</tr>
@@ -36,7 +35,6 @@
 							<td>${administracao.nome}</td>
 							<td>${administracao.siape}</td>
 							<td>${administracao.funcao}</td>
-							<td>${administracao.descricao_funcao}</td>
 							<td>${administracao.usuario.email}</td>
 
 							<!-- AÇÕES -->

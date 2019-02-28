@@ -18,7 +18,8 @@
 
 		<!-- EMAIL -->
 		<div class="form-group">
-			<label for="email" class="col-form-label">E-mail<span class="obrigatorio">*</span></label>
+			<label for="email" class="col-form-label">E-mail<span
+				class="obrigatorio">*</span></label>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text">@</span>
@@ -30,26 +31,50 @@
 
 		<!-- SENHA -->
 		<div class="form-group">
-			<label for="senha" class="col-form-label">Senha<span class="obrigatorio">*</span></label> <input
-				type="password" class="form-control" name="senha" id="senha"
-				MAXLENGTH="50" required>
+			<label for="senha" class="col-form-label">Senha<span
+				class="obrigatorio">*</span></label> <input type="password"
+				class="form-control" name="senha" id="senha" MAXLENGTH="50" required>
 		</div>
 
 		<!-- REPETIR SENHA -->
 		<div class="form-group">
 			<label for="repetir_senha" class="col-form-label">Repetir
-				Senha<span class="obrigatorio">*</span></label> <input type="password" class="form-control"
-				name="repetir_senha" id="repetir_senha" MAXLENGTH="50" required>
+				Senha<span class="obrigatorio">*</span>
+			</label> <input type="password" class="form-control" name="repetir_senha"
+				id="repetir_senha" MAXLENGTH="50" required>
 		</div>
 
 		<!-- PERFIL -->
 		<div class="form-group">
-			<label for="perfil" class="col-form-label">Perfil<span class="obrigatorio">*</span></label> <select
-				class="custom-select" name="perfil.id" required>
-				<!-- percorre perfil montando as linhas da tabela -->
-				<c:forEach var="perfil" items="${perfis}">
-					<option value="${perfil.id}">${perfil.nome}</option>
-				</c:forEach>
+			<label for="perfil" class="col-form-label">Perfil<span
+				class="obrigatorio">*</span></label> <select class="custom-select"
+				name="perfil.id" required>
+				<security:authorize access="hasRole('ROLE_Administrador')">
+					<option value="1">Administrador</option>
+					<option value="3">Diretor</option>
+				</security:authorize>
+				<security:authorize
+					access="hasAnyRole('ROLE_Administrador', 'ROLE_Diretor')">
+					<option value="2">Coordenador</option>
+					<option value="4">Psicologia</option>
+					<option value="5">Assistência Social</option>
+					<option value="6">Enfermagem</option>
+					<option value="7">Pedagogia</option>
+					<option value="8">Odontologia</option>
+					<option value="12">Coordenação de Disciplina</option>
+				</security:authorize>
+				<security:authorize
+					access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Coordenação de Disciplina')">
+					<option value="9">Docente</option>
+				</security:authorize>
+				<security:authorize
+					access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Docente')">
+					<option value="10">Monitor</option>
+				</security:authorize>
+				<security:authorize
+					access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
+					<option value="11">Aluno</option>
+				</security:authorize>
 			</select>
 		</div>
 

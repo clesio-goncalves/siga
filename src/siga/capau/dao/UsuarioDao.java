@@ -79,6 +79,31 @@ public class UsuarioDao implements UserDetailsService {
 				Usuario.class).setParameter("funcao", funcao).getResultList();
 	}
 
+	public List<Usuario> listaUsuarioManipulavelPorCoordenadorPedagogia() {
+		return manager.createQuery("select u from Usuario u where u.perfil.id IN (9, 10, 11)", Usuario.class)
+				.getResultList();
+	}
+	
+	public List<Usuario> listaUsuarioManipulavelPorDiretor() {
+		return manager.createQuery("select u from Usuario u where u.perfil.id NOT IN (1, 3)", Usuario.class)
+				.getResultList();
+	}
+	
+	public List<Usuario> listaUsuarioAlunoManipulavel() {
+		return manager.createQuery("select u from Usuario u where u.perfil.id = 11", Usuario.class)
+				.getResultList();
+	}
+	
+	public List<Usuario> listaUsuarioManipulavelPorDocente() {
+		return manager.createQuery("select u from Usuario u where u.perfil.id IN (10, 11)", Usuario.class)
+				.getResultList();
+	}
+	
+	public List<Usuario> listaUsuarioManipulavelPorCD() {
+		return manager.createQuery("select u from Usuario u where u.perfil.id IN (9, 11)", Usuario.class)
+				.getResultList();
+	}
+
 	public List<Usuario> buscaPorEmail(String email) {
 		return manager.createQuery("select u from Usuario u where u.email = :email", Usuario.class)
 				.setParameter("email", email).getResultList();
@@ -86,6 +111,11 @@ public class UsuarioDao implements UserDetailsService {
 
 	public Usuario buscaPorId(Long id) {
 		return manager.find(Usuario.class, id);
+	}
+
+	public Long buscarPerfilIdPeloUsuarioId(Long id) {
+		return manager.createQuery("select u.perfil.id from Usuario u where u.id = :id", Long.class)
+				.setParameter("id", id).getSingleResult();
 	}
 
 	public void remove(Long id) {

@@ -10,18 +10,20 @@
 	<div class="container">
 		<h1 class="display-3">Editar Usuário</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
-			alteração do usuário no sistema.</p>
+			alteração do usuário no sistema. Não é permitida a alteração do
+			Perfil do usuário, com o objetivo de mater a consistência dos dados.</p>
 	</div>
 </div>
 <div class="container">
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${usuario.id}" required/>
+		<input type="hidden" name="id" value="${usuario.id}" required />
 
 		<!-- USUARIO -->
 		<div class="form-group">
-			<label for="email" class="col-form-label">E-mail<span class="obrigatorio">*</span></label>
+			<label for="email" class="col-form-label">E-mail<span
+				class="obrigatorio">*</span></label>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text">@</span>
@@ -33,27 +35,25 @@
 
 		<!-- SENHA -->
 		<div class="form-group">
-			<label for="senha" class="col-form-label">Senha<span class="obrigatorio">*</span></label> <input
-				type="password" class="form-control" name="senha" id="senha"
-				MAXLENGTH="50" required>
+			<label for="senha" class="col-form-label">Senha<span
+				class="obrigatorio">*</span></label> <input type="password"
+				class="form-control" name="senha" id="senha" MAXLENGTH="50" required>
 		</div>
 
 		<!-- REPETIR SENHA -->
 		<div class="form-group">
 			<label for="repetir_senha" class="col-form-label">Repetir
-				Senha<span class="obrigatorio">*</span></label> <input type="password" class="form-control"
-				name="repetir_senha" id="repetir_senha" MAXLENGTH="50" required>
+				Senha<span class="obrigatorio">*</span>
+			</label> <input type="password" class="form-control" name="repetir_senha"
+				id="repetir_senha" MAXLENGTH="50" required>
 		</div>
 
 		<!-- PERMISSÃO -->
 		<div class="form-group">
-			<label for="perfil" class="col-form-label">Perfil<span class="obrigatorio">*</span></label> <select
-				class="custom-select" name="perfil.id" required>
-				<!-- percorre perfil montando as linhas da tabela -->
-				<c:forEach var="perfil" items="${perfis}">
-					<option value="${perfil.id}"
-						${perfil.id==usuario.perfil.id ? 'selected' : ''}>${perfil.nome}</option>
-				</c:forEach>
+			<label for="perfil" class="col-form-label">Perfil<span
+				class="obrigatorio">*</span></label> <select class="custom-select"
+				name="perfil.id" required disabled="disabled">
+				<option value="${usuario.perfil.id}" selected="selected">${usuario.perfil.nome}</option>
 			</select>
 		</div>
 
