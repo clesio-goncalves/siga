@@ -41,7 +41,7 @@ public class MonitorController {
 	AtendimentoMonitoriaDao dao_atendimento_monitoria;
 
 	@RequestMapping("/novo")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String novoMonitor(Model model) {
 		this.lista_usuario = dao_usuario.listaUsuarioMonitorSemVinculo();
 
@@ -55,7 +55,7 @@ public class MonitorController {
 	}
 
 	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String adiciona(@Valid Monitor monitor, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:novo";
@@ -69,25 +69,19 @@ public class MonitorController {
 	}
 
 	@RequestMapping("/lista")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		model.addAttribute("monitores", dao.lista());
 		return "monitor/lista";
 	}
 
 	@RequestMapping("/remove")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String remove(Monitor monitor) {
 		dao.remove(monitor.getId());
 		return "redirect:lista";
 	}
 
 	@RequestMapping("/exibe")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("monitor", dao.buscaPorId(id));
 		model.addAttribute("disciplinas_monitor", dao_disciplina.listaDisciplinasPorMonitorId(id));
@@ -96,14 +90,14 @@ public class MonitorController {
 	}
 
 	@RequestMapping("/edita")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String edita(Long id, Model model) {
 		model.addAttribute("monitor", dao.buscaPorId(id));
 		return "monitor/edita";
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String altera(@Valid Monitor monitor, BindingResult result) {
 		this.lista_monitor = dao.buscaPorMatricula(monitor.getMatricula());
 		if (result.hasErrors()) {

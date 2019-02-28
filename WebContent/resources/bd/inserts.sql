@@ -44,25 +44,31 @@ insert into Usuario(id, email, senha, ativo, perfil_id)
 values (3, 'diretor@diretor.com','$2a$10$NP/U1b23pPhbwYgB9foQ.u.OSaT1JvKQ.NRXRo4VJs1Uv6advx3AG', 1, 3);
 
 insert into Usuario(id, email, senha, ativo, perfil_id)
-values (4, 'psicologo@psicologo.com','$2a$10$03J6yDNF1SwrLPJciIhTeOWomDJJnHIJoqb.u7Nse4irOg969Fq92', 1, 4);
+values (4, 'psicologia@psicologia.com','$2a$10$09Cq8M99qOo7KdBUveqdBOh78paYZUwyykE.XAJNxto47kmaVuP4.', 1, 4);
 
 insert into Usuario(id, email, senha, ativo, perfil_id)
-values (5, 'assistente@assistente.com','$2a$10$RbrLXGZW.Gv5pxqmgm14puEmvscRIsVtkaIJQocQDrqf.DF4S4CAm', 1, 5);
+values (5, 'as@as.com','$2a$10$nHeIl7dPX2j9jACwLTqra.3f.3C7LMdyKJ42tsYUGhUQm98pHkPZG', 1, 5);
 
 insert into Usuario(id, email, senha, ativo, perfil_id)
-values (6, 'enfermeiro@enfermeiro.com','$2a$10$7DDFvw.HOkhwaj6.zCufheHpoo/YaOD16ZJ6djDsv665b7VzPHLR6', 1, 6);
+values (6, 'enfermagem@enfermagem.com','$2a$10$C0VoDrsnPXO2FHf1dhj3Z.IeGGhtuUcdfy5304arpmXt4QQXtfsQO', 1, 6);
 
 insert into Usuario(id, email, senha, ativo, perfil_id)
-values (7, 'odonto@odonto.com','$2a$10$MWn2zLaHN0nICdbkBzCkGeV24rtUb4vipmbSyXH3DcuybipY1DVRK', 1, 8);
+values (7, 'pedagogia@pedagogia.com','$2a$10$nXD1lk8SjQmO6KBXKvBrFOT8odQNdUOv6k0PR6Mse5stccQHxDdNm', 1, 7);
 
 insert into Usuario(id, email, senha, ativo, perfil_id)
-values (8, 'docente@docente.com','$2a$10$6SvL56HB0kZa1pDGt6ls/.VQlzCanJbctPyg1iWzoi5T/agOLucOW', 1, 9);
+values (8, 'odontologia@odontologia.com','$2a$10$0joNG6nMLyT.JsqzQ6rjde3yRejgUPvCLQ4zFWgaxvKwPSZhJ4Fzq', 1, 8);
 
 insert into Usuario(id, email, senha, ativo, perfil_id)
-values (9, 'monitor@monitor.com','$2a$10$WYXa9SQ.8wLJjYBysLQZcuFXwYexhRzClxbAjrtl8p0ukMkjurvuK', 1, 10);
-    
+values (9, 'docente@docente.com','$2a$10$n/VecX2RV/TY3xfHbW0Jo.bpg2MAoy0yKGHSa.vuZ.ZuGFiB2QYha', 1, 9);
+
 insert into Usuario(id, email, senha, ativo, perfil_id)
-values (10, 'aluno@aluno.com','$2a$10$qpt3HctirwaIRedM0ERwXegnlFN0dejoMPBqsv5GDxJj9eAM/scBy', 1, 11);
+values (10, 'monitor@monitor.com','$2a$10$9p2tu15zJKOOLIn.HTx76.Jo/QnHRzO7NYtHtL9Fjv1urtYQIFqWy', 1, 10);
+
+insert into Usuario(id, email, senha, ativo, perfil_id)
+values (11, 'aluno@aluno.com','$2a$10$Z032yir9pQ4FSrG/WQxo7eWm4tstNtfspS3srxaholypPXj4FK.a.', 1, 11);
+
+insert into Usuario(id, email, senha, ativo, perfil_id)
+values (12, 'cd@cd.com','$2a$10$blE.bIaeXORY9jDiiMq2COivr.osQmn2y0AIvqFRpaVI3X/Ehc3wi', 1, 12);
 
 insert into Curso(id, nome)
 values (1, 'Técnico em Mineração');
@@ -72,3 +78,6 @@ values (2, 'Técnico em Informática');
 
 insert into Curso(id, nome)
 values (3, 'Técnico em Agropecuária');
+
+insert into Curso(id, nome)
+values (4, 'Técnico em Administração');

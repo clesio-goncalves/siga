@@ -83,9 +83,6 @@ public class TurmaController {
 	}
 
 	@RequestMapping("/lista")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		this.lista_turma = dao.lista();
 		for (Turma turma : this.lista_turma) {
@@ -112,9 +109,6 @@ public class TurmaController {
 	}
 
 	@RequestMapping("/exibe")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("turma", dao.buscaPorId(id));
 		model.addAttribute("qnt_alunos", dao_aluno.buscaQntAlunosPorTurmaId(id));

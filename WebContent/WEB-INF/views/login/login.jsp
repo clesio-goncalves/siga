@@ -70,7 +70,7 @@
 							</form>
 						</div>
 					</div>
-					<div class="footer">2018 - Todos os direitos reservados a CTI
+					<div class="footer">2019 - Todos os direitos reservados a CTI
 						- Campus Paulistana.</div>
 				</div>
 			</div>

@@ -31,53 +31,68 @@
 
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav mr-auto">
+			<security:authorize access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
 					role="button" aria-haspopup="true" aria-expanded="false">Cadastro</a>
 					<div class="dropdown-menu" x-placement="bottom-start"
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
-						<a class="dropdown-item" href="<c:url value="/usuario/novo" />">Usuário</a>
-						<a class="dropdown-item" href="<c:url value="/aluno/novo" />">Aluno</a>
-						<a class="dropdown-item" href="<c:url value="/docente/novo" />">Docente</a>
-						<a class="dropdown-item" href="<c:url value="/monitor/novo" />">Monitor</a>
-						<a class="dropdown-item"
-							href="<c:url value="/profissional/novo" />">Profissional</a><a
-							class="dropdown-item" href="<c:url value="/administracao/novo" />">Administração</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="<c:url value="/curso/novo" />">Curso</a>
-						<a class="dropdown-item" href="<c:url value="/turma/nova" />">Turma</a>
-						<a class="dropdown-item" href="<c:url value="/disciplina/nova" />">Disciplina</a>
+												
+							<a class="dropdown-item" href="<c:url value="/usuario/novo" />">Usuário</a>
+							<a class="dropdown-item" href="<c:url value="/aluno/novo" />">Aluno</a>
+						
+						<security:authorize
+							access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Coordenação de Disciplina')">
+							<a class="dropdown-item" href="<c:url value="/docente/novo" />">Docente</a>
+						</security:authorize>
+						
+						<security:authorize
+							access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Docente')">
+							<a class="dropdown-item" href="<c:url value="/monitor/novo" />">Monitor</a>
+						</security:authorize>
+						
+						<security:authorize access="hasAnyRole('ROLE_Administrador', 'ROLE_Diretor')">
+							<a class="dropdown-item" href="<c:url value="/profissional/novo" />">Profissional</a>
+							<a class="dropdown-item" href="<c:url value="/administracao/novo" />">Administração</a>
+						</security:authorize>
+						
+						<security:authorize
+							access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Coordenação de Disciplina')">
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<c:url value="/curso/novo" />">Curso</a>
+							<a class="dropdown-item" href="<c:url value="/turma/nova" />">Turma</a>
+							<a class="dropdown-item" href="<c:url value="/disciplina/nova" />">Disciplina</a>
+						</security:authorize>
 					</div></li>
+			
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
 					role="button" aria-haspopup="true" aria-expanded="false">Atendimento</a>
 					<div class="dropdown-menu" x-placement="bottom-start"
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
-						<a class="dropdown-item"
-							href="<c:url value="/atendimento/extra-classe/lista" />">Extraclasse</a>
-						<a class="dropdown-item"
-							href="<c:url value="/atendimento/monitoria/lista" />">Monitoria</a>
-						<a class="dropdown-item"
-							href="<c:url value="/atendimento/saude/lista" />">Serviços de
-							Saúde</a>
+						<a class="dropdown-item" href="<c:url value="/atendimento/extra-classe/lista" />">Extraclasse</a>
+						<a class="dropdown-item" href="<c:url value="/atendimento/monitoria/lista" />">Monitoria</a>
+						<a class="dropdown-item" href="<c:url value="/atendimento/saude/lista" />">Serviços de Saúde</a>
 					</div></li>
+			</security:authorize>
+			
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
 					role="button" aria-haspopup="true" aria-expanded="false">Relatórios</a>
 					<div class="dropdown-menu" x-placement="bottom-start"
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+						
 						<a class="dropdown-item" href="<c:url value="/usuario/lista" />">Usuários</a>
 						<a class="dropdown-item" href="<c:url value="/aluno/lista" />">Alunos</a>
 						<a class="dropdown-item" href="<c:url value="/docente/lista" />">Docentes</a>
 						<a class="dropdown-item" href="<c:url value="/monitor/lista" />">Monitores</a>
-						<a class="dropdown-item"
-							href="<c:url value="/profissional/lista" />">Profissional</a><a
-							class="dropdown-item" href="<c:url value="/administracao/lista" />">Administração</a>
+						<a class="dropdown-item" href="<c:url value="/profissional/lista" />">Profissional</a>
+						<a class="dropdown-item" href="<c:url value="/administracao/lista" />">Administração</a>
+						
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="<c:url value="/curso/lista" />">Cursos</a>
 						<a class="dropdown-item" href="<c:url value="/turma/lista" />">Turmas</a>
-						<a class="dropdown-item"
-							href="<c:url value="/disciplina/lista" />">Disciplinas</a>
+						<a class="dropdown-item" href="<c:url value="/disciplina/lista" />">Disciplinas</a>
 					</div></li>
 			</ul>
 			<security:authorize access="isAuthenticated()">

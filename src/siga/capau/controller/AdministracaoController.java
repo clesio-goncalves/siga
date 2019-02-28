@@ -59,7 +59,6 @@ public class AdministracaoController {
 	}
 
 	@RequestMapping("/lista")
-	@Secured({ "ROLE_Administrador", "ROLE_Diretor", "ROLE_Coordenador" })
 	public String lista(Model model) {
 		model.addAttribute("lista_administracao", dao.lista());
 		return "administracao/lista";
@@ -73,7 +72,6 @@ public class AdministracaoController {
 	}
 
 	@RequestMapping("/exibe")
-	@Secured({ "ROLE_Administrador", "ROLE_Diretor", "ROLE_Coordenador" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("administracao", dao.buscaPorId(id));
 		return "administracao/exibe";
@@ -92,7 +90,8 @@ public class AdministracaoController {
 		this.lista_administracao = dao.buscaPorSiape(administracao.getSiape());
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + administracao.getId();
-		} else if (this.lista_administracao.size() > 0 && this.lista_administracao.get(0).getId() != administracao.getId()) {
+		} else if (this.lista_administracao.size() > 0
+				&& this.lista_administracao.get(0).getId() != administracao.getId()) {
 			return "redirect:edita?id=" + administracao.getId();
 		}
 

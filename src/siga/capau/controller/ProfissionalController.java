@@ -63,7 +63,6 @@ public class ProfissionalController {
 	}
 
 	@RequestMapping("/lista")
-	@Secured({ "ROLE_Administrador", "ROLE_Diretor", "ROLE_Coordenador" })
 	public String lista(Model model) {
 		model.addAttribute("profissionais", dao.lista());
 		return "profissional/lista";
@@ -77,7 +76,6 @@ public class ProfissionalController {
 	}
 
 	@RequestMapping("/exibe")
-	@Secured({ "ROLE_Administrador", "ROLE_Diretor", "ROLE_Coordenador" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("profissional", dao.buscaPorId(id));
 		model.addAttribute("atendimentos_saude", dao_atendimento_saude.buscaPeloProfissionalId(id));

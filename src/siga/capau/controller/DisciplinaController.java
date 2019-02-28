@@ -109,9 +109,6 @@ public class DisciplinaController {
 	}
 
 	@RequestMapping("/lista")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		model.addAttribute("disciplinas", dao.lista());
 		return "disciplina/lista";
@@ -127,9 +124,6 @@ public class DisciplinaController {
 	}
 
 	@RequestMapping("/exibe")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("disciplina", dao.buscaPorId(id));
 		model.addAttribute("monitores", dao_monitor.lista());
