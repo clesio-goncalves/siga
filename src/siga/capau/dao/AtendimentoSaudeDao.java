@@ -103,10 +103,6 @@ public class AtendimentoSaudeDao {
 					+ filtro_atendimento_saude.getEsse_problema_dificulta_aprendizado() + "'";
 		}
 
-		System.out.println("------------------------------------------------------");
-		System.out.println(sql);
-		System.out.println("------------------------------------------------------");
-
 		return manager.createQuery(sql, AtendimentoSaude.class).getResultList();
 
 	}

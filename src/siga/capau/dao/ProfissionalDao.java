@@ -33,9 +33,13 @@ public class ProfissionalDao {
 	}
 
 	public List<Profissional> buscaPorUsuario(Long id) {
-		return manager
-				.createQuery("select p from Profissional p where p.usuario.id = :id", Profissional.class)
+		return manager.createQuery("select p from Profissional p where p.usuario.id = :id", Profissional.class)
 				.setParameter("id", id).getResultList();
+	}
+
+	public Long usuarioProfissional(Long id) {
+		return manager.createQuery("select count(p) from Profissional p where p.usuario.id = :id", Long.class)
+				.setParameter("id", id).getSingleResult();
 	}
 
 	public Profissional buscaPorId(Long id) {

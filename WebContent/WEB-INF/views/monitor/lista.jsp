@@ -69,6 +69,10 @@
 														Deseja realmente excluir o Monitor <br>ID
 														(${monitor.id}) -> ${monitor.nome}?
 													</p>
+													<p>
+														<b>Atenção: Não é recomendado excluir o usuário, <br>
+															Então, desative-o.<b>
+													</p>
 												</div>
 												<div class="modal-footer">
 													<a

@@ -116,10 +116,6 @@ public class ExtraClasseDao {
 			sql = sql + " and e.conteudo like '%" + filtro_extra_classe.getConteudo() + "%'";
 		}
 
-		System.out.println("------------------------------------------------------");
-		System.out.println(sql);
-		System.out.println("------------------------------------------------------");
-
 		return manager.createQuery(sql, ExtraClasse.class).getResultList();
 
 	}

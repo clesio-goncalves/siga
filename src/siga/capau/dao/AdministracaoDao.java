@@ -31,6 +31,11 @@ public class AdministracaoDao {
 		return manager.createQuery("select a from Administracao a where a.siape = :siape", Administracao.class)
 				.setParameter("siape", siape).getResultList();
 	}
+	
+	public Long usuarioAdministracao(Long id) {
+		return manager.createQuery("select count(a) from Administracao a where a.usuario.id = :id", Long.class)
+				.setParameter("id", id).getSingleResult();
+	}
 
 	public Long buscarPerfilIdPelaAdministracaoId(Long id) {
 		return manager.createQuery("select a.usuario.perfil.id from Administracao a where a.id = :id", Long.class)

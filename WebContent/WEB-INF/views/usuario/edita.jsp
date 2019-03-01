@@ -48,12 +48,13 @@
 				id="repetir_senha" MAXLENGTH="50" required>
 		</div>
 
-		<!-- PERMISSÃO -->
+		<!-- PERFIL -->
+		<input type="hidden" name="perfil.id" value="${usuario.perfil.id}" />
 		<div class="form-group">
 			<label for="perfil" class="col-form-label">Perfil<span
 				class="obrigatorio">*</span></label> <select class="custom-select"
 				name="perfil.id" required disabled="disabled">
-				<option value="${usuario.perfil.id}" selected="selected">${usuario.perfil.nome}</option>
+				<option value="" selected="selected">${usuario.perfil.nome}</option>
 			</select>
 		</div>
 

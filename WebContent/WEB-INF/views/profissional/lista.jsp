@@ -71,6 +71,10 @@
 														Deseja realmente excluir o Profissional <br>ID
 														(${profissional.id}) -> ${profissional.nome}?
 													</p>
+													<p>
+														<b>Atenção: Não é recomendado excluir o usuário, <br>
+															Então, desative-o.<b>
+													</p>
 												</div>
 												<div class="modal-footer">
 													<a

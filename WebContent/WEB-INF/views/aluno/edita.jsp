@@ -53,8 +53,9 @@
 		<div class="form-group">
 			<label for="usuario.id" class="col-form-label">Usuário</label>
 			<c:if test="${aluno.usuario != null}">
+				<input type="hidden" name="usuario.id" value="${aluno.usuario.id}" />
 				<select class="custom-select" name="usuario.id" disabled="disabled">
-					<option value="${aluno.usuario.id}" selected>${aluno.usuario.email}</option>
+					<option value="" selected>${aluno.usuario.email}</option>
 				</select>
 			</c:if>
 			<c:if test="${aluno.usuario == null}">

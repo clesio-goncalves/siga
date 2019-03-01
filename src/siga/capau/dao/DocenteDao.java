@@ -45,6 +45,11 @@ public class DocenteDao {
 				Docente.class).setParameter("disciplina_id", disciplina_id).getResultList();
 	}
 
+	public Long usuarioDocente(Long id) {
+		return manager.createQuery("select count(d) from Docente d where d.usuario.id = :id", Long.class)
+				.setParameter("id", id).getSingleResult();
+	}
+
 	public Docente buscaPorId(Long id) {
 		return manager.find(Docente.class, id);
 	}

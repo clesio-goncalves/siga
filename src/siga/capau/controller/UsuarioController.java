@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import siga.capau.dao.AdministracaoDao;
+import siga.capau.dao.AlunoDao;
+import siga.capau.dao.DocenteDao;
+import siga.capau.dao.MonitorDao;
 import siga.capau.dao.PerfilDao;
+import siga.capau.dao.ProfissionalDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Usuario;
 
@@ -40,7 +44,16 @@ public class UsuarioController {
 	AdministracaoDao dao_administracao;
 
 	@Autowired
-	AdministracaoDao dao_coordenador;
+	ProfissionalDao dao_profissional;
+
+	@Autowired
+	MonitorDao dao_monitor;
+
+	@Autowired
+	AlunoDao dao_aluno;
+
+	@Autowired
+	DocenteDao dao_docente;
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
@@ -85,7 +98,9 @@ public class UsuarioController {
 			"ROLE_Coordenação de Disciplina" })
 	public String remove(Usuario usuario, HttpServletResponse response) {
 		if (possuiPermissaoUsuario(usuario.getId())) {
-			dao.remove(usuario.getId());
+			if (usuarioPossuiVinculo(usuario.getId()) == 0) {
+				dao.remove(usuario.getId());
+			}
 			return "redirect:lista";
 		} else {
 			response.setStatus(403);
@@ -250,6 +265,38 @@ public class UsuarioController {
 			return false;
 		default:
 			return false;
+		}
+	}
+
+	private Long usuarioPossuiVinculo(Long id) {
+		this.perfil_id = dao.buscarPerfilIdPeloUsuarioId(id);
+		switch (Integer.parseInt(this.perfil_id.toString())) {
+		case 1:
+			return this.dao_administracao.usuarioAdministracao(id);
+		case 2:
+			return this.dao_administracao.usuarioAdministracao(id);
+		case 3:
+			return this.dao_administracao.usuarioAdministracao(id);
+		case 4:
+			return this.dao_profissional.usuarioProfissional(id);
+		case 5:
+			return this.dao_profissional.usuarioProfissional(id);
+		case 6:
+			return this.dao_profissional.usuarioProfissional(id);
+		case 7:
+			return this.dao_profissional.usuarioProfissional(id);
+		case 8:
+			return this.dao_profissional.usuarioProfissional(id);
+		case 9:
+			return this.dao_docente.usuarioDocente(id);
+		case 10:
+			return this.dao_monitor.usuarioMonitor(id);
+		case 11:
+			return this.dao_aluno.usuarioAluno(id);
+		case 12:
+			return this.dao_profissional.usuarioProfissional(id);
+		default:
+			return (long) 1;
 		}
 	}
 

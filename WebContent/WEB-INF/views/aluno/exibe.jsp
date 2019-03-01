@@ -218,6 +218,10 @@
 							Deseja realmente excluir o aluno <br>ID (${aluno.id}) ->
 							${aluno.nome}?
 						</p>
+						<p>
+							<b>Atenção: Não é recomendado excluir o usuário, <br>
+								Então, desative-o.<b>
+						</p>
 					</div>
 					<div class="modal-footer">
 						<a href="<c:url value="/aluno/remove?id=${aluno.id}" />"

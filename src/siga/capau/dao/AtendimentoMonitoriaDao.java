@@ -126,10 +126,6 @@ public class AtendimentoMonitoriaDao {
 			}
 		}
 
-		System.out.println("------------------------------------------------------");
-		System.out.println(sql);
-		System.out.println("------------------------------------------------------");
-
 		return manager.createQuery(sql, AtendimentoMonitoria.class).getResultList();
 
 	}

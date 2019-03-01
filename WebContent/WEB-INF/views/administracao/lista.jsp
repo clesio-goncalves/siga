@@ -76,6 +76,10 @@
 															Deseja realmente excluir o Servidor <br>ID
 															(${administracao.id}) -> ${administracao.nome}?
 														</p>
+														<p>
+															<b>Atenção: Não é recomendado excluir o usuário, <br>
+																Então, desative-o.<b>
+														</p>
 													</div>
 													<div class="modal-footer">
 														<a
