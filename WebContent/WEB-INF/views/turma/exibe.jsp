@@ -138,6 +138,11 @@
 							Deseja realmente excluir o turma ID <br>(${turma.id}) ->
 							${turma.nome}?
 						</p>
+						<p>
+							<b>Atenção: não é permitido excluir a turma, caso<br>
+								tenha aluno(s) vinculado(s)!
+							</b>
+						</p>
 					</div>
 					<div class="modal-footer">
 						<a href="<c:url value="/turma/remove?id=${turma.id}" />"

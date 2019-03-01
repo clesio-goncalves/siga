@@ -69,7 +69,7 @@ public class TurmaController {
 	public String adiciona(@Valid Turma turma, BindingResult result) {
 		// Altera o nome da turma
 		turma.setNome(dao_curso.buscaNomePorId(turma.getCurso().getId()) + " - " + turma.getAno_ingresso() + "."
-				+ turma.getPeriodo_ingresso());
+				+ turma.getPeriodo_ingresso() + " - " + turma.getTipo_turma());
 
 		if (result.hasErrors()) {
 			return "redirect:nova";
@@ -129,6 +129,7 @@ public class TurmaController {
 		String ingresso[] = nome[1].split("#");
 		this.turma.setAno_ingresso(Integer.parseInt(ingresso[0]));
 		this.turma.setPeriodo_ingresso(Integer.parseInt(ingresso[1]));
+		this.turma.setTipo_turma(nome[2]);
 
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("turma", this.turma);
@@ -142,7 +143,7 @@ public class TurmaController {
 	public String altera(@Valid Turma turma, BindingResult result) {
 		// Altera o nome da turma
 		turma.setNome(dao_curso.buscaNomePorId(turma.getCurso().getId()) + " - " + turma.getAno_ingresso() + "."
-				+ turma.getPeriodo_ingresso());
+				+ turma.getPeriodo_ingresso() + " - " + turma.getTipo_turma());
 
 		this.lista_turma = dao.buscaPorNome(turma.getNome());
 		if (result.hasErrors()) {

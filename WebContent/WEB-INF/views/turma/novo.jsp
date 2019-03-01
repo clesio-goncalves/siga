@@ -20,7 +20,8 @@
 		<div class="form-row">
 			<!-- ANO INGRESSO -->
 			<div class="col-md-6 form-group">
-				<label class="col-form-label" for="ano_ingresso">Ano<span class="obrigatorio">*</span></label>
+				<label class="col-form-label" for="ano_ingresso">Ano<span
+					class="obrigatorio">*</span></label>
 				<div class="form-group">
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
@@ -38,11 +39,26 @@
 			</div>
 
 			<!-- PERIODO-->
-			<div class="col-md-6 form-group">
-				<label for="periodo_ingresso" class="col-form-label">Período<span class="obrigatorio">*</span></label>
-				<select class="custom-select" name="periodo_ingresso" required>
+			<div class="col-md-3 form-group">
+				<label for="periodo_ingresso" class="col-form-label">Período<span
+					class="obrigatorio">*</span></label> <select class="custom-select"
+					name="periodo_ingresso" required>
 					<option value="1">1º Semestre</option>
 					<option value="2">2º Semestre</option>
+				</select>
+			</div>
+
+			<!-- TIPO TURMA -->
+			<div class="col-md-3 form-group">
+				<label for="tipo_turma" class="col-form-label">Tipo<span
+					class="obrigatorio">*</span></label> <select class="custom-select"
+					name="tipo_turma" required>
+					<option value="Única">Única</option>
+					<option value="A">A</option>
+					<option value="B">B</option>
+					<option value="C">C</option>
+					<option value="D">D</option>
+					<option value="E">E</option>
 				</select>
 			</div>
 
@@ -50,7 +66,8 @@
 
 		<!-- CURSO -->
 		<div class="form-group">
-			<label for="curso.id" class="col-form-label">Curso<span class="obrigatorio">*</span></label>
+			<label for="curso.id" class="col-form-label">Curso<span
+				class="obrigatorio">*</span></label>
 			<c:forEach var="curso" items="${cursos}">
 				<div class="custom-control custom-radio">
 					<input type="radio" id="${curso.id}" name="curso.id"
