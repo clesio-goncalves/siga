@@ -27,11 +27,10 @@ public class DocenteDao {
 		return manager.createQuery("select d from Docente d", Docente.class).getResultList();
 	}
 
-	public List<Docente> listaDocentesPorDisciplinaIdTurmaId(Long disciplina_id, Long turma_id) {
+	public List<Docente> listaDocentesPorDisciplinaId(Long disciplina_id) {
 		return manager.createQuery(
-				"select d from Docente d inner join TurmaDisciplinaDocente tdd on tdd.docente.id = d.id where tdd.disciplina.id = :disciplina_id and tdd.turma.id = :turma_id",
-				Docente.class).setParameter("disciplina_id", disciplina_id).setParameter("turma_id", turma_id)
-				.getResultList();
+				"select DISTINCT d from Docente d inner join TurmaDisciplinaDocente tdd on tdd.docente.id = d.id where tdd.disciplina.id = :disciplina_id",
+				Docente.class).setParameter("disciplina_id", disciplina_id).getResultList();
 	}
 
 	public List<Docente> buscaPorSiape(int siape) {
@@ -43,6 +42,11 @@ public class DocenteDao {
 		return manager.createQuery(
 				"select d from Docente d where d.id not in (select tdd.docente.id from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :disciplina_id)",
 				Docente.class).setParameter("disciplina_id", disciplina_id).getResultList();
+	}
+
+	public List<Docente> buscaPorUsuario(Long id) {
+		return manager.createQuery("select d from Docente d where d.usuario.id = :id", Docente.class)
+				.setParameter("id", id).getResultList();
 	}
 
 	public Long usuarioDocente(Long id) {

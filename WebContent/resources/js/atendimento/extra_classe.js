@@ -95,8 +95,7 @@ function alteraDisciplina(contexto){
 		cache : false,
 		data : {
 			contexto : contexto,
-			disciplina_id : $("select[name='disciplina.id'] :selected").val(),
-			turma_id : $("select[name='turma.id'] :selected").val()
+			disciplina_id : $("select[name='disciplina.id'] :selected").val()
 		},
 		beforeSend : function(xhr) {
 			xhr.setRequestHeader(header, token);

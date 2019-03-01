@@ -31,6 +31,11 @@ public class MonitorDao {
 		return manager.createQuery("select m from Monitor m where m.matricula = :matricula", Monitor.class)
 				.setParameter("matricula", matricula).getResultList();
 	}
+	
+	public List<Monitor> buscaPorUsuario(Long id) {
+		return manager.createQuery("select m from Monitor m where m.usuario.id = :id", Monitor.class)
+				.setParameter("id", id).getResultList();
+	}
 
 	public Long usuarioMonitor(Long id) {
 		return manager.createQuery("select count(m) from Monitor m where m.usuario.id = :id", Long.class)

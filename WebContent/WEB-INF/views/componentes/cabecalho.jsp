@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -98,14 +99,16 @@
 					</div></li>
 			</ul>
 			<security:authorize access="isAuthenticated()">
+			<security:authentication property="principal" var="usuario" />
+			<c:set var="perfil" value="${usuario.perfil.nome}" />
+			<c:set var="nome_perfil" value="${fn:replace(perfil, 'ROLE_', '')}" />
 				<ul class="navbar-nav navbar-right">
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-						role="button" aria-haspopup="true" aria-expanded="false"><security:authentication
-								property="principal" var="user" /> ${user.email}</a>
+						role="button" aria-haspopup="true" aria-expanded="false">${nome_perfil}</a>
 						<div class="dropdown-menu" x-placement="bottom-start"
 							style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
-							<a class="dropdown-item" href="#"><span
+							<a class="dropdown-item" href="<c:url value="/perfil/usuario" />"><span
 								class="glyphicon glyphicon-info-sign"></span> Perfil</a> <a
 								class="dropdown-item" href="<c:url value="/logout" />"><span
 								class="glyphicon glyphicon-log-out"></span> Sair</a>

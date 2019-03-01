@@ -65,4 +65,9 @@ public class AlunoDao {
 				.setParameter("id", id).getResultList();
 	}
 
+	public List<Aluno> buscaPorUsuario(Long id) {
+		return manager.createQuery("select a from Aluno a where a.usuario.id = :id", Aluno.class).setParameter("id", id)
+				.getResultList();
+	}
+
 }

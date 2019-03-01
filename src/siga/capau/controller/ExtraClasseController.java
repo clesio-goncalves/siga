@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.modelo.ExtraClasse;
 import siga.capau.modelo.FiltroExtraClasse;
+import siga.capau.modelo.Usuario;
 
 @Transactional
 @Controller
@@ -29,6 +31,7 @@ public class ExtraClasseController {
 
 	private ExtraClasse extra_classe;
 	private FiltroExtraClasse filtra_extra_classe;
+	private Usuario usuario;
 
 	@Autowired
 	ExtraClasseDao dao;
@@ -73,7 +76,15 @@ public class ExtraClasseController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
-		model.addAttribute("extra_classes", dao.lista());
+		this.usuario = retornaUsuarioLogado();
+
+		// Se o usuario logado for docente só exibe os extraclasse dele
+		if (this.usuario.getPerfil().getId() == 9) {
+			model.addAttribute("extra_classes", dao.buscaPeloDocenteId(this.usuario.getId()));
+		} else {
+			model.addAttribute("extra_classes", dao.lista());
+		}
+
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("turmas", dao_turma.lista());
 		model.addAttribute("alunos", dao_aluno.lista());
@@ -112,8 +123,8 @@ public class ExtraClasseController {
 					dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
 			model.addAttribute("disciplinas",
 					dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-			model.addAttribute("docentes", dao_docente.listaDocentesPorDisciplinaIdTurmaId(
-					this.extra_classe.getDisciplina().getId(), this.extra_classe.getAluno().getTurma().getId()));
+			model.addAttribute("docentes",
+					dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
 		} else {
 			model.addAttribute("docentes", dao_docente.lista());
 		}
@@ -182,9 +193,7 @@ public class ExtraClasseController {
 			throws Exception {
 		if (request.getParameter("disciplina_id") != null) {
 			model.addAttribute("docentes",
-					dao_docente.listaDocentesPorDisciplinaIdTurmaId(
-							Long.parseLong(request.getParameter("disciplina_id")),
-							Long.parseLong(request.getParameter("turma_id"))));
+					dao_docente.listaDocentesPorDisciplinaId(Long.parseLong(request.getParameter("disciplina_id"))));
 		}
 		if (request.getParameter("contexto").equals("edita")) {
 			return "extra_classe/import_edita/docente";
@@ -253,6 +262,10 @@ public class ExtraClasseController {
 		} else {
 			return this.filtra_extra_classe.formataData(data_final);
 		}
+	}
+
+	private Usuario retornaUsuarioLogado() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 }

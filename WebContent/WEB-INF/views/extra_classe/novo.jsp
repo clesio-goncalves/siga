@@ -19,6 +19,9 @@
 </div>
 <div class="container">
 	<form action="adiciona" method="POST">
+		<security:authentication property="principal" var="usuario_logado" />
+		<c:if test="${usuario_logado.perfil.id == 9}">
+		</c:if>
 
 		<div class="row">
 			<!-- CURSO-->
