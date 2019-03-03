@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -17,6 +18,9 @@ public class Curso {
 	@NotNull
 	@Column(unique = true)
 	private String nome;
+
+	@Transient
+	private Long qnt_turmas;
 
 	public Long getId() {
 		return id;
@@ -32,6 +36,14 @@ public class Curso {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Long getQnt_turmas() {
+		return qnt_turmas;
+	}
+
+	public void setQnt_turmas(Long qnt_turmas) {
+		this.qnt_turmas = qnt_turmas;
 	}
 
 }

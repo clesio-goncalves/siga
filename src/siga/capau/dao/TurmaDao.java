@@ -43,6 +43,11 @@ public class TurmaDao {
 				Turma.class).setParameter("disciplina_id", disciplina_id).getResultList();
 	}
 
+	public Long buscaQntTurmasPorCursoId(Long curso_id) {
+		return manager.createQuery("select count(t.curso.id) from Turma t where t.curso.id = :curso_id", Long.class)
+				.setParameter("curso_id", curso_id).getSingleResult();
+	}
+
 	public Turma buscaPorId(Long id) {
 		return manager.find(Turma.class, id);
 	}

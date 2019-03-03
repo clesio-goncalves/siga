@@ -22,6 +22,7 @@
 					<tr>
 						<th>ID</th>
 						<th>Nome</th>
+						<th>Qnt Turmas</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
@@ -31,6 +32,7 @@
 						<tr>
 							<td>${curso.id}</td>
 							<td>${curso.nome}</td>
+							<td>${curso.qnt_turmas}</td>
 							<td>
 								<!-- Exibir --> <a
 								href="<c:url value="/curso/exibe?id=${curso.id}"/>"

@@ -19,10 +19,13 @@
 						<th width="30%">ID</th>
 						<td>${curso.id}</td>
 					</tr>
-
 					<tr>
 						<th>Nome</th>
 						<td style="font-weight: bold; color: blue;">${curso.nome}</td>
+					</tr>
+					<tr>
+						<th>Qnt Turmas</th>
+						<td>${qnt_turmas}</td>
 					</tr>
 				</table>
 			</div>
@@ -34,7 +37,7 @@
 						<tr>
 							<th>ID</th>
 							<th>Nome</th>
-							<th>Turma</th>
+							<th>Qnt Alunos</th>
 							<th>Ações</th>
 						</tr>
 					</thead>
@@ -43,8 +46,7 @@
 							<tr>
 								<td>${turma_curso.id}</td>
 								<td>${turma_curso.nome}</td>
-								<td>${turma_curso.nome}</td>
-
+								<td>${turma_curso.qnt_alunos}</td>
 								<td>
 									<!-- Exibir --> <a
 									href="<c:url value="/turma/exibe?id=${turma_curso.id}"/>"
