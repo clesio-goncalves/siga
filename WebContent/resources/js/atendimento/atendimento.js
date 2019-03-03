@@ -48,7 +48,7 @@ function configDatePicker() {
 	$(".maskHorario").timepicker({
 		timeFormat : 'HH:mm',
 		hourMin : 7,
-		hourMax : 22,
+		hourMax : 21,
 		currentText : "Agora",
 		closeText : "Fechar",
 		timeOnlyTitle : "Selecionar Hor&aacute;rio",

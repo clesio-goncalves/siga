@@ -26,7 +26,8 @@
 	</div>
 
 	<div align="center">
-		<security:authorize access="hasRole('ROLE_Administrador')">
+		<security:authorize
+			access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Docente')">
 			<a href="<c:url value="/atendimento/extra-classe/novo" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>

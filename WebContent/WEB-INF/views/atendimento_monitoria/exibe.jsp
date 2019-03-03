@@ -96,7 +96,8 @@
 			</div>
 		</div>
 	</div>
-	<security:authorize access="hasRole('ROLE_Administrador')">
+	<security:authorize
+		access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Monitor')">
 		<div align="center">
 			<!-- Cadastrar -->
 			<a href="<c:url value="/atendimento/monitoria/novo" />"

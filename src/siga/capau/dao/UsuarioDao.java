@@ -80,27 +80,27 @@ public class UsuarioDao implements UserDetailsService {
 	}
 
 	public List<Usuario> listaUsuarioManipulavelPorCoordenadorPedagogia() {
-		return manager.createQuery("select u from Usuario u u.ativo=true and where u.perfil.id IN (9, 10, 11)", Usuario.class)
+		return manager.createQuery("select u from Usuario u where u.perfil.id IN (9, 10, 11)", Usuario.class)
 				.getResultList();
 	}
 	
 	public List<Usuario> listaUsuarioManipulavelPorDiretor() {
-		return manager.createQuery("select u from Usuario u u.ativo=true and where u.perfil.id NOT IN (1, 3)", Usuario.class)
+		return manager.createQuery("select u from Usuario u where u.perfil.id NOT IN (1, 3)", Usuario.class)
 				.getResultList();
 	}
 	
 	public List<Usuario> listaUsuarioAlunoManipulavel() {
-		return manager.createQuery("select u from Usuario u u.ativo=true and where u.perfil.id = 11", Usuario.class)
+		return manager.createQuery("select u from Usuario u where u.perfil.id = 11", Usuario.class)
 				.getResultList();
 	}
 	
 	public List<Usuario> listaUsuarioManipulavelPorDocente() {
-		return manager.createQuery("select u from Usuario u u.ativo=true and where u.perfil.id IN (10, 11)", Usuario.class)
+		return manager.createQuery("select u from Usuario u where u.perfil.id IN (10, 11)", Usuario.class)
 				.getResultList();
 	}
 	
 	public List<Usuario> listaUsuarioManipulavelPorCD() {
-		return manager.createQuery("select u from Usuario u u.ativo=true and where u.perfil.id IN (9, 11)", Usuario.class)
+		return manager.createQuery("select u from Usuario u where u.perfil.id IN (9, 11)", Usuario.class)
 				.getResultList();
 	}
 

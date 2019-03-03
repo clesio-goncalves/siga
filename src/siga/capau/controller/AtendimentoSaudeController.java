@@ -201,7 +201,7 @@ public class AtendimentoSaudeController {
 	private String trataDataInicial(String data_inicial) {
 		// Se a data inicial não estiver sido informada, será atribuido 01/01/2018
 		if (data_inicial.equals("")) {
-			return "2018-01-01";
+			return "2019-01-01";
 		} else {
 			return this.filtra_atendimento_saude.formataData(data_inicial);
 		}

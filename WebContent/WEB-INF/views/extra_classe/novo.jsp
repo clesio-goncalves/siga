@@ -19,11 +19,8 @@
 </div>
 <div class="container">
 	<form action="adiciona" method="POST">
-		<security:authentication property="principal" var="usuario_logado" />
-		<c:if test="${usuario_logado.perfil.id == 9}">
-		</c:if>
-
 		<div class="row">
+
 			<!-- CURSO-->
 			<div class="form-group col-md-6">
 				<label for="curso.id" class="col-form-label">Curso<span
@@ -57,10 +54,12 @@
 			</div>
 
 			<!-- DOCENTE -->
+			<input type="hidden" name="docente_id" value="${docente.id}" />
 			<div class="col-md-6 form-group" id="lista_docentes">
 				<jsp:include page="import_novo/docente.jsp"></jsp:include>
 			</div>
 		</div>
+
 		<div class="row">
 			<!-- Data -->
 			<div class="form-group col-6">
