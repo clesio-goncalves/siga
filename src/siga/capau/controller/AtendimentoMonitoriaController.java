@@ -75,7 +75,7 @@ public class AtendimentoMonitoriaController {
 	public String lista(Model model) {
 		model.addAttribute("atendimento_monitorias", dao.lista());
 		model.addAttribute("cursos", dao_curso.lista());
-		model.addAttribute("turmas", dao_turma.lista());
+		model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("disciplinas", dao_disciplina.lista());
 		model.addAttribute("monitores", dao_monitor.lista());

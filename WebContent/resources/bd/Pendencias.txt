@@ -1,7 +1,5 @@
 Correções necessárias:
 - Filtro na lista de alunos
-- Inserir contagem das turmas no relatório de cursos
-- Inserir boolean no cadastro de turma - para informar q a turma está desativada
 - Vincular o monitor no atendimento de monitoria para não perder o histórico de registros dos atendimentos de monitoria caso o monitor seja
 desvinculado da disciplina
 - Relatorio (PDF) nos módulos de atendimento

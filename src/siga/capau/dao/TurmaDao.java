@@ -23,8 +23,12 @@ public class TurmaDao {
 		manager.merge(turma);
 	}
 
-	public List<Turma> lista() {
+	public List<Turma> listaTurmas() {
 		return manager.createQuery("select t from Turma t", Turma.class).getResultList();
+	}
+
+	public List<Turma> listaTurmasAtivas() {
+		return manager.createQuery("select t from Turma t where t.ativo=true", Turma.class).getResultList();
 	}
 
 	public List<Turma> buscaPorNome(String nome) {
@@ -33,18 +37,20 @@ public class TurmaDao {
 	}
 
 	public List<Turma> listaTurmaPorCursoId(Long id) {
-		return manager.createQuery("select t from Turma as t where t.curso.id = :id", Turma.class)
+		return manager.createQuery("select t from Turma as t where t.ativo=true and t.curso.id = :id", Turma.class)
 				.setParameter("id", id).getResultList();
 	}
 
 	public List<Turma> buscaTurmaSemVinculoEmTurmaDisciplinaDocente(Long disciplina_id) {
 		return manager.createQuery(
-				"select t from Turma t where t.id not in (select tdd.turma.id from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :disciplina_id)",
+				"select t from Turma t where t.ativo=true and t.id not in (select tdd.turma.id from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :disciplina_id)",
 				Turma.class).setParameter("disciplina_id", disciplina_id).getResultList();
 	}
 
 	public Long buscaQntTurmasPorCursoId(Long curso_id) {
-		return manager.createQuery("select count(t.curso.id) from Turma t where t.curso.id = :curso_id", Long.class)
+		return manager
+				.createQuery("select count(t.curso.id) from Turma t where t.ativo=true and t.curso.id = :curso_id",
+						Long.class)
 				.setParameter("curso_id", curso_id).getSingleResult();
 	}
 

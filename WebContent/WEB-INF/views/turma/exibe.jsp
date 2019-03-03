@@ -30,6 +30,15 @@
 							href="<c:url value="/curso/exibe?id=${turma.curso.id}" />">${turma.curso.nome}</a></td>
 					</tr>
 					<tr>
+						<th>Ativa</th>
+						<c:if test="${turma.ativo eq true}">
+							<td>Sim</td>
+						</c:if>
+						<c:if test="${turma.ativo eq false}">
+							<td>Não</td>
+						</c:if>
+					</tr>
+					<tr>
 						<th>Quantidade de Alunos</th>
 						<td>${qnt_alunos}</td>
 					</tr>

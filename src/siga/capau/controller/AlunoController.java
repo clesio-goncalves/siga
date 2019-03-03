@@ -52,7 +52,7 @@ public class AlunoController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String novoAluno(Model model) {
-		this.lista_turma = dao_turma.lista();
+		this.lista_turma = dao_turma.listaTurmasAtivas();
 		if (this.lista_turma.size() == 0) {
 			return "redirect:/turma/nova";
 		}
@@ -112,12 +112,12 @@ public class AlunoController {
 	public String edita(Long id, Model model) {
 
 		// Testa se há turmas cadastrados
-		if (dao_turma.lista().size() == 0) {
+		if (dao_turma.listaTurmasAtivas().size() == 0) {
 			return "redirect:/turma/nova";
 		}
 
 		model.addAttribute("aluno", dao.buscaPorId(id));
-		model.addAttribute("turmas", dao_turma.lista());
+		model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
 		return "aluno/edita";
 

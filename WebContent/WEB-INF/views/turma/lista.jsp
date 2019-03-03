@@ -22,6 +22,7 @@
 					<tr>
 						<th>ID</th>
 						<th>Nome</th>
+						<th>Ativa</th>
 						<th>Qnt Alunos</th>
 						<th>Curso</th>
 						<th>Ações</th>
@@ -33,6 +34,15 @@
 						<tr>
 							<td>${turma.id}</td>
 							<td>${turma.nome}</td>
+							
+							<!-- Ativo -->
+							<c:if test="${turma.ativo eq true}">
+								<td>Sim</td>
+							</c:if>
+							<c:if test="${turma.ativo eq false}">
+								<td>Não</td>
+							</c:if>
+							
 							<td>${turma.qnt_alunos}</td>
 							<td>${turma.curso.nome}</td>
 							<td>

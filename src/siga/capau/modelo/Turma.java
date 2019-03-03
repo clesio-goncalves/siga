@@ -24,6 +24,8 @@ public class Turma {
 	@ManyToOne
 	private Curso curso;
 
+	private boolean ativo;
+
 	@Transient
 	private int ano_ingresso;
 
@@ -58,6 +60,14 @@ public class Turma {
 
 	public void setCurso(Curso curso) {
 		this.curso = curso;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public int getAno_ingresso() {

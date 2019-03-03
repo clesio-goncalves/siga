@@ -86,7 +86,7 @@ public class ExtraClasseController {
 		}
 
 		model.addAttribute("cursos", dao_curso.lista());
-		model.addAttribute("turmas", dao_turma.lista());
+		model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("disciplinas", dao_disciplina.lista());
 		model.addAttribute("docentes", dao_docente.lista());

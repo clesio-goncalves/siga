@@ -63,7 +63,7 @@ public class DisciplinaController {
 			"ROLE_Coordenação de Disciplina" })
 	public String disciplina(Disciplina disciplina, Model model) {
 		this.lista_docente = dao_docente.lista();
-		this.lista_turma = dao_turma.lista();
+		this.lista_turma = dao_turma.listaTurmasAtivas();
 
 		if (this.lista_docente.size() == 0) {
 			return "redirect:/docente/novo";

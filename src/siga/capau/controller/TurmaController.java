@@ -84,7 +84,7 @@ public class TurmaController {
 
 	@RequestMapping("/lista")
 	public String lista(Model model) {
-		this.lista_turma = dao.lista();
+		this.lista_turma = dao.listaTurmas();
 		for (Turma turma : this.lista_turma) {
 			turma.setQnt_alunos(dao_aluno.buscaQntAlunosPorTurmaId(turma.getId()));
 		}

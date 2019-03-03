@@ -83,7 +83,7 @@ public class AtendimentoSaudeController {
 	public String lista(Model model) {
 		model.addAttribute("atendimentos_saude", dao.lista());
 		model.addAttribute("cursos", dao_curso.lista());
-		model.addAttribute("turmas", dao_turma.lista());
+		model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("profissionais", dao_profissional.lista());
 		return "atendimento_saude/lista";

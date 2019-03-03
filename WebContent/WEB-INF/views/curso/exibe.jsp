@@ -24,12 +24,12 @@
 						<td style="font-weight: bold; color: blue;">${curso.nome}</td>
 					</tr>
 					<tr>
-						<th>Qnt Turmas</th>
+						<th>Qnt Turmas Ativas</th>
 						<td>${qnt_turmas}</td>
 					</tr>
 				</table>
 			</div>
-			<legend>TURMAS</legend>
+			<legend>TURMAS ATIVAS</legend>
 			<div class="table-responsive">
 				<table class="table table-hover table-bordered dt-responsive nowrap"
 					style="width: 100%; margin-top: 10px;">
