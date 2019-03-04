@@ -30,6 +30,11 @@ public class ExtraClasseDao {
 		return manager.createQuery("select e from ExtraClasse e", ExtraClasse.class).getResultList();
 	}
 
+	public Long buscaDocenteIdPeloExtraClasseId(Long id) {
+		return manager.createQuery("select e.docente.id from ExtraClasse e where e.id = :id", Long.class)
+				.setParameter("id", id).getSingleResult();
+	}
+
 	public List<ExtraClasse> buscaPeloAlunoId(Long aluno_id) {
 		return manager.createQuery("select e from ExtraClasse e where e.aluno.id = :aluno_id", ExtraClasse.class)
 				.setParameter("aluno_id", aluno_id).getResultList();
@@ -115,7 +120,7 @@ public class ExtraClasseDao {
 		if (!filtro_extra_classe.getConteudo().equals("")) {
 			sql = sql + " and e.conteudo like '%" + filtro_extra_classe.getConteudo() + "%'";
 		}
-
+		
 		return manager.createQuery(sql, ExtraClasse.class).getResultList();
 
 	}

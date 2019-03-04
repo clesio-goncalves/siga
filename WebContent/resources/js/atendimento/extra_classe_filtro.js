@@ -1,5 +1,6 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
+var docente_id = $("input[name='docente_id']").val();
 
 // Reset
 function limpar(){
@@ -19,6 +20,12 @@ function limpar(){
 
 // Filtro
 function filtrar(){
+	var filtro_docente;
+	if (docente_id != "") {
+		filtro_docente = $("input[name='docente']").val();
+	} else { 
+		filtro_docente = $("select[name='docente'] :selected").val();
+	}
 	$.ajax({
 		type : "POST",
 		url : "filtrar",
@@ -32,7 +39,7 @@ function filtrar(){
 			turma : $("select[name='turma'] :selected").val(),
 			disciplina : $("select[name='disciplina'] :selected").val(),
 			aluno : $("select[name='aluno'] :selected").val(),
-			docente : $("select[name='docente'] :selected").val(),
+			docente : filtro_docente,
 			status_atendimento : $("select[name='status_atendimento'] :selected").val(),
 			local : $("input[name='local']").val(),
 			conteudo : $("input[name='conteudo']").val()

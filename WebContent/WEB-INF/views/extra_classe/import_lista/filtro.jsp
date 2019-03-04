@@ -118,16 +118,29 @@
 
 			<div class="col-5">
 				<!-- Docente -->
+				<input type="hidden" name="docente_id" value="${docente.id}" />
 				<div class="form-group">
-					<label for="docente" class="col-form-label">Docente</label> <select
-						name="docente" class="selectpicker show-tick form-control"
-						data-live-search="true" multiple data-max-options="1"
-						title="Selecione um docente"
-						data-live-search-placeholder="Pesquisar">
-						<c:forEach var="docente" items="${docentes}">
-							<option value="${docente.id}">${docente.siape}-${docente.nome}</option>
-						</c:forEach>
-					</select>
+					<label for="docente" class="col-form-label">Docente</label>
+					<c:if test="${docente != null}">
+						<select name="" class="selectpicker show-tick form-control"
+							data-live-search="true" multiple data-max-options="1"
+							title="Selecione um docente"
+							data-live-search-placeholder="Pesquisar" required
+							disabled="disabled">
+							<option value="${docente.id}" selected="selected">${docente.siape}-${docente.nome}</option>
+						</select>
+						<input type="hidden" name="docente" value="${docente.id}" />
+					</c:if>
+					<c:if test="${docente == null}">
+						<select name="docente" class="selectpicker show-tick form-control"
+							data-live-search="true" multiple data-max-options="1"
+							title="Selecione um docente"
+							data-live-search-placeholder="Pesquisar">
+							<c:forEach var="docente" items="${docentes}">
+								<option value="${docente.id}">${docente.siape}-${docente.nome}</option>
+							</c:forEach>
+						</select>
+					</c:if>
 				</div>
 			</div>
 

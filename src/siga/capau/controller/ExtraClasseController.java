@@ -35,6 +35,7 @@ public class ExtraClasseController {
 	private ExtraClasse extra_classe;
 	private FiltroExtraClasse filtra_extra_classe;
 	private Usuario usuario;
+	private Docente docente;
 	private List<Docente> lista_docente;
 
 	@Autowired
@@ -99,71 +100,102 @@ public class ExtraClasseController {
 		// Se o usuario logado for docente só exibe os extraclasse dele
 		if (this.usuario.getPerfil().getId() == 9) {
 			this.lista_docente = dao_docente.buscaPorUsuario(this.usuario.getId());
-			model.addAttribute("extra_classes", dao.buscaPeloDocenteId(this.lista_docente.get(0).getId()));
+			if (this.lista_docente.size() == 1) { // se há docente para o usuário cadastrado
+				model.addAttribute("extra_classes", dao.buscaPeloDocenteId(this.lista_docente.get(0).getId()));
+				model.addAttribute("cursos",
+						dao_curso.listaCursosPorDisciplinasDoDocenteId(this.lista_docente.get(0).getId()));
+				model.addAttribute("turmas",
+						dao_turma.listaTurmasPorDisciplinasDoDocenteId(this.lista_docente.get(0).getId()));
+				model.addAttribute("disciplinas",
+						dao_disciplina.listaDisciplinasDoDocenteId(this.lista_docente.get(0).getId()));
+				model.addAttribute("docente", this.lista_docente.get(0));
+			} else {
+				return "redirect:/docente/novo";
+			}
 		} else {
 			model.addAttribute("extra_classes", dao.lista());
 			model.addAttribute("cursos", dao_curso.lista());
 			model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
-			model.addAttribute("alunos", dao_aluno.lista());
 			model.addAttribute("disciplinas", dao_disciplina.lista());
 			model.addAttribute("docentes", dao_docente.lista());
 		}
+		model.addAttribute("alunos", dao_aluno.lista());
 		return "extra_classe/lista";
 	}
 
 	@RequestMapping("/remove")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
-	public String remove(ExtraClasse extraClasse) {
-		dao.remove(extraClasse.getId());
-		return "redirect:lista";
+	public String remove(ExtraClasse extraClasse, HttpServletResponse response) {
+		if (possuiPermissao(extraClasse.getId())) {
+			dao.remove(extraClasse.getId());
+			return "redirect:lista";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping("/exibe")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
-	public String exibe(Long id, Model model) {
-		model.addAttribute("extra_classe", dao.buscaPorId(id));
-		return "extra_classe/exibe";
+	public String exibe(Long id, Model model, HttpServletResponse response) {
+		if (possuiPermissao(id)) {
+			model.addAttribute("extra_classe", dao.buscaPorId(id));
+			return "extra_classe/exibe";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping("/edita")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
-	public String edita(Long id, Model model) {
-		this.extra_classe = dao.buscaPorId(id);
-		model.addAttribute("extra_classe", this.extra_classe);
-		model.addAttribute("cursos", dao_curso.lista());
-		// Se for informado que houve atendimento
-		if (this.extra_classe.isStatus_atendimento() == false) {
-			model.addAttribute("turmas",
-					dao_turma.listaTurmaPorCursoId(this.extra_classe.getAluno().getTurma().getCurso().getId()));
-			model.addAttribute("alunos",
-					dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-			model.addAttribute("disciplinas",
-					dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-			model.addAttribute("docentes",
-					dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
+	public String edita(Long id, Model model, HttpServletResponse response) {
+		if (possuiPermissao(id)) {
+			this.extra_classe = dao.buscaPorId(id);
+			model.addAttribute("extra_classe", this.extra_classe);
+			model.addAttribute("cursos", dao_curso.lista());
+			// Se for informado que houve atendimento
+			if (this.extra_classe.isStatus_atendimento() == false) {
+				model.addAttribute("turmas",
+						dao_turma.listaTurmaPorCursoId(this.extra_classe.getAluno().getTurma().getCurso().getId()));
+				model.addAttribute("alunos",
+						dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
+				model.addAttribute("disciplinas",
+						dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
+				model.addAttribute("docentes",
+						dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
+			} else {
+				model.addAttribute("docentes", dao_docente.lista());
+			}
+			return "extra_classe/edita";
 		} else {
-			model.addAttribute("docentes", dao_docente.lista());
+			response.setStatus(403);
+			return "redirect:/403";
 		}
-		return "extra_classe/edita";
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
-	public String altera(@Valid ExtraClasse extraClasse, BindingResult result) {
-		if (result.hasErrors()) {
-			return "redirect:edita?id=" + extraClasse.getId();
-		}
+	public String altera(@Valid ExtraClasse extraClasse, BindingResult result, HttpServletResponse response) {
+		if (possuiPermissao(extraClasse.getId())) {
+			if (result.hasErrors()) {
+				return "redirect:edita?id=" + extraClasse.getId();
+			}
 
-		// Se na edição marcar atendimento como não realizado
-		if (extraClasse.isStatus_atendimento()) {
-			extraClasse.setConteudo("-");
-		}
+			// Se na edição marcar atendimento como não realizado
+			if (extraClasse.isStatus_atendimento()) {
+				extraClasse.setConteudo("-");
+			}
 
-		// Altera no banco
-		dao.altera(extraClasse);
-		return "redirect:lista";
+			// Altera no banco
+			dao.altera(extraClasse);
+			return "redirect:lista";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping(value = "/filtro_turma", method = RequestMethod.POST)
@@ -280,7 +312,7 @@ public class ExtraClasseController {
 	}
 
 	private String trataDataInicial(String data_inicial) {
-		// Se a data inicial não estiver sido informada, será atribuido 01/01/2018
+		// Se a data inicial não estiver sido informada, será atribuido 01/01/2019
 		if (data_inicial.equals("")) {
 			return "2019-01-01";
 		} else {
@@ -295,6 +327,21 @@ public class ExtraClasseController {
 			return this.filtra_extra_classe.retornaDataFinal();
 		} else {
 			return this.filtra_extra_classe.formataData(data_final);
+		}
+	}
+
+	private boolean possuiPermissao(Long id) {
+		this.usuario = retornaUsuarioLogado(); // Pego o usuário logado
+		// O docente só realiza a ação se for dono do atendimento
+		if (this.usuario.getPerfil().getId() == 9) {
+			this.docente = dao_docente.buscaPorUsuario(this.usuario.getId()).get(0);
+			if (this.docente.getId() == dao.buscaDocenteIdPeloExtraClasseId(id)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
 		}
 	}
 

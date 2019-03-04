@@ -128,7 +128,7 @@ public class AdministracaoController {
 		this.usuario = retornaUsuarioLogado(); // Pego o usuário logado
 		// O diretor só realiza a ação se o usuário não for igual a administrador ou
 		// diretor
-		if (this.usuario.getPerfil().getNome().equals("ROLE_Diretor")) {
+		if (this.usuario.getPerfil().getId() == 3) {
 			Long perfil_id = dao.buscarPerfilIdPelaAdministracaoId(id);
 			if (perfil_id == 1 || perfil_id == 3) {
 				return false;
