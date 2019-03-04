@@ -155,19 +155,37 @@ public class ExtraClasseController {
 		if (possuiPermissao(id)) {
 			this.extra_classe = dao.buscaPorId(id);
 			model.addAttribute("extra_classe", this.extra_classe);
-			model.addAttribute("cursos", dao_curso.lista());
-			// Se for informado que houve atendimento
-			if (this.extra_classe.isStatus_atendimento() == false) {
-				model.addAttribute("turmas",
-						dao_turma.listaTurmaPorCursoId(this.extra_classe.getAluno().getTurma().getCurso().getId()));
-				model.addAttribute("alunos",
-						dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-				model.addAttribute("disciplinas",
-						dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-				model.addAttribute("docentes",
-						dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
+
+			if (this.usuario.getPerfil().getId() == 9) { // Docente
+				model.addAttribute("docente", this.extra_classe.getDocente());
+				model.addAttribute("cursos",
+						dao_curso.listaCursosPorDisciplinasDoDocenteId(this.extra_classe.getDocente().getId()));
+				// Se for informado que houve atendimento
+				if (this.extra_classe.isStatus_atendimento() == false) {
+					model.addAttribute("turmas",
+							dao_turma.listaTurmaPorCursoIdDisciplinasDoDocenteId(
+									this.extra_classe.getAluno().getTurma().getCurso().getId(),
+									this.extra_classe.getDocente().getId()));
+					model.addAttribute("alunos",
+							dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
+					model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasPorTurmaIdDisciplinasDoDocenteId(
+							this.extra_classe.getAluno().getTurma().getId(), this.extra_classe.getDocente().getId()));
+				}
 			} else {
-				model.addAttribute("docentes", dao_docente.lista());
+				model.addAttribute("cursos", dao_curso.lista());
+				// Se for informado que houve atendimento
+				if (this.extra_classe.isStatus_atendimento() == false) {
+					model.addAttribute("turmas",
+							dao_turma.listaTurmaPorCursoId(this.extra_classe.getAluno().getTurma().getCurso().getId()));
+					model.addAttribute("alunos",
+							dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
+					model.addAttribute("disciplinas",
+							dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
+					model.addAttribute("docentes",
+							dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
+				} else {
+					model.addAttribute("docentes", dao_docente.lista());
+				}
 			}
 			return "extra_classe/edita";
 		} else {

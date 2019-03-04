@@ -59,6 +59,7 @@
 			</div>
 
 			<!-- DOCENTE -->
+			<input type="hidden" name="docente_id" value="${docente.id}" />
 			<div class="col-md-6 form-group" id="lista_docentes">
 				<jsp:include page="import_edita/docente.jsp"></jsp:include>
 			</div>
