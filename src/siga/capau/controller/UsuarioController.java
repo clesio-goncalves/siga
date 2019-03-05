@@ -81,7 +81,7 @@ public class UsuarioController {
 
 		// Adiciona no banco de dados
 		dao.adiciona(usuario);
-		return "redirect:lista";
+		return retornaPaginaCadastro(usuario.getPerfil().getId());
 	}
 
 	@RequestMapping("/lista")
@@ -297,6 +297,37 @@ public class UsuarioController {
 			return this.dao_profissional.usuarioProfissional(id);
 		default:
 			return (long) 1;
+		}
+	}
+
+	private String retornaPaginaCadastro(Long perfil_id) {
+		switch (Integer.parseInt(perfil_id.toString())) {
+		case 1:
+			return "redirect:/administracao/novo";
+		case 2:
+			return "redirect:/administracao/novo";
+		case 3:
+			return "redirect:/administracao/novo";
+		case 4:
+			return "redirect:/profissional/novo";
+		case 5:
+			return "redirect:/profissional/novo";
+		case 6:
+			return "redirect:/profissional/novo";
+		case 7:
+			return "redirect:/profissional/novo";
+		case 8:
+			return "redirect:/profissional/novo";
+		case 9:
+			return "redirect:/docente/novo";
+		case 10:
+			return "redirect:/monitor/novo";
+		case 11:
+			return "redirect:/aluno/novo";
+		case 12:
+			return "redirect:/profissional/novo";
+		default:
+			return "redirect:lista";
 		}
 	}
 

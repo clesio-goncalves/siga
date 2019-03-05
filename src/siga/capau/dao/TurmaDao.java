@@ -59,6 +59,12 @@ public class TurmaDao {
 				Turma.class).setParameter("docente_id", docente_id).getResultList();
 	}
 
+	public List<Turma> listaTurmasPorMonitorId(Long monitor_id) {
+		return manager.createQuery(
+				"select t from Turma t inner join TurmaDisciplinaDocente tdd on tdd.turma.id = t.id where t.ativo=true and tdd.disciplina.monitor.id = :monitor_id",
+				Turma.class).setParameter("monitor_id", monitor_id).getResultList();
+	}
+
 	public List<Turma> buscaTurmaSemVinculoEmTurmaDisciplinaDocente(Long disciplina_id) {
 		return manager.createQuery(
 				"select t from Turma t where t.ativo=true and t.id not in (select tdd.turma.id from TurmaDisciplinaDocente tdd where tdd.disciplina.id = :disciplina_id)",

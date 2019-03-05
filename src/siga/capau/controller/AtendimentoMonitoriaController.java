@@ -93,12 +93,30 @@ public class AtendimentoMonitoriaController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Monitor", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
-		model.addAttribute("atendimento_monitorias", dao.lista());
-		model.addAttribute("cursos", dao_curso.lista());
-		model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
+
+		this.usuario = retornaUsuarioLogado();
+
+		// Se o usuario logado for monitor só exibe os atendimentos dele
+		if (this.usuario.getPerfil().getId() == 10) {
+			this.lista_monitor = dao_monitor.buscaPorUsuario(this.usuario.getId());
+			if (this.lista_monitor.size() == 1) { // se há monitor para o usuário cadastrado
+				model.addAttribute("atendimento_monitorias", dao.buscaPeloMonitorId(this.lista_monitor.get(0).getId()));
+				model.addAttribute("cursos", dao_curso.listaCursosPorMonitorId(this.lista_monitor.get(0).getId()));
+				model.addAttribute("turmas", dao_turma.listaTurmasPorMonitorId(this.lista_monitor.get(0).getId()));
+				model.addAttribute("disciplinas",
+						dao_disciplina.listaDisciplinasPorMonitorId(this.lista_monitor.get(0).getId()));
+				model.addAttribute("monitores", dao_monitor.lista());
+			} else {
+				return "redirect:/monitor/novo";
+			}
+		} else {
+			model.addAttribute("atendimento_monitorias", dao.lista());
+			model.addAttribute("cursos", dao_curso.lista());
+			model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
+			model.addAttribute("disciplinas", dao_disciplina.lista());
+			model.addAttribute("monitores", dao_monitor.lista());
+		}
 		model.addAttribute("alunos", dao_aluno.lista());
-		model.addAttribute("disciplinas", dao_disciplina.lista());
-		model.addAttribute("monitores", dao_monitor.lista());
 		return "atendimento_monitoria/lista";
 	}
 
