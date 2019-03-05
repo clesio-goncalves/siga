@@ -66,40 +66,52 @@
 			</div>
 			<security:authorize
 				access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
-				<legend>ATENDIMENTO DE MONITORIA</legend>
-				<div class="table-responsive">
-					<table
-						class="table table-hover table-bordered dt-responsive nowrap"
-						style="width: 100%; margin-top: 10px;">
-						<thead>
-							<tr>
-								<th>Data</th>
-								<th>Turma</th>
-								<th>Disciplina</th>
-								<th>Aluno</th>
-								<th>Ações</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="atendimento_monitoria"
-								items="${atendimentos_monitoria}">
+				<security:authentication property="principal" var="usuario_logado" />
+				<c:if
+					test="${usuario_logado.perfil.id != 10 or usuario_logado.id == monitor.usuario.id}">
+					<legend>ATENDIMENTO DE MONITORIA</legend>
+					<div class="table-responsive">
+						<table
+							class="table table-hover table-bordered dt-responsive nowrap"
+							style="width: 100%; margin-top: 10px;">
+							<thead>
 								<tr>
-									<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
-									<td>${atendimento_monitoria.aluno.turma.nome}</td>
-									<td>${atendimento_monitoria.disciplina.nome}</td>
-									<td>${atendimento_monitoria.aluno.nome}</td>
-									<td>
-										<!-- Exibir --> <a
-										href="<c:url value="/atendimento/monitoria/exibe?id=${atendimento_monitoria.id}"/>"
-										class="btn btn-info btn-sm" data-tooltip="tooltip"
-										data-placement="bottom" title="Exibir"> <span
-											class="glyphicon glyphicon-search"></span></a>
-									</td>
+									<th>Data</th>
+									<th>Turma</th>
+									<th>Disciplina</th>
+									<th>Aluno</th>
+									<th>Ações</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
+							</thead>
+							<tbody>
+								<c:forEach var="atendimento_monitoria"
+									items="${atendimentos_monitoria}">
+									<tr>
+										<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
+										<c:if test="${atendimento_monitoria.status_atendimento}">
+											<td>-</td>
+											<td>-</td>
+											<td>-</td>
+										</c:if>
+										<c:if
+											test="${atendimento_monitoria.status_atendimento == false}">
+											<td>${atendimento_monitoria.aluno.turma.nome}</td>
+											<td>${atendimento_monitoria.disciplina.nome}</td>
+											<td>${atendimento_monitoria.aluno.nome}</td>
+										</c:if>
+										<td>
+											<!-- Exibir --> <a
+											href="<c:url value="/atendimento/monitoria/exibe?id=${atendimento_monitoria.id}"/>"
+											class="btn btn-info btn-sm" data-tooltip="tooltip"
+											data-placement="bottom" title="Exibir"> <span
+												class="glyphicon glyphicon-search"></span></a>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</c:if>
 			</security:authorize>
 		</div>
 	</div>

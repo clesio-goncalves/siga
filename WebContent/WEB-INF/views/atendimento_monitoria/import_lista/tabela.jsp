@@ -20,12 +20,13 @@
 				<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
 				<c:if test="${atendimento_monitoria.status_atendimento}">
 					<td>-</td>
+					<td>-</td>
 				</c:if>
 				<c:if test="${atendimento_monitoria.status_atendimento ==  false}">
 					<td>${atendimento_monitoria.aluno.nome}</td>
+					<td>${atendimento_monitoria.disciplina.nome}</td>
 				</c:if>
-				<td>${atendimento_monitoria.disciplina.nome}</td>
-				<td>${atendimento_monitoria.disciplina.monitor.nome}</td>
+				<td>${atendimento_monitoria.monitor.nome}</td>
 				<td>
 					<!-- Exibir --> <a
 					href="<c:url value="/atendimento/monitoria/exibe?id=${atendimento_monitoria.id}"/>"

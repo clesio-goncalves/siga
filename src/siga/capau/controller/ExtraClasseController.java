@@ -58,7 +58,7 @@ public class ExtraClasseController {
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
-	public String novoExtraClasse(Model model) {
+	public String novo(Model model) {
 		this.usuario = retornaUsuarioLogado();
 
 		// Caso o usuário seja um docente
@@ -66,14 +66,13 @@ public class ExtraClasseController {
 			this.lista_docente = dao_docente.buscaPorUsuario(this.usuario.getId());
 			if (this.lista_docente.size() == 1) {
 				model.addAttribute("docente", this.lista_docente.get(0));
-				model.addAttribute("cursos",
-						dao_curso.listaCursosPorDisciplinasDoDocenteId(this.lista_docente.get(0).getId()));
-				return "extra_classe/novo";
+				model.addAttribute("cursos", dao_curso.listaCursosPorDocenteId(this.lista_docente.get(0).getId()));
 			} else {
 				return "redirect:/docente/novo";
 			}
+		} else {
+			model.addAttribute("cursos", dao_curso.lista());
 		}
-		model.addAttribute("cursos", dao_curso.lista());
 		return "extra_classe/novo";
 	}
 
@@ -102,12 +101,10 @@ public class ExtraClasseController {
 			this.lista_docente = dao_docente.buscaPorUsuario(this.usuario.getId());
 			if (this.lista_docente.size() == 1) { // se há docente para o usuário cadastrado
 				model.addAttribute("extra_classes", dao.buscaPeloDocenteId(this.lista_docente.get(0).getId()));
-				model.addAttribute("cursos",
-						dao_curso.listaCursosPorDisciplinasDoDocenteId(this.lista_docente.get(0).getId()));
-				model.addAttribute("turmas",
-						dao_turma.listaTurmasPorDisciplinasDoDocenteId(this.lista_docente.get(0).getId()));
+				model.addAttribute("cursos", dao_curso.listaCursosPorDocenteId(this.lista_docente.get(0).getId()));
+				model.addAttribute("turmas", dao_turma.listaTurmasPorDocenteId(this.lista_docente.get(0).getId()));
 				model.addAttribute("disciplinas",
-						dao_disciplina.listaDisciplinasDoDocenteId(this.lista_docente.get(0).getId()));
+						dao_disciplina.listaDisciplinasPorDocenteId(this.lista_docente.get(0).getId()));
 				model.addAttribute("docente", this.lista_docente.get(0));
 			} else {
 				return "redirect:/docente/novo";
@@ -158,17 +155,16 @@ public class ExtraClasseController {
 
 			if (this.usuario.getPerfil().getId() == 9) { // Docente
 				model.addAttribute("docente", this.extra_classe.getDocente());
-				model.addAttribute("cursos",
-						dao_curso.listaCursosPorDisciplinasDoDocenteId(this.extra_classe.getDocente().getId()));
+				model.addAttribute("cursos", dao_curso.listaCursosPorDocenteId(this.extra_classe.getDocente().getId()));
 				// Se for informado que houve atendimento
 				if (this.extra_classe.isStatus_atendimento() == false) {
 					model.addAttribute("turmas",
-							dao_turma.listaTurmaPorCursoIdDisciplinasDoDocenteId(
+							dao_turma.listaTurmaPorCursoIdDocenteId(
 									this.extra_classe.getAluno().getTurma().getCurso().getId(),
 									this.extra_classe.getDocente().getId()));
 					model.addAttribute("alunos",
 							dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-					model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasPorTurmaIdDisciplinasDoDocenteId(
+					model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasPorTurmaIdDocenteId(
 							this.extra_classe.getAluno().getTurma().getId(), this.extra_classe.getDocente().getId()));
 				}
 			} else {
@@ -219,11 +215,9 @@ public class ExtraClasseController {
 	@RequestMapping(value = "/filtro_turma", method = RequestMethod.POST)
 	public String filtrarTurma(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		if (request.getParameter("curso_id") != null) {
-			this.usuario = retornaUsuarioLogado();
 			if (this.usuario.getPerfil().getId() == 9) { // Se Docente
 				model.addAttribute("turmas",
-						dao_turma.listaTurmaPorCursoIdDisciplinasDoDocenteId(
-								Long.parseLong(request.getParameter("curso_id")),
+						dao_turma.listaTurmaPorCursoIdDocenteId(Long.parseLong(request.getParameter("curso_id")),
 								Long.parseLong(request.getParameter("docente_id"))));
 			} else {
 				model.addAttribute("turmas",
@@ -254,10 +248,9 @@ public class ExtraClasseController {
 	public String filtrarDisciplina(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception {
 		if (request.getParameter("turma_id") != null) {
-			this.usuario = retornaUsuarioLogado();
 			if (this.usuario.getPerfil().getId() == 9) { // Se Docente
 				model.addAttribute("disciplinas",
-						dao_disciplina.listaDisciplinasPorTurmaIdDisciplinasDoDocenteId(
+						dao_disciplina.listaDisciplinasPorTurmaIdDocenteId(
 								Long.parseLong(request.getParameter("turma_id")),
 								Long.parseLong(request.getParameter("docente_id"))));
 			} else {

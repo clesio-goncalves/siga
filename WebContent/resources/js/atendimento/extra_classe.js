@@ -80,8 +80,6 @@ function alteraAluno(contexto) {
 			$('#lista_disciplinas').html(response);
 			$('#disciplina').removeAttr('disabled');
 			$('#disciplina').selectpicker('refresh');
-			// $('#docente option').remove();
-			// $('#docente').selectpicker('refresh');
 		},
 		error : function() {
 			alert("Ocorreu um erro");

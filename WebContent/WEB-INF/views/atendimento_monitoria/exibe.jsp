@@ -31,6 +31,10 @@
 							<th>Turma</th>
 							<td>-</td>
 						</tr>
+						<tr>
+							<th>Disciplina</th>
+							<td>-</td>
+						</tr>
 					</c:if>
 					<c:if test="${atendimento_monitoria.status_atendimento == false}">
 						<tr>
@@ -49,16 +53,16 @@
 							<td><a
 								href="<c:url value="/turma/exibe?id=${atendimento_monitoria.aluno.turma.id}" />">${atendimento_monitoria.aluno.turma.nome}</a></td>
 						</tr>
+						<tr>
+							<th>Disciplina</th>
+							<td><a
+								href="<c:url value="/disciplina/exibe?id=${atendimento_monitoria.disciplina.id}" />">${atendimento_monitoria.disciplina.nome}</a></td>
+						</tr>
 					</c:if>
-					<tr>
-						<th>Disciplina</th>
-						<td><a
-							href="<c:url value="/disciplina/exibe?id=${atendimento_monitoria.disciplina.id}" />">${atendimento_monitoria.disciplina.nome}</a></td>
-					</tr>
 					<tr>
 						<th>Monitor</th>
 						<td><a
-							href="<c:url value="/monitor/exibe?id=${atendimento_monitoria.disciplina.monitor.id}" />">${atendimento_monitoria.disciplina.monitor.nome}</a></td>
+							href="<c:url value="/monitor/exibe?id=${atendimento_monitoria.monitor.id}" />">${atendimento_monitoria.monitor.nome}</a></td>
 					</tr>
 					<tr>
 						<th>Data do atendimento</th>

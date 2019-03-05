@@ -34,16 +34,23 @@ public class DisciplinaDao {
 				Disciplina.class).setParameter("turma_id", turma_id).getResultList();
 	}
 
-	public List<Disciplina> listaDisciplinasPorTurmaIdDisciplinasDoDocenteId(Long turma_id, Long docente_id) {
+	public List<Disciplina> listaDisciplinasPorTurmaIdDocenteId(Long turma_id, Long docente_id) {
 		return manager.createQuery(
-				"select DISTINCT d from Disciplina d inner join TurmaDisciplinaDocente tdd on tdd.disciplina.id = d.id where tdd.turma.id = :turma_id and tdd.disciplina.id in (select tddi.disciplina.id from TurmaDisciplinaDocente tddi where tddi.docente.id = :docente_id)",
+				"select d from Disciplina d inner join TurmaDisciplinaDocente tdd on tdd.disciplina.id = d.id where tdd.turma.id = :turma_id and tdd.docente.id = :docente_id",
 				Disciplina.class).setParameter("turma_id", turma_id).setParameter("docente_id", docente_id)
 				.getResultList();
 	}
 
-	public List<Disciplina> listaDisciplinasDoDocenteId(Long docente_id) {
+	public List<Disciplina> listaDisciplinasPorTurmaIdMonitorId(Long turma_id, Long monitor_id) {
 		return manager.createQuery(
-				"select DISTINCT d from Disciplina d inner join TurmaDisciplinaDocente tdd on tdd.disciplina.id = d.id where tdd.disciplina.id in (select tddi.disciplina.id from TurmaDisciplinaDocente tddi where tddi.docente.id = :docente_id)",
+				"select d from Disciplina d inner join TurmaDisciplinaDocente tdd on tdd.disciplina.id = d.id where tdd.turma.id = :turma_id and tdd.disciplina.monitor.id = :monitor_id",
+				Disciplina.class).setParameter("turma_id", turma_id).setParameter("monitor_id", monitor_id)
+				.getResultList();
+	}
+
+	public List<Disciplina> listaDisciplinasPorDocenteId(Long docente_id) {
+		return manager.createQuery(
+				"select d from Disciplina d inner join TurmaDisciplinaDocente tdd on tdd.disciplina.id = d.id where tdd.docente.id = :docente_id",
 				Disciplina.class).setParameter("docente_id", docente_id).getResultList();
 	}
 

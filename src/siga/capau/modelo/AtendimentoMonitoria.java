@@ -49,12 +49,15 @@ public class AtendimentoMonitoria {
 
 	private boolean status_atendimento;
 
-	@NotNull
+	@ManyToOne
+	private Aluno aluno;
+
 	@ManyToOne
 	private Disciplina disciplina;
 
+	@NotNull
 	@ManyToOne
-	private Aluno aluno;
+	private Monitor monitor;
 
 	public Long getId() {
 		return id;
@@ -120,6 +123,14 @@ public class AtendimentoMonitoria {
 		this.status_atendimento = status_atendimento;
 	}
 
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
 	public Disciplina getDisciplina() {
 		return disciplina;
 	}
@@ -128,12 +139,12 @@ public class AtendimentoMonitoria {
 		this.disciplina = disciplina;
 	}
 
-	public Aluno getAluno() {
-		return aluno;
+	public Monitor getMonitor() {
+		return monitor;
 	}
 
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
+	public void setMonitor(Monitor monitor) {
+		this.monitor = monitor;
 	}
 
 }

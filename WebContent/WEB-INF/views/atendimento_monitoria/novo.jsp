@@ -53,7 +53,8 @@
 			</div>
 
 			<!-- MONITOR -->
-			<div class="col-md-6 form-group" id="monitor_disciplina">
+			<input type="hidden" name="monitor_id" value="${monitor.id}" />
+			<div class="col-md-6 form-group" id="lista_monitores">
 				<jsp:include page="import_novo/monitor.jsp"></jsp:include>
 			</div>
 		</div>

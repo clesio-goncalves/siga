@@ -59,7 +59,7 @@
 			</div>
 
 			<!-- MONITOR -->
-			<div class="col-md-6 form-group" id="monitor_disciplina">
+			<div class="col-md-6 form-group" id="lista_monitores">
 				<jsp:include page="import_novo/monitor.jsp"></jsp:include>
 			</div>
 		</div>

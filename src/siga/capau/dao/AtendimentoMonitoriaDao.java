@@ -36,10 +36,8 @@ public class AtendimentoMonitoriaDao {
 	}
 
 	public List<AtendimentoMonitoria> buscaPeloMonitorId(Long monitor_id) {
-		return manager
-				.createQuery("select am from AtendimentoMonitoria am where am.disciplina.monitor.id = :monitor_id",
-						AtendimentoMonitoria.class)
-				.setParameter("monitor_id", monitor_id).getResultList();
+		return manager.createQuery("select am from AtendimentoMonitoria am where am.monitor.id = :monitor_id",
+				AtendimentoMonitoria.class).setParameter("monitor_id", monitor_id).getResultList();
 	}
 
 	public List<AtendimentoMonitoria> buscaPelaDisciplinaId(Long disciplina_id) {
@@ -66,8 +64,8 @@ public class AtendimentoMonitoriaDao {
 
 		// Horario inicial atendimento
 		if (!filtro_atendimento_monitoria.getHorario_inicial_atendimento().equals("")) {
-			sql = sql + " and TIME(am.horario_inicial) >= '" + filtro_atendimento_monitoria.getHorario_inicial_atendimento()
-					+ ":00'";
+			sql = sql + " and TIME(am.horario_inicial) >= '"
+					+ filtro_atendimento_monitoria.getHorario_inicial_atendimento() + ":00'";
 		}
 
 		// Horario final atendimento

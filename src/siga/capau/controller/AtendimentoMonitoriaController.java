@@ -1,5 +1,7 @@
 package siga.capau.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -7,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +24,8 @@ import siga.capau.dao.MonitorDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.modelo.AtendimentoMonitoria;
 import siga.capau.modelo.FiltroAtendimentoMonitoria;
+import siga.capau.modelo.Monitor;
+import siga.capau.modelo.Usuario;
 
 @Transactional
 @Controller
@@ -29,6 +34,8 @@ public class AtendimentoMonitoriaController {
 
 	private AtendimentoMonitoria atendimento_monitoria;
 	private FiltroAtendimentoMonitoria filtra_atendimento_monitoria;
+	private Usuario usuario;
+	private List<Monitor> lista_monitor;
 
 	@Autowired
 	AtendimentoMonitoriaDao dao;
@@ -50,8 +57,20 @@ public class AtendimentoMonitoriaController {
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
-	public String novoAtendimentoMonitoria(Model model) {
-		model.addAttribute("cursos", dao_curso.lista());
+	public String novo(Model model) {
+		this.usuario = retornaUsuarioLogado();
+		// Caso o usuário seja um monitor
+		if (this.usuario.getPerfil().getId() == 10) {
+			this.lista_monitor = dao_monitor.buscaPorUsuario(this.usuario.getId());
+			if (this.lista_monitor.size() == 1) {
+				model.addAttribute("monitor", this.lista_monitor.get(0));
+				model.addAttribute("cursos", dao_curso.listaCursosPorMonitorId(this.lista_monitor.get(0).getId()));
+			} else {
+				return "redirect:/monitor/novo";
+			}
+		} else {
+			model.addAttribute("cursos", dao_curso.lista());
+		}
 		return "atendimento_monitoria/novo";
 	}
 
@@ -60,6 +79,7 @@ public class AtendimentoMonitoriaController {
 	public String adiciona(@Valid AtendimentoMonitoria AtendimentoMonitoria, BindingResult result) {
 
 		if (result.hasErrors()) {
+			System.out.println("Erro ao salvar: " + result);
 			return "redirect:novo";
 		}
 
@@ -70,8 +90,8 @@ public class AtendimentoMonitoriaController {
 
 	@RequestMapping("/lista")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-		"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-		"ROLE_Coordenação de Disciplina" })
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Monitor", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		model.addAttribute("atendimento_monitorias", dao.lista());
 		model.addAttribute("cursos", dao_curso.lista());
@@ -91,8 +111,8 @@ public class AtendimentoMonitoriaController {
 
 	@RequestMapping("/exibe")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-		"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-		"ROLE_Coordenação de Disciplina" })
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Monitor", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("atendimento_monitoria", dao.buscaPorId(id));
 		return "atendimento_monitoria/exibe";
@@ -142,8 +162,14 @@ public class AtendimentoMonitoriaController {
 	@RequestMapping(value = "/filtro_turma", method = RequestMethod.POST)
 	public String filtrarTurma(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		if (request.getParameter("curso_id") != null) {
-			model.addAttribute("turmas",
-					dao_turma.listaTurmaPorCursoId(Long.parseLong(request.getParameter("curso_id"))));
+			if (this.usuario.getPerfil().getId() == 10) { // Se Monitor
+				model.addAttribute("turmas",
+						dao_turma.listaTurmaPorCursoIdMonitorId(Long.parseLong(request.getParameter("curso_id")),
+								Long.parseLong(request.getParameter("monitor_id"))));
+			} else {
+				model.addAttribute("turmas",
+						dao_turma.listaTurmaPorCursoId(Long.parseLong(request.getParameter("curso_id"))));
+			}
 		}
 		if (request.getParameter("contexto").equals("edita")) {
 			return "atendimento_monitoria/import_edita/turma";
@@ -169,19 +195,25 @@ public class AtendimentoMonitoriaController {
 	public String filtrarDisciplina(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception {
 		if (request.getParameter("turma_id") != null) {
-			model.addAttribute("disciplinas", dao_disciplina
-					.listaDisciplinasPorTurmaIdMonitorNotNull(Long.parseLong(request.getParameter("turma_id"))));
+			if (this.usuario.getPerfil().getId() == 10) { // Se Monitor
+				model.addAttribute("disciplinas",
+						dao_disciplina.listaDisciplinasPorTurmaIdMonitorId(
+								Long.parseLong(request.getParameter("turma_id")),
+								Long.parseLong(request.getParameter("monitor_id"))));
+			} else {
+				model.addAttribute("disciplinas", dao_disciplina
+						.listaDisciplinasPorTurmaIdMonitorNotNull(Long.parseLong(request.getParameter("turma_id"))));
+			}
 		}
 		if (request.getParameter("contexto").equals("edita")) {
 			return "atendimento_monitoria/import_edita/disciplina";
 		} else {
 			return "atendimento_monitoria/import_novo/disciplina";
 		}
-
 	}
 
 	@RequestMapping(value = "/filtro_monitor", method = RequestMethod.POST)
-	public String filtrarDocente(HttpServletRequest request, HttpServletResponse response, Model model)
+	public String filtrarMonitor(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception {
 		if (request.getParameter("disciplina_id") != null) {
 			model.addAttribute("monitor_disciplina",
@@ -191,7 +223,7 @@ public class AtendimentoMonitoriaController {
 	}
 
 	@RequestMapping(value = "/lista_disciplinas", method = RequestMethod.POST)
-	public String listaDocente(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+	public String listaMonitor(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasMonitorNotNull());
 		if (request.getParameter("contexto").equals("edita")) {
 			return "atendimento_monitoria/import_edita/disciplina";
@@ -238,7 +270,7 @@ public class AtendimentoMonitoriaController {
 	}
 
 	private String trataDataInicial(String data_inicial) {
-		// Se a data inicial não estiver sido informada, será atribuido 01/01/2018
+		// Se a data inicial não estiver sido informada, será atribuido 01/01/2019
 		if (data_inicial.equals("")) {
 			return "2019-01-01";
 		} else {
@@ -255,4 +287,9 @@ public class AtendimentoMonitoriaController {
 			return this.filtra_atendimento_monitoria.formataData(data_final);
 		}
 	}
+
+	private Usuario retornaUsuarioLogado() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+
 }

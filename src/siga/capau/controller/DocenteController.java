@@ -87,10 +87,10 @@ public class DocenteController {
 
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
+		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPeloDocenteId(id));
 		model.addAttribute("docente", dao.buscaPorId(id));
 		model.addAttribute("disciplinas_turma",
 				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorDocenteId(id));
-		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPeloDocenteId(id));
 		return "docente/exibe";
 	}
 
