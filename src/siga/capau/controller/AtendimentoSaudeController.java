@@ -1,5 +1,7 @@
 package siga.capau.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -31,6 +33,7 @@ import siga.capau.modelo.Usuario;
 public class AtendimentoSaudeController {
 
 	private AtendimentoSaude atendimento_saude;
+	private List<Profissional> lista_profissional;
 	private FiltroAtendimentoSaude filtra_atendimento_saude;
 
 	@Autowired
@@ -54,10 +57,12 @@ public class AtendimentoSaudeController {
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Psicologia", "ROLE_Assistência Social", "ROLE_Enfermagem", "ROLE_Odontologia" })
 	public String novoAtendimentoSaude(Model model) {
-		if (dao_profissional.buscaPorUsuario(retornaUsuarioLogado().getId()).size() == 0) {
+		this.lista_profissional = dao_profissional.buscaPorUsuario(retornaUsuarioLogado().getId());
+		if (this.lista_profissional.size() == 0) {
 			return "redirect:/profissional/novo";
 		}
 		model.addAttribute("cursos", dao_curso.lista());
+		model.addAttribute("profissional", this.lista_profissional.get(0));
 		return "atendimento_saude/novo";
 	}
 
@@ -68,9 +73,6 @@ public class AtendimentoSaudeController {
 			return "redirect:novo";
 		}
 
-		// pega o usuario logado para inserir o atendimento
-		atendimentoSaude.setProfissional(retornaProfissional());
-
 		// Adiciona no banco de dados
 		dao.adiciona(atendimentoSaude);
 		return "redirect:lista";
@@ -78,8 +80,8 @@ public class AtendimentoSaudeController {
 
 	@RequestMapping("/lista")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-		"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-		"ROLE_Coordenação de Disciplina" })
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		model.addAttribute("atendimentos_saude", dao.lista());
 		model.addAttribute("cursos", dao_curso.lista());
@@ -98,8 +100,8 @@ public class AtendimentoSaudeController {
 
 	@RequestMapping("/exibe")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-		"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-		"ROLE_Coordenação de Disciplina" })
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("atendimento_saude", dao.buscaPorId(id));
 		return "atendimento_saude/exibe";
@@ -158,10 +160,6 @@ public class AtendimentoSaudeController {
 
 	private Usuario retornaUsuarioLogado() {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	}
-
-	private Profissional retornaProfissional() {
-		return dao_profissional.buscaPorUsuario(retornaUsuarioLogado().getId()).get(0);
 	}
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)

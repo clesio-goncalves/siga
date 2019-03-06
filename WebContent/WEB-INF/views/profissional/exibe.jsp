@@ -46,6 +46,53 @@
 			<security:authorize
 				access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
 				<c:if
+					test="${profissional.tipo_atendimento eq 'Coordenação de Disciplina'}">
+					<legend>ATENDIMENTOS DE INDISCIPLINA</legend>
+					<div class="table-responsive">
+						<table
+							class="table table-hover table-bordered dt-responsive nowrap"
+							style="width: 100%; margin-top: 10px;">
+							<thead>
+								<tr>
+									<th>Data</th>
+									<th>Horário</th>
+									<th>Aluno</th>
+									<th>Advertido</th>
+									<th>Tipo advertência</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="atendimento_indisciplina"
+									items="${atendimentos_indisciplina}">
+									<tr>
+										<td><fmt:formatDate
+												value="${atendimento_indisciplina.data}" /></td>
+										<td><fmt:formatDate type="time"
+												value="${atendimento_indisciplina.horario}" pattern="HH:mm" />
+										<td>${atendimento_indisciplina.aluno.nome}</td>
+										<c:if test="${atendimento_indisciplina.advertido eq 'Sim'}">
+											<td style="font-weight: bold; color: red;">${atendimento_indisciplina.advertido}</td>
+											<td>${atendimento_indisciplina.tipo_advertencia}</td>
+										</c:if>
+										<c:if test="${atendimento_indisciplina.advertido eq 'Não'}">
+											<td>${atendimento_indisciplina.advertido}</td>
+											<td>-</td>
+										</c:if>
+										<td>
+											<!-- Exibir --> <a
+											href="<c:url value="/atendimento/indisciplina/exibe?id=${atendimento_indisciplina.id}"/>"
+											class="btn btn-info btn-sm" data-tooltip="tooltip"
+											data-placement="bottom" title="Exibir"> <span
+												class="glyphicon glyphicon-search"></span></a>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</c:if>
+				<c:if
 					test="${profissional.tipo_atendimento eq 'Psicologia' or profissional.tipo_atendimento eq 'Assistência Social' or profissional.tipo_atendimento eq 'Enfermagem' or profissional.tipo_atendimento eq 'Odontologia'}">
 					<legend>ATENDIMENTO DE SERVIÇOS DE SAÚDE</legend>
 					<div class="table-responsive">

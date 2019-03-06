@@ -12,13 +12,17 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Atendimento de Serviços de Saúde</h1>
+		<h1>Atendimento de Serviços de Saúde</h1>
 		<p class="lead">Preencha o formulário abaixo com os dados do
 			atendimento do serviço de saúde no sistema.</p>
 	</div>
 </div>
 <div class="container">
 	<form action="adiciona" method="POST">
+
+		<!-- Profissional -->
+		<input type="hidden" name="profissional.id" value="${profissional.id}"
+			required>
 
 		<div class="row">
 			<!-- CURSO-->

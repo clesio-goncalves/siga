@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import siga.capau.dao.AlunoDao;
+import siga.capau.dao.AtendimentoIndisciplinaDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.AtendimentoSaudeDao;
 import siga.capau.dao.ExtraClasseDao;
@@ -46,6 +47,9 @@ public class AlunoController {
 
 	@Autowired
 	AtendimentoSaudeDao dao_atendimento_saude;
+
+	@Autowired
+	AtendimentoIndisciplinaDao dao_atendimento_indisciplina;
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
@@ -102,6 +106,7 @@ public class AlunoController {
 		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPeloAlunoId(id));
 		model.addAttribute("atendimentos_monitoria", dao_atendimento_monitoria.buscaPeloAlunoId(id));
 		model.addAttribute("atendimentos_saude", dao_atendimento_saude.buscaPeloAlunoId(id));
+		model.addAttribute("atendimentos_indisciplina", dao_atendimento_indisciplina.buscaPeloAlunoId(id));
 		return "aluno/exibe";
 	}
 

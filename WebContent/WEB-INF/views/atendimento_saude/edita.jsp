@@ -13,7 +13,7 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-4">Editar Atendimento de Serviços de Saúde</h1>
+		<h1>Editar Atendimento de Serviços de Saúde</h1>
 		<p class="lead">Preencha o formulário abaixo com os dados do
 			atendimento do serviço de saúde para realizar a alteração no sistema.</p>
 	</div>

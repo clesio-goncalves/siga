@@ -73,7 +73,9 @@
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
 						<a class="dropdown-item" href="<c:url value="/atendimento/extra-classe/lista" />">Extraclasse</a>
 						<a class="dropdown-item" href="<c:url value="/atendimento/monitoria/lista" />">Monitoria</a>
+						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="<c:url value="/atendimento/saude/lista" />">Serviços de Saúde</a>
+						<a class="dropdown-item" href="<c:url value="/atendimento/indisciplina/lista" />">Indisciplina</a>
 					</div></li>
 			</security:authorize>
 			

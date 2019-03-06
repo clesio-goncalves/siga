@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import siga.capau.dao.AtendimentoIndisciplinaDao;
 import siga.capau.dao.AtendimentoSaudeDao;
 import siga.capau.dao.ProfissionalDao;
 import siga.capau.dao.UsuarioDao;
@@ -25,7 +26,8 @@ import siga.capau.modelo.Profissional;
 @RequestMapping("/profissional")
 public class ProfissionalController {
 
-	private List<Profissional> profissional;
+	private List<Profissional> lista_profissional;
+	private Profissional profissional;
 
 	@Autowired
 	ProfissionalDao dao;
@@ -35,6 +37,9 @@ public class ProfissionalController {
 
 	@Autowired
 	AtendimentoSaudeDao dao_atendimento_saude;
+
+	@Autowired
+	AtendimentoIndisciplinaDao dao_atendimento_indisciplina;
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Diretor" })
@@ -77,9 +82,17 @@ public class ProfissionalController {
 
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
-		model.addAttribute("profissional", dao.buscaPorId(id));
-		model.addAttribute("atendimentos_saude", dao_atendimento_saude.buscaPeloProfissionalId(id));
-		return "profissional/exibe";
+		this.profissional = dao.buscaPorId(id);
+		model.addAttribute("profissional", this.profissional);
+		if (this.profissional.getTipo_atendimento().equals("Coordenação de Disciplina")) {
+			model.addAttribute("atendimentos_indisciplina", dao_atendimento_indisciplina.buscaPeloProfissionalId(id));
+			return "profissional/exibe";
+		} else if (this.profissional.getTipo_atendimento().equals("Pedagogia")) {
+			return "profissional/exibe";
+		} else {
+			model.addAttribute("atendimentos_saude", dao_atendimento_saude.buscaPeloProfissionalId(id));
+			return "profissional/exibe";
+		}
 	}
 
 	@RequestMapping("/edita")
@@ -92,10 +105,11 @@ public class ProfissionalController {
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	@Secured({ "ROLE_Administrador", "ROLE_Diretor" })
 	public String altera(@Valid Profissional profissional, BindingResult result) {
-		this.profissional = dao.buscaPorSiape(profissional.getSiape());
+		this.lista_profissional = dao.buscaPorSiape(profissional.getSiape());
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + profissional.getId();
-		} else if (this.profissional.size() > 0 && this.profissional.get(0).getId() != profissional.getId()) {
+		} else if (this.lista_profissional.size() > 0
+				&& this.lista_profissional.get(0).getId() != profissional.getId()) {
 			return "redirect:edita?id=" + profissional.getId();
 		}
 

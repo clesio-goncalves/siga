@@ -2,6 +2,7 @@ package siga.capau.modelo;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-public class AtendimentoSaude {
+public class AtendimentoIndisciplina {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,17 +29,16 @@ public class AtendimentoSaude {
 	@NotNull
 	@Temporal(TemporalType.TIME)
 	@DateTimeFormat(pattern = "HH:mm")
-	private Date horario_inicial;
+	private Date horario;
 
 	@NotNull
-	@Temporal(TemporalType.TIME)
-	@DateTimeFormat(pattern = "HH:mm")
-	private Date horario_final;
+	private String advertido;
+
+	private String tipo_advertencia;
 
 	@NotNull
-	private String possui_problema;
-
-	private String esse_problema_dificulta_aprendizado;
+	@Column(columnDefinition = "TEXT")
+	private String descricao;
 
 	@NotNull
 	@ManyToOne
@@ -64,36 +64,36 @@ public class AtendimentoSaude {
 		this.data = data;
 	}
 
-	public Date getHorario_inicial() {
-		return horario_inicial;
+	public Date getHorario() {
+		return horario;
 	}
 
-	public void setHorario_inicial(Date horario_inicial) {
-		this.horario_inicial = horario_inicial;
+	public void setHorario(Date horario) {
+		this.horario = horario;
 	}
 
-	public Date getHorario_final() {
-		return horario_final;
+	public String getAdvertido() {
+		return advertido;
 	}
 
-	public void setHorario_final(Date horario_final) {
-		this.horario_final = horario_final;
+	public void setAdvertido(String advertido) {
+		this.advertido = advertido;
 	}
 
-	public String getPossui_problema() {
-		return possui_problema;
+	public String getTipo_advertencia() {
+		return tipo_advertencia;
 	}
 
-	public void setPossui_problema(String possui_problema) {
-		this.possui_problema = possui_problema;
+	public void setTipo_advertencia(String tipo_advertencia) {
+		this.tipo_advertencia = tipo_advertencia;
 	}
 
-	public String getEsse_problema_dificulta_aprendizado() {
-		return esse_problema_dificulta_aprendizado;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setEsse_problema_dificulta_aprendizado(String esse_problema_dificulta_aprendizado) {
-		this.esse_problema_dificulta_aprendizado = esse_problema_dificulta_aprendizado;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public Aluno getAluno() {
