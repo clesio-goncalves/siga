@@ -17,7 +17,7 @@
 		data-live-search-placeholder="Pesquisar" required>
 		<c:forEach var="docente" items="${docentes}">
 			<option value="${docente.id}"
-				${extra_classe.docente.id == docente.id ? 'selected' : ''}>${docente.nome}</option>
+				${extra_classe.docente.id == docente.id ? 'selected' : ''}>${docente.siape}-${docente.nome}</option>
 		</c:forEach>
 	</select>
 </c:if>

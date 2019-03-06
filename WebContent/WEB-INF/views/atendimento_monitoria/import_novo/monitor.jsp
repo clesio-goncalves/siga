@@ -14,9 +14,10 @@
 	<select name="monitor.id" id="monitor"
 		class="selectpicker show-tick form-control" data-live-search="true"
 		multiple data-max-options="1" title="Selecione um monitor"
-		data-live-search-placeholder="Pesquisar" required disabled="disabled">
-		<c:forEach var="forMonitor" items="${monitors}">
-			<option value="${forMonitor.id}">${forMonitor.matricula}-${forMonitor.nome}</option>
+		data-live-search-placeholder="Pesquisar" required>
+		<c:forEach var="monitor" items="${monitores}">
+			<option value="${monitor.id}"
+				${atendimento_monitoria.monitor.id == monitor.id ? 'selected' : ''}>${monitor.matricula}-${monitor.nome}</option>
 		</c:forEach>
 	</select>
 </c:if>

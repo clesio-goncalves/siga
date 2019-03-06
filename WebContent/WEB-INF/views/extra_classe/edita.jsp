@@ -52,7 +52,6 @@
 		</div>
 
 		<div class="row">
-
 			<!-- DISCIPLINA -->
 			<div class="col-md-6 form-group" id="lista_disciplinas">
 				<jsp:include page="import_edita/disciplina.jsp"></jsp:include>

@@ -19,10 +19,11 @@ function alteraCurso(contexto) {
 		beforeSend : function(xhr) {
 			xhr.setRequestHeader(header, token);
 		},
-		success : function(response) {
+		success : function(response) {			
 			$('#lista_turmas').html(response);
 			$('#turma').removeAttr('disabled');
 			$('#turma').selectpicker('refresh');
+			alert("Docente ID: " + docente_id);
 		},
 		error : function() {
 			alert("Ocorreu um erro");
@@ -101,8 +102,8 @@ function alteraDisciplina(contexto) {
 			cache : false,
 			data : {
 				contexto : contexto,
-				disciplina_id : $("select[name='disciplina.id'] :selected")
-						.val()
+				turma_id : $("select[name='turma.id'] :selected").val(),
+				disciplina_id : $("select[name='disciplina.id'] :selected").val()
 			},
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
@@ -165,12 +166,10 @@ function alteraStatusAtendimento(contexto) {
 		$('#curso').removeAttr('disabled');
 		$('#curso').selectpicker('refresh');
 		$("textarea[name='conteudo']").removeAttr('readonly');
+		$('#docente').attr('disabled', "disabled");
+		$('#docente').selectpicker('refresh');
 		if (contexto == "novo") {
 			$("textarea[name='conteudo']").val("");
-		}
-		if (docente_id == "") {
-			$('#docente').attr('disabled', "disabled");
-			$('#docente').selectpicker('refresh');
 		}
 	}
 }

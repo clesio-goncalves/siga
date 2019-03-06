@@ -37,6 +37,7 @@ public class ExtraClasseController {
 	private Usuario usuario;
 	private Docente docente;
 	private List<Docente> lista_docente;
+	private boolean possui_permissao_editar = false;
 
 	@Autowired
 	ExtraClasseDao dao;
@@ -152,6 +153,7 @@ public class ExtraClasseController {
 		if (possuiPermissao(id)) {
 			this.extra_classe = dao.buscaPorId(id);
 			model.addAttribute("extra_classe", this.extra_classe);
+			this.possui_permissao_editar = true;
 
 			if (this.usuario.getPerfil().getId() == 9) { // Docente
 				model.addAttribute("docente", this.extra_classe.getDocente());
@@ -178,7 +180,8 @@ public class ExtraClasseController {
 					model.addAttribute("disciplinas",
 							dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
 					model.addAttribute("docentes",
-							dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
+							dao_docente.listaDocentesPorDisciplinaIdTurmaId(this.extra_classe.getDisciplina().getId(),
+									this.extra_classe.getAluno().getTurma().getId()));
 				} else {
 					model.addAttribute("docentes", dao_docente.lista());
 				}
@@ -193,7 +196,7 @@ public class ExtraClasseController {
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String altera(@Valid ExtraClasse extraClasse, BindingResult result, HttpServletResponse response) {
-		if (possuiPermissao(extraClasse.getId())) {
+		if (this.possui_permissao_editar) {
 			if (result.hasErrors()) {
 				return "redirect:edita?id=" + extraClasse.getId();
 			}
@@ -205,6 +208,7 @@ public class ExtraClasseController {
 
 			// Altera no banco
 			dao.altera(extraClasse);
+			this.possui_permissao_editar = false;
 			return "redirect:lista";
 		} else {
 			response.setStatus(403);
@@ -268,9 +272,13 @@ public class ExtraClasseController {
 	@RequestMapping(value = "/filtro_docente", method = RequestMethod.POST)
 	public String filtrarDocente(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception {
-		if (request.getParameter("disciplina_id") != null) {
-			model.addAttribute("docentes",
-					dao_docente.listaDocentesPorDisciplinaId(Long.parseLong(request.getParameter("disciplina_id"))));
+		if (request.getParameter("turma_id") != null) {
+			if (request.getParameter("disciplina_id") != null) {
+				model.addAttribute("docentes",
+						dao_docente.listaDocentesPorDisciplinaIdTurmaId(
+								Long.parseLong(request.getParameter("disciplina_id")),
+								Long.parseLong(request.getParameter("turma_id"))));
+			}
 		}
 		if (request.getParameter("contexto").equals("edita")) {
 			return "extra_classe/import_edita/docente";

@@ -30,6 +30,11 @@ public class AtendimentoMonitoriaDao {
 				.getResultList();
 	}
 
+	public Long buscaMonitorIdPeloAtendimentoMonitoriaId(Long id) {
+		return manager.createQuery("select am.monitor.id from AtendimentoMonitoria am where am.id = :id", Long.class)
+				.setParameter("id", id).getSingleResult();
+	}
+
 	public List<AtendimentoMonitoria> buscaPeloAlunoId(Long aluno_id) {
 		return manager.createQuery("select am from AtendimentoMonitoria am where am.aluno.id = :aluno_id",
 				AtendimentoMonitoria.class).setParameter("aluno_id", aluno_id).getResultList();
@@ -123,7 +128,7 @@ public class AtendimentoMonitoriaDao {
 				sql = sql + " and am.status_atendimento = true";
 			}
 		}
-		
+
 		return manager.createQuery(sql, AtendimentoMonitoria.class).getResultList();
 
 	}

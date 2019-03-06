@@ -131,6 +131,8 @@ function alteraStatusAtendimento(contexto) {
 		$('#turma').selectpicker('refresh');
 		$('#aluno').attr('disabled', "disabled");
 		$('#aluno').selectpicker('refresh');
+		$('#disciplina').attr('disabled', "disabled");
+		$('#disciplina').selectpicker('refresh');
 		$("textarea[name='conteudo']").attr('readonly', "readonly");
 		$("textarea[name='dificuldades_diagnosticadas']").attr('readonly',
 				"readonly");
@@ -165,18 +167,16 @@ function alteraStatusAtendimento(contexto) {
 	} else {
 		$('#curso').removeAttr('disabled');
 		$('#curso').selectpicker('refresh');
+		$('#disciplina').attr('disabled', "disabled");
+		$('#disciplina').selectpicker('refresh');
+		$('#monitor').attr('disabled', "disabled");
+		$('#monitor').selectpicker('refresh');
 		$("textarea[name='conteudo']").removeAttr('readonly');
 		$("textarea[name='dificuldades_diagnosticadas']")
 				.removeAttr('readonly');
 		if (contexto == "novo") {
 			$("textarea[name='conteudo']").val("");
 			$("textarea[name='dificuldades_diagnosticadas']").val("");
-		}
-		if (monitor_id == "") {
-			$('#disciplina').attr('disabled', "disabled");
-			$('#disciplina').selectpicker('refresh');
-			$('#monitor').attr('disabled', "disabled");
-			$('#monitor').selectpicker('refresh');
 		}
 	}
 }
