@@ -105,7 +105,7 @@ public class AtendimentoMonitoriaController {
 				model.addAttribute("turmas", dao_turma.listaTurmasPorMonitorId(this.lista_monitor.get(0).getId()));
 				model.addAttribute("disciplinas",
 						dao_disciplina.listaDisciplinasPorMonitorId(this.lista_monitor.get(0).getId()));
-				model.addAttribute("monitores", dao_monitor.lista());
+				model.addAttribute("monitor", this.lista_monitor.get(0));
 			} else {
 				return "redirect:/monitor/novo";
 			}

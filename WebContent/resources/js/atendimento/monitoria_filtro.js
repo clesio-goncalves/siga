@@ -1,5 +1,6 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
+var monitor_id = $("input[name='monitor_id']").val();
 
 // Reset
 function limpar(){
@@ -20,6 +21,12 @@ function limpar(){
 
 // Filtro
 function filtrar(){
+	var filtro_monitor;
+	if (monitor_id != "") {
+		filtro_monitor = $("input[name='monitor']").val();
+	} else { 
+		filtro_monitor = $("select[name='monitor'] :selected").val();
+	}
 	$.ajax({
 		type : "POST",
 		url : "filtrar",
@@ -33,7 +40,7 @@ function filtrar(){
 			turma : $("select[name='turma'] :selected").val(),
 			disciplina : $("select[name='disciplina'] :selected").val(),
 			aluno : $("select[name='aluno'] :selected").val(),
-			monitor : $("select[name='monitor'] :selected").val(),
+			monitor : filtro_monitor,
 			local : $("input[name='local']").val(),
 			conteudo : $("input[name='conteudo']").val(),
 			dificuldades_diagnosticadas : $("input[name='dificuldades_diagnosticadas']").val(),

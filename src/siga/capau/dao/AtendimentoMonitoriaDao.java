@@ -96,7 +96,7 @@ public class AtendimentoMonitoriaDao {
 
 		// monitor
 		if (filtro_atendimento_monitoria.getMonitor() != null) {
-			sql = sql + " and am.disciplina.monitor.id = " + filtro_atendimento_monitoria.getMonitor();
+			sql = sql + " and am.monitor.id = " + filtro_atendimento_monitoria.getMonitor();
 		}
 
 		// local
@@ -123,7 +123,7 @@ public class AtendimentoMonitoriaDao {
 				sql = sql + " and am.status_atendimento = true";
 			}
 		}
-
+		
 		return manager.createQuery(sql, AtendimentoMonitoria.class).getResultList();
 
 	}

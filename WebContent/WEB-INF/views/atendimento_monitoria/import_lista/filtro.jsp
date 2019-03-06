@@ -11,7 +11,7 @@
 		</div>
 	</div>
 
-	<div class="card-body collapse show" id="accordion">
+	<div class="card-body collapse hide" id="accordion">
 
 		<div class="row">
 			<div class="col-3">
@@ -118,16 +118,29 @@
 
 			<div class="col-4">
 				<!-- Monitor -->
+				<input type="hidden" name="monitor_id" value="${monitor.id}" />
 				<div class="form-group">
-					<label for="monitor" class="col-form-label">Monitor</label> <select
-						name="monitor" class="selectpicker show-tick form-control"
-						data-live-search="true" multiple data-max-options="1"
-						title="Selecione um monitor"
-						data-live-search-placeholder="Pesquisar">
-						<c:forEach var="monitor" items="${monitores}">
-							<option value="${monitor.id}">${monitor.matricula}-${monitor.nome}</option>
-						</c:forEach>
-					</select>
+					<label for="monitor" class="col-form-label">Monitor</label>
+					<c:if test="${monitor != null}">
+						<select name="" class="selectpicker show-tick form-control"
+							data-live-search="true" multiple data-max-options="1"
+							title="Selecione um monitor"
+							data-live-search-placeholder="Pesquisar" required
+							disabled="disabled">
+							<option value="${monitor.id}" selected="selected">${monitor.matricula}-${monitor.nome}</option>
+						</select>
+						<input type="hidden" name="monitor" value="${monitor.id}" />
+					</c:if>
+					<c:if test="${monitor == null}">
+						<select name="monitor" class="selectpicker show-tick form-control"
+							data-live-search="true" multiple data-max-options="1"
+							title="Selecione um monitor"
+							data-live-search-placeholder="Pesquisar">
+							<c:forEach var="monitor" items="${monitores}">
+								<option value="${monitor.id}">${monitor.matricula}-${monitor.nome}</option>
+							</c:forEach>
+						</select>
+					</c:if>
 				</div>
 			</div>
 			<div class="col-3">
