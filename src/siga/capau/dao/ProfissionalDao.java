@@ -27,11 +27,22 @@ public class ProfissionalDao {
 		return manager.createQuery("select p from Profissional p", Profissional.class).getResultList();
 	}
 
+	public List<Profissional> buscaSetorSaude() {
+		return manager.createQuery(
+				"select p from Profissional p where p.tipo_atendimento in ('Psicologia', 'Assistência Social', 'Enfermagem', 'Odontologia')",
+				Profissional.class).getResultList();
+	}
+
 	public List<Profissional> buscaCoordenacaoDisciplina() {
 		return manager
 				.createQuery("select p from Profissional p where p.tipo_atendimento like 'Coordenação de Disciplina'",
 						Profissional.class)
 				.getResultList();
+	}
+
+	public List<Profissional> buscaPedagogia() {
+		return manager.createQuery("select p from Profissional p where p.tipo_atendimento like 'Pedagogia'",
+				Profissional.class).getResultList();
 	}
 
 	public List<Profissional> buscaPorSiape(int siape) {

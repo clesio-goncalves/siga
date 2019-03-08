@@ -11,37 +11,30 @@
 			<th>Data</th>
 			<th>Horário</th>
 			<th>Aluno</th>
-			<th>Advertido</th>
-			<th>Tipo advertência</th>
 			<th>Ações</th>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="atendimento_indisciplina"
-			items="${atendimentos_indisciplina}">
+		<c:forEach var="atendimento_pedagogia"
+			items="${atendimentos_pedagogia}">
 			<tr>
-				<td><fmt:formatDate value="${atendimento_indisciplina.data}" /></td>
+				<td><fmt:formatDate value="${atendimento_pedagogia.data}" /></td>
 				<td><fmt:formatDate type="time"
-						value="${atendimento_indisciplina.horario}" pattern="HH:mm" /></td>
-				<td>${atendimento_indisciplina.aluno.nome}</td>
-				<c:if test="${atendimento_indisciplina.advertido eq 'Sim'}">
-					<td style="font-weight: bold; color: red;">${atendimento_indisciplina.advertido}</td>
-					<td>${atendimento_indisciplina.tipo_advertencia}</td>
-				</c:if>
-				<c:if test="${atendimento_indisciplina.advertido eq 'Não'}">
-					<td>${atendimento_indisciplina.advertido}</td>
-					<td>-</td>
-				</c:if>
+						value="${atendimento_pedagogia.horario_inicial}" pattern="HH:mm" /> - <fmt:formatDate
+						type="time" value="${atendimento_pedagogia.horario_final}"
+						pattern="HH:mm" /></td>
+				<td>${atendimento_pedagogia.aluno.nome}</td>
+
 				<td>
 					<!-- Exibir --> <a
-					href="<c:url value="/atendimento/indisciplina/exibe?id=${atendimento_indisciplina.id}"/>"
+					href="<c:url value="/atendimento/pedagogia/exibe?id=${atendimento_pedagogia.id}"/>"
 					class="btn btn-info btn-sm" data-tooltip="tooltip"
 					data-placement="bottom" title="Exibir"> <span
 						class="glyphicon glyphicon-search"></span></a> <security:authorize
-						access="hasRole('ROLE_Coordenação de Disciplina')">
+						access="hasRole('ROLE_Pedagogia')">
 						<!-- Editar -->
 						<a
-							href="<c:url value="/atendimento/indisciplina/edita?id=${atendimento_indisciplina.id}" />"
+							href="<c:url value="/atendimento/pedagogia/edita?id=${atendimento_pedagogia.id}" />"
 							class="btn btn-warning btn-sm" data-tooltip="tooltip"
 							data-placement="bottom" title="Editar"><span
 							class="glyphicon glyphicon-pencil"></span> </a>
@@ -49,15 +42,15 @@
 						<button type="button" class="btn btn-danger btn-sm"
 							data-tooltip="tooltip" data-placement="bottom" title="Excluir"
 							data-toggle="modal"
-							data-target="#modal${atendimento_indisciplina.id}">
+							data-target="#modal${atendimento_pedagogia.id}">
 							<span class="glyphicon glyphicon-trash"></span>
 						</button>
-						<div class="modal fade" id="modal${atendimento_indisciplina.id}">
+						<div class="modal fade" id="modal${atendimento_pedagogia.id}">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title">Exclusão de Atendimento de
-											Indisciplina</h5>
+										<h5 class="modal-title">Exclusão de Atendimento da
+											Pedagogia</h5>
 										<button type="button" class="close" data-dismiss="modal"
 											aria-label="Close">
 											<span aria-hidden="true">&times;</span>
@@ -65,14 +58,14 @@
 									</div>
 									<div class="modal-body">
 										<p>
-											Deseja realmente excluir a Ocorrência de Indisciplina <br>ID
-											(${atendimento_indisciplina.id}) - Aluno:
-											${atendimento_indisciplina.aluno.nome}?
+											Deseja realmente excluir o Atendimento da Pedagogia <br>ID
+											(${atendimento_pedagogia.id}) - Aluno:
+											${atendimento_pedagogia.aluno.nome}?
 										</p>
 									</div>
 									<div class="modal-footer">
 										<a
-											href="<c:url value="/atendimento/indisciplina/remove?id=${atendimento_indisciplina.id}" />"
+											href="<c:url value="/atendimento/pedagogia/remove?id=${atendimento_pedagogia.id}" />"
 											class="btn btn-danger"><span
 											class="glyphicon glyphicon-trash"></span> Excluir</a>
 										<button type="button" class="btn btn-secondary"
@@ -89,7 +82,7 @@
 		</c:forEach>
 	</tbody>
 	<tr style="background-color: #fff; font-weight: bold;">
-		<td colspan="6" align="center">Total de Ocorrências:
-			${fn:length(atendimentos_indisciplina)}</td>
+		<td colspan="4" align="center">Total de Atendimentos:
+			${fn:length(atendimentos_pedagogia)}</td>
 	</tr>
 </table>

@@ -4,8 +4,9 @@
 <select name="aluno.id" id="aluno"
 	class="selectpicker show-tick form-control" data-live-search="true"
 	multiple data-max-options="1" title="Selecione um aluno"
-	data-live-search-placeholder="Pesquisar" required disabled="disabled">
+	data-live-search-placeholder="Pesquisar" required>
 	<c:forEach var="aluno" items="${alunos}">
-		<option value="${aluno.id}">${aluno.nome}</option>
+		<option value="${aluno.id}"
+			${atendimento_pedagogia.aluno.id == aluno.id ? 'selected' : ''}>${aluno.nome}</option>
 	</c:forEach>
 </select>
