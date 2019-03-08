@@ -1,6 +1,5 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
-var monitor_id = $("input[name='monitor_id']").val();
 
 // Reset
 function limpar(){
@@ -10,23 +9,15 @@ function limpar(){
 	$("input[name='horario_final_atendimento']").val(""),
 	$("select[name='curso']").val("").selectpicker("refresh"),
 	$("select[name='turma']").val("").selectpicker("refresh"),
-	$("select[name='disciplina']").val("").selectpicker("refresh"),
+	$("select[name='assunto']").val(""),
 	$("select[name='aluno']").val("").selectpicker("refresh"),
-	$("select[name='monitor']").val("").selectpicker("refresh"),
-	$("input[name='local']").val(""),
-	$("input[name='conteudo']").val(""),
-	$("input[name='dificuldades_diagnosticadas']").val(""),
-	$("select[name='status_atendimento']").val("")
+	$("select[name='profissional']").val("").selectpicker("refresh"),
+	$("input[name='exposicao_motivos']").val(""),
+	$("input[name='encaminhamento']").val("")
 }
 
 // Filtro
 function filtrar(){
-	var filtro_monitor;
-	if (monitor_id != "") {
-		filtro_monitor = $("input[name='monitor']").val();
-	} else { 
-		filtro_monitor = $("select[name='monitor'] :selected").val();
-	}
 	$.ajax({
 		type : "POST",
 		url : "filtrar",
@@ -38,13 +29,11 @@ function filtrar(){
 			horario_final_atendimento : $("input[name='horario_final_atendimento']").val(),
 			curso : $("select[name='curso'] :selected").val(),
 			turma : $("select[name='turma'] :selected").val(),
-			disciplina : $("select[name='disciplina'] :selected").val(),
+			assunto : $("select[name='assunto'] :selected").val(),
 			aluno : $("select[name='aluno'] :selected").val(),
-			monitor : filtro_monitor,
-			local : $("input[name='local']").val(),
-			conteudo : $("input[name='conteudo']").val(),
-			dificuldades_diagnosticadas : $("input[name='dificuldades_diagnosticadas']").val(),
-			status_atendimento : $("select[name='status_atendimento'] :selected").val()
+			profissional : $("select[name='profissional'] :selected").val(),
+			exposicao_motivos : $("input[name='exposicao_motivos']").val(),
+			encaminhamento : $("input[name='encaminhamento']").val()
 		},
 		beforeSend: function(xhr) {
             xhr.setRequestHeader(header, token);

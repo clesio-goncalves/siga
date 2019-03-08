@@ -77,28 +77,19 @@
 				</div>
 			</div>
 
-			<div class="col-2">
-				<!-- Advertido -->
+			<div class="col-4">
+				<!-- Assunto -->
 				<div class="form-group">
-					<label for="advertido" class="col-form-label">Advertido? </label> <select
-						class="custom-select" name="advertido">
-						<option value="">Todos</option>
-						<option value="Sim">Sim</option>
-						<option value="Não">Não</option>
-					</select>
-				</div>
-			</div>
-
-			<div class="col-2">
-				<!-- Tipo advertência -->
-				<div class="form-group">
-					<label for="tipo_advertencia" class="col-form-label">Tipo
-						Advertência </label> <select class="custom-select" name="tipo_advertencia"
-						disabled="disabled">
+					<label for="assunto" class="col-form-label">Assunto </label> <select
+						class="custom-select" name="assunto">
 						<option value="" selected="selected">Todos</option>
-						<option value="Oral">Oral</option>
-						<option value="Escrita">Escrita</option>
-						<option value="Suspensão">Suspensão</option>
+						<option value="dificuldades_ensino_aprendizagem">Dificuldades
+							de ensino/aprendizagem</option>
+						<option value="ausencia_professor">Ausência de professor</option>
+						<option value="relacao_professor_aluno">Relação
+							professor/aluno</option>
+						<option value="indisciplina">Indisciplina</option>
+						<option value="outros">Outros</option>
 					</select>
 				</div>
 			</div>
@@ -135,11 +126,21 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-8">
-				<!-- Descrição -->
+			<div class="col-4">
+				<!-- Exposição dos motivos -->
 				<div class="form-group">
-					<label for="descricao" class="col-form-label">Descrição</label> <input
-						type="text" class="form-control" name="descricao" MAXLENGTH="255">
+					<label for="exposicao_motivos" class="col-form-label">Exposição
+						dos motivos</label> <input type="text" class="form-control"
+						name="exposicao_motivos" MAXLENGTH="255">
+				</div>
+			</div>
+
+			<div class="col-4">
+				<!-- Encaminhamento -->
+				<div class="form-group">
+					<label for="encaminhamento" class="col-form-label">Encaminhamento</label>
+					<input type="text" class="form-control" name="encaminhamento"
+						MAXLENGTH="255">
 				</div>
 			</div>
 

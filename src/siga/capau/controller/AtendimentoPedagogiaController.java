@@ -23,6 +23,7 @@ import siga.capau.dao.PerfilDao;
 import siga.capau.dao.ProfissionalDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.modelo.AtendimentoPedagogia;
+import siga.capau.modelo.FiltroAtendimentoPedagogia;
 import siga.capau.modelo.Profissional;
 import siga.capau.modelo.Usuario;
 
@@ -33,7 +34,7 @@ public class AtendimentoPedagogiaController {
 
 	private AtendimentoPedagogia atendimento_pedagogia;
 	private List<Profissional> lista_profissional;
-	// private FiltroAtendimentoPedagogia filtra_atendimento_pedagogia;
+	private FiltroAtendimentoPedagogia filtra_atendimento_pedagogia;
 
 	@Autowired
 	AtendimentoPedagogiaDao dao;
@@ -167,57 +168,57 @@ public class AtendimentoPedagogiaController {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
-//	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
-//	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
-//		model.addAttribute("atendimentos_pedagogia", dao.filtraAtendimentoPedagogia(trataParametrosRequest(request)));
-//		return "atendimento_pedagogia/import_lista/tabela";
-//	}
-//
-//	private FiltroAtendimentoPedagogia trataParametrosRequest(HttpServletRequest request) {
-//		this.filtra_atendimento_pedagogia = new FiltroAtendimentoPedagogia();
-//		this.filtra_atendimento_pedagogia.setData_inicial_atendimento(request.getParameter("data_inicial_atendimento"));
-//		this.filtra_atendimento_pedagogia.setData_final_atendimento(request.getParameter("data_final_atendimento"));
-//		this.filtra_atendimento_pedagogia
-//				.setHorario_inicial_atendimento(request.getParameter("horario_inicial_atendimento"));
-//		this.filtra_atendimento_pedagogia.setHorario_final_atendimento(request.getParameter("horario_final_atendimento"));
-//		this.filtra_atendimento_pedagogia.setCurso(request.getParameter("curso"));
-//		this.filtra_atendimento_pedagogia.setTurma(request.getParameter("turma"));
-//		this.filtra_atendimento_pedagogia.setTipo_atendimento(request.getParameter("tipo_atendimento"));
-//		this.filtra_atendimento_pedagogia.setAluno(request.getParameter("aluno"));
-//		this.filtra_atendimento_pedagogia.setProfissional(request.getParameter("profissional"));
-//		this.filtra_atendimento_pedagogia.setPossui_problema(request.getParameter("possui_problema"));
-//		this.filtra_atendimento_pedagogia
-//				.setEsse_problema_dificulta_aprendizado(request.getParameter("esse_problema_dificulta_aprendizado"));
-//
-//		trataDatas();
-//
-//		return this.filtra_atendimento_pedagogia;
-//	}
-//
-//	private void trataDatas() {
-//		this.filtra_atendimento_pedagogia.setData_inicial_atendimento(
-//				trataDataInicial(this.filtra_atendimento_pedagogia.getData_inicial_atendimento()));
-//		this.filtra_atendimento_pedagogia
-//				.setData_final_atendimento(trataDataFinal(this.filtra_atendimento_pedagogia.getData_final_atendimento()));
-//	}
-//
-//	private String trataDataInicial(String data_inicial) {
-//		// Se a data inicial não estiver sido informada, será atribuido 01/01/2018
-//		if (data_inicial.equals("")) {
-//			return "2019-01-01";
-//		} else {
-//			return this.filtra_atendimento_pedagogia.formataData(data_inicial);
-//		}
-//	}
-//
-//	private String trataDataFinal(String data_final) {
-//		// Se a data final não estiver sido informada, sera atribuido a data atual do
-//		// servidor
-//		if (data_final.equals("")) {
-//			return this.filtra_atendimento_pedagogia.retornaDataFinal();
-//		} else {
-//			return this.filtra_atendimento_pedagogia.formataData(data_final);
-//		}
-//	}
+	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
+	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
+		model.addAttribute("atendimentos_pedagogia", dao.filtraAtendimentoPedagogia(trataParametrosRequest(request)));
+		return "atendimento_pedagogia/import_lista/tabela";
+	}
+
+	private FiltroAtendimentoPedagogia trataParametrosRequest(HttpServletRequest request) {
+		this.filtra_atendimento_pedagogia = new FiltroAtendimentoPedagogia();
+		this.filtra_atendimento_pedagogia.setData_inicial_atendimento(request.getParameter("data_inicial_atendimento"));
+		this.filtra_atendimento_pedagogia.setData_final_atendimento(request.getParameter("data_final_atendimento"));
+		this.filtra_atendimento_pedagogia
+				.setHorario_inicial_atendimento(request.getParameter("horario_inicial_atendimento"));
+		this.filtra_atendimento_pedagogia
+				.setHorario_final_atendimento(request.getParameter("horario_final_atendimento"));
+		this.filtra_atendimento_pedagogia.setCurso(request.getParameter("curso"));
+		this.filtra_atendimento_pedagogia.setTurma(request.getParameter("turma"));
+		this.filtra_atendimento_pedagogia.setAssunto(request.getParameter("assunto"));
+		this.filtra_atendimento_pedagogia.setAluno(request.getParameter("aluno"));
+		this.filtra_atendimento_pedagogia.setProfissional(request.getParameter("profissional"));
+		this.filtra_atendimento_pedagogia.setExposicao_motivos(request.getParameter("exposicao_motivos"));
+		this.filtra_atendimento_pedagogia.setEncaminhamento(request.getParameter("encaminhamento"));
+
+		trataDatas();
+
+		return this.filtra_atendimento_pedagogia;
+	}
+
+	private void trataDatas() {
+		this.filtra_atendimento_pedagogia.setData_inicial_atendimento(
+				trataDataInicial(this.filtra_atendimento_pedagogia.getData_inicial_atendimento()));
+		this.filtra_atendimento_pedagogia.setData_final_atendimento(
+				trataDataFinal(this.filtra_atendimento_pedagogia.getData_final_atendimento()));
+	}
+
+	private String trataDataInicial(String data_inicial) {
+		// Se a data inicial não estiver sido informada, será atribuido 01/01/2019
+		if (data_inicial.equals("")) {
+			return "2019-01-01";
+		} else {
+			return this.filtra_atendimento_pedagogia.formataData(data_inicial);
+		}
+	}
+
+	private String trataDataFinal(String data_final) {
+		// Se a data final não estiver sido informada, sera atribuido a data atual do
+		// servidor
+		if (data_final.equals("")) {
+			return this.filtra_atendimento_pedagogia.retornaDataFinal();
+		} else {
+			return this.filtra_atendimento_pedagogia.formataData(data_final);
+		}
+	}
 
 }
