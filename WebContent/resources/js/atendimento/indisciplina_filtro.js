@@ -9,11 +9,11 @@ function limpar(){
 	$("input[name='horario_final_atendimento']").val(""),
 	$("select[name='curso']").val("").selectpicker("refresh"),
 	$("select[name='turma']").val("").selectpicker("refresh"),
-	$("select[name='tipo_atendimento']").val(""),
+	$("select[name='advertido']").val(""),
+	$("select[name='tipo_advertencia']").val(""),
 	$("select[name='aluno']").val("").selectpicker("refresh"),
 	$("select[name='profissional']").val("").selectpicker("refresh"),
-	$("select[name='possui_problema']").val(""),
-	$("select[name='esse_problema_dificulta_aprendizado']").val("")
+	$("input[name='descricao']").val("")
 }
 
 // Filtro
@@ -29,11 +29,11 @@ function filtrar(){
 			horario_final_atendimento : $("input[name='horario_final_atendimento']").val(),
 			curso : $("select[name='curso'] :selected").val(),
 			turma : $("select[name='turma'] :selected").val(),
-			tipo_atendimento : $("select[name='tipo_atendimento'] :selected").val(),
+			advertido : $("select[name='advertido'] :selected").val(),
+			tipo_advertencia : $("select[name='tipo_advertencia'] :selected").val(),
 			aluno : $("select[name='aluno'] :selected").val(),
 			profissional : $("select[name='profissional'] :selected").val(),
-			possui_problema : $("select[name='possui_problema'] :selected").val(),
-			esse_problema_dificulta_aprendizado : $("select[name='esse_problema_dificulta_aprendizado'] :selected").val()
+			descricao : $("input[name='descricao']").val()
 		},
 		beforeSend: function(xhr) {
             xhr.setRequestHeader(header, token);
@@ -47,3 +47,40 @@ function filtrar(){
 		}
 	});
 }
+
+/**
+ * Busca as turmas com base no curso selecionado
+ * 
+ * @returns {undefined}
+ */
+function alteraCurso() {
+	$.ajax({
+		type : "POST",
+		url : "filtro_turma_lista_atendimento_indisciplina",
+		cache : false,
+		data : {
+			curso : $("select[name='curso'] :selected").val()
+		},
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		success : function(response) {
+			$('#lista_turmas').html(response);
+			$('#turma').removeAttr('disabled');
+			$('#turma').selectpicker('refresh');
+		},
+		error : function() {
+			alert("Ocorreu um erro");
+		}
+	});
+}
+
+$(document).ready(function() {
+	$('select[name=advertido]').change(function() {
+		if (this.value == 'Sim') {
+			$("select[name='tipo_advertencia']").removeAttr('disabled');
+		} else {
+			$("select[name='tipo_advertencia']").attr('disabled', "disabled");
+		}
+	});
+});

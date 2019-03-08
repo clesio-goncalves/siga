@@ -62,7 +62,7 @@
 						name="curso" class="selectpicker show-tick form-control"
 						data-live-search="true" multiple data-max-options="1"
 						title="Selecione um curso"
-						data-live-search-placeholder="Pesquisar">
+						data-live-search-placeholder="Pesquisar" onchange="alteraCurso()">
 						<c:forEach var="curso" items="${cursos}">
 							<option value="${curso.id}">${curso.nome}</option>
 						</c:forEach>
@@ -70,31 +70,35 @@
 				</div>
 			</div>
 
+			<!-- Turma -->
 			<div class="col-4">
-				<!-- Turma -->
+				<div class="form-group" id="lista_turmas">
+					<jsp:include page="import_filtro/turma.jsp"></jsp:include>
+				</div>
+			</div>
+
+			<div class="col-2">
+				<!-- Advertido -->
 				<div class="form-group">
-					<label for="turma" class="col-form-label">Turma</label> <select
-						name="turma" class="selectpicker show-tick form-control"
-						data-live-search="true" multiple data-max-options="1"
-						title="Selecione uma turma"
-						data-live-search-placeholder="Pesquisar">
-						<c:forEach var="turma" items="${turmas}">
-							<option value="${turma.id}">${turma.nome}</option>
-						</c:forEach>
+					<label for="advertido" class="col-form-label">Advertido? </label> <select
+						class="custom-select" name="advertido">
+						<option value="">Todos</option>
+						<option value="Sim">Sim</option>
+						<option value="Não">Não</option>
 					</select>
 				</div>
 			</div>
-			<div class="col-4">
-				<!-- Tipo de Atendimento -->
+
+			<div class="col-2">
+				<!-- Tipo advertência -->
 				<div class="form-group">
-					<label for="tipo_atendimento" class="col-form-label">Tipo
-						de Atendimento</label> <select class="custom-select"
-						name="tipo_atendimento" required>
+					<label for="tipo_advertencia" class="col-form-label">Tipo
+						Advertência </label> <select class="custom-select" name="tipo_advertencia"
+						disabled="disabled">
 						<option value="" selected="selected">Todos</option>
-						<option value="Psicologia">Psicologia</option>
-						<option value="Assistência Social">Assistência Social</option>
-						<option value="Enfermagem">Enfermagem</option>
-						<option value="Odontologia">Odontologia</option>
+						<option value="Oral">Oral</option>
+						<option value="Escrita">Escrita</option>
+						<option value="Suspensão">Suspensão</option>
 					</select>
 				</div>
 			</div>
@@ -131,31 +135,14 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-4">
-				<!-- Possui alguma observação? -->
+			<div class="col-8">
+				<!-- Descrição -->
 				<div class="form-group">
-					<label for="possui_problema" class="col-form-label">Possui
-						alguma observação?</label> <select class="custom-select"
-						name="possui_problema" required>
-						<option value="" selected="selected">Todos</option>
-						<option value="Sim">Sim</option>
-						<option value="Não">Não</option>
-					</select>
+					<label for="descricao" class="col-form-label">Descrição</label> <input
+						type="text" class="form-control" name="descricao" MAXLENGTH="255">
 				</div>
 			</div>
-			<div class="col-4">
-				<!-- esse_problema_dificulta_aprendizado -->
-				<div class="form-group">
-					<label for="esse_problema_dificulta_aprendizado"
-						class="col-form-label">Essa observação dificulta o
-						aprendizado?</label> <select class="custom-select"
-						name="esse_problema_dificulta_aprendizado" required>
-						<option value="" selected="selected">Todos</option>
-						<option value="Sim">Sim</option>
-						<option value="Não">Não</option>
-					</select>
-				</div>
-			</div>
+
 			<div class="col-4">
 				<div class="form-group" align="right">
 					<br>

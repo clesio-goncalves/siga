@@ -27,6 +27,13 @@ public class ProfissionalDao {
 		return manager.createQuery("select p from Profissional p", Profissional.class).getResultList();
 	}
 
+	public List<Profissional> buscaCoordenacaoDisciplina() {
+		return manager
+				.createQuery("select p from Profissional p where p.tipo_atendimento like 'Coordenação de Disciplina'",
+						Profissional.class)
+				.getResultList();
+	}
+
 	public List<Profissional> buscaPorSiape(int siape) {
 		return manager.createQuery("select p from Profissional p where p.siape = :siape", Profissional.class)
 				.setParameter("siape", siape).getResultList();

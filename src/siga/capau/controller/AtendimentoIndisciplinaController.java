@@ -23,6 +23,7 @@ import siga.capau.dao.PerfilDao;
 import siga.capau.dao.ProfissionalDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.modelo.AtendimentoIndisciplina;
+import siga.capau.modelo.FiltroAtendimentoIndisciplina;
 import siga.capau.modelo.Profissional;
 import siga.capau.modelo.Usuario;
 
@@ -33,7 +34,7 @@ public class AtendimentoIndisciplinaController {
 
 	private AtendimentoIndisciplina atendimento_indisciplina;
 	private List<Profissional> lista_profissional;
-	// private FiltroAtendimentoIndisciplina filtra_atendimento_indisciplina;
+	private FiltroAtendimentoIndisciplina filtra_atendimento_indisciplina;
 
 	@Autowired
 	AtendimentoIndisciplinaDao dao;
@@ -84,9 +85,8 @@ public class AtendimentoIndisciplinaController {
 	public String lista(Model model) {
 		model.addAttribute("atendimentos_indisciplina", dao.lista());
 		model.addAttribute("cursos", dao_curso.lista());
-		model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
 		model.addAttribute("alunos", dao_aluno.lista());
-		model.addAttribute("profissionais", dao_profissional.lista());
+		model.addAttribute("profissionais", dao_profissional.buscaCoordenacaoDisciplina());
 		return "atendimento_indisciplina/lista";
 	}
 
@@ -144,6 +144,15 @@ public class AtendimentoIndisciplinaController {
 		}
 	}
 
+	@RequestMapping(value = "/filtro_turma_lista_atendimento_indisciplina", method = RequestMethod.POST)
+	public String filtrarTurmaEmListaAtendimentoIndisciplina(HttpServletRequest request, HttpServletResponse response,
+			Model model) throws Exception {
+		if (request.getParameter("curso") != null) {
+			model.addAttribute("turmas", dao_turma.listaTurmaPorCursoId(Long.parseLong(request.getParameter("curso"))));
+		}
+		return "atendimento_indisciplina/import_lista/import_filtro/turma";
+	}
+
 	@RequestMapping(value = "/filtro_aluno", method = RequestMethod.POST)
 	public String filtrarAluno(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		if (request.getParameter("turma_id") != null) {
@@ -161,57 +170,59 @@ public class AtendimentoIndisciplinaController {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
-//	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
-//	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
-//		model.addAttribute("atendimentos_saude", dao.filtraAtendimentoIndisciplina(trataParametrosRequest(request)));
-//		return "atendimento_indisciplina/import_lista/tabela";
-//	}
+	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
+	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
+		model.addAttribute("atendimentos_indisciplina",
+				dao.filtraAtendimentoIndisciplina(trataParametrosRequest(request)));
+		return "atendimento_indisciplina/import_lista/tabela";
+	}
 
-//	private FiltroAtendimentoIndisciplina trataParametrosRequest(HttpServletRequest request) {
-//		this.filtra_atendimento_indisciplina = new FiltroAtendimentoIndisciplina();
-//		this.filtra_atendimento_indisciplina.setData_inicial_atendimento(request.getParameter("data_inicial_atendimento"));
-//		this.filtra_atendimento_indisciplina.setData_final_atendimento(request.getParameter("data_final_atendimento"));
-//		this.filtra_atendimento_indisciplina
-//				.setHorario_inicial_atendimento(request.getParameter("horario_inicial_atendimento"));
-//		this.filtra_atendimento_indisciplina.setHorario_final_atendimento(request.getParameter("horario_final_atendimento"));
-//		this.filtra_atendimento_indisciplina.setCurso(request.getParameter("curso"));
-//		this.filtra_atendimento_indisciplina.setTurma(request.getParameter("turma"));
-//		this.filtra_atendimento_indisciplina.setTipo_atendimento(request.getParameter("tipo_atendimento"));
-//		this.filtra_atendimento_indisciplina.setAluno(request.getParameter("aluno"));
-//		this.filtra_atendimento_indisciplina.setProfissional(request.getParameter("profissional"));
-//		this.filtra_atendimento_indisciplina.setPossui_problema(request.getParameter("possui_problema"));
-//		this.filtra_atendimento_indisciplina
-//				.setEsse_problema_dificulta_aprendizado(request.getParameter("esse_problema_dificulta_aprendizado"));
-//
-//		trataDatas();
-//
-//		return this.filtra_atendimento_indisciplina;
-//	}
-//
-//	private void trataDatas() {
-//		this.filtra_atendimento_indisciplina.setData_inicial_atendimento(
-//				trataDataInicial(this.filtra_atendimento_indisciplina.getData_inicial_atendimento()));
-//		this.filtra_atendimento_indisciplina
-//				.setData_final_atendimento(trataDataFinal(this.filtra_atendimento_indisciplina.getData_final_atendimento()));
-//	}
-//
-//	private String trataDataInicial(String data_inicial) {
-//		// Se a data inicial não estiver sido informada, será atribuido 01/01/2018
-//		if (data_inicial.equals("")) {
-//			return "2019-01-01";
-//		} else {
-//			return this.filtra_atendimento_indisciplina.formataData(data_inicial);
-//		}
-//	}
-//
-//	private String trataDataFinal(String data_final) {
-//		// Se a data final não estiver sido informada, sera atribuido a data atual do
-//		// servidor
-//		if (data_final.equals("")) {
-//			return this.filtra_atendimento_indisciplina.retornaDataFinal();
-//		} else {
-//			return this.filtra_atendimento_indisciplina.formataData(data_final);
-//		}
-//	}
+	private FiltroAtendimentoIndisciplina trataParametrosRequest(HttpServletRequest request) {
+		this.filtra_atendimento_indisciplina = new FiltroAtendimentoIndisciplina();
+		this.filtra_atendimento_indisciplina
+				.setData_inicial_atendimento(request.getParameter("data_inicial_atendimento"));
+		this.filtra_atendimento_indisciplina.setData_final_atendimento(request.getParameter("data_final_atendimento"));
+		this.filtra_atendimento_indisciplina
+				.setHorario_inicial_atendimento(request.getParameter("horario_inicial_atendimento"));
+		this.filtra_atendimento_indisciplina
+				.setHorario_final_atendimento(request.getParameter("horario_final_atendimento"));
+		this.filtra_atendimento_indisciplina.setCurso(request.getParameter("curso"));
+		this.filtra_atendimento_indisciplina.setTurma(request.getParameter("turma"));
+		this.filtra_atendimento_indisciplina.setAdvertido(request.getParameter("advertido"));
+		this.filtra_atendimento_indisciplina.setTipo_advertencia(request.getParameter("tipo_advertencia"));
+		this.filtra_atendimento_indisciplina.setAluno(request.getParameter("aluno"));
+		this.filtra_atendimento_indisciplina.setProfissional(request.getParameter("profissional"));
+		this.filtra_atendimento_indisciplina.setDescricao(request.getParameter("descricao"));
+
+		trataDatas();
+
+		return this.filtra_atendimento_indisciplina;
+	}
+
+	private void trataDatas() {
+		this.filtra_atendimento_indisciplina.setData_inicial_atendimento(
+				trataDataInicial(this.filtra_atendimento_indisciplina.getData_inicial_atendimento()));
+		this.filtra_atendimento_indisciplina.setData_final_atendimento(
+				trataDataFinal(this.filtra_atendimento_indisciplina.getData_final_atendimento()));
+	}
+
+	private String trataDataInicial(String data_inicial) {
+		// Se a data inicial não estiver sido informada, será atribuido 01/01/2018
+		if (data_inicial.equals("")) {
+			return "2019-01-01";
+		} else {
+			return this.filtra_atendimento_indisciplina.formataData(data_inicial);
+		}
+	}
+
+	private String trataDataFinal(String data_final) {
+		// Se a data final não estiver sido informada, sera atribuido a data atual do
+		// servidor
+		if (data_final.equals("")) {
+			return this.filtra_atendimento_indisciplina.retornaDataFinal();
+		} else {
+			return this.filtra_atendimento_indisciplina.formataData(data_final);
+		}
+	}
 
 }
