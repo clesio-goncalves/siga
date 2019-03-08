@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/atendimento/pedagogia/novo", "/atendimento/pedagogia/adiciona", "/atendimento/pedagogia/edita", "/atendimento/pedagogia/altera", "/atendimento/pedagogia/remove")
 				.hasRole("Pedagogia")
 			.antMatchers("/atendimento/pedagogia/lista", "/atendimento/pedagogia/exibe")
-				.hasAnyRole("Administrador", "Coordenador", "Diretor", "Psicologia", "Assistência Social", "Enfermagem", "Odontologia", "Pedagogia", "Coordenação de Disciplina")
+				.hasAnyRole("Administrador", "Coordenador", "Diretor", "Psicologia", "Assistência Social", "Enfermagem", "Odontologia", "Docente", "Monitor", "Pedagogia", "Coordenação de Disciplina")
 			.antMatchers("/atendimento/monitoria/novo", "/atendimento/monitoria/adiciona", "/atendimento/monitoria/edita", "/atendimento/monitoria/altera", "/atendimento/monitoria/remove")
 				.hasAnyRole("Administrador", "Coordenador", "Diretor", "Pedagogia", "Monitor")
 			.antMatchers("/atendimento/monitoria/lista", "/atendimento/monitoria/exibe")

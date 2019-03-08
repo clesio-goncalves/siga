@@ -69,7 +69,7 @@
 										<td><fmt:formatDate
 												value="${atendimento_indisciplina.data}" /></td>
 										<td><fmt:formatDate type="time"
-												value="${atendimento_indisciplina.horario}" pattern="HH:mm" />
+												value="${atendimento_indisciplina.horario}" pattern="HH:mm" /></td>
 										<td>${atendimento_indisciplina.aluno.nome}</td>
 										<c:if test="${atendimento_indisciplina.advertido eq 'Sim'}">
 											<td style="font-weight: bold; color: red;">${atendimento_indisciplina.advertido}</td>
@@ -121,6 +121,44 @@
 										<td>
 											<!-- Exibir --> <a
 											href="<c:url value="/atendimento/saude/exibe?id=${atendimento_saude.id}"/>"
+											class="btn btn-info btn-sm" data-tooltip="tooltip"
+											data-placement="bottom" title="Exibir"> <span
+												class="glyphicon glyphicon-search"></span></a>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</c:if>
+				<c:if test="${profissional.tipo_atendimento eq 'Pedagogia'}">
+					<legend>ATENDIMENTOS DA PEDAGOGIA</legend>
+					<div class="table-responsive">
+						<table
+							class="table table-hover table-bordered dt-responsive nowrap"
+							style="width: 100%; margin-top: 10px;">
+							<thead>
+								<tr>
+									<th>Data</th>
+									<th>Horário</th>
+									<th>Aluno</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="atendimento_pedagogia"
+									items="${atendimentos_pedagogia}">
+									<tr>
+										<td><fmt:formatDate value="${atendimento_pedagogia.data}" /></td>
+										<td><fmt:formatDate type="time"
+												value="${atendimento_pedagogia.horario_inicial}"
+												pattern="HH:mm" /> - <fmt:formatDate type="time"
+												value="${atendimento_pedagogia.horario_final}"
+												pattern="HH:mm" /></td>
+										<td>${atendimento_pedagogia.aluno.nome}</td>
+										<td>
+											<!-- Exibir --> <a
+											href="<c:url value="/atendimento/pedagogia/exibe?id=${atendimento_pedagogia.id}"/>"
 											class="btn btn-info btn-sm" data-tooltip="tooltip"
 											data-placement="bottom" title="Exibir"> <span
 												class="glyphicon glyphicon-search"></span></a>

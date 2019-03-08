@@ -66,14 +66,30 @@
 								- Outros: ${atendimento_pedagogia.outros}
 							</c:if></td>
 					</tr>
-					<tr>
-						<th>Exposição dos motivos</th>
-						<td>${atendimento_pedagogia.exposicao_motivos}</td>
-					</tr>
-					<tr>
-						<th>Encaminhamento</th>
-						<td>${atendimento_pedagogia.encaminhamento}</td>
-					</tr>
+					<security:authorize
+						access="hasAnyRole('ROLE_Docente', 'ROLE_Monitor')">
+						<tr>
+							<th>Exposição dos motivos</th>
+							<td><i>Informação ocultada</i></td>
+						</tr>
+						<tr>
+							<th>Encaminhamento</th>
+							<td><i>Informação ocultada</i></td>
+						</tr>
+					</security:authorize>
+
+					<security:authorize
+						access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Coordenação de Disciplina')">
+						<tr>
+							<th>Exposição dos motivos</th>
+							<td>${atendimento_pedagogia.exposicao_motivos}</td>
+						</tr>
+						<tr>
+							<th>Encaminhamento</th>
+							<td>${atendimento_pedagogia.encaminhamento}</td>
+						</tr>
+					</security:authorize>
+
 				</table>
 			</div>
 		</div>
