@@ -2,6 +2,8 @@ package siga.capau.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -17,6 +19,7 @@ import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoIndisciplinaDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.AtendimentoSaudeDao;
+import siga.capau.dao.CursoDao;
 import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.dao.UsuarioDao;
@@ -29,9 +32,13 @@ import siga.capau.modelo.Turma;
 public class AlunoController {
 
 	private List<Turma> lista_turma;
+	private Aluno aluno;
 
 	@Autowired
 	AlunoDao dao;
+
+	@Autowired
+	CursoDao dao_curso;
 
 	@Autowired
 	TurmaDao dao_turma;
@@ -56,11 +63,11 @@ public class AlunoController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String novoAluno(Model model) {
-		this.lista_turma = dao_turma.listaTurmasAtivas();
+		this.lista_turma = dao_turma.listaTurmas();
 		if (this.lista_turma.size() == 0) {
 			return "redirect:/turma/nova";
 		}
-		model.addAttribute("turmas", this.lista_turma);
+		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
 		return "aluno/novo";
 	}
@@ -115,17 +122,12 @@ public class AlunoController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String edita(Long id, Model model) {
-
-		// Testa se há turmas cadastrados
-		if (dao_turma.listaTurmasAtivas().size() == 0) {
-			return "redirect:/turma/nova";
-		}
-
-		model.addAttribute("aluno", dao.buscaPorId(id));
-		model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
+		this.aluno = dao.buscaPorId(id);
+		model.addAttribute("aluno", this.aluno);
+		model.addAttribute("cursos", dao_curso.lista());
+		model.addAttribute("turmas", dao_turma.listaTurmaPorCursoId(this.aluno.getTurma().getCurso().getId()));
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
 		return "aluno/edita";
-
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
@@ -147,5 +149,18 @@ public class AlunoController {
 		dao.altera(aluno);
 		return "redirect:lista";
 
+	}
+
+	@RequestMapping(value = "/filtro_turma", method = RequestMethod.POST)
+	public String filtrarTurma(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		if (request.getParameter("curso_id") != null) {
+			model.addAttribute("turmas",
+					dao_turma.listaTurmaPorCursoId(Long.parseLong(request.getParameter("curso_id"))));
+		}
+		if (request.getParameter("contexto").equals("edita")) {
+			return "aluno/import_edita/turma";
+		} else {
+			return "aluno/import_novo/turma";
+		}
 	}
 }

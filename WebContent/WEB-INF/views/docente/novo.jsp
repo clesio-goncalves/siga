@@ -19,25 +19,32 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required>
+			<label for="nome" class="col-form-label">Nome Completo<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required>
 		</div>
 
 		<!-- SIAPE -->
 		<div class="form-group">
-			<label for="siape" class="col-form-label">SIAPE<span class="obrigatorio">*</span></label> <input type="text"
-				class="form-control" name="siape" MAXLENGTH="11" required data-mask="99999999999">
+			<label for="siape" class="col-form-label">SIAPE<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="siape" MAXLENGTH="11" required data-mask="99999999999">
 		</div>
 
 		<!-- USUÁRIO-->
 		<div class="form-group" id="lista_usuarios">
-			<label for="usuario.id" class="col-form-label">Usuário<span class="obrigatorio">*</span></label> <select
-				class="custom-select" name="usuario.id" required>
-				<c:forEach var="usuario" items="${usuarios}">
-					<option value="${usuario.id}">${usuario.email}</option>
-				</c:forEach>
-			</select>
+			<label for="usuario.id" class="col-form-label">Usuário<span
+				class="obrigatorio">*</span></label>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">@</span>
+				</div>
+				<select class="custom-select" name="usuario.id" required>
+					<c:forEach var="usuario" items="${usuarios}">
+						<option value="${usuario.id}">${usuario.email}</option>
+					</c:forEach>
+				</select>
+			</div>
 		</div>
 
 		<security:csrfInput />

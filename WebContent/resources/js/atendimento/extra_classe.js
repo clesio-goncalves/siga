@@ -23,7 +23,6 @@ function alteraCurso(contexto) {
 			$('#lista_turmas').html(response);
 			$('#turma').removeAttr('disabled');
 			$('#turma').selectpicker('refresh');
-			alert("Docente ID: " + docente_id);
 		},
 		error : function() {
 			alert("Ocorreu um erro");

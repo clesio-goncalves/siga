@@ -21,7 +21,7 @@
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${administracao.id}" required/>
+		<input type="hidden" name="id" value="${administracao.id}" required />
 
 		<!-- NOME -->
 		<div class="form-group">
@@ -59,13 +59,19 @@
 		</div>
 
 		<!-- USUÁRIO -->
-		<input type="hidden" name="usuario.id" value="${administracao.usuario.id}" />
+		<input type="hidden" name="usuario.id"
+			value="${administracao.usuario.id}" />
 		<div class="form-group">
 			<label class="col-form-label">Usuário<span
-				class="obrigatorio">*</span></label> <select class="custom-select" required
-				disabled>
-				<option value="" selected>${administracao.usuario.email}</option>
-			</select>
+				class="obrigatorio">*</span></label>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">@</span>
+				</div>
+				<select class="custom-select" required disabled>
+					<option value="" selected>${administracao.usuario.email}</option>
+				</select>
+			</div>
 		</div>
 
 		<security:csrfInput />

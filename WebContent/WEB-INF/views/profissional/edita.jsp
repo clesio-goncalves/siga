@@ -57,10 +57,15 @@
 			value="${profissional.usuario.id}" />
 		<div class="form-group">
 			<label class="col-form-label">Usuário<span
-				class="obrigatorio">*</span></label> <select class="custom-select" required
-				disabled="disabled">
-				<option value="" selected>${profissional.usuario.email}</option>
-			</select>
+				class="obrigatorio">*</span></label>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">@</span>
+				</div>
+				<select class="custom-select" required disabled="disabled">
+					<option value="" selected>${profissional.usuario.email}</option>
+				</select>
+			</div>
 		</div>
 
 		<security:csrfInput />

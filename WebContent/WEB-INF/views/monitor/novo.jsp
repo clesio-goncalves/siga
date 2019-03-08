@@ -18,26 +18,32 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required="required">
+			<label for="nome" class="col-form-label">Nome Completo<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required="required">
 		</div>
 
 		<!-- MATRICULA -->
 		<div class="form-group">
-			<label for="matricula" class="col-form-label">Matricula<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="matricula" MAXLENGTH="50"
-				required="required">
+			<label for="matricula" class="col-form-label">Matricula<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="matricula" MAXLENGTH="50" required="required">
 		</div>
 
 		<!-- USUÁRIO-->
 		<div class="form-group">
-			<label for="usuario.id" class="col-form-label">Usuário<span class="obrigatorio">*</span></label> <select
-				class="custom-select" name="usuario.id" required="required">
-				<c:forEach var="usuario" items="${usuarios}">
-					<option value="${usuario.id}">${usuario.email}</option>
-				</c:forEach>
-			</select>
+			<label for="usuario.id" class="col-form-label">Usuário<span
+				class="obrigatorio">*</span></label>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">@</span>
+				</div>
+				<select class="custom-select" name="usuario.id" required="required">
+					<c:forEach var="usuario" items="${usuarios}">
+						<option value="${usuario.id}">${usuario.email}</option>
+					</c:forEach>
+				</select>
+			</div>
 		</div>
 
 		<security:csrfInput />

@@ -22,7 +22,6 @@
 					<tr>
 						<th>ID</th>
 						<th>Nome Completo</th>
-						<th>Matrícula</th>
 						<th>Turma</th>
 						<th>Usuário</th>
 						<th>Ações</th>
@@ -33,15 +32,6 @@
 						<tr>
 							<td>${aluno.id}</td>
 							<td>${aluno.nome}</td>
-
-							<!-- Matricula -->
-							<c:if test="${aluno.matricula eq \"\"}">
-								<td>-</td>
-							</c:if>
-							<c:if test="${aluno.matricula ne \"\"}">
-								<td>${aluno.matricula}</td>
-							</c:if>
-
 							<td>${aluno.turma.nome}</td>
 
 							<!-- Usuário -->

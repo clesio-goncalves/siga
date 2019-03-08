@@ -20,7 +20,7 @@
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${docente.id}" required/>
+		<input type="hidden" name="id" value="${docente.id}" required />
 
 		<!-- NOME -->
 		<div class="form-group">
@@ -33,19 +33,24 @@
 		<!-- SIAPE -->
 		<div class="form-group">
 			<label for="siape" class="col-form-label">SIAPE<span
-				class="obrigatorio">*</span></label> <input type="text"
-				class="form-control" name="siape" MAXLENGTH="10" required
-				data-mask="99999999999" value="${docente.siape}">
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="siape" MAXLENGTH="10" required data-mask="99999999999"
+				value="${docente.siape}">
 		</div>
 
 		<!-- USUÁRIO -->
 		<input type="hidden" name="usuario.id" value="${docente.usuario.id}" />
 		<div class="form-group">
 			<label class="col-form-label">Usuário<span
-				class="obrigatorio">*</span></label> <select class="custom-select" required
-				disabled>
-				<option value="" selected>${docente.usuario.email}</option>
-			</select>
+				class="obrigatorio">*</span></label>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">@</span>
+				</div>
+				<select class="custom-select" required disabled>
+					<option value="" selected>${docente.usuario.email}</option>
+				</select>
+			</div>
 		</div>
 
 		<security:csrfInput />

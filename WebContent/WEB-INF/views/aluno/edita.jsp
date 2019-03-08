@@ -4,8 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <title>Editar Aluno</title>
 <c:import url="../componentes/cabecalho.jsp" />
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/select/bootstrap-select.min.css" />">
 <div class="jumbotron">
 	<div class="container">
 		<h1 class="display-3">Editar Aluno</h1>
@@ -28,25 +32,50 @@
 				name="nome" autofocus MAXLENGTH="255" required value="${aluno.nome}">
 		</div>
 
-		<!-- MATRICULA -->
-		<div class="form-group">
-			<label for="matricula" class="col-form-label">Matricula</label> <input
-				type="text" class="form-control" name="matricula" MAXLENGTH="50"
-				value="${aluno.matricula}">
+		<div class="row">
+			<!-- CURSO-->
+			<div class="form-group col-md-6">
+				<label for="curso.id" class="col-form-label">Curso<span
+					class="obrigatorio">*</span></label> <select name="curso.id" id="curso"
+					class="selectpicker show-tick form-control" data-live-search="true"
+					multiple data-max-options="1" title="Selecione um curso"
+					data-live-search-placeholder="Pesquisar" required
+					onchange="alteraCurso('edita')">
+					<c:forEach var="curso" items="${cursos}">
+						<option value="${curso.id}"
+							${aluno.turma.curso.id == curso.id ? 'selected' : ''}>${curso.nome}</option>
+					</c:forEach>
+				</select>
+			</div>
+
+			<!-- TURMA-->
+			<div class="form-group col-md-6" id="lista_turmas">
+				<jsp:include page="import_edita/turma.jsp"></jsp:include>
+			</div>
 		</div>
 
-		<!-- TURMA -->
-		<div class="form-group">
-			<label for="turma.id" class="col-form-label">Turma<span
-				class="obrigatorio">*</span></label>
-			<c:forEach var="turma" items="${turmas}">
-				<div class="custom-control custom-radio">
-					<input type="radio" id="${turma.id}" name="turma.id"
-						class="custom-control-input" required value="${turma.id}"
-						${turma.id == aluno.turma.id ? 'checked' : ''}> <label
-						class="custom-control-label" for="${turma.id}">${turma.nome}</label>
+		<div class="row">
+			<!-- MATRICULA -->
+			<div class="form-group col-6">
+				<label for="matricula" class="col-form-label">Matricula</label> <input
+					type="text" class="form-control" name="matricula" MAXLENGTH="50"
+					value="${aluno.matricula}">
+			</div>
+
+			<!-- TELEFONE -->
+			<div class="form-group col-6">
+				<label for="telefone" class="col-form-label">Telefone</label>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><span
+							class="glyphicon glyphicon-earphone"></span></span>
+					</div>
+					<input type="text" class="form-control maskTelefone"
+						name="telefone" MAXLENGTH="20"
+						pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}"
+						value="${aluno.telefone}">
 				</div>
-			</c:forEach>
+			</div>
 		</div>
 
 		<!-- USUÁRIO-->
@@ -54,17 +83,27 @@
 			<label for="usuario.id" class="col-form-label">Usuário</label>
 			<c:if test="${aluno.usuario != null}">
 				<input type="hidden" name="usuario.id" value="${aluno.usuario.id}" />
-				<select class="custom-select" name="usuario.id" disabled="disabled">
-					<option value="" selected>${aluno.usuario.email}</option>
-				</select>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">@</span>
+					</div>
+					<select class="custom-select" name="usuario.id" disabled="disabled">
+						<option value="" selected>${aluno.usuario.email}</option>
+					</select>
+				</div>
 			</c:if>
 			<c:if test="${aluno.usuario == null}">
-				<select class="custom-select" name="usuario.id">
-					<option value="">Não informar</option>
-					<c:forEach var="usuario" items="${usuarios}">
-						<option value="${usuario.id}">${usuario.email}</option>
-					</c:forEach>
-				</select>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">@</span>
+					</div>
+					<select class="custom-select" name="usuario.id">
+						<option value="">Não informar</option>
+						<c:forEach var="usuario" items="${usuarios}">
+							<option value="${usuario.id}">${usuario.email}</option>
+						</c:forEach>
+					</select>
+				</div>
 			</c:if>
 		</div>
 
@@ -85,4 +124,12 @@
 	</form>
 </div>
 
+<script type="text/javascript"
+	src="<c:url value="/resources/js/jquery.mask.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/select/bootstrap-select.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/select/defaults-pt_BR.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/filtro_cadastro/filtroCadAluno.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

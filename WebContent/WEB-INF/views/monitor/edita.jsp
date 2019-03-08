@@ -18,13 +18,14 @@
 	<form action="altera" method="POST">
 
 		<!-- ID -->
-		<input type="hidden" name="id" value="${monitor.id}" required/>
+		<input type="hidden" name="id" value="${monitor.id}" required />
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome Completo<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required="required" value="${monitor.nome}">
+			<label for="nome" class="col-form-label">Nome Completo<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required="required"
+				value="${monitor.nome}">
 		</div>
 
 		<!-- MATRICULA -->
@@ -37,10 +38,17 @@
 		<!-- USUÁRIO-->
 		<input type="hidden" name="usuario.id" value="${monitor.usuario.id}" />
 		<div class="form-group">
-			<label class="col-form-label">Usuário<span class="obrigatorio">*</span></label> <select
-				class="custom-select" required="required" disabled="disabled">
-				<option value="" selected>${monitor.usuario.email}</option>
-			</select>
+			<label class="col-form-label">Usuário<span
+				class="obrigatorio">*</span></label>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">@</span>
+				</div>
+				<select class="custom-select" required="required"
+					disabled="disabled">
+					<option value="" selected>${monitor.usuario.email}</option>
+				</select>
+			</div>
 		</div>
 
 		<security:csrfInput />

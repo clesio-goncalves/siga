@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Aluno {
@@ -19,6 +20,9 @@ public class Aluno {
 	private String nome;
 
 	private String matricula;
+
+	@Size(max = 20)
+	private String telefone;
 
 	@NotNull
 	@ManyToOne
@@ -49,6 +53,14 @@ public class Aluno {
 
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public Turma getTurma() {
