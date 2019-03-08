@@ -63,7 +63,8 @@ public class AtendimentoSaudeDao {
 
 		// Horario final atendimento
 		if (!filtro_atendimento_saude.getHorario_final_atendimento().equals("")) {
-			sql = sql + " and TIME(a.horario_final) <= '" + filtro_atendimento_saude.getHorario_final_atendimento() + ":00'";
+			sql = sql + " and TIME(a.horario_final) <= '" + filtro_atendimento_saude.getHorario_final_atendimento()
+					+ ":00'";
 		}
 
 		// Curso

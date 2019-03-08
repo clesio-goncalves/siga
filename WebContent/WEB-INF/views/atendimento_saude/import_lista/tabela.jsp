@@ -32,52 +32,55 @@
 					href="<c:url value="/atendimento/saude/exibe?id=${atendimento_saude.id}"/>"
 					class="btn btn-info btn-sm" data-tooltip="tooltip"
 					data-placement="bottom" title="Exibir"> <span
-						class="glyphicon glyphicon-search"></span></a> <security:authorize
-						access="hasAnyRole('ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Odontologia')">
-						<!-- Editar -->
-						<a
-							href="<c:url value="/atendimento/saude/edita?id=${atendimento_saude.id}" />"
-							class="btn btn-warning btn-sm" data-tooltip="tooltip"
-							data-placement="bottom" title="Editar"><span
-							class="glyphicon glyphicon-pencil"></span> </a>
-						<!-- Excluir -->
-						<button type="button" class="btn btn-danger btn-sm"
-							data-tooltip="tooltip" data-placement="bottom" title="Excluir"
-							data-toggle="modal" data-target="#modal${atendimento_saude.id}">
-							<span class="glyphicon glyphicon-trash"></span>
-						</button>
-						<div class="modal fade" id="modal${atendimento_saude.id}">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title">Exclusão do Atendimento de
-											Monitoria</h5>
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										<p>
-											Deseja realmente excluir o Atendimento de Saúde <br>ID
-											(${atendimento_saude.id}) - Aluno:
-											${atendimento_saude.aluno.nome}?
-										</p>
-									</div>
-									<div class="modal-footer">
-										<a
-											href="<c:url value="/atendimento/saude/remove?id=${atendimento_saude.id}" />"
-											class="btn btn-danger"><span
-											class="glyphicon glyphicon-trash"></span> Excluir</a>
-										<button type="button" class="btn btn-secondary"
-											data-dismiss="modal">
-											<span class="glyphicon glyphicon-log-out"></span> Fechar
-										</button>
+						class="glyphicon glyphicon-search"></span></a> <c:if
+						test="${tipo_atendimento != null}">
+						<c:if
+							test="${tipo_atendimento == atendimento_saude.profissional.tipo_atendimento}">
+							<!-- Editar -->
+							<a
+								href="<c:url value="/atendimento/saude/edita?id=${atendimento_saude.id}" />"
+								class="btn btn-warning btn-sm" data-tooltip="tooltip"
+								data-placement="bottom" title="Editar"><span
+								class="glyphicon glyphicon-pencil"></span> </a>
+							<!-- Excluir -->
+							<button type="button" class="btn btn-danger btn-sm"
+								data-tooltip="tooltip" data-placement="bottom" title="Excluir"
+								data-toggle="modal" data-target="#modal${atendimento_saude.id}">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+							<div class="modal fade" id="modal${atendimento_saude.id}">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Exclusão do Atendimento de
+												Monitoria</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<p>
+												Deseja realmente excluir o Atendimento de Saúde <br>ID
+												(${atendimento_saude.id}) - Aluno:
+												${atendimento_saude.aluno.nome}?
+											</p>
+										</div>
+										<div class="modal-footer">
+											<a
+												href="<c:url value="/atendimento/saude/remove?id=${atendimento_saude.id}" />"
+												class="btn btn-danger"><span
+												class="glyphicon glyphicon-trash"></span> Excluir</a>
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">
+												<span class="glyphicon glyphicon-log-out"></span> Fechar
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</security:authorize>
+						</c:if>
+					</c:if>
 				</td>
 			</tr>
 		</c:forEach>

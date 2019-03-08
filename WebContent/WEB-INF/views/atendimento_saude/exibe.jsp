@@ -91,46 +91,52 @@
 			<a href="<c:url value="/atendimento/saude/novo" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
-			<!-- Editar -->
-			<a
-				href="<c:url value="/atendimento/saude/edita?id=${atendimento_saude.id}" />"
-				class="btn btn-warning btn-lg"><span
-				class="glyphicon glyphicon-edit"></span> Editar </a>
-			<!-- Excluir -->
-			<button type="button" class="btn btn-danger btn-lg"
-				data-toggle="modal" data-target="#modal${atendimento_saude.id}">
-				<span class="glyphicon glyphicon-trash"></span> Excluir
-			</button>
-		</div>
-		<div class="modal fade" id="modal${atendimento_saude.id}">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Exclusão do Atendimento de Saúde</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+			<c:if test="${tipo_atendimento != null}">
+				<c:if
+					test="${tipo_atendimento == atendimento_saude.profissional.tipo_atendimento}">
+					<!-- Editar -->
+					<a
+						href="<c:url value="/atendimento/saude/edita?id=${atendimento_saude.id}" />"
+						class="btn btn-warning btn-lg"><span
+						class="glyphicon glyphicon-edit"></span> Editar </a>
+					<!-- Excluir -->
+					<button type="button" class="btn btn-danger btn-lg"
+						data-toggle="modal" data-target="#modal${atendimento_saude.id}">
+						<span class="glyphicon glyphicon-trash"></span> Excluir
+					</button>
+					<div class="modal fade" id="modal${atendimento_saude.id}">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Exclusão do Atendimento de Saúde</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p align="left">
+										Deseja realmente excluir o Atendimento de Saúde <br>ID
+										(${atendimento_saude.id}) - Aluno:
+										${atendimento_saude.aluno.nome}?
+									</p>
+								</div>
+								<div class="modal-footer">
+									<a
+										href="<c:url value="/atendimento/saude/remove?id=${atendimento_saude.id}" />"
+										class="btn btn-danger"><span
+										class="glyphicon glyphicon-trash"></span> Excluir</a>
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">
+										<span class="glyphicon glyphicon-log-out"></span> Fechar
+									</button>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="modal-body">
-						<p>
-							Deseja realmente excluir o Atendimento de Saúde <br>ID
-							(${atendimento_saude.id}) - Aluno:
-							${atendimento_saude.aluno.nome}?
-						</p>
-					</div>
-					<div class="modal-footer">
-						<a
-							href="<c:url value="/atendimento/saude/remove?id=${atendimento_saude.id}" />"
-							class="btn btn-danger"><span
-							class="glyphicon glyphicon-trash"></span> Excluir</a>
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">
-							<span class="glyphicon glyphicon-log-out"></span> Fechar
-						</button>
-					</div>
-				</div>
-			</div>
+				</c:if>
+			</c:if>
+
 		</div>
 	</security:authorize>
 

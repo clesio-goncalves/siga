@@ -33,8 +33,10 @@ import siga.capau.modelo.Usuario;
 public class AtendimentoSaudeController {
 
 	private AtendimentoSaude atendimento_saude;
+	private Usuario usuario;
 	private List<Profissional> lista_profissional;
 	private FiltroAtendimentoSaude filtra_atendimento_saude;
+	private boolean possui_permissao_editar = false;
 
 	@Autowired
 	AtendimentoSaudeDao dao;
@@ -87,14 +89,21 @@ public class AtendimentoSaudeController {
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("profissionais", dao_profissional.buscaSetorSaude());
+		possuiPermissaoProfissionalSaude(model); // adiciona o model tipo_atendimento na view
 		return "atendimento_saude/lista";
 	}
 
 	@RequestMapping("/remove")
 	@Secured({ "ROLE_Psicologia", "ROLE_Assistência Social", "ROLE_Enfermagem", "ROLE_Odontologia" })
-	public String remove(AtendimentoSaude AtendimentoSaude) {
-		dao.remove(AtendimentoSaude.getId());
-		return "redirect:lista";
+	public String remove(AtendimentoSaude AtendimentoSaude, HttpServletResponse response) {
+		this.atendimento_saude = AtendimentoSaude;
+		if (possuiPermissao()) {
+			dao.remove(AtendimentoSaude.getId());
+			return "redirect:lista";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping("/exibe")
@@ -103,32 +112,45 @@ public class AtendimentoSaudeController {
 			"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("atendimento_saude", dao.buscaPorId(id));
+		possuiPermissaoProfissionalSaude(model); // adiciona o model tipo_atendimento na view
 		return "atendimento_saude/exibe";
 	}
 
 	@RequestMapping("/edita")
 	@Secured({ "ROLE_Psicologia", "ROLE_Assistência Social", "ROLE_Enfermagem", "ROLE_Odontologia" })
-	public String edita(Long id, Model model) {
+	public String edita(Long id, Model model, HttpServletResponse response) {
 		this.atendimento_saude = dao.buscaPorId(id);
-		model.addAttribute("atendimento_saude", this.atendimento_saude);
-		model.addAttribute("cursos", dao_curso.lista());
-		model.addAttribute("turmas",
-				dao_turma.listaTurmaPorCursoId(this.atendimento_saude.getAluno().getTurma().getCurso().getId()));
-		model.addAttribute("alunos",
-				dao_aluno.listaAlunosPorTurmaId(this.atendimento_saude.getAluno().getTurma().getId()));
-		return "atendimento_saude/edita";
+		if (possuiPermissao()) {
+			this.possui_permissao_editar = true;
+			model.addAttribute("atendimento_saude", this.atendimento_saude);
+			model.addAttribute("cursos", dao_curso.lista());
+			model.addAttribute("turmas",
+					dao_turma.listaTurmaPorCursoId(this.atendimento_saude.getAluno().getTurma().getCurso().getId()));
+			model.addAttribute("alunos",
+					dao_aluno.listaAlunosPorTurmaId(this.atendimento_saude.getAluno().getTurma().getId()));
+			return "atendimento_saude/edita";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	@Secured({ "ROLE_Psicologia", "ROLE_Assistência Social", "ROLE_Enfermagem", "ROLE_Odontologia" })
-	public String altera(@Valid AtendimentoSaude atendimentoSaude, BindingResult result) {
-		if (result.hasErrors()) {
-			return "redirect:edita?id=" + atendimentoSaude.getId();
-		}
+	public String altera(@Valid AtendimentoSaude atendimentoSaude, BindingResult result, HttpServletResponse response) {
+		if (this.possui_permissao_editar) {
+			if (result.hasErrors()) {
+				return "redirect:edita?id=" + atendimentoSaude.getId();
+			}
 
-		// Altera no banco
-		dao.altera(atendimentoSaude);
-		return "redirect:lista";
+			// Altera no banco
+			dao.altera(atendimentoSaude);
+			this.possui_permissao_editar = false;
+			return "redirect:lista";
+		} else {
+			response.setStatus(403);
+			return "redirect:/403";
+		}
 	}
 
 	@RequestMapping(value = "/filtro_turma", method = RequestMethod.POST)
@@ -164,10 +186,6 @@ public class AtendimentoSaudeController {
 		} else {
 			return "atendimento_saude/import_novo/aluno";
 		}
-	}
-
-	private Usuario retornaUsuarioLogado() {
-		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
@@ -221,6 +239,29 @@ public class AtendimentoSaudeController {
 		} else {
 			return this.filtra_atendimento_saude.formataData(data_final);
 		}
+	}
+
+	private boolean possuiPermissao() {
+		this.usuario = retornaUsuarioLogado(); // Pego o usuário logado
+		// O profissional da saúde só realiza a ação se for do mesmo tipo de atendimento
+		if (this.atendimento_saude.getProfissional().getTipo_atendimento()
+				.equals(dao_profissional.buscaPorUsuario(this.usuario.getId()).get(0).getTipo_atendimento())) {
+			return true;
+		}
+		return false;
+	}
+
+	private void possuiPermissaoProfissionalSaude(Model model) {
+		this.usuario = retornaUsuarioLogado();
+		if (this.usuario.getPerfil().getId() == 4 || this.usuario.getPerfil().getId() == 5
+				|| this.usuario.getPerfil().getId() == 6 || this.usuario.getPerfil().getId() == 8) {
+			model.addAttribute("tipo_atendimento",
+					dao_profissional.buscaPorUsuario(this.usuario.getId()).get(0).getTipo_atendimento());
+		}
+	}
+
+	private Usuario retornaUsuarioLogado() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 }
