@@ -62,7 +62,7 @@
 						name="curso" class="selectpicker show-tick form-control"
 						data-live-search="true" multiple data-max-options="1"
 						title="Selecione um curso"
-						data-live-search-placeholder="Pesquisar">
+						data-live-search-placeholder="Pesquisar" onchange="alteraCurso()">
 						<c:forEach var="curso" items="${cursos}">
 							<option value="${curso.id}">${curso.nome}</option>
 						</c:forEach>
@@ -70,20 +70,13 @@
 				</div>
 			</div>
 
+			<!-- Turma -->
 			<div class="col-4">
-				<!-- Turma -->
-				<div class="form-group">
-					<label for="turma" class="col-form-label">Turma</label> <select
-						name="turma" class="selectpicker show-tick form-control"
-						data-live-search="true" multiple data-max-options="1"
-						title="Selecione uma turma"
-						data-live-search-placeholder="Pesquisar">
-						<c:forEach var="turma" items="${turmas}">
-							<option value="${turma.id}">${turma.nome}</option>
-						</c:forEach>
-					</select>
+				<div class="form-group" id="lista_turmas">
+					<jsp:include page="import_filtro/turma.jsp"></jsp:include>
 				</div>
 			</div>
+
 			<div class="col-4">
 				<!-- Tipo de Atendimento -->
 				<div class="form-group">

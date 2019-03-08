@@ -56,3 +56,30 @@ function filtrar(){
 		}
 	});
 }
+
+/**
+ * Busca as turmas com base no curso selecionado
+ * 
+ * @returns {undefined}
+ */
+function alteraCurso() {
+	$.ajax({
+		type : "POST",
+		url : "filtro_turma_lista_atendimento_extraclasse",
+		cache : false,
+		data : {
+			curso : $("select[name='curso'] :selected").val()
+		},
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		success : function(response) {
+			$('#lista_turmas').html(response);
+			$('#turma').removeAttr('disabled');
+			$('#turma').selectpicker('refresh');
+		},
+		error : function() {
+			alert("Ocorreu um erro");
+		}
+	});
+}

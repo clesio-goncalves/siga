@@ -85,7 +85,6 @@ public class AtendimentoSaudeController {
 	public String lista(Model model) {
 		model.addAttribute("atendimentos_saude", dao.lista());
 		model.addAttribute("cursos", dao_curso.lista());
-		model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("profissionais", dao_profissional.lista());
 		return "atendimento_saude/lista";
@@ -143,6 +142,15 @@ public class AtendimentoSaudeController {
 		} else {
 			return "atendimento_saude/import_novo/turma";
 		}
+	}
+	
+	@RequestMapping(value = "/filtro_turma_lista_atendimento_saude", method = RequestMethod.POST)
+	public String filtrarTurmaEmListaAtendimentoSaude(HttpServletRequest request, HttpServletResponse response,
+			Model model) throws Exception {
+		if (request.getParameter("curso") != null) {
+			model.addAttribute("turmas", dao_turma.listaTurmaPorCursoId(Long.parseLong(request.getParameter("curso"))));
+		}
+		return "atendimento_saude/import_lista/import_filtro/turma";
 	}
 
 	@RequestMapping(value = "/filtro_aluno", method = RequestMethod.POST)

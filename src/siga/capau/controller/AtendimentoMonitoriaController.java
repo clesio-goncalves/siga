@@ -101,7 +101,6 @@ public class AtendimentoMonitoriaController {
 			if (this.lista_monitor.size() == 1) { // se há monitor para o usuário cadastrado
 				model.addAttribute("atendimento_monitorias", dao.buscaPeloMonitorId(this.lista_monitor.get(0).getId()));
 				model.addAttribute("cursos", dao_curso.listaCursosPorMonitorId(this.lista_monitor.get(0).getId()));
-				model.addAttribute("turmas", dao_turma.listaTurmasPorMonitorId(this.lista_monitor.get(0).getId()));
 				model.addAttribute("disciplinas",
 						dao_disciplina.listaDisciplinasPorMonitorId(this.lista_monitor.get(0).getId()));
 				model.addAttribute("monitor", this.lista_monitor.get(0));
@@ -111,7 +110,6 @@ public class AtendimentoMonitoriaController {
 		} else {
 			model.addAttribute("atendimento_monitorias", dao.lista());
 			model.addAttribute("cursos", dao_curso.lista());
-			model.addAttribute("turmas", dao_turma.listaTurmasAtivas());
 			model.addAttribute("disciplinas", dao_disciplina.lista());
 			model.addAttribute("monitores", dao_monitor.lista());
 		}
@@ -235,6 +233,15 @@ public class AtendimentoMonitoriaController {
 		} else {
 			return "atendimento_monitoria/import_novo/turma";
 		}
+	}
+
+	@RequestMapping(value = "/filtro_turma_lista_atendimento_monitoria", method = RequestMethod.POST)
+	public String filtrarTurmaEmListaAtendimentoMonitoria(HttpServletRequest request, HttpServletResponse response,
+			Model model) throws Exception {
+		if (request.getParameter("curso") != null) {
+			model.addAttribute("turmas", dao_turma.listaTurmaPorCursoId(Long.parseLong(request.getParameter("curso"))));
+		}
+		return "atendimento_monitoria/import_lista/import_filtro/turma";
 	}
 
 	@RequestMapping(value = "/filtro_aluno", method = RequestMethod.POST)
