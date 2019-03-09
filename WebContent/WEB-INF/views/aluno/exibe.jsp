@@ -38,6 +38,18 @@
 							<td>${aluno.matricula}</td>
 						</c:if>
 					</tr>
+					
+					<tr>
+						<th>Matrícula</th>
+
+						<!-- Telefone -->
+						<c:if test="${aluno.telefone eq \"\"}">
+							<td>-</td>
+						</c:if>
+						<c:if test="${aluno.telefone ne \"\"}">
+							<td>${aluno.telefone}</td>
+						</c:if>
+					</tr>
 
 					<tr>
 						<th>Curso</th>

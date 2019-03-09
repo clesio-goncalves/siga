@@ -8,12 +8,15 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import siga.capau.modelo.Aluno;
+import siga.capau.modelo.FiltroAluno;
 
 @Repository
 public class AlunoDao {
 
 	@PersistenceContext
 	private EntityManager manager;
+	private String sql;
+	private boolean where;
 
 	public void adiciona(Aluno aluno) {
 		manager.persist(aluno);
@@ -24,7 +27,7 @@ public class AlunoDao {
 	}
 
 	public List<Aluno> lista() {
-		return manager.createQuery("select a from Aluno a", Aluno.class).getResultList();
+		return manager.createQuery("select a from Aluno a where a.turma.ativo = true", Aluno.class).getResultList();
 	}
 
 	public Long buscaTurmaIdPorAlunoId(Long aluno_id) {
@@ -68,6 +71,95 @@ public class AlunoDao {
 	public List<Aluno> buscaPorUsuario(Long id) {
 		return manager.createQuery("select a from Aluno a where a.usuario.id = :id", Aluno.class).setParameter("id", id)
 				.getResultList();
+	}
+
+	public List<Aluno> filtraAluno(FiltroAluno filtro_aluno) {
+
+		sql = "select DISTINCT a from Aluno a";
+		this.where = false;
+
+		// Atendimentos
+		if (!filtro_aluno.getAtendimentos().equals("")) {
+			switch (filtro_aluno.getAtendimentos()) {
+			case "Extraclasse":
+				sql = sql + " inner join ExtraClasse e on e.aluno.id = a.id";
+				break;
+			case "Monitoria":
+				sql = sql + " inner join AtendimentoMonitoria am on am.aluno.id = a.id";
+				break;
+			case "Saude":
+				sql = sql + " inner join AtendimentoSaude saude on saude.aluno.id = a.id";
+				break;
+			case "Indisciplina":
+				sql = sql + " inner join AtendimentoIndisciplina ai on ai.aluno.id = a.id";
+				break;
+			case "Pedagogia":
+				sql = sql + " inner join AtendimentoPedagogia ap on ap.aluno.id = a.id";
+				break;
+			case "Todos":
+				sql = sql + " inner join ExtraClasse e on e.aluno.id = a.id"
+						+ " inner join AtendimentoMonitoria am on am.aluno.id = a.id"
+						+ " inner join AtendimentoSaude saude on saude.aluno.id = a.id"
+						+ " inner join AtendimentoIndisciplina ai on ai.aluno.id = a.id"
+						+ " inner join AtendimentoPedagogia ap on ap.aluno.id = a.id";
+				break;
+			default:
+				break;
+			}
+		}
+
+		// Curso
+		if (filtro_aluno.getCurso() != null) {
+			this.where = true;
+			sql = sql + " where a.turma.curso.id = " + filtro_aluno.getCurso();
+		}
+
+		// Turma
+		if (filtro_aluno.getTurma() != null) {
+			sql = sql + " and a.turma.id = " + filtro_aluno.getTurma();
+		}
+
+		// Situação
+		if (!filtro_aluno.getSituacao().equals("")) {
+			testeWhere();
+			sql = sql + " a.turma.ativo = " + filtro_aluno.getSituacao();
+		}
+
+		// Nome
+		if (!filtro_aluno.getNome().equals("")) {
+			testeWhere();
+			sql = sql + " a.nome like '%" + filtro_aluno.getNome() + "%'";
+		}
+
+		// Matricula
+		if (!filtro_aluno.getMatricula().equals("")) {
+			testeWhere();
+			sql = sql + " a.matricula like '%" + filtro_aluno.getMatricula() + "%'";
+		}
+
+		// Telefone
+		if (!filtro_aluno.getTelefone().equals("")) {
+			testeWhere();
+			sql = sql + " a.telefone like '%" + filtro_aluno.getTelefone() + "%'";
+		}
+
+		// Usuario
+		if (!filtro_aluno.getUsuario().equals("")) {
+			testeWhere();
+			sql = sql + " a.usuario.email like '%" + filtro_aluno.getUsuario() + "%'";
+		}
+
+		return manager.createQuery(sql, Aluno.class).getResultList();
+
+	}
+
+	private void testeWhere() {
+		if (this.where == false) {
+			this.where = true;
+			sql = sql + " where";
+		} else {
+			sql = sql + " and";
+		}
 	}
 
 }

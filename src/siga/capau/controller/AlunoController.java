@@ -25,6 +25,7 @@ import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Aluno;
+import siga.capau.modelo.FiltroAluno;
 import siga.capau.modelo.Turma;
 
 @Transactional
@@ -34,6 +35,7 @@ public class AlunoController {
 
 	private List<Turma> lista_turma;
 	private Aluno aluno;
+	private FiltroAluno filtro_aluno;
 
 	@Autowired
 	AlunoDao dao;
@@ -58,7 +60,7 @@ public class AlunoController {
 
 	@Autowired
 	AtendimentoIndisciplinaDao dao_atendimento_indisciplina;
-	
+
 	@Autowired
 	AtendimentoPedagogiaDao dao_atendimento_pedagogia;
 
@@ -98,7 +100,8 @@ public class AlunoController {
 
 	@RequestMapping("/lista")
 	public String lista(Model model) {
-		model.addAttribute("alunos", dao.lista());
+		model.addAttribute("cursos", dao_curso.lista());
+		model.addAttribute("alunos", dao.lista()); // todos os aluno ativos
 		return "aluno/lista";
 	}
 
@@ -168,4 +171,34 @@ public class AlunoController {
 			return "aluno/import_novo/turma";
 		}
 	}
+
+	@RequestMapping(value = "/filtro_turma_em_listagem", method = RequestMethod.POST)
+	public String filtrarTurmaEmListagem(HttpServletRequest request, HttpServletResponse response, Model model)
+			throws Exception {
+		if (request.getParameter("curso") != null) {
+			model.addAttribute("turmas", dao_turma.listaTurmaPorCursoId(Long.parseLong(request.getParameter("curso"))));
+		}
+		return "aluno/import_lista/import_filtro/turma";
+	}
+
+	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
+	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
+		model.addAttribute("alunos", dao.filtraAluno(trataParametrosRequest(request)));
+		return "aluno/import_lista/tabela";
+	}
+
+	private FiltroAluno trataParametrosRequest(HttpServletRequest request) {
+		this.filtro_aluno = new FiltroAluno();
+		this.filtro_aluno.setCurso(request.getParameter("curso"));
+		this.filtro_aluno.setTurma(request.getParameter("turma"));
+		this.filtro_aluno.setSituacao(request.getParameter("situacao"));
+		this.filtro_aluno.setNome(request.getParameter("nome"));
+		this.filtro_aluno.setMatricula(request.getParameter("matricula"));
+		this.filtro_aluno.setTelefone(request.getParameter("telefone"));
+		this.filtro_aluno.setUsuario(request.getParameter("usuario"));
+		this.filtro_aluno.setAtendimentos(request.getParameter("atendimentos"));
+
+		return this.filtro_aluno;
+	}
+
 }
