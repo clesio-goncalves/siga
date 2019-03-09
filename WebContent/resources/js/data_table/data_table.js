@@ -1,4 +1,8 @@
 $(document).ready(function() {
+	atualizaDataTable();
+});
+
+function atualizaDataTable(){
 	$('#tabela_id').DataTable({
 		"language" : {
 			"url" : "../resources/idioma/Portuguese-Brasil.json"
@@ -6,4 +10,4 @@ $(document).ready(function() {
 		"order": [[ 0, "desc" ]]
 	});
 	$('[data-tooltip="tooltip"]').tooltip()
-});
+}

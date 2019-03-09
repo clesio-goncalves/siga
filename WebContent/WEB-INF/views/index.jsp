@@ -19,7 +19,7 @@
 		</security:authorize>
 		<p class="lead">Este é o protótipo do sistema SIGA-Capau (Sistema
 			Integrado de Gestão de Alunos do Campus Paulistana) que acompanha o
-			desenvolvimento dos alunos abaixo da média.</p>
+			desenvolvimento dos alunos no campus.</p>
 	</div>
 </div>
 

@@ -1,16 +1,6 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 
-function atualizaDataTableAtendimento(){
-	$('#tabela_id').DataTable({
-		"order": [[ 0, "desc" ]],
-		"language" : {
-			"url" : "../resources/idioma/Portuguese-Brasil.json"
-		}
-	});
-	$('[data-tooltip="tooltip"]').tooltip()
-}
-
 // Reset
 function limpar(){
 	$("select[name='curso']").val("").selectpicker("refresh"),
@@ -44,7 +34,7 @@ function filtrar(){
         },
 		success : function(response) {
 			$('#tabela').html(response);
-			atualizaDataTableAtendimento();
+			atualizaDataTable();
 		},
 		error : function() {
 			alert("Ocorreu um erro");

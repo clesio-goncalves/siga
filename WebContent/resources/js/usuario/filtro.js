@@ -3,10 +3,8 @@ var header = $("meta[name='_csrf_header']").attr("content");
 
 // Reset
 function limpar(){
-	$("select[name='curso']").val("").selectpicker("refresh"),
-	$("select[name='ano_ingresso']").val(""),
-	$("select[name='periodo_ingresso']").val(""),
-	$("select[name='tipo_turma']").val(""),
+	$("input[name='email']").val(""),
+	$("select[name='perfil']").val(""),
 	$("select[name='situacao']").val("")
 }
 
@@ -17,10 +15,8 @@ function filtrar(){
 		url : "filtrar",
 		cache : false,
 		data : {
-			curso : $("select[name='curso'] :selected").val(),
-			ano_ingresso : $("select[name='ano_ingresso'] :selected").val(),
-			periodo_ingresso : $("select[name='periodo_ingresso'] :selected").val(),
-			tipo_turma : $("select[name='tipo_turma'] :selected").val(),
+			email : $("input[name='email']").val(),
+			perfil : $("select[name='perfil'] :selected").val(),
 			situacao : $("select[name='situacao'] :selected").val()
 		},
 		beforeSend: function(xhr) {

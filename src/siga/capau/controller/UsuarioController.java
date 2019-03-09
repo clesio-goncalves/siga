@@ -2,6 +2,7 @@ package siga.capau.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ import siga.capau.dao.MonitorDao;
 import siga.capau.dao.PerfilDao;
 import siga.capau.dao.ProfissionalDao;
 import siga.capau.dao.UsuarioDao;
+import siga.capau.modelo.FiltroUsuario;
 import siga.capau.modelo.Usuario;
 
 @Transactional
@@ -33,6 +35,7 @@ public class UsuarioController {
 	private List<Usuario> lista_usuario;
 	private Usuario usuario;
 	private Long perfil_id;
+	private FiltroUsuario filtro_usuario;
 
 	@Autowired
 	UsuarioDao dao;
@@ -333,6 +336,21 @@ public class UsuarioController {
 
 	private Usuario retornaUsuarioLogado() {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+
+	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
+	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
+		model.addAttribute("usuarios_manipulaveis", dao.filtraUsuario(trataParametrosRequest(request)));
+		return "usuario/import_lista/tabela";
+	}
+
+	private FiltroUsuario trataParametrosRequest(HttpServletRequest request) {
+		this.filtro_usuario = new FiltroUsuario();
+		this.filtro_usuario.setEmail(request.getParameter("email"));
+		this.filtro_usuario.setPerfil(request.getParameter("perfil"));
+		this.filtro_usuario.setSituacao(request.getParameter("situacao"));
+
+		return this.filtro_usuario;
 	}
 
 }

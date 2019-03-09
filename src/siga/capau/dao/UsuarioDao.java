@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import siga.capau.modelo.FiltroUsuario;
 import siga.capau.modelo.Usuario;
 
 @Repository
@@ -17,6 +18,8 @@ public class UsuarioDao implements UserDetailsService {
 
 	@PersistenceContext
 	private EntityManager manager;
+	private String sql;
+	private boolean where;
 
 	public void adiciona(Usuario usuario) {
 		manager.persist(usuario);
@@ -27,7 +30,7 @@ public class UsuarioDao implements UserDetailsService {
 	}
 
 	public List<Usuario> lista() {
-		return manager.createQuery("select u from Usuario u", Usuario.class).getResultList();
+		return manager.createQuery("select u from Usuario u where u.ativo = true", Usuario.class).getResultList();
 	}
 
 	// Seleciona todos os usuários do tipo aluno que não estão vinculados a nenhum
@@ -80,27 +83,26 @@ public class UsuarioDao implements UserDetailsService {
 	}
 
 	public List<Usuario> listaUsuarioManipulavelPorCoordenadorPedagogia() {
-		return manager.createQuery("select u from Usuario u where u.perfil.id IN (9, 10, 11)", Usuario.class)
+		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id IN (9, 10, 11)", Usuario.class)
 				.getResultList();
 	}
-	
+
 	public List<Usuario> listaUsuarioManipulavelPorDiretor() {
-		return manager.createQuery("select u from Usuario u where u.perfil.id NOT IN (1, 3)", Usuario.class)
+		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id NOT IN (1, 3)", Usuario.class)
 				.getResultList();
 	}
-	
+
 	public List<Usuario> listaUsuarioAlunoManipulavel() {
-		return manager.createQuery("select u from Usuario u where u.perfil.id = 11", Usuario.class)
-				.getResultList();
+		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id = 11", Usuario.class).getResultList();
 	}
-	
+
 	public List<Usuario> listaUsuarioManipulavelPorDocente() {
-		return manager.createQuery("select u from Usuario u where u.perfil.id IN (10, 11)", Usuario.class)
+		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id IN (10, 11)", Usuario.class)
 				.getResultList();
 	}
-	
+
 	public List<Usuario> listaUsuarioManipulavelPorCD() {
-		return manager.createQuery("select u from Usuario u where u.perfil.id IN (9, 11)", Usuario.class)
+		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id IN (9, 11)", Usuario.class)
 				.getResultList();
 	}
 
@@ -114,7 +116,7 @@ public class UsuarioDao implements UserDetailsService {
 	}
 
 	public Long buscarPerfilIdPeloUsuarioId(Long id) {
-		return manager.createQuery("select u.perfil.id from Usuario u where u.id = :id", Long.class)
+		return manager.createQuery("select u.perfil.id from Usuario u where u.ativo=true and u.id = :id", Long.class)
 				.setParameter("id", id).getSingleResult();
 	}
 
@@ -132,6 +134,42 @@ public class UsuarioDao implements UserDetailsService {
 		}
 
 		return usuario;
+	}
+
+	public List<Usuario> filtraUsuario(FiltroUsuario filtro_usuario) {
+
+		sql = "select u from Usuario u";
+		this.where = false;
+
+		// Email
+		if (!filtro_usuario.getEmail().equals("")) {
+			this.where = true;
+			sql = sql + " where u.email like '%" + filtro_usuario.getEmail() + "%'";
+		}
+
+		// Perfil
+		if (!filtro_usuario.getPerfil().equals("")) {
+			testeWhere();
+			sql = sql + " u.perfil.id = " + filtro_usuario.getPerfil();
+		}
+
+		// Situação
+		if (!filtro_usuario.getSituacao().equals("")) {
+			testeWhere();
+			sql = sql + " u.ativo = " + filtro_usuario.getSituacao();
+		}
+
+		return manager.createQuery(sql, Usuario.class).getResultList();
+
+	}
+
+	private void testeWhere() {
+		if (this.where == false) {
+			this.where = true;
+			sql = sql + " where";
+		} else {
+			sql = sql + " and";
+		}
 	}
 
 }
