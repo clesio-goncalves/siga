@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
+import siga.capau.modelo.FiltroTurma;
 import siga.capau.modelo.Turma;
 
 @Repository
@@ -14,6 +15,8 @@ public class TurmaDao {
 
 	@PersistenceContext
 	private EntityManager manager;
+	private String sql;
+	private boolean where;
 
 	public void adiciona(Turma turma) {
 		manager.persist(turma);
@@ -84,6 +87,54 @@ public class TurmaDao {
 
 	public void remove(Long id) {
 		manager.createQuery("delete from Turma t where t.id = :id").setParameter("id", id).executeUpdate();
+	}
+
+	public List<Turma> filtraTurma(FiltroTurma filtro_turma) {
+
+		sql = "select t from Turma t";
+		this.where = false;
+
+		// Curso
+		if (filtro_turma.getCurso() != null) {
+			this.where = true;
+			sql = sql + " where t.curso.id = " + filtro_turma.getCurso();
+		}
+
+		// Ano
+		if (!filtro_turma.getAno_ingresso().equals("")) {
+			testeWhere();
+			sql = sql + " t.nome like '%" + filtro_turma.getAno_ingresso() + "%'";
+		}
+
+		// Periodo
+		if (!filtro_turma.getPeriodo_ingresso().equals("")) {
+			testeWhere();
+			sql = sql + " t.nome like '%." + filtro_turma.getPeriodo_ingresso() + "%'";
+		}
+
+		// Tipo
+		if (!filtro_turma.getTipo_turma().equals("")) {
+			testeWhere();
+			sql = sql + " t.nome like '% - " + filtro_turma.getTipo_turma() + "%'";
+		}
+
+		// Situação
+		if (!filtro_turma.getSituacao().equals("")) {
+			testeWhere();
+			sql = sql + " t.ativo = " + filtro_turma.getSituacao();
+		}
+
+		return manager.createQuery(sql, Turma.class).getResultList();
+
+	}
+
+	private void testeWhere() {
+		if (this.where == false) {
+			this.where = true;
+			sql = sql + " where";
+		} else {
+			sql = sql + " and";
+		}
 	}
 
 }

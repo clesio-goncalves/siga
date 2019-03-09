@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -20,6 +22,7 @@ import siga.capau.dao.CursoDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.dao.TurmaDisciplinaDocenteDao;
 import siga.capau.modelo.Curso;
+import siga.capau.modelo.FiltroTurma;
 import siga.capau.modelo.Turma;
 
 @Transactional
@@ -31,11 +34,7 @@ public class TurmaController {
 	private List<Curso> lista_curso;
 	private List<Integer> lista_anos;
 	private Turma turma;
-
-	public TurmaController() {
-		this.lista_anos = new ArrayList<>();
-		listaUltimosCincoAnos();
-	}
+	private FiltroTurma filtro_turma;
 
 	@Autowired
 	TurmaDao dao;
@@ -49,6 +48,10 @@ public class TurmaController {
 	@Autowired
 	TurmaDisciplinaDocenteDao dao_turma_disciplina_docente;
 
+	public TurmaController() {
+		this.lista_anos = new ArrayList<>();
+	}
+
 	@RequestMapping("/nova")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
 			"ROLE_Coordenação de Disciplina" })
@@ -58,6 +61,7 @@ public class TurmaController {
 			return "redirect:/curso/novo";
 		}
 
+		listaUltimosCincoAnos();
 		model.addAttribute("lista_anos", this.lista_anos);
 		model.addAttribute("cursos", this.lista_curso);
 		return "turma/novo";
@@ -84,12 +88,10 @@ public class TurmaController {
 
 	@RequestMapping("/lista")
 	public String lista(Model model) {
-		this.lista_turma = dao.listaTurmas();
-		for (Turma turma : this.lista_turma) {
-			turma.setQnt_alunos(dao_aluno.buscaQntAlunosPorTurmaId(turma.getId()));
-		}
-
-		model.addAttribute("turmas", this.lista_turma);
+		listaUltimosCincoAnos();
+		model.addAttribute("cursos", dao_curso.lista());
+		model.addAttribute("lista_anos", this.lista_anos);
+		model.addAttribute("turmas", qntAlunos(dao.listaTurmasAtivas()));
 		return "turma/lista";
 	}
 
@@ -164,6 +166,31 @@ public class TurmaController {
 			ano = ano - 1;
 		}
 		return this.lista_anos;
+	}
+
+	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
+	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
+		model.addAttribute("turmas", qntAlunos(dao.filtraTurma(trataParametrosRequest(request))));
+		return "turma/import_lista/tabela";
+	}
+
+	private FiltroTurma trataParametrosRequest(HttpServletRequest request) {
+		this.filtro_turma = new FiltroTurma();
+		this.filtro_turma.setCurso(request.getParameter("curso"));
+		this.filtro_turma.setAno_ingresso(request.getParameter("ano_ingresso"));
+		this.filtro_turma.setPeriodo_ingresso(request.getParameter("periodo_ingresso"));
+		this.filtro_turma.setTipo_turma(request.getParameter("tipo_turma"));
+		this.filtro_turma.setSituacao(request.getParameter("situacao"));
+
+		return this.filtro_turma;
+	}
+
+	private List<Turma> qntAlunos(List<Turma> lista) {
+		this.lista_turma = lista;
+		for (Turma turma : this.lista_turma) {
+			turma.setQnt_alunos(dao_aluno.buscaQntAlunosPorTurmaId(turma.getId()));
+		}
+		return this.lista_turma;
 	}
 
 }
