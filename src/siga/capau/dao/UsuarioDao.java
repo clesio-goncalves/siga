@@ -116,7 +116,7 @@ public class UsuarioDao implements UserDetailsService {
 	}
 
 	public Long buscarPerfilIdPeloUsuarioId(Long id) {
-		return manager.createQuery("select u.perfil.id from Usuario u where u.ativo=true and u.id = :id", Long.class)
+		return manager.createQuery("select u.perfil.id from Usuario u where u.id = :id", Long.class)
 				.setParameter("id", id).getSingleResult();
 	}
 

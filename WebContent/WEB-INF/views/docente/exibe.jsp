@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <%@	taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,6 +107,10 @@
 									</tr>
 								</c:forEach>
 							</tbody>
+							<tr style="background-color: #fff; font-weight: bold;">
+								<td colspan="5" align="center">Total de Atendimentos:
+									${fn:length(atendimentos_extraclasse)}</td>
+							</tr>
 						</table>
 					</div>
 				</c:if>

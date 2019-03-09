@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <%@	taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +39,7 @@
 							<td>${aluno.matricula}</td>
 						</c:if>
 					</tr>
-					
+
 					<tr>
 						<th>Matrícula</th>
 
@@ -117,6 +118,10 @@
 								</tr>
 							</c:forEach>
 						</tbody>
+						<tr style="background-color: #fff; font-weight: bold;">
+							<td colspan="5" align="center">Total de Atendimentos:
+								${fn:length(atendimentos_extraclasse)}</td>
+						</tr>
 					</table>
 				</div>
 				<legend>ATENDIMENTO DE MONITORIA</legend>
@@ -155,6 +160,10 @@
 								</tr>
 							</c:forEach>
 						</tbody>
+						<tr style="background-color: #fff; font-weight: bold;">
+							<td colspan="5" align="center">Total de Atendimentos:
+								${fn:length(atendimentos_monitoria)}</td>
+						</tr>
 					</table>
 				</div>
 				<legend>ATENDIMENTO DE SERVIÇOS DE SAÚDE</legend>
@@ -193,6 +202,10 @@
 								</tr>
 							</c:forEach>
 						</tbody>
+						<tr style="background-color: #fff; font-weight: bold;">
+							<td colspan="6" align="center">Total de Atendimentos:
+								${fn:length(atendimentos_saude)}</td>
+						</tr>
 					</table>
 				</div>
 				<legend>HISTÓRICO DE INDISCIPLINA</legend>
@@ -236,6 +249,10 @@
 								</tr>
 							</c:forEach>
 						</tbody>
+						<tr style="background-color: #fff; font-weight: bold;">
+							<td colspan="5" align="center">Total de Atendimentos:
+								${fn:length(atendimentos_indisciplina)}</td>
+						</tr>
 					</table>
 				</div>
 				<legend>ATENDIMENTO DA PEDAGOGIA</legend>
@@ -272,6 +289,10 @@
 								</tr>
 							</c:forEach>
 						</tbody>
+						<tr style="background-color: #fff; font-weight: bold;">
+							<td colspan="4" align="center">Total de Atendimentos:
+								${fn:length(atendimentos_pedagogia)}</td>
+						</tr>
 					</table>
 				</div>
 			</c:if>

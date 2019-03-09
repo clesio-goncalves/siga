@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <%@	taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,7 @@
 
 <div class="container">
 	<div class="card border-light mb-3">
+		<security:authentication property="principal" var="usuario_logado" />
 		<div class="card-header">Exibe os dados da disciplina</div>
 		<!-- Table -->
 		<div class="card-body">
@@ -59,82 +61,100 @@
 					</tbody>
 				</table>
 			</div>
-			<legend>ATENDIMENTO EXTRACLASSE</legend>
-			<div class="table-responsive">
-				<table class="table table-hover table-bordered dt-responsive nowrap"
-					style="width: 100%; margin-top: 10px;">
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Turma</th>
-							<th>Docente</th>
-							<th>Aluno</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="atendimento_extraclasse"
-							items="${atendimentos_extraclasse}">
+			<security:authorize
+				access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
+				<legend>ATENDIMENTO EXTRACLASSE</legend>
+				<div class="table-responsive">
+					<table
+						class="table table-hover table-bordered dt-responsive nowrap"
+						style="width: 100%; margin-top: 10px;">
+						<thead>
 							<tr>
-								<td><fmt:formatDate value="${atendimento_extraclasse.data}" /></td>
-								<td>${atendimento_extraclasse.aluno.turma.nome}</td>
-								<td>${atendimento_extraclasse.docente.nome}</td>
-								<td>${atendimento_extraclasse.aluno.nome}</td>
-								<td>
-									<!-- Exibir --> <a
-									href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"
-									class="btn btn-info btn-sm" data-tooltip="tooltip"
-									data-placement="bottom" title="Exibir"> <span
-										class="glyphicon glyphicon-search"></span></a>
-								</td>
+								<th>Data</th>
+								<th>Turma</th>
+								<th>Docente</th>
+								<th>Aluno</th>
+								<th>Ações</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-			<legend>ATENDIMENTO DE MONITORIA</legend>
-			<div class="table-responsive">
-				<table class="table table-hover table-bordered dt-responsive nowrap"
-					style="width: 100%; margin-top: 10px;">
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Horário</th>
-							<th>Turma</th>
-							<th>Aluno</th>
-							<th>Ações</th>
+						</thead>
+						<tbody>
+							<c:forEach var="atendimento_extraclasse"
+								items="${atendimentos_extraclasse}">
+								<tr>
+									<td><fmt:formatDate
+											value="${atendimento_extraclasse.data}" /></td>
+									<td>${atendimento_extraclasse.aluno.turma.nome}</td>
+									<td>${atendimento_extraclasse.docente.nome}</td>
+									<td>${atendimento_extraclasse.aluno.nome}</td>
+									<td>
+										<!-- Exibir --> <a
+										href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"
+										class="btn btn-info btn-sm" data-tooltip="tooltip"
+										data-placement="bottom" title="Exibir"> <span
+											class="glyphicon glyphicon-search"></span></a>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						<tr style="background-color: #fff; font-weight: bold;">
+							<td colspan="5" align="center">Total de Atendimentos:
+								${fn:length(atendimentos_extraclasse)}</td>
 						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="atendimento_monitoria"
-							items="${atendimentos_monitoria}">
+					</table>
+				</div>
+			</security:authorize>
+			<security:authorize
+				access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Coordenação de Disciplina')">
+				<legend>ATENDIMENTO DE MONITORIA</legend>
+				<div class="table-responsive">
+					<table
+						class="table table-hover table-bordered dt-responsive nowrap"
+						style="width: 100%; margin-top: 10px;">
+						<thead>
 							<tr>
-								<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
-								<td><fmt:formatDate type="time"
-										value="${atendimento_monitoria.horario_inicial}"
-										pattern="HH:mm" /> - <fmt:formatDate type="time"
-										value="${atendimento_monitoria.horario_final}" pattern="HH:mm" /></td>
-								<c:if test="${atendimento_monitoria.status_atendimento}">
-									<td>-</td>
-									<td>-</td>
-								</c:if>
-								<c:if
-									test="${atendimento_monitoria.status_atendimento == false}">
-									<td>${atendimento_monitoria.aluno.turma.nome}</td>
-									<td>${atendimento_monitoria.aluno.nome}</td>
-								</c:if>
-								<td>
-									<!-- Exibir --> <a
-									href="<c:url value="/atendimento/monitoria/exibe?id=${atendimento_monitoria.id}"/>"
-									class="btn btn-info btn-sm" data-tooltip="tooltip"
-									data-placement="bottom" title="Exibir"> <span
-										class="glyphicon glyphicon-search"></span></a>
-								</td>
+								<th>Data</th>
+								<th>Horário</th>
+								<th>Turma</th>
+								<th>Aluno</th>
+								<th>Ações</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody>
+							<c:forEach var="atendimento_monitoria"
+								items="${atendimentos_monitoria}">
+								<tr>
+									<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
+									<td><fmt:formatDate type="time"
+											value="${atendimento_monitoria.horario_inicial}"
+											pattern="HH:mm" /> - <fmt:formatDate type="time"
+											value="${atendimento_monitoria.horario_final}"
+											pattern="HH:mm" /></td>
+									<c:if test="${atendimento_monitoria.status_atendimento}">
+										<td>-</td>
+										<td>-</td>
+									</c:if>
+									<c:if
+										test="${atendimento_monitoria.status_atendimento == false}">
+										<td>${atendimento_monitoria.aluno.turma.nome}</td>
+										<td>${atendimento_monitoria.aluno.nome}</td>
+									</c:if>
+									<td>
+										<!-- Exibir --> <a
+										href="<c:url value="/atendimento/monitoria/exibe?id=${atendimento_monitoria.id}"/>"
+										class="btn btn-info btn-sm" data-tooltip="tooltip"
+										data-placement="bottom" title="Exibir"> <span
+											class="glyphicon glyphicon-search"></span></a>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						<tr style="background-color: #fff; font-weight: bold;">
+							<td colspan="5" align="center">Total de Atendimentos:
+								${fn:length(atendimentos_monitoria)}</td>
+						</tr>
+					</table>
+				</div>
+			</security:authorize>
 		</div>
 	</div>
 	<security:authorize
