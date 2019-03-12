@@ -1,5 +1,6 @@
 package siga.capau.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ import siga.capau.modelo.Usuario;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-	private List<Usuario> lista_usuario;
+	private List<Usuario> lista_usuarios;
 	private Usuario usuario;
 	private Long perfil_id;
 	private FiltroUsuario filtro_usuario;
@@ -149,12 +150,12 @@ public class UsuarioController {
 			"ROLE_Coordenação de Disciplina" })
 	public String altera(@Valid Usuario usuario, BindingResult result, HttpServletResponse response) {
 		if (possuiPermissaoUsuario(usuario.getId())) {
-			this.lista_usuario = dao.buscaPorEmail(usuario.getEmail());
+			this.lista_usuarios = dao.buscaPorEmail(usuario.getEmail());
 			if (result.hasErrors()) {
 				return "redirect:edita?id=" + usuario.getId();
 			} else if (usuario.comparaSenhas() == false) {
 				return "redirect:edita?id=" + usuario.getId();
-			} else if (this.lista_usuario.size() > 0 && this.lista_usuario.get(0).getId() != usuario.getId()) {
+			} else if (this.lista_usuarios.size() > 0 && this.lista_usuarios.get(0).getId() != usuario.getId()) {
 				return "redirect:edita?id=" + usuario.getId();
 			}
 
@@ -171,22 +172,24 @@ public class UsuarioController {
 	}
 
 	@RequestMapping("/relatorio")
-	public void relatorio(HttpServletRequest request, HttpServletResponse response) {
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		String nomeRelatorio = "Relatório de Usuários";
-		String nomeArquivo = request.getServletContext().getRealPath("/resources/relatorio/relatorio_usuarios.jasper");
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_usuario);
+		if (this.lista_usuarios != null) {
+			String nomeRelatorio = "Relatório de Usuários";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/relatorio_usuarios.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_usuarios);
 
-		// Pego o usuário logado
-		Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", this.usuario.getEmail());
 
-		parametros.put("relatorio_logo",
-				request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
-		parametros.put("usuario_logado", usuario.getEmail());
-
-		GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
-		gerador.geraPDFParaOutputStream(response);
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
 
 	}
 
@@ -194,43 +197,43 @@ public class UsuarioController {
 		this.usuario = retornaUsuarioLogado();
 		switch (this.usuario.getPerfil().getNome()) {
 		case "ROLE_Administrador":
-			this.lista_usuario = dao.lista();
+			this.lista_usuarios = dao.lista();
 			break;
 		case "ROLE_Coordenador":
-			this.lista_usuario = dao.listaUsuarioManipulavelPorCoordenadorPedagogia();
+			this.lista_usuarios = dao.listaUsuarioManipulavelPorCoordenadorPedagogia();
 			break;
 		case "ROLE_Diretor":
-			this.lista_usuario = dao.listaUsuarioManipulavelPorDiretor();
+			this.lista_usuarios = dao.listaUsuarioManipulavelPorDiretor();
 			break;
 		case "ROLE_Psicologia":
-			this.lista_usuario = dao.listaUsuarioAlunoManipulavel();
+			this.lista_usuarios = dao.listaUsuarioAlunoManipulavel();
 			break;
 		case "ROLE_Assistência Social":
-			this.lista_usuario = dao.listaUsuarioAlunoManipulavel();
+			this.lista_usuarios = dao.listaUsuarioAlunoManipulavel();
 			break;
 		case "ROLE_Enfermagem":
-			this.lista_usuario = dao.listaUsuarioAlunoManipulavel();
+			this.lista_usuarios = dao.listaUsuarioAlunoManipulavel();
 			break;
 		case "ROLE_Odontologia":
-			this.lista_usuario = dao.listaUsuarioAlunoManipulavel();
+			this.lista_usuarios = dao.listaUsuarioAlunoManipulavel();
 			break;
 		case "ROLE_Pedagogia":
-			this.lista_usuario = dao.listaUsuarioManipulavelPorCoordenadorPedagogia();
+			this.lista_usuarios = dao.listaUsuarioManipulavelPorCoordenadorPedagogia();
 			break;
 		case "ROLE_Docente":
-			this.lista_usuario = dao.listaUsuarioManipulavelPorDocente();
+			this.lista_usuarios = dao.listaUsuarioManipulavelPorDocente();
 			break;
 		case "ROLE_Monitor":
-			this.lista_usuario = dao.listaUsuarioAlunoManipulavel();
+			this.lista_usuarios = dao.listaUsuarioAlunoManipulavel();
 			break;
 		case "ROLE_Coordenação de Disciplina":
-			this.lista_usuario = dao.listaUsuarioManipulavelPorCD();
+			this.lista_usuarios = dao.listaUsuarioManipulavelPorCD();
 			break;
 		default:
 			break;
 		}
 
-		model.addAttribute("usuarios_manipulaveis", this.lista_usuario);
+		model.addAttribute("usuarios_manipulaveis", this.lista_usuarios);
 		return "usuario/lista";
 	}
 
@@ -365,7 +368,8 @@ public class UsuarioController {
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
-		model.addAttribute("usuarios_manipulaveis", dao.filtraUsuario(trataParametrosRequest(request)));
+		this.lista_usuarios = dao.filtraUsuario(trataParametrosRequest(request));
+		model.addAttribute("usuarios_manipulaveis", this.lista_usuarios);
 		return "usuario/import_lista/tabela";
 	}
 

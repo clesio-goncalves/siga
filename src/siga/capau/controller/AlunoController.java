@@ -1,6 +1,9 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,12 +12,14 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoIndisciplinaDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
@@ -27,6 +32,8 @@ import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Aluno;
 import siga.capau.modelo.FiltroAluno;
 import siga.capau.modelo.Turma;
+import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
@@ -34,6 +41,7 @@ import siga.capau.modelo.Turma;
 public class AlunoController {
 
 	private List<Turma> lista_turma;
+	private List<Aluno> lista_alunos;
 	private Aluno aluno;
 	private FiltroAluno filtro_aluno;
 
@@ -100,8 +108,9 @@ public class AlunoController {
 
 	@RequestMapping("/lista")
 	public String lista(Model model) {
+		this.lista_alunos = dao.lista();
 		model.addAttribute("cursos", dao_curso.lista());
-		model.addAttribute("alunos", dao.lista()); // todos os aluno ativos
+		model.addAttribute("alunos", this.lista_alunos); // todos os aluno ativos
 		return "aluno/lista";
 	}
 
@@ -183,8 +192,31 @@ public class AlunoController {
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
-		model.addAttribute("alunos", dao.filtraAluno(trataParametrosRequest(request)));
+		this.lista_alunos = dao.filtraAluno(trataParametrosRequest(request));
+		model.addAttribute("alunos", this.lista_alunos);
 		return "aluno/import_lista/tabela";
+	}
+
+	@RequestMapping("/relatorio")
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_alunos != null) {
+			String nomeRelatorio = "Relatório de Alunos";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/relatorio_alunos.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_alunos);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
+
 	}
 
 	private FiltroAluno trataParametrosRequest(HttpServletRequest request) {
@@ -199,6 +231,10 @@ public class AlunoController {
 		this.filtro_aluno.setAtendimentos(request.getParameter("atendimentos"));
 
 		return this.filtro_aluno;
+	}
+
+	private Usuario retornaUsuarioLogado() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 }
