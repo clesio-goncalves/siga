@@ -172,6 +172,9 @@ public class UsuarioController {
 	}
 
 	@RequestMapping("/relatorio")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+		"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+		"ROLE_Coordenação de Disciplina" })
 	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		if (this.lista_usuarios != null) {

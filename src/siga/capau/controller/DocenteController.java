@@ -146,7 +146,6 @@ public class DocenteController {
 		} else {
 			response.sendRedirect("lista");
 		}
-
 	}
 
 	private Usuario retornaUsuarioLogado() {

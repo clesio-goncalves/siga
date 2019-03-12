@@ -1,24 +1,32 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.MonitorDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Monitor;
 import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
@@ -26,7 +34,7 @@ import siga.capau.modelo.Usuario;
 public class MonitorController {
 
 	private List<Usuario> lista_usuario;
-	private List<Monitor> lista_monitor;
+	private List<Monitor> lista_monitores;
 
 	@Autowired
 	MonitorDao dao;
@@ -70,7 +78,8 @@ public class MonitorController {
 
 	@RequestMapping("/lista")
 	public String lista(Model model) {
-		model.addAttribute("monitores", dao.lista());
+		this.lista_monitores = dao.lista();
+		model.addAttribute("monitores", this.lista_monitores);
 		return "monitor/lista";
 	}
 
@@ -99,15 +108,40 @@ public class MonitorController {
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String altera(@Valid Monitor monitor, BindingResult result) {
-		this.lista_monitor = dao.buscaPorMatricula(monitor.getMatricula());
+		this.lista_monitores = dao.buscaPorMatricula(monitor.getMatricula());
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + monitor.getId();
-		} else if (this.lista_monitor.size() > 0 && this.lista_monitor.get(0).getId() != monitor.getId()) {
+		} else if (this.lista_monitores.size() > 0 && this.lista_monitores.get(0).getId() != monitor.getId()) {
 			return "redirect:edita?id=" + monitor.getId();
 		}
 
 		// Altera no banco
 		dao.altera(monitor);
 		return "redirect:lista";
+	}
+
+	@RequestMapping("/relatorio")
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_monitores != null) {
+			String nomeRelatorio = "Relatório de Monitores.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/relatorio_monitores.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_monitores);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
+	}
+
+	private Usuario retornaUsuarioLogado() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 }

@@ -93,7 +93,7 @@
 						<a class="dropdown-item" href="<c:url value="/aluno/lista" />">Alunos</a>
 						<a class="dropdown-item" href="<c:url value="/docente/lista" />">Docentes</a>
 						<a class="dropdown-item" href="<c:url value="/monitor/lista" />">Monitores</a>
-						<a class="dropdown-item" href="<c:url value="/profissional/lista" />">Profissional</a>
+						<a class="dropdown-item" href="<c:url value="/profissional/lista" />">Profissionais</a>
 						<a class="dropdown-item" href="<c:url value="/administracao/lista" />">Administração</a>
 						
 						<div class="dropdown-divider"></div>

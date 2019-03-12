@@ -1,6 +1,9 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,25 +12,29 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AtendimentoIndisciplinaDao;
 import siga.capau.dao.AtendimentoPedagogiaDao;
 import siga.capau.dao.AtendimentoSaudeDao;
 import siga.capau.dao.ProfissionalDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Profissional;
+import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
 @RequestMapping("/profissional")
 public class ProfissionalController {
 
-	private List<Profissional> lista_profissional;
+	private List<Profissional> lista_profissionais;
 	private Profissional profissional;
 
 	@Autowired
@@ -41,7 +48,7 @@ public class ProfissionalController {
 
 	@Autowired
 	AtendimentoIndisciplinaDao dao_atendimento_indisciplina;
-	
+
 	@Autowired
 	AtendimentoPedagogiaDao dao_atendimento_pedagogia;
 
@@ -73,7 +80,8 @@ public class ProfissionalController {
 
 	@RequestMapping("/lista")
 	public String lista(Model model) {
-		model.addAttribute("profissionais", dao.lista());
+		this.lista_profissionais = dao.lista();
+		model.addAttribute("profissionais", this.lista_profissionais);
 		return "profissional/lista";
 	}
 
@@ -110,11 +118,11 @@ public class ProfissionalController {
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	@Secured({ "ROLE_Administrador", "ROLE_Diretor" })
 	public String altera(@Valid Profissional profissional, BindingResult result) {
-		this.lista_profissional = dao.buscaPorSiape(profissional.getSiape());
+		this.lista_profissionais = dao.buscaPorSiape(profissional.getSiape());
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + profissional.getId();
-		} else if (this.lista_profissional.size() > 0
-				&& this.lista_profissional.get(0).getId() != profissional.getId()) {
+		} else if (this.lista_profissionais.size() > 0
+				&& this.lista_profissionais.get(0).getId() != profissional.getId()) {
 			return "redirect:edita?id=" + profissional.getId();
 		}
 
@@ -129,6 +137,31 @@ public class ProfissionalController {
 		model.addAttribute("usuarios",
 				dao_usuario.listaUsuarioProfissionalSemVinculo(request.getParameter("tipo_atendimento")));
 		return "profissional/lista_usuarios";
+	}
+
+	@RequestMapping("/relatorio")
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_profissionais != null) {
+			String nomeRelatorio = "Relatório de Profissionais.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/relatorio_profissionais.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_profissionais);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
+	}
+
+	private Usuario retornaUsuarioLogado() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 }
