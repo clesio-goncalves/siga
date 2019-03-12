@@ -41,7 +41,7 @@
 					</tr>
 
 					<tr>
-						<th>Matrícula</th>
+						<th>Telefone</th>
 
 						<!-- Telefone -->
 						<c:if test="${aluno.telefone eq \"\"}">

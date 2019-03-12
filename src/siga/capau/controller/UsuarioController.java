@@ -1,6 +1,8 @@
 package siga.capau.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import siga.capau.relatorio.GeradorRelatorio;
 import siga.capau.dao.AdministracaoDao;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.DocenteDao;
@@ -166,46 +170,67 @@ public class UsuarioController {
 		}
 	}
 
+	@RequestMapping("/relatorio")
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) {
+
+		String nomeRelatorio = "Relatório de Usuários";
+		String nomeArquivo = request.getServletContext().getRealPath("/resources/relatorio/relatorio_usuarios.jasper");
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_usuario);
+
+		// Pego o usuário logado
+		Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		parametros.put("relatorio_logo",
+				request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+		parametros.put("usuario_logado", usuario.getEmail());
+
+		GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+		gerador.geraPDFParaOutputStream(response);
+
+	}
+
 	private String retornaListaUsuariosManipulaveis(Model model) {
 		this.usuario = retornaUsuarioLogado();
 		switch (this.usuario.getPerfil().getNome()) {
 		case "ROLE_Administrador":
-			model.addAttribute("usuarios_manipulaveis", dao.lista());
+			this.lista_usuario = dao.lista();
 			break;
 		case "ROLE_Coordenador":
-			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioManipulavelPorCoordenadorPedagogia());
+			this.lista_usuario = dao.listaUsuarioManipulavelPorCoordenadorPedagogia();
 			break;
 		case "ROLE_Diretor":
-			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioManipulavelPorDiretor());
+			this.lista_usuario = dao.listaUsuarioManipulavelPorDiretor();
 			break;
 		case "ROLE_Psicologia":
-			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioAlunoManipulavel());
+			this.lista_usuario = dao.listaUsuarioAlunoManipulavel();
 			break;
 		case "ROLE_Assistência Social":
-			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioAlunoManipulavel());
+			this.lista_usuario = dao.listaUsuarioAlunoManipulavel();
 			break;
 		case "ROLE_Enfermagem":
-			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioAlunoManipulavel());
+			this.lista_usuario = dao.listaUsuarioAlunoManipulavel();
 			break;
 		case "ROLE_Odontologia":
-			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioAlunoManipulavel());
+			this.lista_usuario = dao.listaUsuarioAlunoManipulavel();
 			break;
 		case "ROLE_Pedagogia":
-			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioManipulavelPorCoordenadorPedagogia());
+			this.lista_usuario = dao.listaUsuarioManipulavelPorCoordenadorPedagogia();
 			break;
 		case "ROLE_Docente":
-			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioManipulavelPorDocente());
+			this.lista_usuario = dao.listaUsuarioManipulavelPorDocente();
 			break;
 		case "ROLE_Monitor":
-			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioAlunoManipulavel());
+			this.lista_usuario = dao.listaUsuarioAlunoManipulavel();
 			break;
 		case "ROLE_Coordenação de Disciplina":
-			model.addAttribute("usuarios_manipulaveis", dao.listaUsuarioManipulavelPorCD());
+			this.lista_usuario = dao.listaUsuarioManipulavelPorCD();
 			break;
 		default:
 			break;
 		}
 
+		model.addAttribute("usuarios_manipulaveis", this.lista_usuario);
 		return "usuario/lista";
 	}
 
