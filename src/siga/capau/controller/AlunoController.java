@@ -201,7 +201,7 @@ public class AlunoController {
 	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		if (this.lista_alunos != null) {
-			String nomeRelatorio = "Relatório de Alunos";
+			String nomeRelatorio = "Relatório de Alunos.pdf";
 			String nomeArquivo = request.getServletContext()
 					.getRealPath("/resources/relatorio/relatorio_alunos.jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();

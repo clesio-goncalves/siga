@@ -175,7 +175,7 @@ public class UsuarioController {
 	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		if (this.lista_usuarios != null) {
-			String nomeRelatorio = "Relatório de Usuários";
+			String nomeRelatorio = "Relatório de Usuários.pdf";
 			String nomeArquivo = request.getServletContext()
 					.getRealPath("/resources/relatorio/relatorio_usuarios.jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
