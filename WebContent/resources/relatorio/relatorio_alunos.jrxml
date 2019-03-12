@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_alunos" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ad66fa9b-cb60-4eb1-847a-e4b7d265e5d1">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="relatorio_logo" class="java.lang.String"/>
@@ -27,7 +27,18 @@
 				<imageExpression><![CDATA[$P{relatorio_logo}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="300" y="10" width="350" height="48" uuid="147d704e-54bd-47ec-b3fe-1c0e126db3ac">
+				<reportElement x="0" y="110" width="803" height="30" uuid="0cdd49b2-cfcd-43a8-b8c8-29bb3188f030">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE ALUNOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="350" height="48" uuid="53368127-9ad2-4e20-be37-f5a75bf3bc4f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -38,7 +49,7 @@
 				<text><![CDATA[Instituto Federal de Educação, Ciência e Tecnologia do Piauí - Campus Paulistana]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="300" y="45" width="350" height="31" uuid="9a776b93-4e85-441e-a875-04f0394848cb">
+				<reportElement x="300" y="35" width="350" height="31" uuid="6056c0e5-6a2a-48e5-b2e0-b0b894a47f2a">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -50,15 +61,16 @@
 				<text><![CDATA[Coordenação de Tecnologia da Informação]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="110" width="803" height="30" uuid="0cdd49b2-cfcd-43a8-b8c8-29bb3188f030">
+				<reportElement x="300" y="54" width="350" height="31" uuid="c0b29cd1-3ed2-4f7f-a01d-2500544966d2">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="16" isBold="true"/>
+				<textElement>
+					<font size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[RELATÓRIO DE ALUNOS]]></text>
+				<text><![CDATA[Sistema Integrado de Gestão de Alunos]]></text>
 			</staticText>
 		</band>
 	</title>

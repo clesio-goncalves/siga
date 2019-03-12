@@ -25,7 +25,7 @@
 				<imageExpression><![CDATA[$P{relatorio_logo}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="300" y="10" width="350" height="48" uuid="0578be17-d24d-478b-93b4-4c49c4e6e442">
+				<reportElement x="300" y="0" width="350" height="48" uuid="0578be17-d24d-478b-93b4-4c49c4e6e442">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -36,7 +36,7 @@
 				<text><![CDATA[Instituto Federal de Educação, Ciência e Tecnologia do Piauí - Campus Paulistana]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="300" y="45" width="350" height="31" uuid="87dd6126-e063-4feb-a96a-228000bb79e4">
+				<reportElement x="300" y="35" width="350" height="31" uuid="87dd6126-e063-4feb-a96a-228000bb79e4">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -57,6 +57,18 @@
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RELATÓRIO DE PROFISSIONAIS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="54" width="350" height="31" uuid="4e262769-573b-4599-b947-756cec70cd46">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema Integrado de Gestão de Alunos]]></text>
 			</staticText>
 		</band>
 	</title>

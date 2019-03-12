@@ -24,7 +24,18 @@
 				<imageExpression><![CDATA[$P{relatorio_logo}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="260" y="10" width="295" height="48" uuid="0ae2061c-8d77-4356-8355-8ba4c472e441">
+				<reportElement x="0" y="110" width="555" height="30" uuid="92c5d912-84d3-4744-94ca-c6bfa87ad62a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE DOCENTES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="0" width="295" height="48" uuid="a63bf406-fce6-4d9b-b84e-aeea7aef196f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -35,7 +46,7 @@
 				<text><![CDATA[Instituto Federal de Educação, Ciência e Tecnologia do Piauí - Campus Paulistana]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="260" y="45" width="295" height="31" uuid="0ea05b89-229e-499c-bcaa-7f9683d41b07">
+				<reportElement x="260" y="35" width="295" height="31" uuid="775d2acb-9ed3-4d56-bb0f-45381c6c6fec">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -47,15 +58,16 @@
 				<text><![CDATA[Coordenação de Tecnologia da Informação]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="110" width="555" height="30" uuid="92c5d912-84d3-4744-94ca-c6bfa87ad62a">
+				<reportElement x="260" y="54" width="295" height="31" uuid="80e3c95b-0b0f-474a-9e02-b046790f8d1b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="16" isBold="true"/>
+				<textElement>
+					<font size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[RELATÓRIO DE DOCENTES]]></text>
+				<text><![CDATA[Sistema Integrado de Gestão de Alunos]]></text>
 			</staticText>
 		</band>
 	</title>

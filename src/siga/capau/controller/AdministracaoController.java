@@ -1,6 +1,9 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,10 +19,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AdministracaoDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Administracao;
 import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
@@ -63,7 +68,8 @@ public class AdministracaoController {
 
 	@RequestMapping("/lista")
 	public String lista(Model model) {
-		model.addAttribute("lista_administracao", dao.lista());
+		this.lista_administracao = dao.lista();
+		model.addAttribute("lista_administracao", this.lista_administracao);
 		return "administracao/lista";
 	}
 
@@ -115,6 +121,27 @@ public class AdministracaoController {
 		} else {
 			response.setStatus(403);
 			return "redirect:/403";
+		}
+	}
+
+	@RequestMapping("/relatorio")
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_administracao != null) {
+			String nomeRelatorio = "Relatório da Administração.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/relatorio_administracao.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_administracao);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
 		}
 	}
 
