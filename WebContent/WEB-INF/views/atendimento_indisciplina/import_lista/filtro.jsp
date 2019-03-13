@@ -96,7 +96,7 @@
 						Advertência </label> <select class="custom-select" name="tipo_advertencia"
 						disabled="disabled">
 						<option value="" selected="selected">Todos</option>
-						<option value="Oral">Oral</option>
+						<option value="Verbal">Verbal</option>
 						<option value="Escrita">Escrita</option>
 						<option value="Suspensão">Suspensão</option>
 					</select>

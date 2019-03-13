@@ -13,6 +13,7 @@
 			<th>Aluno</th>
 			<th>Advertido</th>
 			<th>Tipo advertência</th>
+			<th>Descrição</th>
 			<th>Ações</th>
 		</tr>
 	</thead>
@@ -32,6 +33,7 @@
 					<td>${atendimento_indisciplina.advertido}</td>
 					<td>-</td>
 				</c:if>
+				<td>${atendimento_indisciplina.descricao}</td>
 				<td>
 					<!-- Exibir --> <a
 					href="<c:url value="/atendimento/indisciplina/exibe?id=${atendimento_indisciplina.id}"/>"
@@ -89,7 +91,7 @@
 		</c:forEach>
 	</tbody>
 	<tr style="background-color: #fff; font-weight: bold;">
-		<td colspan="6" align="center">Total de Ocorrências:
+		<td colspan="7" align="center">Total de Ocorrências:
 			${fn:length(atendimentos_indisciplina)}</td>
 	</tr>
 </table>

@@ -93,8 +93,8 @@
 					Advertência </label> <select class="custom-select" name="tipo_advertencia"
 					required="required"
 					${atendimento_indisciplina.advertido eq 'Não' ? 'disabled' : ''}>
-					<option value="Oral"
-						${atendimento_indisciplina.tipo_advertencia eq 'Oral' ? 'selected' : ''}>Oral</option>
+					<option value="Verbal"
+						${atendimento_indisciplina.tipo_advertencia eq 'Verbal' ? 'selected' : ''}>Verbal</option>
 					<option value="Escrita"
 						${atendimento_indisciplina.tipo_advertencia eq 'Escrita' ? 'selected' : ''}>Escrita</option>
 					<option value="Suspensão"

@@ -82,7 +82,7 @@
 				<label for="tipo_advertencia" class="col-form-label">Tipo
 					Advertência </label> <select class="custom-select" name="tipo_advertencia"
 					disabled="disabled" required="required">
-					<option value="Oral" selected="selected">Oral</option>
+					<option value="Verbal" selected="selected">Verbal</option>
 					<option value="Escrita">Escrita</option>
 					<option value="Suspensão">Suspensão</option>
 				</select>

@@ -26,8 +26,8 @@ public class AtendimentoIndisciplinaDao {
 	}
 
 	public List<AtendimentoIndisciplina> lista() {
-		return manager.createQuery("select ai from AtendimentoIndisciplina ai", AtendimentoIndisciplina.class)
-				.getResultList();
+		return manager.createQuery("select ai from AtendimentoIndisciplina ai order by ai.data desc",
+				AtendimentoIndisciplina.class).getResultList();
 	}
 
 	public List<AtendimentoIndisciplina> buscaPeloAlunoId(Long aluno_id) {
@@ -106,9 +106,8 @@ public class AtendimentoIndisciplinaDao {
 			sql = sql + " and a.descricao like '%" + filtro_atendimento_indisciplina.getDescricao() + "%'";
 		}
 
-		System.out.println("---------------------------------------------------------------------");
-		System.out.println(sql);
-		System.out.println("---------------------------------------------------------------------");
+		// Order by
+		sql = sql + "order by a.data desc";
 
 		return manager.createQuery(sql, AtendimentoIndisciplina.class).getResultList();
 

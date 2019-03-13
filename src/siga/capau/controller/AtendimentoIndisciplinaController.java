@@ -1,6 +1,9 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoIndisciplinaDao;
 import siga.capau.dao.CursoDao;
@@ -26,6 +30,7 @@ import siga.capau.modelo.AtendimentoIndisciplina;
 import siga.capau.modelo.FiltroAtendimentoIndisciplina;
 import siga.capau.modelo.Profissional;
 import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
@@ -33,6 +38,7 @@ import siga.capau.modelo.Usuario;
 public class AtendimentoIndisciplinaController {
 
 	private AtendimentoIndisciplina atendimento_indisciplina;
+	private List<AtendimentoIndisciplina> lista_atendimentos_indisciplina;
 	private List<Profissional> lista_profissional;
 	private FiltroAtendimentoIndisciplina filtra_atendimento_indisciplina;
 
@@ -82,7 +88,8 @@ public class AtendimentoIndisciplinaController {
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
-		model.addAttribute("atendimentos_indisciplina", dao.lista());
+		this.lista_atendimentos_indisciplina = dao.lista();
+		model.addAttribute("atendimentos_indisciplina", this.lista_atendimentos_indisciplina);
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("profissionais", dao_profissional.buscaCoordenacaoDisciplina());
@@ -164,14 +171,37 @@ public class AtendimentoIndisciplinaController {
 		}
 	}
 
+	@RequestMapping("/relatorio")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_atendimentos_indisciplina != null) {
+			String nomeRelatorio = "Ocorrências de Indisciplina.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/atendimento_indisciplina.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_indisciplina);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
+	}
+
 	private Usuario retornaUsuarioLogado() {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
-		model.addAttribute("atendimentos_indisciplina",
-				dao.filtraAtendimentoIndisciplina(trataParametrosRequest(request)));
+		this.lista_atendimentos_indisciplina = dao.filtraAtendimentoIndisciplina(trataParametrosRequest(request));
+		model.addAttribute("atendimentos_indisciplina",	this.lista_atendimentos_indisciplina);
 		return "atendimento_indisciplina/import_lista/tabela";
 	}
 
