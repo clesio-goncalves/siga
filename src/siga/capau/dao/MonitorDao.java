@@ -24,7 +24,11 @@ public class MonitorDao {
 	}
 
 	public List<Monitor> lista() {
-		return manager.createQuery("select m from Monitor m", Monitor.class).getResultList();
+		return manager.createQuery("select m from Monitor m order by m.id desc", Monitor.class).getResultList();
+	}
+	
+	public List<Monitor> listaMonitorVinculadoADisciplina() {
+		return manager.createQuery("select m from Monitor m inner join Disciplina d on d.monitor.id = m.id", Monitor.class).getResultList();
 	}
 
 	public List<Monitor> buscaPorMatricula(String matricula) {

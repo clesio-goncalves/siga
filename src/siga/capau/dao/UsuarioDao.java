@@ -30,7 +30,8 @@ public class UsuarioDao implements UserDetailsService {
 	}
 
 	public List<Usuario> lista() {
-		return manager.createQuery("select u from Usuario u where u.ativo = true", Usuario.class).getResultList();
+		return manager.createQuery("select u from Usuario u where u.ativo = true order by u.id desc", Usuario.class)
+				.getResultList();
 	}
 
 	// Seleciona todos os usuários do tipo aluno que não estão vinculados a nenhum
@@ -83,26 +84,32 @@ public class UsuarioDao implements UserDetailsService {
 	}
 
 	public List<Usuario> listaUsuarioManipulavelPorCoordenadorPedagogia() {
-		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id IN (9, 10, 11)", Usuario.class)
-				.getResultList();
+		return manager.createQuery(
+				"select u from Usuario u where u.ativo=true and u.perfil.id IN (9, 10, 11) order by u.id desc",
+				Usuario.class).getResultList();
 	}
 
 	public List<Usuario> listaUsuarioManipulavelPorDiretor() {
-		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id NOT IN (1, 3)", Usuario.class)
-				.getResultList();
+		return manager.createQuery(
+				"select u from Usuario u where u.ativo=true and u.perfil.id NOT IN (1, 3) order by u.id desc",
+				Usuario.class).getResultList();
 	}
 
 	public List<Usuario> listaUsuarioAlunoManipulavel() {
-		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id = 11", Usuario.class).getResultList();
+		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id = 11 order by u.id desc",
+				Usuario.class).getResultList();
 	}
 
 	public List<Usuario> listaUsuarioManipulavelPorDocente() {
-		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id IN (10, 11)", Usuario.class)
-				.getResultList();
+		return manager.createQuery(
+				"select u from Usuario u where u.ativo=true and u.perfil.id IN (10, 11) order by u.id desc",
+				Usuario.class).getResultList();
 	}
 
 	public List<Usuario> listaUsuarioManipulavelPorCD() {
-		return manager.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id IN (9, 11)", Usuario.class)
+		return manager
+				.createQuery("select u from Usuario u where u.ativo=true and u.perfil.id IN (9, 11) order by u.id desc",
+						Usuario.class)
 				.getResultList();
 	}
 
@@ -158,6 +165,8 @@ public class UsuarioDao implements UserDetailsService {
 			testeWhere();
 			sql = sql + " u.ativo = " + filtro_usuario.getSituacao();
 		}
+
+		sql = sql + " order by u.id desc";
 
 		return manager.createQuery(sql, Usuario.class).getResultList();
 

@@ -31,7 +31,8 @@ public class TurmaDao {
 	}
 
 	public List<Turma> listaTurmasAtivas() {
-		return manager.createQuery("select t from Turma t where t.ativo=true", Turma.class).getResultList();
+		return manager.createQuery("select t from Turma t where t.ativo=true order by t.id desc", Turma.class)
+				.getResultList();
 	}
 
 	public List<Turma> buscaPorNome(String nome) {
@@ -123,6 +124,8 @@ public class TurmaDao {
 			testeWhere();
 			sql = sql + " t.ativo = " + filtro_turma.getSituacao();
 		}
+
+		sql = sql + "order by t.id desc";
 
 		return manager.createQuery(sql, Turma.class).getResultList();
 

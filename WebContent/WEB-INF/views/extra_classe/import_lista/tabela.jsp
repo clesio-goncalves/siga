@@ -88,7 +88,7 @@
 		</c:forEach>
 	</tbody>
 	<tr style="background-color: #fff; font-weight: bold;">
-		<td colspan="5" align="center">Total de Atendimentos:
+		<td colspan="6" align="center">Total de Atendimentos:
 			${fn:length(extra_classes)}</td>
 	</tr>
 </table>

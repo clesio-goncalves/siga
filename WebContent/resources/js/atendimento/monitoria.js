@@ -154,8 +154,6 @@ function alteraStatusAtendimento(contexto) {
 				},
 				success : function(response) {
 					$('#lista_monitores').html(response);
-					$('#disciplina').removeAttr('disabled');
-					$('#disciplina').selectpicker('refresh');
 					$('#monitor').removeAttr('disabled');
 					$('#monitor').selectpicker('refresh');
 				},

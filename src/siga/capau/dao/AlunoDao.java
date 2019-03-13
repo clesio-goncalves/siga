@@ -27,7 +27,8 @@ public class AlunoDao {
 	}
 
 	public List<Aluno> lista() {
-		return manager.createQuery("select a from Aluno a where a.turma.ativo = true", Aluno.class).getResultList();
+		return manager.createQuery("select a from Aluno a where a.turma.ativo = true order by a.id desc", Aluno.class)
+				.getResultList();
 	}
 
 	public Long buscaTurmaIdPorAlunoId(Long aluno_id) {
@@ -148,6 +149,8 @@ public class AlunoDao {
 			testeWhere();
 			sql = sql + " a.usuario.email like '%" + filtro_aluno.getUsuario() + "%'";
 		}
+
+		sql = sql + "order by a.id desc";
 
 		return manager.createQuery(sql, Aluno.class).getResultList();
 

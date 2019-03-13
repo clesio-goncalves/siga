@@ -287,6 +287,16 @@ public class AtendimentoMonitoriaController {
 		}
 		return "atendimento_monitoria/import_novo/monitor";
 	}
+	
+	@RequestMapping(value = "/lista_monitor", method = RequestMethod.POST)
+	public String listaDocente(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		model.addAttribute("monitores", dao_monitor.listaMonitorVinculadoADisciplina());
+		if (request.getParameter("contexto").equals("edita")) {
+			return "atendimento_monitoria/import_edita/monitor";
+		} else {
+			return "atendimento_monitoria/import_novo/monitor";
+		}
+	}
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {

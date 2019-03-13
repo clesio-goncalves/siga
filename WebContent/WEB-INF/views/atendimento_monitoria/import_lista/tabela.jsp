@@ -9,6 +9,7 @@
 	<thead>
 		<tr>
 			<th>Data</th>
+			<th>Horário</th>
 			<th>Aluno</th>
 			<th>Disciplina</th>
 			<th>Monitor</th>
@@ -20,6 +21,10 @@
 			items="${atendimento_monitorias}">
 			<tr>
 				<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
+				<td><fmt:formatDate type="time"
+						value="${atendimento_monitoria.horario_inicial}" pattern="HH:mm" />
+					- <fmt:formatDate type="time"
+						value="${atendimento_monitoria.horario_final}" pattern="HH:mm" /></td>
 				<c:if test="${atendimento_monitoria.status_atendimento}">
 					<td>-</td>
 					<td>-</td>
@@ -85,7 +90,7 @@
 		</c:forEach>
 	</tbody>
 	<tr style="background-color: #fff; font-weight: bold;">
-		<td colspan="5" align="center">Total de Atendimentos:
+		<td colspan="6" align="center">Total de Atendimentos:
 			${fn:length(atendimento_monitorias)}</td>
 	</tr>
 </table>

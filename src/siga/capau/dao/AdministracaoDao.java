@@ -24,7 +24,7 @@ public class AdministracaoDao {
 	}
 
 	public List<Administracao> lista() {
-		return manager.createQuery("select a from Administracao a", Administracao.class).getResultList();
+		return manager.createQuery("select a from Administracao a order by a.id desc", Administracao.class).getResultList();
 	}
 
 	public List<Administracao> buscaPorSiape(int siape) {

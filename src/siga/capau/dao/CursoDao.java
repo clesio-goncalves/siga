@@ -24,7 +24,7 @@ public class CursoDao {
 	}
 
 	public List<Curso> lista() {
-		return manager.createQuery("select c from Curso c", Curso.class).getResultList();
+		return manager.createQuery("select c from Curso c order by c.id desc", Curso.class).getResultList();
 	}
 
 	public List<Curso> listaCursosPorDocenteId(Long docente_id) {

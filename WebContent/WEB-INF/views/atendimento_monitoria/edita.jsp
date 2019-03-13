@@ -61,7 +61,7 @@
 			<!-- MONITOR -->
 			<input type="hidden" name="monitor_id" value="${monitor.id}" />
 			<div class="col-md-6 form-group" id="lista_monitores">
-				<jsp:include page="import_novo/monitor.jsp"></jsp:include>
+				<jsp:include page="import_edita/monitor.jsp"></jsp:include>
 			</div>
 		</div>
 

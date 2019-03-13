@@ -24,7 +24,7 @@ public class ProfissionalDao {
 	}
 
 	public List<Profissional> lista() {
-		return manager.createQuery("select p from Profissional p", Profissional.class).getResultList();
+		return manager.createQuery("select p from Profissional p order by p.id desc", Profissional.class).getResultList();
 	}
 
 	public List<Profissional> buscaSetorSaude() {

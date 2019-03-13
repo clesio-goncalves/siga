@@ -13,9 +13,12 @@
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
-
 	<!-- Filtros -->
 	<jsp:include page="import_lista/filtro.jsp"></jsp:include>
+
+</div>
+
+<div class="container-fluid">
 
 	<div class="card border-light mb-3">
 		<div class="card-header">Listagem de Atendimentos de Monitoria</div>
