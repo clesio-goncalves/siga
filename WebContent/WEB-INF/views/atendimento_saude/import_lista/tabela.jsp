@@ -9,9 +9,11 @@
 	<thead>
 		<tr>
 			<th>Data</th>
+			<th>Horário</th>
 			<th>Tipo de Atendimento</th>
 			<th>Aluno</th>
 			<th>Possui observação</th>
+			<th>Essa observação dificulta o aprendizado</th>
 			<th>Ações</th>
 		</tr>
 	</thead>
@@ -19,13 +21,26 @@
 		<c:forEach var="atendimento_saude" items="${atendimentos_saude}">
 			<tr>
 				<td><fmt:formatDate value="${atendimento_saude.data}" /></td>
+				<td><fmt:formatDate type="time"
+						value="${atendimento_saude.horario_inicial}" pattern="HH:mm" /> -
+					<fmt:formatDate type="time"
+						value="${atendimento_saude.horario_final}" pattern="HH:mm" /></td>
 				<td>${atendimento_saude.profissional.tipo_atendimento}</td>
 				<td>${atendimento_saude.aluno.nome}</td>
 				<c:if test="${atendimento_saude.possui_problema eq 'Sim'}">
 					<td style="font-weight: bold; color: red;">${atendimento_saude.possui_problema}</td>
+					<c:if
+						test="${atendimento_saude.esse_problema_dificulta_aprendizado eq 'Sim'}">
+						<td style="font-weight: bold; color: red;">${atendimento_saude.esse_problema_dificulta_aprendizado}</td>
+					</c:if>
+					<c:if
+						test="${atendimento_saude.esse_problema_dificulta_aprendizado eq 'Não'}">
+						<td>${atendimento_saude.esse_problema_dificulta_aprendizado}</td>
+					</c:if>
 				</c:if>
 				<c:if test="${atendimento_saude.possui_problema eq 'Não'}">
 					<td>${atendimento_saude.possui_problema}</td>
+					<td>-</td>
 				</c:if>
 				<td>
 					<!-- Exibir --> <a
@@ -86,7 +101,7 @@
 		</c:forEach>
 	</tbody>
 	<tr style="background-color: #fff; font-weight: bold;">
-		<td colspan="5" align="center">Total de Atendimentos:
+		<td colspan="7" align="center">Total de Atendimentos:
 			${fn:length(atendimentos_saude)}</td>
 	</tr>
 </table>

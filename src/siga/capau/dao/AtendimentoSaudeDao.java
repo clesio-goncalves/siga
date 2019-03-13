@@ -26,7 +26,7 @@ public class AtendimentoSaudeDao {
 	}
 
 	public List<AtendimentoSaude> lista() {
-		return manager.createQuery("select a from AtendimentoSaude a", AtendimentoSaude.class).getResultList();
+		return manager.createQuery("select a from AtendimentoSaude a order by a.data desc", AtendimentoSaude.class).getResultList();
 	}
 
 	public List<AtendimentoSaude> buscaPeloAlunoId(Long aluno_id) {
@@ -103,6 +103,9 @@ public class AtendimentoSaudeDao {
 			sql = sql + " and a.esse_problema_dificulta_aprendizado like '"
 					+ filtro_atendimento_saude.getEsse_problema_dificulta_aprendizado() + "'";
 		}
+		
+		// Order by
+		sql = sql + " order by a.data desc";
 
 		return manager.createQuery(sql, AtendimentoSaude.class).getResultList();
 

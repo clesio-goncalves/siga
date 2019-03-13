@@ -53,23 +53,13 @@
 							- <fmt:formatDate type="time"
 								value="${atendimento_saude.horario_final}" pattern="HH:mm" /></td>
 					</tr>
-					<tr>
-						<th>Possui alguma observação?</th>
-						<c:if test="${atendimento_saude.possui_problema eq 'Sim'}">
+					<c:if test="${atendimento_saude.possui_problema eq 'Sim'}">
+						<tr>
+							<th>Possui alguma observação?</th>
 							<td style="font-weight: bold; color: red;">${atendimento_saude.possui_problema}</td>
-						</c:if>
-						<c:if test="${atendimento_saude.possui_problema eq 'Não'}">
-							<td>${atendimento_saude.possui_problema}</td>
-						</c:if>
-					</tr>
-					<tr>
-						<th>Essa observação dificulta o aprendizado?</th>
-						<c:if
-							test="${atendimento_saude.esse_problema_dificulta_aprendizado == null}">
-							<td>-</td>
-						</c:if>
-						<c:if
-							test="${atendimento_saude.esse_problema_dificulta_aprendizado != null}">
+						</tr>
+						<tr>
+							<th>Essa observação dificulta o aprendizado?</th>
 							<c:if
 								test="${atendimento_saude.esse_problema_dificulta_aprendizado eq 'Sim'}">
 								<td style="font-weight: bold; color: red;">${atendimento_saude.esse_problema_dificulta_aprendizado}</td>
@@ -78,8 +68,18 @@
 								test="${atendimento_saude.esse_problema_dificulta_aprendizado eq 'Não'}">
 								<td>${atendimento_saude.esse_problema_dificulta_aprendizado}</td>
 							</c:if>
-						</c:if>
-					</tr>
+						</tr>
+					</c:if>
+					<c:if test="${atendimento_saude.possui_problema eq 'Não'}">
+						<tr>
+							<th>Possui alguma observação?</th>
+							<td>${atendimento_saude.possui_problema}</td>
+						</tr>
+						<tr>
+							<th>Essa observação dificulta o aprendizado?</th>
+							<td>-</td>
+						</tr>
+					</c:if>
 				</table>
 			</div>
 		</div>

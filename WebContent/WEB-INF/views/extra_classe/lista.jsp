@@ -15,7 +15,6 @@
 <div class="container">
 	<!-- Filtros -->
 	<jsp:include page="import_lista/filtro.jsp"></jsp:include>
-
 </div>
 
 <div class="container-fluid">

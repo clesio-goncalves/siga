@@ -13,9 +13,11 @@
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
-
 	<!-- Filtros -->
 	<jsp:include page="import_lista/filtro.jsp"></jsp:include>
+</div>
+
+<div class="container-fluid">
 
 	<div class="card border-light mb-3">
 		<div class="card-header">Listagem de Atendimentos de Serviços de
@@ -34,6 +36,9 @@
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
+		<!-- PDF -->
+		<a href="relatorio" class="btn btn-danger btn-lg"><span
+			class="glyphicon glyphicon-file"></span> Relatório PDF</a>
 	</div>
 </div>
 <c:import url="../componentes/js_atendimento.jsp" />

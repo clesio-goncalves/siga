@@ -374,7 +374,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Coordenador]]></text>
+				<text><![CDATA[Coordenação]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="602" y="101" width="201" height="25" uuid="fa168180-89ce-4f00-99ad-ec5432688c28">
@@ -385,7 +385,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Diretor de Ensino]]></text>
+				<text><![CDATA[Direção de Ensino]]></text>
 			</staticText>
 		</band>
 	</summary>

@@ -382,7 +382,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Diretor de Ensino]]></text>
+				<text><![CDATA[Direção de Ensino]]></text>
 			</staticText>
 		</band>
 	</summary>

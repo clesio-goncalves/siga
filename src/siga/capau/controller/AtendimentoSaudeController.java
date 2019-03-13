@@ -1,6 +1,9 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoSaudeDao;
 import siga.capau.dao.CursoDao;
@@ -26,6 +30,7 @@ import siga.capau.modelo.AtendimentoSaude;
 import siga.capau.modelo.FiltroAtendimentoSaude;
 import siga.capau.modelo.Profissional;
 import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
@@ -33,6 +38,7 @@ import siga.capau.modelo.Usuario;
 public class AtendimentoSaudeController {
 
 	private AtendimentoSaude atendimento_saude;
+	private List<AtendimentoSaude> lista_atendimentos_saude;
 	private Usuario usuario;
 	private List<Profissional> lista_profissional;
 	private FiltroAtendimentoSaude filtra_atendimento_saude;
@@ -84,7 +90,12 @@ public class AtendimentoSaudeController {
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
-		model.addAttribute("atendimentos_saude", dao.lista());
+		this.lista_profissional = dao_profissional.buscaPorUsuario(retornaUsuarioLogado().getId());
+		if (this.lista_profissional.size() == 0) {
+			return "redirect:/profissional/novo";
+		}
+		this.lista_atendimentos_saude = dao.lista();
+		model.addAttribute("atendimentos_saude", this.lista_atendimentos_saude);
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("profissionais", dao_profissional.buscaSetorSaude());
@@ -151,6 +162,28 @@ public class AtendimentoSaudeController {
 		}
 	}
 
+	@RequestMapping("/relatorio")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		if (this.lista_atendimentos_saude != null) {
+			String nomeRelatorio = "Atendimento de Serviço de Saúde.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/atendimento_saude.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_saude);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
+	}
+
 	@RequestMapping(value = "/filtro_turma", method = RequestMethod.POST)
 	public String filtrarTurma(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		if (request.getParameter("curso_id") != null) {
@@ -188,7 +221,8 @@ public class AtendimentoSaudeController {
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
-		model.addAttribute("atendimentos_saude", dao.filtraAtendimentoSaude(trataParametrosRequest(request)));
+		this.lista_atendimentos_saude = dao.filtraAtendimentoSaude(trataParametrosRequest(request));
+		model.addAttribute("atendimentos_saude", this.lista_atendimentos_saude);
 		return "atendimento_saude/import_lista/tabela";
 	}
 
