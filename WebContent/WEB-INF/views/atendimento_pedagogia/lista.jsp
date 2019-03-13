@@ -32,6 +32,9 @@
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
+		<!-- PDF -->
+		<a href="relatorio" class="btn btn-danger btn-lg"><span
+			class="glyphicon glyphicon-file"></span> Relatório PDF</a>
 	</div>
 </div>
 <c:import url="../componentes/js_atendimento.jsp" />

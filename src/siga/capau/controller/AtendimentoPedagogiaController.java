@@ -1,6 +1,9 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoPedagogiaDao;
 import siga.capau.dao.CursoDao;
@@ -26,6 +30,7 @@ import siga.capau.modelo.AtendimentoPedagogia;
 import siga.capau.modelo.FiltroAtendimentoPedagogia;
 import siga.capau.modelo.Profissional;
 import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
@@ -33,6 +38,7 @@ import siga.capau.modelo.Usuario;
 public class AtendimentoPedagogiaController {
 
 	private AtendimentoPedagogia atendimento_pedagogia;
+	private List<AtendimentoPedagogia> lista_atendimentos_pedagogia;
 	private List<Profissional> lista_profissional;
 	private FiltroAtendimentoPedagogia filtra_atendimento_pedagogia;
 
@@ -83,7 +89,8 @@ public class AtendimentoPedagogiaController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
-		model.addAttribute("atendimentos_pedagogia", dao.lista());
+		this.lista_atendimentos_pedagogia = dao.lista();
+		model.addAttribute("atendimentos_pedagogia", this.lista_atendimentos_pedagogia);
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("profissionais", dao_profissional.buscaPedagogia());
@@ -144,7 +151,7 @@ public class AtendimentoPedagogiaController {
 		}
 	}
 
-	@RequestMapping(value = "/filtro_turma_lista_atendimento_pedagogia", method = RequestMethod.POST)
+	@RequestMapping(value = "/filtro_turma_lista_atendimentos_pedagogia", method = RequestMethod.POST)
 	public String filtrarTurmaEmListaAtendimentoPedagogia(HttpServletRequest request, HttpServletResponse response,
 			Model model) throws Exception {
 		if (request.getParameter("curso") != null) {
@@ -166,13 +173,38 @@ public class AtendimentoPedagogiaController {
 		}
 	}
 
+	@RequestMapping("/relatorio")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_atendimentos_pedagogia != null) {
+			String nomeRelatorio = "Atendimento de Pedagogia - Aluno.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/atendimento_pedagogia_aluno.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_pedagogia);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
+	}
+
 	private Usuario retornaUsuarioLogado() {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
-		model.addAttribute("atendimentos_pedagogia", dao.filtraAtendimentoPedagogia(trataParametrosRequest(request)));
+		this.lista_atendimentos_pedagogia = dao.filtraAtendimentoPedagogia(trataParametrosRequest(request));
+		model.addAttribute("atendimentos_pedagogia", this.lista_atendimentos_pedagogia);
 		return "atendimento_pedagogia/import_lista/tabela";
 	}
 

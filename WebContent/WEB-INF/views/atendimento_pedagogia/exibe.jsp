@@ -35,7 +35,7 @@
 							href="<c:url value="/turma/exibe?id=${atendimento_pedagogia.aluno.turma.id}" />">${atendimento_pedagogia.aluno.turma.nome}</a></td>
 					</tr>
 					<tr>
-						<th>Profissional</th>
+						<th>Profissional responsável</th>
 						<td><a
 							href="<c:url value="/profissional/exibe?id=${atendimento_pedagogia.profissional.id}" />">${atendimento_pedagogia.profissional.nome}</a></td>
 					</tr>

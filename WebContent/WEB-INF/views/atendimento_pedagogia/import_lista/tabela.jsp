@@ -11,6 +11,7 @@
 			<th>Data</th>
 			<th>Horário</th>
 			<th>Aluno</th>
+			<th>Profissional responsável</th>
 			<th>Ações</th>
 		</tr>
 	</thead>
@@ -24,6 +25,7 @@
 						type="time" value="${atendimento_pedagogia.horario_final}"
 						pattern="HH:mm" /></td>
 				<td>${atendimento_pedagogia.aluno.nome}</td>
+				<td>${atendimento_pedagogia.profissional.nome}</td>
 
 				<td>
 					<!-- Exibir --> <a
