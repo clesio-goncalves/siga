@@ -1,18 +1,25 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.DocenteDao;
@@ -23,6 +30,8 @@ import siga.capau.dao.TurmaDisciplinaDocenteDao;
 import siga.capau.modelo.Disciplina;
 import siga.capau.modelo.Docente;
 import siga.capau.modelo.Turma;
+import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
@@ -31,7 +40,7 @@ public class DisciplinaController {
 
 	private List<Turma> lista_turma;
 	private List<Long> lista_id_turma;
-	private List<Disciplina> lista_disciplina;
+	private List<Disciplina> lista_disciplinas;
 	private List<Docente> lista_docente;
 	private Disciplina disciplina;
 	private String[] turmas_id;
@@ -110,7 +119,8 @@ public class DisciplinaController {
 
 	@RequestMapping("/lista")
 	public String lista(Model model) {
-		model.addAttribute("disciplinas", dao.lista());
+		this.lista_disciplinas = dao.lista();
+		model.addAttribute("disciplinas", this.lista_disciplinas);
 		return "disciplina/lista";
 	}
 
@@ -159,10 +169,10 @@ public class DisciplinaController {
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
 			"ROLE_Coordenação de Disciplina" })
 	public String altera(@Valid Disciplina disciplina, BindingResult result) {
-		this.lista_disciplina = dao.buscaPorNome(disciplina.getNome());
+		this.lista_disciplinas = dao.buscaPorNome(disciplina.getNome());
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + disciplina.getId();
-		} else if (this.lista_disciplina.size() > 0 && this.lista_disciplina.get(0).getId() != disciplina.getId()) {
+		} else if (this.lista_disciplinas.size() > 0 && this.lista_disciplinas.get(0).getId() != disciplina.getId()) {
 			return "redirect:edita?id=" + disciplina.getId();
 		} else if (disciplina.getTurmas() == null) {
 			return "redirect:edita?id=" + disciplina.getId();
@@ -205,6 +215,31 @@ public class DisciplinaController {
 		}
 
 		return "redirect:lista";
+	}
+
+	@RequestMapping("/relatorio")
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_disciplinas != null) {
+			String nomeRelatorio = "Relatório de Disciplinas.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/relatorio_disciplinas.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_disciplinas);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
+	}
+
+	private Usuario retornaUsuarioLogado() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 }
