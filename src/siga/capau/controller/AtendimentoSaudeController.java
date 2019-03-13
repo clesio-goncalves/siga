@@ -82,8 +82,7 @@ public class AtendimentoSaudeController {
 
 	@RequestMapping("/lista")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		model.addAttribute("atendimentos_saude", dao.lista());
 		model.addAttribute("cursos", dao_curso.lista());
@@ -108,8 +107,7 @@ public class AtendimentoSaudeController {
 
 	@RequestMapping("/exibe")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("atendimento_saude", dao.buscaPorId(id));
 		possuiPermissaoProfissionalSaude(model); // adiciona o model tipo_atendimento na view

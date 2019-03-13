@@ -45,7 +45,7 @@
 				</table>
 			</div>
 			<security:authorize
-				access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
+				access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Coordenação de Disciplina')">
 				<c:if
 					test="${profissional.tipo_atendimento eq 'Coordenação de Disciplina'}">
 					<legend>ATENDIMENTOS DE INDISCIPLINA</legend>

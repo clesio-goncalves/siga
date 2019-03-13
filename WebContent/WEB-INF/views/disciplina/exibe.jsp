@@ -62,7 +62,7 @@
 				</table>
 			</div>
 			<security:authorize
-				access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
+				access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Coordenação de Disciplina')">
 				<legend>ATENDIMENTO EXTRACLASSE</legend>
 				<div class="table-responsive">
 					<table

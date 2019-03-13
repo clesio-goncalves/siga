@@ -86,8 +86,7 @@ public class AtendimentoPedagogiaController {
 
 	@RequestMapping("/lista")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
 		this.lista_atendimentos_pedagogia = dao.lista();
 		model.addAttribute("atendimentos_pedagogia", this.lista_atendimentos_pedagogia);
@@ -106,8 +105,7 @@ public class AtendimentoPedagogiaController {
 
 	@RequestMapping("/exibe")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("atendimento_pedagogia", dao.buscaPorId(id));
 		return "atendimento_pedagogia/exibe";
@@ -175,8 +173,7 @@ public class AtendimentoPedagogiaController {
 
 	@RequestMapping("/relatorio")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		if (this.lista_atendimentos_pedagogia != null) {
