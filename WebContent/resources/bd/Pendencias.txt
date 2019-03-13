@@ -1,3 +1,0 @@
-Correções necessárias:
-- Verificar quem pode visualizar os dados do atendimento de pedagogia
-- Relatorio (PDF) nos módulos de atendimento
