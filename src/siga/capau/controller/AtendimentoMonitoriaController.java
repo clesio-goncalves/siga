@@ -1,6 +1,9 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.CursoDao;
@@ -26,6 +30,7 @@ import siga.capau.modelo.AtendimentoMonitoria;
 import siga.capau.modelo.FiltroAtendimentoMonitoria;
 import siga.capau.modelo.Monitor;
 import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
@@ -33,6 +38,7 @@ import siga.capau.modelo.Usuario;
 public class AtendimentoMonitoriaController {
 
 	private AtendimentoMonitoria atendimento_monitoria;
+	private List<AtendimentoMonitoria> lista_atendimentos_monitoria;
 	private FiltroAtendimentoMonitoria filtra_atendimento_monitoria;
 	private Usuario usuario;
 	private Monitor monitor;
@@ -99,7 +105,7 @@ public class AtendimentoMonitoriaController {
 		if (this.usuario.getPerfil().getId() == 10) {
 			this.lista_monitor = dao_monitor.buscaPorUsuario(this.usuario.getId());
 			if (this.lista_monitor.size() == 1) { // se há monitor para o usuário cadastrado
-				model.addAttribute("atendimento_monitorias", dao.buscaPeloMonitorId(this.lista_monitor.get(0).getId()));
+				this.lista_atendimentos_monitoria = dao.buscaPeloMonitorId(this.lista_monitor.get(0).getId());
 				model.addAttribute("cursos", dao_curso.listaCursosPorMonitorId(this.lista_monitor.get(0).getId()));
 				model.addAttribute("disciplinas",
 						dao_disciplina.listaDisciplinasPorMonitorId(this.lista_monitor.get(0).getId()));
@@ -108,11 +114,12 @@ public class AtendimentoMonitoriaController {
 				return "redirect:/monitor/novo";
 			}
 		} else {
-			model.addAttribute("atendimento_monitorias", dao.lista());
+			this.lista_atendimentos_monitoria = dao.lista();
 			model.addAttribute("cursos", dao_curso.lista());
 			model.addAttribute("disciplinas", dao_disciplina.lista());
 			model.addAttribute("monitores", dao_monitor.lista());
 		}
+		model.addAttribute("atendimento_monitorias", this.lista_atendimentos_monitoria);
 		model.addAttribute("alunos", dao_aluno.lista());
 		return "atendimento_monitoria/lista";
 	}
@@ -216,6 +223,30 @@ public class AtendimentoMonitoriaController {
 		}
 	}
 
+	@RequestMapping("/relatorio")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_atendimentos_monitoria != null) {
+			String nomeRelatorio = "Atendimento Monitoria.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/atendimento_monitoria.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_monitoria);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", this.usuario.getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
+	}
+
 	@RequestMapping(value = "/filtro_turma", method = RequestMethod.POST)
 	public String filtrarTurma(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		if (request.getParameter("curso_id") != null) {
@@ -287,7 +318,7 @@ public class AtendimentoMonitoriaController {
 		}
 		return "atendimento_monitoria/import_novo/monitor";
 	}
-	
+
 	@RequestMapping(value = "/lista_monitor", method = RequestMethod.POST)
 	public String listaDocente(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		model.addAttribute("monitores", dao_monitor.listaMonitorVinculadoADisciplina());
@@ -300,7 +331,8 @@ public class AtendimentoMonitoriaController {
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
-		model.addAttribute("atendimento_monitorias", dao.filtraAtendimentoMonitoria(trataParametrosRequest(request)));
+		this.lista_atendimentos_monitoria = dao.filtraAtendimentoMonitoria(trataParametrosRequest(request));
+		model.addAttribute("atendimento_monitorias", this.lista_atendimentos_monitoria);
 		return "atendimento_monitoria/import_lista/tabela";
 	}
 
