@@ -9,6 +9,7 @@
 	<thead>
 		<tr>
 			<th>Data</th>
+			<th>Horário</th>
 			<th>Aluno</th>
 			<th>Disciplina</th>
 			<th>Docente</th>
@@ -19,6 +20,9 @@
 		<c:forEach var="extra_classe" items="${extra_classes}">
 			<tr>
 				<td><fmt:formatDate value="${extra_classe.data}" /></td>
+				<td><fmt:formatDate type="time"
+						value="${extra_classe.horario_inicial}" pattern="HH:mm" /> - <fmt:formatDate
+						type="time" value="${extra_classe.horario_final}" pattern="HH:mm" /></td>
 
 				<c:if test="${extra_classe.status_atendimento}">
 					<td>-</td>

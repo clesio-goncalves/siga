@@ -1,6 +1,9 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.DisciplinaDao;
@@ -26,6 +30,7 @@ import siga.capau.modelo.Docente;
 import siga.capau.modelo.ExtraClasse;
 import siga.capau.modelo.FiltroExtraClasse;
 import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
@@ -33,6 +38,7 @@ import siga.capau.modelo.Usuario;
 public class ExtraClasseController {
 
 	private ExtraClasse extra_classe;
+	private List<ExtraClasse> lista_extra_classe;
 	private FiltroExtraClasse filtra_extra_classe;
 	private Usuario usuario;
 	private Docente docente;
@@ -101,7 +107,7 @@ public class ExtraClasseController {
 		if (this.usuario.getPerfil().getId() == 9) {
 			this.lista_docente = dao_docente.buscaPorUsuario(this.usuario.getId());
 			if (this.lista_docente.size() == 1) { // se há docente para o usuário cadastrado
-				model.addAttribute("extra_classes", dao.buscaPeloDocenteId(this.lista_docente.get(0).getId()));
+				this.lista_extra_classe = dao.buscaPeloDocenteId(this.lista_docente.get(0).getId());
 				model.addAttribute("cursos", dao_curso.listaCursosPorDocenteId(this.lista_docente.get(0).getId()));
 				model.addAttribute("disciplinas",
 						dao_disciplina.listaDisciplinasPorDocenteId(this.lista_docente.get(0).getId()));
@@ -110,11 +116,12 @@ public class ExtraClasseController {
 				return "redirect:/docente/novo";
 			}
 		} else {
-			model.addAttribute("extra_classes", dao.lista());
+			this.lista_extra_classe = dao.lista();
 			model.addAttribute("cursos", dao_curso.lista());
 			model.addAttribute("disciplinas", dao_disciplina.lista());
 			model.addAttribute("docentes", dao_docente.lista());
 		}
+		model.addAttribute("extra_classes", this.lista_extra_classe);
 		model.addAttribute("alunos", dao_aluno.lista());
 		return "extra_classe/lista";
 	}
@@ -306,8 +313,33 @@ public class ExtraClasseController {
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
-		model.addAttribute("extra_classes", dao.filtraExtraClasse(trataParametrosRequest(request)));
+		this.lista_extra_classe = dao.filtraExtraClasse(trataParametrosRequest(request));
+		model.addAttribute("extra_classes", this.lista_extra_classe);
 		return "extra_classe/import_lista/tabela";
+	}
+
+	@RequestMapping("/relatorio")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
+			"ROLE_Coordenação de Disciplina" })
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_extra_classe != null) {
+			String nomeRelatorio = "Atendimento Extraclasse.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/atendimento_extraclasse.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_extra_classe);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", this.usuario.getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
 	}
 
 	private FiltroExtraClasse trataParametrosRequest(HttpServletRequest request) {

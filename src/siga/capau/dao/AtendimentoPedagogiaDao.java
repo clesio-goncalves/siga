@@ -26,7 +26,7 @@ public class AtendimentoPedagogiaDao {
 	}
 
 	public List<AtendimentoPedagogia> lista() {
-		return manager.createQuery("select a from AtendimentoPedagogia a", AtendimentoPedagogia.class).getResultList();
+		return manager.createQuery("select a from AtendimentoPedagogia a order by a.data desc", AtendimentoPedagogia.class).getResultList();
 	}
 
 	public List<AtendimentoPedagogia> buscaPeloAlunoId(Long aluno_id) {
@@ -106,6 +106,9 @@ public class AtendimentoPedagogiaDao {
 		if (!filtro_atendimento_pedagogia.getEncaminhamento().equals("")) {
 			sql = sql + " and a.encaminhamento like '%" + filtro_atendimento_pedagogia.getEncaminhamento() + "%'";
 		}
+		
+		// Order by
+		sql = sql + " order by a.data desc";
 
 		return manager.createQuery(sql, AtendimentoPedagogia.class).getResultList();
 

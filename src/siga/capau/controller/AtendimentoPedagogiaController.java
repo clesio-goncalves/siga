@@ -151,7 +151,7 @@ public class AtendimentoPedagogiaController {
 		}
 	}
 
-	@RequestMapping(value = "/filtro_turma_lista_atendimentos_pedagogia", method = RequestMethod.POST)
+	@RequestMapping(value = "/filtro_turma_lista_atendimento_pedagogia", method = RequestMethod.POST)
 	public String filtrarTurmaEmListaAtendimentoPedagogia(HttpServletRequest request, HttpServletResponse response,
 			Model model) throws Exception {
 		if (request.getParameter("curso") != null) {
