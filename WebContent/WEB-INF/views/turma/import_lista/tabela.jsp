@@ -10,7 +10,6 @@
 			<th>Nome</th>
 			<th>Ativa</th>
 			<th>Qnt Alunos</th>
-			<th>Curso</th>
 			<th>Ações</th>
 		</tr>
 	</thead>
@@ -30,7 +29,6 @@
 				</c:if>
 
 				<td>${turma.qnt_alunos}</td>
-				<td>${turma.curso.nome}</td>
 				<td>
 					<!-- Exibir --> <a
 					href="<c:url value="/turma/exibe?id=${turma.id}"/>"

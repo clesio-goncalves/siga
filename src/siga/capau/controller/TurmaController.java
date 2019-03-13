@@ -1,8 +1,11 @@
 package siga.capau.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,12 +14,14 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.TurmaDao;
@@ -24,13 +29,15 @@ import siga.capau.dao.TurmaDisciplinaDocenteDao;
 import siga.capau.modelo.Curso;
 import siga.capau.modelo.FiltroTurma;
 import siga.capau.modelo.Turma;
+import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
 @RequestMapping("/turma")
 public class TurmaController {
 
-	private List<Turma> lista_turma;
+	private List<Turma> lista_turmas;
 	private List<Curso> lista_curso;
 	private List<Integer> lista_anos;
 	private Turma turma;
@@ -147,15 +154,36 @@ public class TurmaController {
 		turma.setNome(dao_curso.buscaNomePorId(turma.getCurso().getId()) + " - " + turma.getAno_ingresso() + "."
 				+ turma.getPeriodo_ingresso() + " - " + turma.getTipo_turma());
 
-		this.lista_turma = dao.buscaPorNome(turma.getNome());
+		this.lista_turmas = dao.buscaPorNome(turma.getNome());
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + turma.getId();
-		} else if (this.lista_turma.size() > 0 && this.lista_turma.get(0).getId() != turma.getId()) {
+		} else if (this.lista_turmas.size() > 0 && this.lista_turmas.get(0).getId() != turma.getId()) {
 			return "redirect:edita?id=" + turma.getId();
 		}
 
 		dao.altera(turma);
 		return "redirect:lista";
+	}
+
+	@RequestMapping("/relatorio")
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_turmas != null) {
+			String nomeRelatorio = "Relatório de Turmas.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/relatorio_turmas.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_turmas);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
 	}
 
 	private List<Integer> listaUltimosCincoAnos() {
@@ -186,11 +214,15 @@ public class TurmaController {
 	}
 
 	private List<Turma> qntAlunos(List<Turma> lista) {
-		this.lista_turma = lista;
-		for (Turma turma : this.lista_turma) {
+		this.lista_turmas = lista;
+		for (Turma turma : this.lista_turmas) {
 			turma.setQnt_alunos(dao_aluno.buscaQntAlunosPorTurmaId(turma.getId()));
 		}
-		return this.lista_turma;
+		return this.lista_turmas;
+	}
+
+	private Usuario retornaUsuarioLogado() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 }

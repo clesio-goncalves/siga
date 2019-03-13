@@ -25,14 +25,17 @@
 			<jsp:include page="import_lista/tabela.jsp"></jsp:include>
 		</div>
 	</div>
-	<security:authorize
-		access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Coordenação de Disciplina')">
-		<div align="center">
+	<div align="center">
+		<security:authorize
+			access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Pedagogia', 'ROLE_Coordenação de Disciplina')">
 			<a href="<c:url value="/turma/nova" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
-		</div>
-	</security:authorize>
+		</security:authorize>
+		<!-- PDF -->
+		<a href="relatorio" class="btn btn-danger btn-lg"><span
+			class="glyphicon glyphicon-file"></span> Relatório PDF</a>
+	</div>
 </div>
 
 <c:import url="../componentes/js_data_table.jsp" />
