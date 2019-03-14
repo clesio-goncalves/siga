@@ -8,13 +8,13 @@
 	style="width: 100%">
 	<thead>
 		<tr>
-			<th>Data</th>
-			<th>Horário</th>
-			<th>Tipo de Atendimento</th>
-			<th>Aluno</th>
-			<th>Possui observação</th>
-			<th>Essa observação dificulta o aprendizado</th>
-			<th>Ações</th>
+			<th style="vertical-align: middle;">Data</th>
+			<th style="vertical-align: middle;">Horário</th>
+			<th style="vertical-align: middle;">Tipo de Atendimento</th>
+			<th style="vertical-align: middle;">Aluno</th>
+			<th>Possui <br>observação?</th>
+			<th>Dificulta <br>o aprendizado?</th>
+			<th style="vertical-align: middle;">Ações</th>
 		</tr>
 	</thead>
 	<tbody>

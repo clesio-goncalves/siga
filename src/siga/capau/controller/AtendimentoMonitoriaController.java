@@ -232,7 +232,7 @@ public class AtendimentoMonitoriaController {
 		if (this.lista_atendimentos_monitoria != null) {
 			String nomeRelatorio = "Atendimento Monitoria.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/atendimento_monitoria.jasper");
+					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_monitoria);
 
@@ -244,6 +244,19 @@ public class AtendimentoMonitoriaController {
 			gerador.geraPDFParaOutputStream(response);
 		} else {
 			response.sendRedirect("lista");
+		}
+	}
+
+	private String retornaCaminhoRelatorio() {
+		switch (this.usuario.getPerfil().getId().toString()) {
+		case "10":
+			return "atendimento_monitoria_monitor";
+		case "7":
+			return "atendimento_monitoria_pedagogia";
+		case "3":
+			return "atendimento_monitoria_diretor";
+		default:
+			return "atendimento_monitoria";
 		}
 	}
 

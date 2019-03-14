@@ -179,7 +179,7 @@ public class AtendimentoPedagogiaController {
 		if (this.lista_atendimentos_pedagogia != null) {
 			String nomeRelatorio = "Atendimento de Pedagogia - Aluno.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/atendimento_pedagogia_aluno.jasper");
+					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_pedagogia);
 
@@ -191,6 +191,17 @@ public class AtendimentoPedagogiaController {
 			gerador.geraPDFParaOutputStream(response);
 		} else {
 			response.sendRedirect("lista");
+		}
+	}
+
+	private String retornaCaminhoRelatorio() {
+		switch (retornaUsuarioLogado().getPerfil().getId().toString()) {
+		case "7":
+			return "atendimento_pedagogia_aluno_cp";
+		case "3":
+			return "atendimento_pedagogia_aluno_diretor";
+		default:
+			return "atendimento_pedagogia_aluno";
 		}
 	}
 

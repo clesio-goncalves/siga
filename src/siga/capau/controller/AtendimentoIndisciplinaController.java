@@ -179,7 +179,7 @@ public class AtendimentoIndisciplinaController {
 		if (this.lista_atendimentos_indisciplina != null) {
 			String nomeRelatorio = "Ocorrências de Indisciplina.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/atendimento_indisciplina.jasper");
+					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_indisciplina);
 
@@ -194,6 +194,17 @@ public class AtendimentoIndisciplinaController {
 		}
 	}
 
+	private String retornaCaminhoRelatorio() {
+		switch (retornaUsuarioLogado().getPerfil().getId().toString()) {
+		case "12":
+			return "atendimento_indisciplina_cd";
+		case "3":
+			return "atendimento_indisciplina_diretor";
+		default:
+			return "atendimento_indisciplina";
+		}
+	}
+
 	private Usuario retornaUsuarioLogado() {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
@@ -201,7 +212,7 @@ public class AtendimentoIndisciplinaController {
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
 		this.lista_atendimentos_indisciplina = dao.filtraAtendimentoIndisciplina(trataParametrosRequest(request));
-		model.addAttribute("atendimentos_indisciplina",	this.lista_atendimentos_indisciplina);
+		model.addAttribute("atendimentos_indisciplina", this.lista_atendimentos_indisciplina);
 		return "atendimento_indisciplina/import_lista/tabela";
 	}
 

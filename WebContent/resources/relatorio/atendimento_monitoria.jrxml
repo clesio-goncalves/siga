@@ -301,7 +301,7 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="180">
+		<band height="31">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<line>
 				<reportElement x="0" y="0" width="803" height="1" uuid="2ee83163-bbeb-43aa-9d44-310cd78f4752">
@@ -331,50 +331,6 @@
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total de Atendimentos:]]></text>
-			</staticText>
-			<line>
-				<reportElement x="50" y="100" width="250" height="1" uuid="5de386b3-7cf1-4bbd-8427-d5ebf9f0f477">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-				</reportElement>
-				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="500" y="100" width="250" height="1" uuid="36b5d007-98a5-43b9-b424-e914c7ab57b6">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-				</reportElement>
-				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</graphicElement>
-			</line>
-			<staticText>
-				<reportElement x="50" y="101" width="250" height="25" uuid="bacf88d0-0677-465f-af19-d2bd115d26e9">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font isBold="true" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[Monitor]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="500" y="101" width="250" height="25" uuid="04f6c777-f447-4a64-a872-90dfc92e11a5">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font isBold="true" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[Coordenação Pedagógica]]></text>
 			</staticText>
 		</band>
 	</summary>

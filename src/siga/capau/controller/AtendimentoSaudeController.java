@@ -90,16 +90,21 @@ public class AtendimentoSaudeController {
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
-		this.lista_profissional = dao_profissional.buscaPorUsuario(retornaUsuarioLogado().getId());
-		if (this.lista_profissional.size() == 0) {
-			return "redirect:/profissional/novo";
+		this.usuario = retornaUsuarioLogado();
+		if (this.usuario.getPerfil().getId() == 4 || this.usuario.getPerfil().getId() == 5
+				|| this.usuario.getPerfil().getId() == 6 || this.usuario.getPerfil().getId() == 8) {
+			this.lista_profissional = dao_profissional.buscaPorUsuario(this.usuario.getId());
+			if (this.lista_profissional.size() == 0) {
+				return "redirect:/profissional/novo";
+			}
+			possuiPermissaoProfissionalSaude(model); // adiciona o model tipo_atendimento na view
 		}
+
 		this.lista_atendimentos_saude = dao.lista();
 		model.addAttribute("atendimentos_saude", this.lista_atendimentos_saude);
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("profissionais", dao_profissional.buscaSetorSaude());
-		possuiPermissaoProfissionalSaude(model); // adiciona o model tipo_atendimento na view
 		return "atendimento_saude/lista";
 	}
 
@@ -169,18 +174,33 @@ public class AtendimentoSaudeController {
 		if (this.lista_atendimentos_saude != null) {
 			String nomeRelatorio = "Atendimento de Serviço de Saúde.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/atendimento_saude.jasper");
+					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_saude);
 
 			parametros.put("relatorio_logo",
 					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
-			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+			parametros.put("usuario_logado", this.usuario.getEmail());
 
 			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
 			gerador.geraPDFParaOutputStream(response);
 		} else {
 			response.sendRedirect("lista");
+		}
+	}
+
+	private String retornaCaminhoRelatorio() {
+		switch (this.usuario.getPerfil().getId().toString()) {
+		case "4":
+			return "atendimento_saude";
+		case "5":
+			return "atendimento_saude";
+		case "6":
+			return "atendimento_saude";
+		case "8":
+			return "atendimento_saude";
+		default:
+			return "atendimento_saude_outros";
 		}
 	}
 
@@ -284,12 +304,8 @@ public class AtendimentoSaudeController {
 	}
 
 	private void possuiPermissaoProfissionalSaude(Model model) {
-		this.usuario = retornaUsuarioLogado();
-		if (this.usuario.getPerfil().getId() == 4 || this.usuario.getPerfil().getId() == 5
-				|| this.usuario.getPerfil().getId() == 6 || this.usuario.getPerfil().getId() == 8) {
-			model.addAttribute("tipo_atendimento",
-					dao_profissional.buscaPorUsuario(this.usuario.getId()).get(0).getTipo_atendimento());
-		}
+		model.addAttribute("tipo_atendimento",
+				dao_profissional.buscaPorUsuario(this.usuario.getId()).get(0).getTipo_atendimento());
 	}
 
 	private Usuario retornaUsuarioLogado() {

@@ -323,8 +323,10 @@ public class ExtraClasseController {
 
 		if (this.lista_extra_classe != null) {
 			String nomeRelatorio = "Atendimento Extraclasse.pdf";
+
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/atendimento_extraclasse.jasper");
+					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
+			
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_extra_classe);
 
@@ -336,6 +338,19 @@ public class ExtraClasseController {
 			gerador.geraPDFParaOutputStream(response);
 		} else {
 			response.sendRedirect("lista");
+		}
+	}
+
+	private String retornaCaminhoRelatorio() {
+		switch (this.usuario.getPerfil().getId().toString()) {
+		case "9":
+			return "atendimento_extraclasse_docente";
+		case "3":
+			return "atendimento_extraclasse_diretor";
+		case "2":
+			return "atendimento_extraclasse_coordenador";
+		default:
+			return "atendimento_extraclasse";
 		}
 	}
 
