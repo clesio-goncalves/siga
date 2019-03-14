@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-public class AtendimentoPedagogia {
+public class AtendimentoPedagogiaAluno {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

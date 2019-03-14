@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AtendimentoIndisciplinaDao;
-import siga.capau.dao.AtendimentoPedagogiaDao;
+import siga.capau.dao.AtendimentoPedagogiaAlunoDao;
 import siga.capau.dao.AtendimentoSaudeDao;
 import siga.capau.dao.ProfissionalDao;
 import siga.capau.dao.UsuarioDao;
@@ -50,7 +50,7 @@ public class ProfissionalController {
 	AtendimentoIndisciplinaDao dao_atendimento_indisciplina;
 
 	@Autowired
-	AtendimentoPedagogiaDao dao_atendimento_pedagogia;
+	AtendimentoPedagogiaAlunoDao dao_atendimento_pedagogia_aluno;
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Diretor" })
@@ -100,7 +100,7 @@ public class ProfissionalController {
 			model.addAttribute("atendimentos_indisciplina", dao_atendimento_indisciplina.buscaPeloProfissionalId(id));
 			return "profissional/exibe";
 		} else if (this.profissional.getTipo_atendimento().equals("Pedagogia")) {
-			model.addAttribute("atendimentos_pedagogia", dao_atendimento_pedagogia.buscaPeloProfissionalId(id));
+			model.addAttribute("atendimentos_pedagogia_aluno", dao_atendimento_pedagogia_aluno.buscaPeloProfissionalId(id));
 			return "profissional/exibe";
 		} else {
 			model.addAttribute("atendimentos_saude", dao_atendimento_saude.buscaPeloProfissionalId(id));

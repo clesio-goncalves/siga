@@ -141,7 +141,7 @@
 					</div>
 				</c:if>
 				<c:if test="${profissional.tipo_atendimento eq 'Pedagogia'}">
-					<legend>ATENDIMENTOS DA PEDAGOGIA</legend>
+					<legend>ATENDIMENTOS DE PEDAGOGIA AO ALUNO</legend>
 					<div class="table-responsive">
 						<table
 							class="table table-hover table-bordered dt-responsive nowrap"
@@ -156,7 +156,7 @@
 							</thead>
 							<tbody>
 								<c:forEach var="atendimento_pedagogia"
-									items="${atendimentos_pedagogia}">
+									items="${atendimentos_pedagogia_aluno}">
 									<tr>
 										<td><fmt:formatDate value="${atendimento_pedagogia.data}" /></td>
 										<td><fmt:formatDate type="time"
@@ -167,7 +167,7 @@
 										<td>${atendimento_pedagogia.aluno.nome}</td>
 										<td>
 											<!-- Exibir --> <a
-											href="<c:url value="/atendimento/pedagogia/exibe?id=${atendimento_pedagogia.id}"/>"
+											href="<c:url value="/atendimento/pedagogia/aluno/exibe?id=${atendimento_pedagogia.id}"/>"
 											class="btn btn-info btn-sm" data-tooltip="tooltip"
 											data-placement="bottom" title="Exibir"> <span
 												class="glyphicon glyphicon-search"></span></a>
@@ -177,7 +177,7 @@
 							</tbody>
 							<tr style="background-color: #fff; font-weight: bold;">
 								<td colspan="4" align="center">Total de Atendimentos:
-									${fn:length(atendimentos_pedagogia)}</td>
+									${fn:length(atendimentos_pedagogia_aluno)}</td>
 							</tr>
 						</table>
 					</div>

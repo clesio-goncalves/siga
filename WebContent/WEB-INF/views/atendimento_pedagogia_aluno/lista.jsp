@@ -7,7 +7,7 @@
 <head>
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
-<title>Atendimento de Pedagogia</title>
+<title>Atendimento de Pedagogia ao Aluno</title>
 <c:import url="../componentes/css_data_table.jsp" />
 <c:import url="../componentes/css_atendimento.jsp" />
 <c:import url="../componentes/cabecalho.jsp" />
@@ -18,7 +18,8 @@
 	<jsp:include page="import_lista/filtro.jsp"></jsp:include>
 
 	<div class="card border-light mb-3">
-		<div class="card-header">Listagem de Atendimentos da Pedagogia</div>
+		<div class="card-header">Listagem de Atendimentos da Pedagogia
+			ao Aluno</div>
 
 		<!-- Table -->
 		<div class="card-body" id="tabela">
@@ -28,7 +29,7 @@
 
 	<div align="center">
 		<security:authorize access="hasRole('ROLE_Pedagogia')">
-			<a href="<c:url value="/atendimento/pedagogia/novo" />"
+			<a href="<c:url value="/atendimento/pedagogia/aluno/novo" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 		</security:authorize>
@@ -38,7 +39,7 @@
 	</div>
 </div>
 <c:import url="../componentes/js_atendimento.jsp" />
-<c:import url="../componentes/js_data_table_atendimento.jsp" />
+<c:import url="../componentes/js_data_table_atendimento_pedagogia.jsp" />
 <script type="text/javascript"
-	src="<c:url value="/resources/js/atendimento/pedagogia_filtro.js" />"></script>
+	src="<c:url value="/resources/js/atendimento/pedagogia_aluno_filtro.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

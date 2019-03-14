@@ -6,13 +6,13 @@
 <head>
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
-<title>Atendimento de Pedagogia</title>
+<title>Atendimento de Pedagogia ao Aluno</title>
 <c:import url="../componentes/cabecalho.jsp" />
 <c:import url="../componentes/css_atendimento.jsp" />
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Atendimento de Pedagogia</h1>
+		<h1>Atendimento de Pedagogia ao Aluno</h1>
 		<p class="lead">Preencha o formulário abaixo com os dados do
 			atendimento de pedagogia no sistema.</p>
 	</div>
@@ -154,6 +154,6 @@
 
 <c:import url="../componentes/js_atendimento.jsp" />
 <script type="text/javascript"
-	src="<c:url value="/resources/js/atendimento/pedagogia.js" />"></script>
+	src="<c:url value="/resources/js/atendimento/pedagogia_aluno.js" />"></script>
 
 <c:import url="../componentes/rodape.jsp" />

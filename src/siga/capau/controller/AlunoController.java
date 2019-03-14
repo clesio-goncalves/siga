@@ -23,7 +23,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoIndisciplinaDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
-import siga.capau.dao.AtendimentoPedagogiaDao;
+import siga.capau.dao.AtendimentoPedagogiaAlunoDao;
 import siga.capau.dao.AtendimentoSaudeDao;
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.ExtraClasseDao;
@@ -70,7 +70,7 @@ public class AlunoController {
 	AtendimentoIndisciplinaDao dao_atendimento_indisciplina;
 
 	@Autowired
-	AtendimentoPedagogiaDao dao_atendimento_pedagogia;
+	AtendimentoPedagogiaAlunoDao dao_atendimento_pedagogia_aluno;
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
@@ -130,7 +130,7 @@ public class AlunoController {
 		model.addAttribute("atendimentos_monitoria", dao_atendimento_monitoria.buscaPeloAlunoId(id));
 		model.addAttribute("atendimentos_saude", dao_atendimento_saude.buscaPeloAlunoId(id));
 		model.addAttribute("atendimentos_indisciplina", dao_atendimento_indisciplina.buscaPeloAlunoId(id));
-		model.addAttribute("atendimentos_pedagogia", dao_atendimento_pedagogia.buscaPeloAlunoId(id));
+		model.addAttribute("atendimentos_pedagogia_aluno", dao_atendimento_pedagogia_aluno.buscaPeloAlunoId(id));
 		return "aluno/exibe";
 	}
 

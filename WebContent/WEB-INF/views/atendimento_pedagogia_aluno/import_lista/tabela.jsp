@@ -29,14 +29,14 @@
 
 				<td>
 					<!-- Exibir --> <a
-					href="<c:url value="/atendimento/pedagogia/exibe?id=${atendimento_pedagogia.id}"/>"
+					href="<c:url value="/atendimento/pedagogia/aluno/exibe?id=${atendimento_pedagogia.id}"/>"
 					class="btn btn-info btn-sm" data-tooltip="tooltip"
 					data-placement="bottom" title="Exibir"> <span
 						class="glyphicon glyphicon-search"></span></a> <security:authorize
 						access="hasRole('ROLE_Pedagogia')">
 						<!-- Editar -->
 						<a
-							href="<c:url value="/atendimento/pedagogia/edita?id=${atendimento_pedagogia.id}" />"
+							href="<c:url value="/atendimento/pedagogia/aluno/edita?id=${atendimento_pedagogia.id}" />"
 							class="btn btn-warning btn-sm" data-tooltip="tooltip"
 							data-placement="bottom" title="Editar"><span
 							class="glyphicon glyphicon-pencil"></span> </a>
@@ -67,7 +67,7 @@
 									</div>
 									<div class="modal-footer">
 										<a
-											href="<c:url value="/atendimento/pedagogia/remove?id=${atendimento_pedagogia.id}" />"
+											href="<c:url value="/atendimento/pedagogia/aluno/remove?id=${atendimento_pedagogia.id}" />"
 											class="btn btn-danger"><span
 											class="glyphicon glyphicon-trash"></span> Excluir</a>
 										<button type="button" class="btn btn-secondary"

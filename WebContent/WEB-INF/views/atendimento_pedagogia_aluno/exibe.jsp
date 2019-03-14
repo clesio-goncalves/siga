@@ -5,13 +5,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Exibe os dados do atendimento da pedagogia</title>
+<title>Exibe os dados do atendimento da pedagogia ao aluno</title>
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
 	<div class="card border-light mb-3">
 		<div class="card-header">Exibe os dados do atendimento da
-			pedagogia</div>
+			pedagogia ao aluno</div>
 		<!-- Table -->
 		<div class="card-body">
 			<div class="table-responsive">
@@ -97,12 +97,12 @@
 	<security:authorize access="hasRole('ROLE_Pedagogia')">
 		<div align="center">
 			<!-- Cadastrar -->
-			<a href="<c:url value="/atendimento/pedagogia/novo" />"
+			<a href="<c:url value="/atendimento/pedagogia/aluno/novo" />"
 				class="btn btn-primary btn-lg"><span
 				class="glyphicon glyphicon-plus"></span> Cadastrar</a>
 			<!-- Editar -->
 			<a
-				href="<c:url value="/atendimento/pedagogia/edita?id=${atendimento_pedagogia.id}" />"
+				href="<c:url value="/atendimento/pedagogia/aluno/edita?id=${atendimento_pedagogia.id}" />"
 				class="btn btn-warning btn-lg"><span
 				class="glyphicon glyphicon-edit"></span> Editar </a>
 			<!-- Excluir -->
@@ -130,7 +130,7 @@
 					</div>
 					<div class="modal-footer">
 						<a
-							href="<c:url value="/atendimento/pedagogia/remove?id=${atendimento_pedagogia.id}" />"
+							href="<c:url value="/atendimento/pedagogia/aluno/remove?id=${atendimento_pedagogia.id}" />"
 							class="btn btn-danger"><span
 							class="glyphicon glyphicon-trash"></span> Excluir</a>
 						<button type="button" class="btn btn-secondary"
@@ -144,7 +144,7 @@
 	</security:authorize>
 
 	<a class="btn btn-success"
-		href="<c:url value="/atendimento/pedagogia/lista" />"><span
+		href="<c:url value="/atendimento/pedagogia/aluno/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 
 </div>

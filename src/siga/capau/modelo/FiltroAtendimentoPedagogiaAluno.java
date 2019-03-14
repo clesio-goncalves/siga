@@ -1,6 +1,6 @@
 package siga.capau.modelo;
 
-public class FiltroAtendimentoPedagogia extends FiltroAtendimento {
+public class FiltroAtendimentoPedagogiaAluno extends FiltroAtendimento {
 
 	private String assunto;
 	private String profissional;

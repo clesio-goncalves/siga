@@ -7,51 +7,51 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import siga.capau.modelo.AtendimentoPedagogia;
-import siga.capau.modelo.FiltroAtendimentoPedagogia;
+import siga.capau.modelo.AtendimentoPedagogiaAluno;
+import siga.capau.modelo.FiltroAtendimentoPedagogiaAluno;
 
 @Repository
-public class AtendimentoPedagogiaDao {
+public class AtendimentoPedagogiaAlunoDao {
 
 	@PersistenceContext
 	private EntityManager manager;
 	private String sql;
 
-	public void adiciona(AtendimentoPedagogia atendimento_pedagogia) {
+	public void adiciona(AtendimentoPedagogiaAluno atendimento_pedagogia) {
 		manager.persist(atendimento_pedagogia);
 	}
 
-	public void altera(AtendimentoPedagogia atendimento_pedagogia) {
+	public void altera(AtendimentoPedagogiaAluno atendimento_pedagogia) {
 		manager.merge(atendimento_pedagogia);
 	}
 
-	public List<AtendimentoPedagogia> lista() {
-		return manager.createQuery("select a from AtendimentoPedagogia a order by a.data desc", AtendimentoPedagogia.class).getResultList();
+	public List<AtendimentoPedagogiaAluno> lista() {
+		return manager.createQuery("select a from AtendimentoPedagogiaAluno a order by a.data desc", AtendimentoPedagogiaAluno.class).getResultList();
 	}
 
-	public List<AtendimentoPedagogia> buscaPeloAlunoId(Long aluno_id) {
-		return manager.createQuery("select a from AtendimentoPedagogia a where a.aluno.id = :aluno_id",
-				AtendimentoPedagogia.class).setParameter("aluno_id", aluno_id).getResultList();
+	public List<AtendimentoPedagogiaAluno> buscaPeloAlunoId(Long aluno_id) {
+		return manager.createQuery("select a from AtendimentoPedagogiaAluno a where a.aluno.id = :aluno_id",
+				AtendimentoPedagogiaAluno.class).setParameter("aluno_id", aluno_id).getResultList();
 	}
 
-	public List<AtendimentoPedagogia> buscaPeloProfissionalId(Long profissional_id) {
-		return manager.createQuery("select a from AtendimentoPedagogia a where a.profissional.id = :profissional_id",
-				AtendimentoPedagogia.class).setParameter("profissional_id", profissional_id).getResultList();
+	public List<AtendimentoPedagogiaAluno> buscaPeloProfissionalId(Long profissional_id) {
+		return manager.createQuery("select a from AtendimentoPedagogiaAluno a where a.profissional.id = :profissional_id",
+				AtendimentoPedagogiaAluno.class).setParameter("profissional_id", profissional_id).getResultList();
 	}
 
-	public AtendimentoPedagogia buscaPorId(Long id) {
-		return manager.find(AtendimentoPedagogia.class, id);
+	public AtendimentoPedagogiaAluno buscaPorId(Long id) {
+		return manager.find(AtendimentoPedagogiaAluno.class, id);
 	}
 
 	public void remove(Long id) {
-		manager.createQuery("delete from AtendimentoPedagogia a where a.id = :id").setParameter("id", id)
+		manager.createQuery("delete from AtendimentoPedagogiaAluno a where a.id = :id").setParameter("id", id)
 				.executeUpdate();
 	}
 
-	public List<AtendimentoPedagogia> filtraAtendimentoPedagogia(
-			FiltroAtendimentoPedagogia filtro_atendimento_pedagogia) {
+	public List<AtendimentoPedagogiaAluno> filtraAtendimentoPedagogiaAluno(
+			FiltroAtendimentoPedagogiaAluno filtro_atendimento_pedagogia) {
 
-		sql = "select a from AtendimentoPedagogia as a";
+		sql = "select a from AtendimentoPedagogiaAluno as a";
 
 		sql = sql + " where DATE(a.data) between '" + filtro_atendimento_pedagogia.getData_inicial_atendimento()
 				+ "' and '" + filtro_atendimento_pedagogia.getData_final_atendimento() + "'";
@@ -110,7 +110,7 @@ public class AtendimentoPedagogiaDao {
 		// Order by
 		sql = sql + " order by a.data desc";
 
-		return manager.createQuery(sql, AtendimentoPedagogia.class).getResultList();
+		return manager.createQuery(sql, AtendimentoPedagogiaAluno.class).getResultList();
 
 	}
 
