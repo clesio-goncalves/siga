@@ -7,14 +7,15 @@
 <head>
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
-<title>Atendimento de Pedagogia ao Aluno</title>
+<title>Atendimento de Pedagogia a Família</title>
 <c:import url="../componentes/cabecalho.jsp" />
 <c:import url="../componentes/css_atendimento.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1>Editar Atendimento de Pedagogia ao Aluno</h1>
+		<h1>Editar Atendimento de Pedagogia a Família</h1>
 		<p class="lead">Preencha o formulário abaixo com os dados do
-			atendimento de pedagogia ao aluno para realizar a alteração no sistema.</p>
+			atendimento de pedagogia a família para realizar a alteração no
+			sistema.</p>
 	</div>
 </div>
 <div class="container">
@@ -55,6 +56,14 @@
 			<jsp:include page="import_edita/aluno.jsp"></jsp:include>
 		</div>
 
+		<!-- RESPONSÁVEL -->
+		<div class="form-group">
+			<label for="responsavel" class="col-form-label">Responsável<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="responsavel" MAXLENGTH="255" required
+				value="${atendimento_pedagogia.responsavel}">
+		</div>
+
 		<div class="row">
 			<!-- Data -->
 			<div class="form-group col-6">
@@ -84,62 +93,12 @@
 			</div>
 		</div>
 
-		<!-- ASSUNTO -->
+		<!-- RELATO DO ATENDIMENTO -->
 		<div class="form-group">
-			<label class="col-form-label">Assunto<span
+			<label for="relato">Relato do atendimento<span
 				class="obrigatorio">*</span></label>
-			<div class="custom-control custom-checkbox">
-				<input type="checkbox" class="custom-control-input"
-					id="customCheck1" name="dificuldades_ensino_aprendizagem"
-					${atendimento_pedagogia.dificuldades_ensino_aprendizagem ? 'checked' : ''}>
-				<label class="custom-control-label" for="customCheck1">Dificuldades
-					de ensino/aprendizagem</label>
-			</div>
-			<div class="custom-control custom-checkbox">
-				<input type="checkbox" class="custom-control-input"
-					id="customCheck2" name="ausencia_professor"
-					${atendimento_pedagogia.ausencia_professor ? 'checked' : ''}>
-				<label class="custom-control-label" for="customCheck2">Ausência
-					de professor</label>
-			</div>
-			<div class="custom-control custom-checkbox">
-				<input type="checkbox" class="custom-control-input"
-					id="customCheck3" name="relacao_professor_aluno"
-					${atendimento_pedagogia.relacao_professor_aluno ? 'checked' : ''}>
-				<label class="custom-control-label" for="customCheck3">Relação
-					professor/aluno</label>
-			</div>
-			<div class="custom-control custom-checkbox">
-				<input type="checkbox" class="custom-control-input"
-					id="customCheck4" name="indisciplina"
-					${atendimento_pedagogia.indisciplina ? 'checked' : ''}> <label
-					class="custom-control-label" for="customCheck4">Indisciplina</label>
-			</div>
-			<div class="row">
-				<div class="form-group col-auto">
-					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input"
-							id="customCheck5" onchange="alteraOutros()"
-							${atendimento_pedagogia.outros != null ? 'checked' : ''}>
-						<label class="custom-control-label" for="customCheck5">Outros</label>
-
-					</div>
-				</div>
-				<div class="form-group col-6">
-					<input type="text" class="form-control form-control-sm"
-						name="outros" id="outros" MAXLENGTH="255" required="required"
-						value="${atendimento_pedagogia.outros}"
-						${atendimento_pedagogia.outros eq null ? 'disabled' : ''}>
-				</div>
-			</div>
-		</div>
-
-		<!-- EXPOSIÇÃO DOS MOTIVOS -->
-		<div class="form-group">
-			<label for="exposicao_motivos">Exposição dos motivos<span
-				class="obrigatorio">*</span></label>
-			<textarea class="form-control" name="exposicao_motivos" rows="3"
-				required maxlength="3000">${atendimento_pedagogia.exposicao_motivos}</textarea>
+			<textarea class="form-control" name="relato" rows="3" required
+				maxlength="3000">${atendimento_pedagogia.relato}</textarea>
 		</div>
 
 		<!-- ENCAMINHAMENTO -->
@@ -155,7 +114,7 @@
 		<!-- OBTIGATÓRIO -->
 		<label>(*) Campos obrigatórios</label>
 		<div>
-			<a href="<c:url value="/atendimento/pedagogia/aluno/lista" />"
+			<a href="<c:url value="/atendimento/pedagogia/familia/lista" />"
 				class="btn btn-secondary btn-lg"> <span
 				class="glyphicon glyphicon-remove"></span> Cancelar
 			</a>

@@ -21,29 +21,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
-import siga.capau.dao.AtendimentoPedagogiaAlunoDao;
+import siga.capau.dao.AtendimentoPedagogiaFamiliaDao;
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.PerfilDao;
 import siga.capau.dao.ProfissionalDao;
 import siga.capau.dao.TurmaDao;
-import siga.capau.modelo.AtendimentoPedagogiaAluno;
-import siga.capau.modelo.FiltroAtendimentoPedagogiaAluno;
+import siga.capau.modelo.AtendimentoPedagogiaFamilia;
+import siga.capau.modelo.FiltroAtendimentoPedagogiaFamilia;
 import siga.capau.modelo.Profissional;
 import siga.capau.modelo.Usuario;
 import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
-@RequestMapping("/atendimento/pedagogia/aluno")
-public class AtendimentoPedagogiaAlunoController {
+@RequestMapping("/atendimento/pedagogia/familia")
+public class AtendimentoPedagogiaFamiliaController {
 
-	private AtendimentoPedagogiaAluno atendimento_pedagogia;
-	private List<AtendimentoPedagogiaAluno> lista_atendimentos_pedagogia;
+	private AtendimentoPedagogiaFamilia atendimento_pedagogia;
+	private List<AtendimentoPedagogiaFamilia> lista_atendimentos_pedagogia;
 	private List<Profissional> lista_profissional;
-	private FiltroAtendimentoPedagogiaAluno filtra_atendimento_pedagogia;
+	private FiltroAtendimentoPedagogiaFamilia filtra_atendimento_pedagogia;
 
 	@Autowired
-	AtendimentoPedagogiaAlunoDao dao;
+	AtendimentoPedagogiaFamiliaDao dao;
 
 	@Autowired
 	ProfissionalDao dao_profissional;
@@ -62,19 +62,19 @@ public class AtendimentoPedagogiaAlunoController {
 
 	@RequestMapping("/novo")
 	@Secured("ROLE_Pedagogia")
-	public String novoAtendimentoPedagogiaAluno(Model model) {
+	public String novoAtendimentoPedagogiaFamilia(Model model) {
 		this.lista_profissional = dao_profissional.buscaPorUsuario(retornaUsuarioLogado().getId());
 		if (this.lista_profissional.size() == 0) {
 			return "redirect:/profissional/novo";
 		}
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("profissional", this.lista_profissional.get(0));
-		return "atendimento_pedagogia_aluno/novo";
+		return "atendimento_pedagogia_familia/novo";
 	}
 
 	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
 	@Secured("ROLE_Pedagogia")
-	public String adiciona(@Valid AtendimentoPedagogiaAluno atendimento, BindingResult result) {
+	public String adiciona(@Valid AtendimentoPedagogiaFamilia atendimento, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:novo";
 		}
@@ -93,13 +93,13 @@ public class AtendimentoPedagogiaAlunoController {
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("alunos", dao_aluno.lista());
 		model.addAttribute("profissionais", dao_profissional.buscaPedagogia());
-		return "atendimento_pedagogia_aluno/lista";
+		return "atendimento_pedagogia_familia/lista";
 	}
 
 	@RequestMapping("/remove")
 	@Secured("ROLE_Pedagogia")
-	public String remove(AtendimentoPedagogiaAluno AtendimentoPedagogiaAluno) {
-		dao.remove(AtendimentoPedagogiaAluno.getId());
+	public String remove(AtendimentoPedagogiaFamilia AtendimentoPedagogiaFamilia) {
+		dao.remove(AtendimentoPedagogiaFamilia.getId());
 		return "redirect:lista";
 	}
 
@@ -108,7 +108,7 @@ public class AtendimentoPedagogiaAlunoController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
 		model.addAttribute("atendimento_pedagogia", dao.buscaPorId(id));
-		return "atendimento_pedagogia_aluno/exibe";
+		return "atendimento_pedagogia_familia/exibe";
 	}
 
 	@RequestMapping("/edita")
@@ -121,12 +121,12 @@ public class AtendimentoPedagogiaAlunoController {
 				dao_turma.listaTurmaPorCursoId(this.atendimento_pedagogia.getAluno().getTurma().getCurso().getId()));
 		model.addAttribute("alunos",
 				dao_aluno.listaAlunosPorTurmaId(this.atendimento_pedagogia.getAluno().getTurma().getId()));
-		return "atendimento_pedagogia_aluno/edita";
+		return "atendimento_pedagogia_familia/edita";
 	}
 
 	@RequestMapping(value = "/altera", method = RequestMethod.POST)
 	@Secured("ROLE_Pedagogia")
-	public String altera(@Valid AtendimentoPedagogiaAluno atendimento, BindingResult result) {
+	public String altera(@Valid AtendimentoPedagogiaFamilia atendimento, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:edita?id=" + atendimento.getId();
 		}
@@ -143,19 +143,19 @@ public class AtendimentoPedagogiaAlunoController {
 					dao_turma.listaTurmaPorCursoId(Long.parseLong(request.getParameter("curso_id"))));
 		}
 		if (request.getParameter("contexto").equals("edita")) {
-			return "atendimento_pedagogia_aluno/import_edita/turma";
+			return "atendimento_pedagogia_familia/import_edita/turma";
 		} else {
-			return "atendimento_pedagogia_aluno/import_novo/turma";
+			return "atendimento_pedagogia_familia/import_novo/turma";
 		}
 	}
 
 	@RequestMapping(value = "/filtro_turma_lista_atendimento_pedagogia", method = RequestMethod.POST)
-	public String filtrarTurmaEmListaAtendimentoPedagogiaAluno(HttpServletRequest request, HttpServletResponse response,
-			Model model) throws Exception {
+	public String filtrarTurmaEmListaAtendimentoPedagogiaFamilia(HttpServletRequest request,
+			HttpServletResponse response, Model model) throws Exception {
 		if (request.getParameter("curso") != null) {
 			model.addAttribute("turmas", dao_turma.listaTurmaPorCursoId(Long.parseLong(request.getParameter("curso"))));
 		}
-		return "atendimento_pedagogia_aluno/import_lista/import_filtro/turma";
+		return "atendimento_pedagogia_familia/import_lista/import_filtro/turma";
 	}
 
 	@RequestMapping(value = "/filtro_aluno", method = RequestMethod.POST)
@@ -165,9 +165,9 @@ public class AtendimentoPedagogiaAlunoController {
 					dao_aluno.listaAlunosPorTurmaId(Long.parseLong(request.getParameter("turma_id"))));
 		}
 		if (request.getParameter("contexto").equals("edita")) {
-			return "atendimento_pedagogia_aluno/import_edita/aluno";
+			return "atendimento_pedagogia_familia/import_edita/aluno";
 		} else {
-			return "atendimento_pedagogia_aluno/import_novo/aluno";
+			return "atendimento_pedagogia_familia/import_novo/aluno";
 		}
 	}
 
@@ -197,11 +197,11 @@ public class AtendimentoPedagogiaAlunoController {
 	private String retornaCaminhoRelatorio() {
 		switch (retornaUsuarioLogado().getPerfil().getId().toString()) {
 		case "7":
-			return "atendimento_pedagogia_aluno_cp";
+			return "atendimento_pedagogia_familia_cp";
 		case "3":
-			return "atendimento_pedagogia_aluno_diretor";
+			return "atendimento_pedagogia_familia_diretor";
 		default:
-			return "atendimento_pedagogia_aluno";
+			return "atendimento_pedagogia_familia";
 		}
 	}
 
@@ -211,13 +211,13 @@ public class AtendimentoPedagogiaAlunoController {
 
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
-		this.lista_atendimentos_pedagogia = dao.filtraAtendimentoPedagogiaAluno(trataParametrosRequest(request));
+		this.lista_atendimentos_pedagogia = dao.filtraAtendimentoPedagogiaFamilia(trataParametrosRequest(request));
 		model.addAttribute("atendimentos_pedagogia", this.lista_atendimentos_pedagogia);
-		return "atendimento_pedagogia_aluno/import_lista/tabela";
+		return "atendimento_pedagogia_familia/import_lista/tabela";
 	}
 
-	private FiltroAtendimentoPedagogiaAluno trataParametrosRequest(HttpServletRequest request) {
-		this.filtra_atendimento_pedagogia = new FiltroAtendimentoPedagogiaAluno();
+	private FiltroAtendimentoPedagogiaFamilia trataParametrosRequest(HttpServletRequest request) {
+		this.filtra_atendimento_pedagogia = new FiltroAtendimentoPedagogiaFamilia();
 		this.filtra_atendimento_pedagogia.setData_inicial_atendimento(request.getParameter("data_inicial_atendimento"));
 		this.filtra_atendimento_pedagogia.setData_final_atendimento(request.getParameter("data_final_atendimento"));
 		this.filtra_atendimento_pedagogia
@@ -226,10 +226,10 @@ public class AtendimentoPedagogiaAlunoController {
 				.setHorario_final_atendimento(request.getParameter("horario_final_atendimento"));
 		this.filtra_atendimento_pedagogia.setCurso(request.getParameter("curso"));
 		this.filtra_atendimento_pedagogia.setTurma(request.getParameter("turma"));
-		this.filtra_atendimento_pedagogia.setAssunto(request.getParameter("assunto"));
+		this.filtra_atendimento_pedagogia.setResponsavel(request.getParameter("responsavel"));
 		this.filtra_atendimento_pedagogia.setAluno(request.getParameter("aluno"));
 		this.filtra_atendimento_pedagogia.setProfissional(request.getParameter("profissional"));
-		this.filtra_atendimento_pedagogia.setExposicao_motivos(request.getParameter("exposicao_motivos"));
+		this.filtra_atendimento_pedagogia.setRelato(request.getParameter("relato"));
 		this.filtra_atendimento_pedagogia.setEncaminhamento(request.getParameter("encaminhamento"));
 
 		trataDatas();

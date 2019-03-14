@@ -77,7 +77,8 @@
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="<c:url value="/atendimento/saude/lista" />">Serviços de Saúde</a>
 							<a class="dropdown-item" href="<c:url value="/atendimento/indisciplina/lista" />">Indisciplina</a>
-							<a class="dropdown-item" href="<c:url value="/atendimento/pedagogia/aluno/lista" />">Pedagogia</a>
+							<a class="dropdown-item" href="<c:url value="/atendimento/pedagogia/aluno/lista" />">Pedagogia (Aluno)</a>
+							<a class="dropdown-item" href="<c:url value="/atendimento/pedagogia/familia/lista" />">Pedagogia (Família)</a>
 						</security:authorize>
 					</div>
 				</li>
