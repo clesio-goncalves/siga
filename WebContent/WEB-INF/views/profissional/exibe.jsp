@@ -21,22 +21,18 @@
 						<th width="30%">ID</th>
 						<td>${profissional.id}</td>
 					</tr>
-
 					<tr>
 						<th>Nome Completo</th>
 						<td style="font-weight: bold; color: blue;">${profissional.nome}</td>
 					</tr>
-
 					<tr>
 						<th>SIAPE</th>
 						<td>${profissional.siape}</td>
 					</tr>
-
 					<tr>
 						<th>Tipo de Atendimento</th>
 						<td>${profissional.tipo_atendimento}</td>
 					</tr>
-
 					<tr>
 						<th>Usuário</th>
 						<td><a
@@ -178,6 +174,48 @@
 							<tr style="background-color: #fff; font-weight: bold;">
 								<td colspan="4" align="center">Total de Atendimentos:
 									${fn:length(atendimentos_pedagogia_aluno)}</td>
+							</tr>
+						</table>
+					</div>
+					<legend>ATENDIMENTOS DE PEDAGOGIA A FAMÍLIA</legend>
+					<div class="table-responsive">
+						<table
+							class="table table-hover table-bordered dt-responsive nowrap"
+							style="width: 100%; margin-top: 10px;">
+							<thead>
+								<tr>
+									<th>Data</th>
+									<th>Horário</th>
+									<th>Aluno</th>
+									<th>Responsável</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="atendimento_pedagogia"
+									items="${atendimentos_pedagogia_familia}">
+									<tr>
+										<td><fmt:formatDate value="${atendimento_pedagogia.data}" /></td>
+										<td><fmt:formatDate type="time"
+												value="${atendimento_pedagogia.horario_inicial}"
+												pattern="HH:mm" /> - <fmt:formatDate type="time"
+												value="${atendimento_pedagogia.horario_final}"
+												pattern="HH:mm" /></td>
+										<td>${atendimento_pedagogia.aluno.nome}</td>
+										<td>${atendimento_pedagogia.responsavel}</td>
+										<td>
+											<!-- Exibir --> <a
+											href="<c:url value="/atendimento/pedagogia/familia/exibe?id=${atendimento_pedagogia.id}"/>"
+											class="btn btn-info btn-sm" data-tooltip="tooltip"
+											data-placement="bottom" title="Exibir"> <span
+												class="glyphicon glyphicon-search"></span></a>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+							<tr style="background-color: #fff; font-weight: bold;">
+								<td colspan="5" align="center">Total de Atendimentos:
+									${fn:length(atendimentos_pedagogia_familia)}</td>
 							</tr>
 						</table>
 					</div>

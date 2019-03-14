@@ -297,6 +297,48 @@
 							</tr>
 						</table>
 					</div>
+					<legend>ATENDIMENTO DE PEDAGOGIA A FAMÍLIA</legend>
+					<div class="table-responsive">
+						<table
+							class="table table-hover table-bordered dt-responsive nowrap"
+							style="width: 100%; margin-top: 10px;">
+							<thead>
+								<tr>
+									<th>Data</th>
+									<th>Horário</th>
+									<th>Responsável</th>
+									<th>Profissional</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="atendimento_pedagogia"
+									items="${atendimentos_pedagogia_familia}">
+									<tr>
+										<td><fmt:formatDate value="${atendimento_pedagogia.data}" /></td>
+										<td><fmt:formatDate type="time"
+												value="${atendimento_pedagogia.horario_inicial}"
+												pattern="HH:mm" /> - <fmt:formatDate type="time"
+												value="${atendimento_pedagogia.horario_final}"
+												pattern="HH:mm" /></td>
+										<td>${atendimento_pedagogia.responsavel}</td>
+										<td>${atendimento_pedagogia.profissional.nome}</td>
+										<td>
+											<!-- Exibir --> <a
+											href="<c:url value="/atendimento/pedagogia/familia/exibe?id=${atendimento_pedagogia.id}"/>"
+											class="btn btn-info btn-sm" data-tooltip="tooltip"
+											data-placement="bottom" title="Exibir"> <span
+												class="glyphicon glyphicon-search"></span></a>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+							<tr style="background-color: #fff; font-weight: bold;">
+								<td colspan="5" align="center">Total de Atendimentos:
+									${fn:length(atendimentos_pedagogia_familia)}</td>
+							</tr>
+						</table>
+					</div>
 				</security:authorize>
 			</c:if>
 		</div>
