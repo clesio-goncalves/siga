@@ -35,7 +35,7 @@
 			<label for="siape" class="col-form-label">SIAPE<span
 				class="obrigatorio">*</span></label> <input type="text" class="form-control"
 				name="siape" MAXLENGTH="10" required data-mask="99999999999"
-				value="${docente.siape}">
+				autocomplete="off" value="${docente.siape}">
 		</div>
 
 		<!-- USUÁRIO -->
@@ -68,4 +68,6 @@
 		</div>
 	</form>
 </div>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/jquery.mask.min.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

@@ -30,7 +30,8 @@
 		<div class="form-group">
 			<label for="siape" class="col-form-label">SIAPE<span
 				class="obrigatorio">*</span></label> <input type="text" class="form-control"
-				name="siape" MAXLENGTH="11" required data-mask="99999999999">
+				name="siape" MAXLENGTH="11" required data-mask="99999999999"
+				autocomplete="off">
 		</div>
 
 		<!-- FUNCAO -->
@@ -43,8 +44,8 @@
 					value="Coordenador"> <label class="custom-control-label"
 					for="customRadio1">Coordenador</label>
 			</div>
-			
-			<security:authorize	access="hasRole('ROLE_Administrador')">
+
+			<security:authorize access="hasRole('ROLE_Administrador')">
 				<div class="custom-control custom-radio">
 					<input type="radio" id="customRadio2" name="funcao"
 						class="custom-control-input" value="Administrador"> <label
@@ -86,6 +87,8 @@
 	</form>
 </div>
 
+<script type="text/javascript"
+	src="<c:url value="/resources/js/jquery.mask.min.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/filtro_cadastro/filtroCadServidor.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

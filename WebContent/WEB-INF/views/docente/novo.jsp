@@ -28,7 +28,8 @@
 		<div class="form-group">
 			<label for="siape" class="col-form-label">SIAPE<span
 				class="obrigatorio">*</span></label> <input type="text" class="form-control"
-				name="siape" MAXLENGTH="11" required data-mask="99999999999">
+				name="siape" MAXLENGTH="11" required data-mask="99999999999"
+				autocomplete="off">
 		</div>
 
 		<!-- USUÁRIO-->
@@ -62,4 +63,6 @@
 	</form>
 </div>
 
+<script type="text/javascript"
+	src="<c:url value="/resources/js/jquery.mask.min.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />
