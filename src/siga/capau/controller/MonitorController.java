@@ -126,7 +126,7 @@ public class MonitorController {
 		if (this.lista_monitores != null) {
 			String nomeRelatorio = "Relatório de Monitores.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/relatorio_monitores.jasper");
+					.getRealPath("/resources/relatorio/cadastro/relatorio_monitores.jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_monitores);
 

@@ -171,7 +171,7 @@ public class TurmaController {
 		if (this.lista_turmas != null) {
 			String nomeRelatorio = "Relatório de Turmas.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/relatorio_turmas.jasper");
+					.getRealPath("/resources/relatorio/cadastro/relatorio_turmas.jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_turmas);
 

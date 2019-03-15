@@ -55,13 +55,27 @@
 		<div class="form-group" id="lista_alunos">
 			<jsp:include page="import_edita/aluno.jsp"></jsp:include>
 		</div>
-
-		<!-- RESPONSÁVEL -->
-		<div class="form-group">
-			<label for="responsavel" class="col-form-label">Responsável<span
-				class="obrigatorio">*</span></label> <input type="text" class="form-control"
-				name="responsavel" MAXLENGTH="255" required
-				value="${atendimento_pedagogia.responsavel}">
+		<div class="row">
+			<!-- RESPONSÁVEL -->
+			<div class="form-group col-9">
+				<label for="responsavel" class="col-form-label">Responsável<span
+					class="obrigatorio">*</span></label> <input type="text"
+					class="form-control" name="responsavel" MAXLENGTH="255" required
+					value="${atendimento_pedagogia.responsavel}">
+			</div>
+			<div class="form-group col-3">
+				<label for="telefone" class="col-form-label">Telefone</label>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><span
+							class="glyphicon glyphicon-earphone"></span></span>
+					</div>
+					<input type="text" class="form-control maskTelefone"
+						name="telefone" MAXLENGTH="20"
+						pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}"
+						value="${atendimento_pedagogia.telefone}">
+				</div>
+			</div>
 		</div>
 
 		<div class="row">

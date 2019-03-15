@@ -180,7 +180,7 @@ public class UsuarioController {
 		if (this.lista_usuarios != null) {
 			String nomeRelatorio = "Relatório de Usuários.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/relatorio_usuarios.jasper");
+					.getRealPath("/resources/relatorio/cadastro/relatorio_usuarios.jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_usuarios);
 

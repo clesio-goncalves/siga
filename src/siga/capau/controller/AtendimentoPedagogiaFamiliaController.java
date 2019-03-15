@@ -184,7 +184,7 @@ public class AtendimentoPedagogiaFamiliaController {
 			this.lista_atendimentos_pedagogia.add(0, atendimento_pedagogia);
 			String nomeRelatorio = "Registro de atendimetno a família do aluno.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/registro_atendimento_familia.jasper");
+					.getRealPath("/resources/relatorio/pedagogia_familia/registro_atendimento_familia.jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_pedagogia);
 
@@ -207,7 +207,7 @@ public class AtendimentoPedagogiaFamiliaController {
 		if (this.lista_atendimentos_pedagogia != null) {
 			String nomeRelatorio = "Atendimento de Pedagogia - Aluno.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
+					.getRealPath("/resources/relatorio/pedagogia_familia/" + retornaCaminhoRelatorio() + ".jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_pedagogia);
 

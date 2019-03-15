@@ -152,7 +152,7 @@ public class ProfissionalController {
 		if (this.lista_profissionais != null) {
 			String nomeRelatorio = "Relatório de Profissionais.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/relatorio_profissionais.jasper");
+					.getRealPath("/resources/relatorio/cadastro/relatorio_profissionais.jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_profissionais);
 

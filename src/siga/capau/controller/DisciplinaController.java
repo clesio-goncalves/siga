@@ -223,7 +223,7 @@ public class DisciplinaController {
 		if (this.lista_disciplinas != null) {
 			String nomeRelatorio = "Relatório de Disciplinas.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/relatorio_disciplinas.jasper");
+					.getRealPath("/resources/relatorio/cadastro/relatorio_disciplinas.jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_disciplinas);
 

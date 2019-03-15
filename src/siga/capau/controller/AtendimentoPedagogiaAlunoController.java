@@ -179,7 +179,7 @@ public class AtendimentoPedagogiaAlunoController {
 		if (this.lista_atendimentos_pedagogia != null) {
 			String nomeRelatorio = "Atendimento de Pedagogia - Aluno.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
+					.getRealPath("/resources/relatorio/pedagogia_aluno/" + retornaCaminhoRelatorio() + ".jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_pedagogia);
 

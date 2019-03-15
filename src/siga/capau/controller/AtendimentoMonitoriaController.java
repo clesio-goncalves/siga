@@ -232,7 +232,7 @@ public class AtendimentoMonitoriaController {
 		if (this.lista_atendimentos_monitoria != null) {
 			String nomeRelatorio = "Atendimento Monitoria.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
+					.getRealPath("/resources/relatorio/monitoria/" + retornaCaminhoRelatorio() + ".jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_monitoria);
 

@@ -174,7 +174,7 @@ public class AtendimentoSaudeController {
 		if (this.lista_atendimentos_saude != null) {
 			String nomeRelatorio = "Atendimento de Serviço de Saúde.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
+					.getRealPath("/resources/relatorio/saude/" + retornaCaminhoRelatorio() + ".jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_saude);
 

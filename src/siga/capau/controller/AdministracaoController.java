@@ -130,7 +130,7 @@ public class AdministracaoController {
 		if (this.lista_administracao != null) {
 			String nomeRelatorio = "Relatório da Administração.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/relatorio_administracao.jasper");
+					.getRealPath("/resources/relatorio/cadastro/relatorio_administracao.jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_administracao);
 

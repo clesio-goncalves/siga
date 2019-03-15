@@ -133,7 +133,7 @@ public class DocenteController {
 		if (this.lista_docentes != null) {
 			String nomeRelatorio = "Relatório de Docentes.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/relatorio_docentes.jasper");
+					.getRealPath("/resources/relatorio/cadastro/relatorio_docentes.jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_docentes);
 

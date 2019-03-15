@@ -179,7 +179,7 @@ public class AtendimentoIndisciplinaController {
 		if (this.lista_atendimentos_indisciplina != null) {
 			String nomeRelatorio = "Ocorrências de Indisciplina.pdf";
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
+					.getRealPath("/resources/relatorio/indisciplina/" + retornaCaminhoRelatorio() + ".jasper");
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_indisciplina);
 

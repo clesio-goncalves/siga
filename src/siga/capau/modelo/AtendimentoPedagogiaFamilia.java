@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -38,6 +39,9 @@ public class AtendimentoPedagogiaFamilia {
 
 	@NotNull
 	private String responsavel;
+
+	@Size(max = 20)
+	private String telefone;
 
 	@NotNull
 	@Column(columnDefinition = "TEXT")
@@ -93,6 +97,14 @@ public class AtendimentoPedagogiaFamilia {
 
 	public void setResponsavel(String responsavel) {
 		this.responsavel = responsavel;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public String getRelato() {

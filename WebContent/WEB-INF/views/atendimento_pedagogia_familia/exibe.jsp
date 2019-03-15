@@ -39,6 +39,16 @@
 						<td>${atendimento_pedagogia.responsavel}</td>
 					</tr>
 					<tr>
+						<th>Telefone</th>
+						<!-- Telefone -->
+						<c:if test="${atendimento_pedagogia.telefone eq \"\"}">
+							<td>-</td>
+						</c:if>
+						<c:if test="${atendimento_pedagogia.telefone ne \"\"}">
+							<td>${atendimento_pedagogia.telefone}</td>
+						</c:if>
+					</tr>
+					<tr>
 						<th>Servidor</th>
 						<td><a
 							href="<c:url value="/profissional/exibe?id=${atendimento_pedagogia.profissional.id}" />">${atendimento_pedagogia.profissional.nome}</a></td>
@@ -84,6 +94,9 @@
 	</div>
 	<security:authorize access="hasRole('ROLE_Pedagogia')">
 		<div align="center">
+			<!-- PDF -->
+			<a href="registro_atendimento_familia" class="btn btn-outline-danger btn-lg"><span
+				class="glyphicon glyphicon-file"></span> Relatório PDF</a>
 			<!-- Cadastrar -->
 			<a href="<c:url value="/atendimento/pedagogia/familia/novo" />"
 				class="btn btn-primary btn-lg"><span

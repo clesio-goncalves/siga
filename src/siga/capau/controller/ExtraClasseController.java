@@ -325,7 +325,7 @@ public class ExtraClasseController {
 			String nomeRelatorio = "Atendimento Extraclasse.pdf";
 
 			String nomeArquivo = request.getServletContext()
-					.getRealPath("/resources/relatorio/" + retornaCaminhoRelatorio() + ".jasper");
+					.getRealPath("/resources/relatorio/extraclasse/" + retornaCaminhoRelatorio() + ".jasper");
 			
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_extra_classe);
