@@ -96,6 +96,10 @@
 	</div>
 	<security:authorize access="hasRole('ROLE_Pedagogia')">
 		<div align="center">
+			<!-- PDF -->
+			<a href="registro_atendimento_aluno"
+				class="btn btn-outline-danger btn-lg"><span
+				class="glyphicon glyphicon-file"></span> Relatório PDF</a>
 			<!-- Cadastrar -->
 			<a href="<c:url value="/atendimento/pedagogia/aluno/novo" />"
 				class="btn btn-primary btn-lg"><span

@@ -1,6 +1,7 @@
 package siga.capau.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +108,7 @@ public class AtendimentoPedagogiaAlunoController {
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
+		this.atendimento_pedagogia = dao.buscaPorId(id);
 		model.addAttribute("atendimento_pedagogia", dao.buscaPorId(id));
 		return "atendimento_pedagogia_aluno/exibe";
 	}
@@ -168,6 +170,32 @@ public class AtendimentoPedagogiaAlunoController {
 			return "atendimento_pedagogia_aluno/import_edita/aluno";
 		} else {
 			return "atendimento_pedagogia_aluno/import_novo/aluno";
+		}
+	}
+
+	@RequestMapping("/registro_atendimento_aluno")
+	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
+			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
+	public void registroAtendimentoFamilia(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		if (this.atendimento_pedagogia != null) {
+			this.lista_atendimentos_pedagogia = new ArrayList<AtendimentoPedagogiaAluno>();
+			this.lista_atendimentos_pedagogia.add(0, atendimento_pedagogia);
+			String nomeRelatorio = "Registro de atendimetno a família do aluno.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/pedagogia_aluno/registro_atendimento_aluno.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_pedagogia);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("exibe");
 		}
 	}
 
