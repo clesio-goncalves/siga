@@ -59,6 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.hasAnyRole("Administrador", "Coordenador", "Diretor", "Psicologia", "Assistência Social", "Enfermagem", "Pedagogia", "Odontologia", "Docente", "Coordenação de Disciplina")
 			.antMatchers("/monitor/novo", "/monitor/adiciona", "/monitor/edita", "/monitor/altera", "/monitor/remove")
 				.hasAnyRole("Administrador", "Coordenador", "Diretor", "Pedagogia", "Docente")
+			.antMatchers("/perfil/lista", "/perfil/exibe")
+				.hasRole("Administrador")
 			.antMatchers("/profissional/novo", "/profissional/adiciona", "/profissional/edita", "/profissional/altera", "/profissional/remove")
 				.hasAnyRole("Administrador", "Diretor")
 			.antMatchers("/turma/nova", "/turma/adiciona", "/turma/edita", "/turma/altera", "/turma/remove")

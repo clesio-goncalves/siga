@@ -90,6 +90,11 @@
 					<div class="dropdown-menu" x-placement="bottom-start"
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
 						
+						<security:authorize access="hasRole('ROLE_Administrador')">
+							<a class="dropdown-item" href="<c:url value="/perfil/lista" />">Perfis de Usuário</a>
+							<div class="dropdown-divider"></div>
+						</security:authorize>
+						
 						<security:authorize access="hasAnyRole('ROLE_Administrador', 'ROLE_Coordenador', 'ROLE_Diretor', 'ROLE_Psicologia', 'ROLE_Assistência Social', 'ROLE_Enfermagem', 'ROLE_Pedagogia', 'ROLE_Odontologia', 'ROLE_Docente', 'ROLE_Monitor', 'ROLE_Coordenação de Disciplina')">
 							<a class="dropdown-item" href="<c:url value="/usuario/lista" />">Usuários</a>
 						</security:authorize>

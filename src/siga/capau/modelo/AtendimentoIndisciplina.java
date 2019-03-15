@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,8 +33,10 @@ public class AtendimentoIndisciplina {
 	private Date horario;
 
 	@NotNull
+	@Size(max = 3)
 	private String advertido;
 
+	@Size(max = 9)
 	private String tipo_advertencia;
 
 	@NotNull

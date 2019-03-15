@@ -1,27 +1,38 @@
 package siga.capau.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AdministracaoDao;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.DocenteDao;
 import siga.capau.dao.MonitorDao;
+import siga.capau.dao.PerfilDao;
 import siga.capau.dao.ProfissionalDao;
+import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Administracao;
 import siga.capau.modelo.Aluno;
 import siga.capau.modelo.Docente;
 import siga.capau.modelo.Monitor;
+import siga.capau.modelo.Perfil;
 import siga.capau.modelo.Profissional;
+import siga.capau.modelo.Turma;
 import siga.capau.modelo.Usuario;
+import siga.capau.relatorio.GeradorRelatorio;
 
 @Transactional
 @Controller
@@ -31,9 +42,16 @@ public class PerfilController {
 	private Usuario usuario;
 	private List<Administracao> lista_administracao;
 	private List<Profissional> lista_profissional;
+	private List<Perfil> lista_perfis;
 	private List<Docente> lista_docente;
 	private List<Monitor> lista_monitor;
 	private List<Aluno> lista_aluno;
+
+	@Autowired
+	PerfilDao dao;
+
+	@Autowired
+	UsuarioDao dao_usuario;
 
 	@Autowired
 	AdministracaoDao dao_administracao;
@@ -53,6 +71,52 @@ public class PerfilController {
 	@RequestMapping("/usuario")
 	public String perfil(Model model, HttpServletResponse response) {
 		return retornaContaVinculadaPeloUsuarioId(response);
+	}
+
+	@RequestMapping("/lista")
+	@Secured("ROLE_Administrador")
+	public String lista(Model model) {
+		model.addAttribute("perfis", qntPerfis(dao.lista()));
+		return "perfil/lista";
+	}
+
+	@RequestMapping("/exibe")
+	@Secured("ROLE_Administrador")
+	public String exibe(Long id, Model model) {
+		model.addAttribute("perfil", dao.buscaPorId(id));
+		model.addAttribute("qnt_usuarios_ativos", dao_usuario.buscaQntUsuariosAtivosPorPerfilId(id));
+		return "perfil/exibe";
+	}
+
+	@RequestMapping("/relatorio")
+	@Secured("ROLE_Administrador")
+	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		if (this.lista_perfis != null) {
+			String nomeRelatorio = "Relatório de Perfis de Usuários.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/cadastro/relatorio_perfis.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_perfis);
+
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("lista");
+		}
+
+	}
+
+	private List<Perfil> qntPerfis(List<Perfil> lista) {
+		this.lista_perfis = lista;
+		for (Perfil perfil : this.lista_perfis) {
+			perfil.setQnt_usuarios_ativos(dao_usuario.buscaQntUsuariosAtivosPorPerfilId(perfil.getId()));
+		}
+		return this.lista_perfis;
 	}
 
 	private String retornaContaVinculadaPeloUsuarioId(HttpServletResponse response) {

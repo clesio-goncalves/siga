@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,9 @@ public class Perfil implements GrantedAuthority {
 	@NotNull
 	@Column(unique = true)
 	private String nome;
+
+	@Transient
+	private Long qnt_usuarios_ativos;
 
 	public Long getId() {
 		return id;
@@ -39,6 +43,14 @@ public class Perfil implements GrantedAuthority {
 	@Override
 	public String getAuthority() {
 		return this.nome;
+	}
+
+	public Long getQnt_usuarios_ativos() {
+		return qnt_usuarios_ativos;
+	}
+
+	public void setQnt_usuarios_ativos(Long qnt_usuarios_ativos) {
+		this.qnt_usuarios_ativos = qnt_usuarios_ativos;
 	}
 
 }
