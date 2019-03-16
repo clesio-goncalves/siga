@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
+<%@	taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,21 +27,43 @@
 					</tr>
 					<tr>
 						<th>Qnt de usuários ativos</th>
-						<td>${qnt_usuarios_ativos}</td>
+						<td>${fn:length(usuarios)}</td>
 					</tr>
-					<tr>
-						<th>Qnt de usuários inativos</th>
-						<td>${qnt_usuarios_inativos}</td>
+				</table>
+			</div>
+			<legend>USUÁRIOS ATIVOS COM ESSE PERFIL</legend>
+			<div class="table-responsive">
+				<table class="table table-hover table-bordered dt-responsive nowrap"
+					style="width: 100%; margin-top: 10px;">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>E-mail</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="usuario" items="${usuarios}">
+							<tr>
+								<td>${usuario.id}</td>
+								<td>${usuario.email}</td>
+								<td>
+									<!-- Exibir --> <a
+									href="<c:url value="/usuario/exibe?id=${usuario.id}"/>"
+									class="btn btn-info btn-sm" data-tooltip="tooltip"
+									data-placement="bottom" title="Exibir"> <span
+										class="glyphicon glyphicon-search"></span></a>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+					<tr style="background-color: #fff; font-weight: bold;">
+						<td colspan="3" align="center">Total de Usuários:
+							${fn:length(usuarios)}</td>
 					</tr>
 				</table>
 			</div>
 		</div>
-	</div>
-	<div align="center">
-		<!-- Editar -->
-		<a href="<c:url value="/perfil/edita?id=${perfil.id}" />"
-			class="btn btn-warning btn-lg"><span
-			class="glyphicon glyphicon-edit"></span> Editar </a>
 	</div>
 	<a class="btn btn-success" href="<c:url value="/perfil/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>

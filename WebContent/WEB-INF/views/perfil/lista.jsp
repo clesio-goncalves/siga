@@ -9,10 +9,14 @@
 <c:import url="../componentes/cabecalho.jsp" />
 
 <div class="container">
-
+	<div class="alert alert-dismissible alert-warning">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<h4 class="alert-heading">Atenção!</h4>
+		<p class="mb-0">Não é permitido alterar ou excluir o perfil,
+			devido as restrições das rergas de negócio da aplicação.</p>
+	</div>
 	<div class="card border-light mb-3">
 		<div class="card-header">Listagem de Perfis</div>
-
 		<!-- Table -->
 		<div class="card-body">
 			<table id="tabela_id"
@@ -32,17 +36,12 @@
 							<td>${perfil.id}</td>
 							<td>${perfil.nome}</td>
 							<td>${perfil.qnt_usuarios_ativos}</td>
-
 							<td>
 								<!-- Exibir --> <a
 								href="<c:url value="/perfil/exibe?id=${perfil.id}"/>"
 								class="btn btn-info btn-sm" data-tooltip="tooltip"
 								data-placement="bottom" title="Exibir"> <span
-									class="glyphicon glyphicon-search"></span></a> <!-- Editar --> <a
-								href="<c:url value="/perfil/edita?id=${perfil.id}" />"
-								class="btn btn-warning btn-sm" data-tooltip="tooltip"
-								data-placement="bottom" title="Editar"><span
-									class="glyphicon glyphicon-pencil"></span> </a> <!-- Excluir -->
+									class="glyphicon glyphicon-search"></span></a>
 							</td>
 						</tr>
 					</c:forEach>

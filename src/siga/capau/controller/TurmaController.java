@@ -120,7 +120,6 @@ public class TurmaController {
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("turma", dao.buscaPorId(id));
-		model.addAttribute("qnt_alunos", dao_aluno.buscaQntAlunosPorTurmaId(id));
 		model.addAttribute("disciplinas_docente",
 				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorTurmaId(id));
 		model.addAttribute("alunos_turma", dao_aluno.listaAlunosPorTurmaId(id));

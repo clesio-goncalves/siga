@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +41,7 @@
 					</tr>
 					<tr>
 						<th>Quantidade de Alunos</th>
-						<td>${qnt_alunos}</td>
+						<td>${fn:length(alunos_turma)}</td>
 					</tr>
 				</table>
 			</div>
@@ -110,6 +111,10 @@
 							</tr>
 						</c:forEach>
 					</tbody>
+					<tr style="background-color: #fff; font-weight: bold;">
+						<td colspan="5" align="center">Total de Alunos:
+							${fn:length(alunos_turma)}</td>
+					</tr>
 				</table>
 			</div>
 		</div>

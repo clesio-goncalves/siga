@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -18,6 +19,7 @@ public class Perfil implements GrantedAuthority {
 	private Long id;
 
 	@NotNull
+	@Size(max = 50)
 	@Column(unique = true)
 	private String nome;
 

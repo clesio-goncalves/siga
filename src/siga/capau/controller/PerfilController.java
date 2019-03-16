@@ -30,7 +30,6 @@ import siga.capau.modelo.Docente;
 import siga.capau.modelo.Monitor;
 import siga.capau.modelo.Perfil;
 import siga.capau.modelo.Profissional;
-import siga.capau.modelo.Turma;
 import siga.capau.modelo.Usuario;
 import siga.capau.relatorio.GeradorRelatorio;
 
@@ -84,7 +83,7 @@ public class PerfilController {
 	@Secured("ROLE_Administrador")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("perfil", dao.buscaPorId(id));
-		model.addAttribute("qnt_usuarios_ativos", dao_usuario.buscaQntUsuariosAtivosPorPerfilId(id));
+		model.addAttribute("usuarios", dao_usuario.buscarPeloPerfilId(id));
 		return "perfil/exibe";
 	}
 

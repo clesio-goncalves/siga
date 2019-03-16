@@ -22,5 +22,4 @@ public class PerfilDao {
 	public Perfil buscaPorId(Long id) {
 		return manager.find(Perfil.class, id);
 	}
-
 }

@@ -9,6 +9,7 @@
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="nome" class="java.lang.String"/>
+	<field name="qnt_usuarios_ativos" class="java.lang.Long"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -93,7 +94,7 @@
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="50" y="1" width="505" height="25" uuid="865d3c94-e652-4482-9eeb-e4e0c599aff1">
+				<reportElement x="50" y="1" width="350" height="25" uuid="865d3c94-e652-4482-9eeb-e4e0c599aff1">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -113,6 +114,19 @@
 					<pen lineWidth="3.0" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
+			<staticText>
+				<reportElement x="400" y="0" width="155" height="25" uuid="9e8e71ae-d746-4f23-92cc-dc92fe05cdff">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Qnt Usuários Ativos]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -141,7 +155,7 @@
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="0" width="505" height="25" uuid="24a6be6f-f632-4c26-8ec3-39f61b8226c7">
+				<reportElement x="50" y="0" width="350" height="25" uuid="24a6be6f-f632-4c26-8ec3-39f61b8226c7">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -149,6 +163,16 @@
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="155" height="25" uuid="81a5a3f6-abf9-47f1-84b0-bd06d27e5881">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{qnt_usuarios_ativos}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

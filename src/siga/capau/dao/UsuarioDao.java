@@ -126,11 +126,16 @@ public class UsuarioDao implements UserDetailsService {
 		return manager.createQuery("select u.perfil.id from Usuario u where u.id = :id", Long.class)
 				.setParameter("id", id).getSingleResult();
 	}
-
+	
 	public Long buscaQntUsuariosAtivosPorPerfilId(Long perfil_id) {
 		return manager.createQuery(
 				"select count(u.perfil.id) from Usuario u where u.ativo = true and u.perfil.id = :perfil_id",
 				Long.class).setParameter("perfil_id", perfil_id).getSingleResult();
+	}
+
+	public List<Usuario> buscarPeloPerfilId(Long id) {
+		return manager.createQuery("select u from Usuario u where u.perfil.id = :id", Usuario.class)
+				.setParameter("id", id).getResultList();
 	}
 
 	public void remove(Long id) {

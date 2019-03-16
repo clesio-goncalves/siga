@@ -104,7 +104,6 @@ public class CursoController {
 		model.addAttribute("turmas_curso", dao_turma.listaTurmaPorCursoId(id));
 
 		model.addAttribute("curso", dao.buscaPorId(id));
-		model.addAttribute("qnt_turmas", dao_turma.buscaQntTurmasPorCursoId(id));
 		return "curso/exibe";
 	}
 
