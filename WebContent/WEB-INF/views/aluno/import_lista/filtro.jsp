@@ -11,7 +11,7 @@
 		</div>
 	</div>
 
-	<div class="card-body collapse show" id="accordion">
+	<div class="card-body collapse hide" id="accordion">
 
 		<div class="row">
 			<div class="col-4">

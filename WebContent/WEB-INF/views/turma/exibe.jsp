@@ -77,6 +77,7 @@
 							<th>Nome</th>
 							<th>Matrícula</th>
 							<th>Usuário</th>
+							<th>Situação</th>
 							<th>Ações</th>
 						</tr>
 					</thead>
@@ -101,6 +102,7 @@
 								<c:if test="${aluno_turma.usuario != null}">
 									<td>${aluno_turma.usuario.email}</td>
 								</c:if>
+								<td>${aluno_turma.situacao.nome}</td>
 								<td>
 									<!-- Exibir --> <a
 									href="<c:url value="/aluno/exibe?id=${aluno_turma.id}"/>"
@@ -112,7 +114,7 @@
 						</c:forEach>
 					</tbody>
 					<tr style="background-color: #fff; font-weight: bold;">
-						<td colspan="5" align="center">Total de Alunos:
+						<td colspan="6" align="center">Total de Alunos:
 							${fn:length(alunos_turma)}</td>
 					</tr>
 				</table>
