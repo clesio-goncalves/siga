@@ -14,7 +14,7 @@
 	<div class="card-body collapse hide" id="accordion">
 
 		<div class="row">
-			<div class="col-5">
+			<div class="col-4">
 				<!-- Curso -->
 				<div class="form-group">
 					<label for="curso" class="col-form-label">Curso</label> <select
@@ -30,21 +30,29 @@
 			</div>
 
 			<!-- Turma -->
-			<div class="col-5">
+			<div class="col-4">
 				<div class="form-group" id="lista_turmas">
 					<jsp:include page="import_filtro/turma.jsp"></jsp:include>
 				</div>
 			</div>
 
 			<div class="col-2">
-				<!-- Situação -->
+				<!-- Status -->
 				<div class="form-group">
-					<label for="situacao" class="col-form-label">Situação </label> <select
-						class="custom-select" name="situacao">
+					<label for="status" class="col-form-label">Status </label> <select
+						class="custom-select" name="status">
 						<option value="">Todos</option>
 						<option value="true">Ativos</option>
 						<option value="false">Inativos</option>
 					</select>
+				</div>
+			</div>
+
+			<div class="col-2">
+				<!-- Matrícula -->
+				<div class="form-group">
+					<label for="matricula" class="col-form-label">Matricula</label> <input
+						type="text" class="form-control" name="matricula" MAXLENGTH="50">
 				</div>
 			</div>
 		</div>
@@ -54,13 +62,6 @@
 				<div class="form-group">
 					<label for="nome" class="col-form-label">Nome</label> <input
 						type="text" class="form-control" name="nome" MAXLENGTH="255">
-				</div>
-			</div>
-			<div class="col-3">
-				<!-- Matrícula -->
-				<div class="form-group">
-					<label for="matricula" class="col-form-label">Matricula</label> <input
-						type="text" class="form-control" name="matricula" MAXLENGTH="50">
 				</div>
 			</div>
 			<div class="col-3">
@@ -76,6 +77,21 @@
 							MAXLENGTH="20" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}"
 							data-mask="(00) 0000-00009">
 					</div>
+				</div>
+			</div>
+			<div class="col-3">
+				<!-- Atendimentos -->
+				<div class="form-group">
+					<label for="atendimentos" class="col-form-label">Atendimentos
+					</label> <select class="custom-select" name="atendimentos">
+						<option value="">Nenhum</option>
+						<option value="Extraclasse">Extraclasse</option>
+						<option value="Monitoria">Monitoria</option>
+						<option value="Saude">Serviços de Saúde</option>
+						<option value="Indisciplina">Indisciplina</option>
+						<option value="Pedagogia">Pedagogia</option>
+						<option value="Todos">Todos</option>
+					</select>
 				</div>
 			</div>
 		</div>
@@ -95,17 +111,14 @@
 			</div>
 
 			<div class="col-4">
-				<!-- Atendimentos -->
+				<!-- Situação -->
 				<div class="form-group">
-					<label for="atendimentos" class="col-form-label">Atendimentos
-					</label> <select class="custom-select" name="atendimentos">
-						<option value="">Nenhum</option>
-						<option value="Extraclasse">Extraclasse</option>
-						<option value="Monitoria">Monitoria</option>
-						<option value="Saude">Serviços de Saúde</option>
-						<option value="Indisciplina">Indisciplina</option>
-						<option value="Pedagogia">Pedagogia</option>
-						<option value="Todos">Todos</option>
+					<label for="situacao" class="col-form-label">Situação </label> <select
+						class="custom-select" name="situacao">
+						<option value="">Qualquer</option>
+						<c:forEach var="situacao" items="${situacoes}">
+							<option value="${situacao.id}">${situacao.nome}</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>

@@ -107,7 +107,7 @@ public class AtendimentoIndisciplinaDao {
 		}
 
 		// Order by
-		sql = sql + "order by a.data desc";
+		sql = sql + " order by a.data desc";
 
 		return manager.createQuery(sql, AtendimentoIndisciplina.class).getResultList();
 

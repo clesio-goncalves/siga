@@ -112,13 +112,25 @@
 			<div class="form-group col-6">
 				<label for="situacao.id" class="col-form-label">Situação
 					atual<span class="obrigatorio">*</span>
-				</label> <select class="custom-select" name="situacao.id"
-					required="required">
-					<c:forEach var="forsituacao" items="${situacoes}">
-						<option value="${forsituacao.id}"
-							${aluno.situacao.id == forsituacao.id ? 'selected' : '' }>${forsituacao.nome}</option>
-					</c:forEach>
-				</select>
+				</label>
+				<security:authentication property="principal" var="usuario_logado" />
+				<c:if
+					test="${usuario_logado.perfil.id == 9 or usuario_logado.perfil.id == 10}">
+					<select class="custom-select" name="situacao.id"
+						required="required" disabled="disabled">
+						<option value="${aluno.situacao.id}" selected="selected">${aluno.situacao.nome}</option>
+					</select>
+				</c:if>
+				<c:if
+					test="${usuario_logado.perfil.id != 9 and usuario_logado.perfil.id != 10}">
+					<select class="custom-select" name="situacao.id"
+						required="required">
+						<c:forEach var="forsituacao" items="${situacoes}">
+							<option value="${forsituacao.id}"
+								${aluno.situacao.id == forsituacao.id ? 'selected' : '' }>${forsituacao.nome}</option>
+						</c:forEach>
+					</select>
+				</c:if>
 			</div>
 		</div>
 

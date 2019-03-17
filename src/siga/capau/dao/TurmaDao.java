@@ -125,7 +125,7 @@ public class TurmaDao {
 			sql = sql + " t.ativo = " + filtro_turma.getSituacao();
 		}
 
-		sql = sql + "order by t.id desc";
+		sql = sql + " order by t.id desc";
 
 		return manager.createQuery(sql, Turma.class).getResultList();
 

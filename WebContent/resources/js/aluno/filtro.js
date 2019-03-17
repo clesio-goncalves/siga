@@ -5,12 +5,13 @@ var header = $("meta[name='_csrf_header']").attr("content");
 function limpar(){
 	$("select[name='curso']").val("").selectpicker("refresh"),
 	$("select[name='turma']").val("").selectpicker("refresh"),
-	$("select[name='situacao']").val(""),
-	$("input[name='nome']").val(""),
+	$("select[name='status']").val(""),
 	$("input[name='matricula']").val(""),
+	$("input[name='nome']").val(""),
 	$("input[name='telefone']").val(""),
+	$("select[name='atendimentos']").val(""),
 	$("input[name='usuario']").val(""),
-	$("select[name='atendimentos']").val("")
+	$("select[name='situacao']").val("")
 }
 
 // Filtro
@@ -22,12 +23,13 @@ function filtrar(){
 		data : {
 			curso : $("select[name='curso'] :selected").val(),
 			turma : $("select[name='turma'] :selected").val(),
-			situacao : $("select[name='situacao'] :selected").val(),
-			nome : $("input[name='nome']").val(),
+			status : $("select[name='status'] :selected").val(),
 			matricula : $("input[name='matricula']").val(),
+			nome : $("input[name='nome']").val(),
 			telefone : $("input[name='telefone']").val(),
+			atendimentos : $("select[name='atendimentos'] :selected").val(),
 			usuario : $("input[name='usuario']").val(),
-			atendimentos : $("select[name='atendimentos'] :selected").val()
+			situacao : $("select[name='situacao'] :selected").val()
 		},
 		beforeSend: function(xhr) {
             xhr.setRequestHeader(header, token);

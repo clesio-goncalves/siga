@@ -249,12 +249,13 @@ public class AlunoController {
 		this.filtro_aluno = new FiltroAluno();
 		this.filtro_aluno.setCurso(request.getParameter("curso"));
 		this.filtro_aluno.setTurma(request.getParameter("turma"));
-		this.filtro_aluno.setSituacao(request.getParameter("situacao"));
-		this.filtro_aluno.setNome(request.getParameter("nome"));
+		this.filtro_aluno.setStatus(request.getParameter("status"));
 		this.filtro_aluno.setMatricula(request.getParameter("matricula"));
+		this.filtro_aluno.setNome(request.getParameter("nome"));
 		this.filtro_aluno.setTelefone(request.getParameter("telefone"));
-		this.filtro_aluno.setUsuario(request.getParameter("usuario"));
 		this.filtro_aluno.setAtendimentos(request.getParameter("atendimentos"));
+		this.filtro_aluno.setUsuario(request.getParameter("usuario"));
+		this.filtro_aluno.setSituacao(request.getParameter("situacao"));
 
 		return this.filtro_aluno;
 	}

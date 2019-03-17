@@ -138,22 +138,22 @@ public class AlunoDao {
 			sql = sql + " and a.turma.id = " + filtro_aluno.getTurma();
 		}
 
-		// Situação
-		if (!filtro_aluno.getSituacao().equals("")) {
+		// Status
+		if (!filtro_aluno.getStatus().equals("")) {
 			testeWhere();
-			sql = sql + " a.turma.ativo = " + filtro_aluno.getSituacao();
-		}
-
-		// Nome
-		if (!filtro_aluno.getNome().equals("")) {
-			testeWhere();
-			sql = sql + " a.nome like '%" + filtro_aluno.getNome() + "%'";
+			sql = sql + " a.turma.ativo = " + filtro_aluno.getStatus();
 		}
 
 		// Matricula
 		if (!filtro_aluno.getMatricula().equals("")) {
 			testeWhere();
 			sql = sql + " a.matricula like '%" + filtro_aluno.getMatricula() + "%'";
+		}
+
+		// Nome
+		if (!filtro_aluno.getNome().equals("")) {
+			testeWhere();
+			sql = sql + " a.nome like '%" + filtro_aluno.getNome() + "%'";
 		}
 
 		// Telefone
@@ -168,7 +168,13 @@ public class AlunoDao {
 			sql = sql + " a.usuario.email like '%" + filtro_aluno.getUsuario() + "%'";
 		}
 
-		sql = sql + "order by a.id desc";
+		// Situação
+		if (!filtro_aluno.getSituacao().equals("")) {
+			testeWhere();
+			sql = sql + " a.situacao.id = " + filtro_aluno.getSituacao();
+		}
+
+		sql = sql + " order by a.id desc";
 
 		return manager.createQuery(sql, Aluno.class).getResultList();
 

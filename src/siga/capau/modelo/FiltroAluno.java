@@ -4,12 +4,13 @@ public class FiltroAluno {
 
 	private String curso;
 	private String turma;
-	private String situacao;
-	private String nome;
+	private String status;
 	private String matricula;
+	private String nome;
 	private String telefone;
-	private String usuario;
 	private String atendimentos;
+	private String usuario;
+	private String situacao;
 
 	public String getCurso() {
 		return curso;
@@ -27,20 +28,12 @@ public class FiltroAluno {
 		this.turma = turma;
 	}
 
-	public String getSituacao() {
-		return situacao;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setSituacao(String situacao) {
-		this.situacao = situacao;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getMatricula() {
@@ -51,12 +44,28 @@ public class FiltroAluno {
 		this.matricula = matricula;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	public String getTelefone() {
 		return telefone;
 	}
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public String getAtendimentos() {
+		return atendimentos;
+	}
+
+	public void setAtendimentos(String atendimentos) {
+		this.atendimentos = atendimentos;
 	}
 
 	public String getUsuario() {
@@ -67,12 +76,12 @@ public class FiltroAluno {
 		this.usuario = usuario;
 	}
 
-	public String getAtendimentos() {
-		return atendimentos;
+	public String getSituacao() {
+		return situacao;
 	}
 
-	public void setAtendimentos(String atendimentos) {
-		this.atendimentos = atendimentos;
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
 	}
 
 }
