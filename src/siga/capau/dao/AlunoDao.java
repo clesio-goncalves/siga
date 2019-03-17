@@ -47,6 +47,13 @@ public class AlunoDao {
 				Aluno.class).setParameter("situacao_id", situacao_id).getResultList();
 	}
 
+	public List<Aluno> listaAlunosPorBeneficioId(Long beneficio_id) {
+		return manager
+				.createQuery("select a from Aluno a where a.turma.ativo = true and a.beneficio.id = :beneficio_id",
+						Aluno.class)
+				.setParameter("beneficio_id", beneficio_id).getResultList();
+	}
+
 	public List<Aluno> alunoPossuiUsuario(Long id) {
 		return manager.createQuery("select a from Aluno a where a.id = :id and a.usuario.id is not null", Aluno.class)
 				.setParameter("id", id).getResultList();
@@ -62,6 +69,12 @@ public class AlunoDao {
 				.createQuery("select count(a) from Aluno a where a.turma.ativo = true and a.situacao.id = :situacao_id",
 						Long.class)
 				.setParameter("situacao_id", situacao_id).getSingleResult();
+	}
+
+	public Long buscaQntAlunosPorBeneficioId(Long beneficio_id) {
+		return manager.createQuery(
+				"select count(a) from Aluno a where a.turma.ativo = true and a.beneficio.id = :beneficio_id",
+				Long.class).setParameter("beneficio_id", beneficio_id).getSingleResult();
 	}
 
 	public Long usuarioAluno(Long id) {
@@ -166,6 +179,12 @@ public class AlunoDao {
 		if (!filtro_aluno.getUsuario().equals("")) {
 			testeWhere();
 			sql = sql + " a.usuario.email like '%" + filtro_aluno.getUsuario() + "%'";
+		}
+
+		// Benefício
+		if (!filtro_aluno.getBeneficio().equals("")) {
+			testeWhere();
+			sql = sql + " a.beneficio.id = " + filtro_aluno.getBeneficio();
 		}
 
 		// Situação

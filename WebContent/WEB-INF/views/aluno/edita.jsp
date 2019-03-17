@@ -22,6 +22,8 @@
 <div class="container">
 	<form action="altera" method="POST">
 
+		<security:authentication property="principal" var="usuario_logado" />
+
 		<!-- ID -->
 		<input type="hidden" name="id" value="${aluno.id}" required />
 
@@ -56,14 +58,14 @@
 
 		<div class="row">
 			<!-- MATRICULA -->
-			<div class="form-group col-6">
+			<div class="form-group col-4">
 				<label for="matricula" class="col-form-label">Matricula</label> <input
 					type="text" class="form-control" name="matricula" MAXLENGTH="50"
 					value="${aluno.matricula}">
 			</div>
 
 			<!-- TELEFONE -->
-			<div class="form-group col-6">
+			<div class="form-group col-4">
 				<label for="telefone" class="col-form-label">Telefone</label>
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
@@ -76,11 +78,8 @@
 						value="${aluno.telefone}">
 				</div>
 			</div>
-		</div>
-
-		<div class="row">
 			<!-- USUÁRIO-->
-			<div class="form-group col-6">
+			<div class="form-group col-4">
 				<label for="usuario.id" class="col-form-label">Usuário</label>
 				<c:if test="${aluno.usuario != null}">
 					<input type="hidden" name="usuario.id" value="${aluno.usuario.id}" />
@@ -108,12 +107,38 @@
 					</div>
 				</c:if>
 			</div>
+		</div>
+
+		<div class="row">
+			<!-- BENEFÍCIO -->
+			<div class="form-group col-6">
+				<label for="beneficio.id" class="col-form-label">Benefício
+					Assistencial<span class="obrigatorio">**</span>
+				</label>
+				<c:if test="${usuario_logado.perfil.id != 5}">
+					<select class="custom-select" name="beneficio.id"
+						disabled="disabled">
+						<option value="${aluno.beneficio.id}">${aluno.beneficio == null ? 'Nenhum' : aluno.beneficio.nome}</option>
+					</select>
+					<input type="hidden" name="beneficio.id"
+						value="${aluno.beneficio.id}">
+				</c:if>
+				<c:if test="${usuario_logado.perfil.id == 5}">
+					<select class="custom-select" name="beneficio.id">
+						<option value="">Nenhum</option>
+						<c:forEach var="beneficio" items="${beneficios}">
+							<option value="${beneficio.id}"
+								${aluno.beneficio.id == beneficio.id ? 'selected' : ''}>${beneficio.nome}</option>
+						</c:forEach>
+					</select>
+				</c:if>
+			</div>
+
 			<!-- SITUAÇÃO-->
 			<div class="form-group col-6">
 				<label for="situacao.id" class="col-form-label">Situação
 					atual<span class="obrigatorio">*</span>
 				</label>
-				<security:authentication property="principal" var="usuario_logado" />
 				<c:if
 					test="${usuario_logado.perfil.id == 9 or usuario_logado.perfil.id == 10}">
 					<select class="custom-select" name="situacao.id"
@@ -137,7 +162,9 @@
 		<security:csrfInput />
 
 		<!-- OBTIGATÓRIO -->
-		<label>(*) Campos obrigatórios</label>
+		<label>(*) Campos obrigatórios</label> <br> <label>(**)
+			Política de Assistência Estudantil (POLAE) - Resolução 14/2014, do
+			Conselho Superior do IFPI</label>
 
 		<div>
 			<a href="<c:url value="/aluno/lista" />"

@@ -31,6 +31,9 @@ public class Aluno {
 	@OneToOne
 	private Usuario usuario;
 
+	@ManyToOne
+	private Beneficio beneficio;
+
 	@NotNull
 	@ManyToOne
 	private Situacao situacao;
@@ -81,6 +84,14 @@ public class Aluno {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Beneficio getBeneficio() {
+		return beneficio;
+	}
+
+	public void setBeneficio(Beneficio beneficio) {
+		this.beneficio = beneficio;
 	}
 
 	public Situacao getSituacao() {

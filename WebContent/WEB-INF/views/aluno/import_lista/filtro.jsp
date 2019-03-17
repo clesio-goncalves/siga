@@ -11,7 +11,7 @@
 		</div>
 	</div>
 
-	<div class="card-body collapse hide" id="accordion">
+	<div class="card-body collapse show" id="accordion">
 
 		<div class="row">
 			<div class="col-4">
@@ -57,7 +57,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-6">
+			<div class="col-4">
 				<!-- Nome -->
 				<div class="form-group">
 					<label for="nome" class="col-form-label">Nome</label> <input
@@ -80,23 +80,6 @@
 				</div>
 			</div>
 			<div class="col-3">
-				<!-- Atendimentos -->
-				<div class="form-group">
-					<label for="atendimentos" class="col-form-label">Atendimentos
-					</label> <select class="custom-select" name="atendimentos">
-						<option value="">Nenhum</option>
-						<option value="Extraclasse">Extraclasse</option>
-						<option value="Monitoria">Monitoria</option>
-						<option value="Saude">Serviços de Saúde</option>
-						<option value="Indisciplina">Indisciplina</option>
-						<option value="Pedagogia">Pedagogia</option>
-						<option value="Todos">Todos</option>
-					</select>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-4">
 				<!-- Usuário -->
 				<label for="usuario" class="col-form-label">Usuário</label>
 				<div class="form-group">
@@ -109,6 +92,21 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-2">
+				<!-- Benefício Assistencial -->
+				<div class="form-group">
+					<label for="beneficio" class="col-form-label">Benefício
+						Assistencial </label> <select class="custom-select" name="beneficio">
+						<option value="">Nenhum</option>
+						<c:forEach var="beneficio" items="${beneficios}">
+							<option value="${beneficio.id}">${beneficio.nome}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+
+		</div>
+		<div class="row">
 
 			<div class="col-4">
 				<!-- Situação -->
@@ -119,6 +117,22 @@
 						<c:forEach var="situacao" items="${situacoes}">
 							<option value="${situacao.id}">${situacao.nome}</option>
 						</c:forEach>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<!-- Atendimentos -->
+				<div class="form-group">
+					<label for="atendimentos" class="col-form-label">Atendimentos
+					</label> <select class="custom-select" name="atendimentos">
+						<option value="">Nenhum</option>
+						<option value="Extraclasse">Extraclasse</option>
+						<option value="Monitoria">Monitoria</option>
+						<option value="Saude">Serviços de Saúde</option>
+						<option value="Indisciplina">Indisciplina</option>
+						<option value="Pedagogia">Pedagogia</option>
+						<option value="Todos">Todos</option>
 					</select>
 				</div>
 			</div>

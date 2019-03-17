@@ -28,6 +28,7 @@ import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.AtendimentoPedagogiaAlunoDao;
 import siga.capau.dao.AtendimentoPedagogiaFamiliaDao;
 import siga.capau.dao.AtendimentoSaudeDao;
+import siga.capau.dao.BeneficioDao;
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.SituacaoDao;
@@ -85,6 +86,9 @@ public class AlunoController {
 	@Autowired
 	AlunoSituacaoDao dao_aluno_situacao;
 
+	@Autowired
+	BeneficioDao dao_beneficio;
+
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
@@ -97,6 +101,7 @@ public class AlunoController {
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
 		model.addAttribute("situacoes", dao_situacao.lista());
+		model.addAttribute("beneficios", dao_beneficio.lista());
 		return "aluno/novo";
 	}
 
@@ -115,11 +120,16 @@ public class AlunoController {
 			aluno.setUsuario(null);
 		}
 
+		// Testa se o id do beneficio é null
+		if (aluno.getBeneficio().getId() == null) {
+			aluno.setBeneficio(null);
+		}
+
 		// Adiciona no banco de dados
 		this.aluno = dao.adiciona(aluno);
 
 		// Adiciona Vinculo em AlunoSituação
-		this.dao_aluno_situacao.adiciona(this.aluno.getId(), aluno.getSituacao().getId(), new Date());
+		this.dao_aluno_situacao.adiciona(this.aluno.getId(), this.aluno.getSituacao().getId(), new Date());
 
 		return "redirect:lista";
 	}
@@ -130,13 +140,12 @@ public class AlunoController {
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("alunos", this.lista_alunos); // todos os aluno ativos
 		model.addAttribute("situacoes", dao_situacao.lista());
+		model.addAttribute("beneficios", dao_beneficio.lista());
 		return "aluno/lista";
 	}
 
 	@RequestMapping("/remove")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
-			"ROLE_Coordenação de Disciplina" })
+	@Secured("ROLE_Administrador")
 	public String remove(Aluno aluno) {
 		dao.remove(aluno.getId());
 		return "redirect:lista";
@@ -165,6 +174,7 @@ public class AlunoController {
 		model.addAttribute("turmas", dao_turma.listaTurmaPorCursoId(this.aluno.getTurma().getCurso().getId()));
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
 		model.addAttribute("situacoes", dao_situacao.lista());
+		model.addAttribute("beneficios", dao_beneficio.lista());
 		return "aluno/edita";
 	}
 
@@ -181,6 +191,11 @@ public class AlunoController {
 		// Testa se o id do usuário é null
 		if (aluno.getUsuario().getId() == null) {
 			aluno.setUsuario(null);
+		}
+
+		// Testa se o id do beneficio é null
+		if (aluno.getBeneficio().getId() == null) {
+			aluno.setBeneficio(null);
 		}
 
 		// Se a situação informada for diferente, então insere em AlunoSituação
@@ -253,9 +268,10 @@ public class AlunoController {
 		this.filtro_aluno.setMatricula(request.getParameter("matricula"));
 		this.filtro_aluno.setNome(request.getParameter("nome"));
 		this.filtro_aluno.setTelefone(request.getParameter("telefone"));
-		this.filtro_aluno.setAtendimentos(request.getParameter("atendimentos"));
 		this.filtro_aluno.setUsuario(request.getParameter("usuario"));
+		this.filtro_aluno.setBeneficio(request.getParameter("beneficio"));
 		this.filtro_aluno.setSituacao(request.getParameter("situacao"));
+		this.filtro_aluno.setAtendimentos(request.getParameter("atendimentos"));
 
 		return this.filtro_aluno;
 	}

@@ -82,6 +82,12 @@ values (3, 'Aprovado no Conselho com Pendência');
 insert into Situacao (id, nome)
 values (4, 'Retido');
 
+insert into Beneficio (id, nome)
+values (1, 'Permanente');
+
+insert into Beneficio (id, nome)
+values (2, 'Eventual');
+
 insert into Curso(id, nome)
 values (1, 'Técnico em Mineração');
 

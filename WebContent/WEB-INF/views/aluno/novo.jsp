@@ -20,6 +20,8 @@
 <div class="container">
 	<form action="adiciona" method="POST">
 
+		<security:authentication property="principal" var="usuario_logado" />
+
 		<!-- NOME -->
 		<div class="form-group">
 			<label for="nome" class="col-form-label">Nome Completo<span
@@ -49,13 +51,13 @@
 		</div>
 		<div class="row">
 			<!-- MATRICULA -->
-			<div class="form-group col-6">
+			<div class="form-group col-4">
 				<label for="matricula" class="col-form-label">Matricula</label> <input
 					type="text" class="form-control" name="matricula" MAXLENGTH="50">
 			</div>
 
 			<!-- TELEFONE -->
-			<div class="form-group col-6">
+			<div class="form-group col-4">
 				<label for="telefone" class="col-form-label">Telefone</label>
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
@@ -67,10 +69,9 @@
 						pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}">
 				</div>
 			</div>
-		</div>
-		<div class="row">
+
 			<!-- USUÁRIO-->
-			<div class="form-group col-6">
+			<div class="form-group col-4">
 				<label for="usuario.id" class="col-form-label">Usuário</label>
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
@@ -85,6 +86,31 @@
 					</select>
 				</div>
 			</div>
+		</div>
+
+		<div class="row">
+			<!-- BENEFÍCIO -->
+			<div class="form-group col-6">
+				<label for="beneficio.id" class="col-form-label">Benefício
+					Assistencial<span class="obrigatorio">**</span>
+				</label>
+				<c:if test="${usuario_logado.perfil.id != 5}">
+					<select class="custom-select" name="beneficio.id"
+						disabled="disabled">
+						<option value="">Nenhum</option>
+					</select>
+					<input type="hidden" name="beneficio.id" value="">
+				</c:if>
+				<c:if test="${usuario_logado.perfil.id == 5}">
+					<select class="custom-select" name="beneficio.id">
+						<option value="">Nenhum</option>
+						<c:forEach var="beneficio" items="${beneficios}">
+							<option value="${beneficio.id}">${beneficio.nome}</option>
+						</c:forEach>
+					</select>
+				</c:if>
+			</div>
+
 			<!-- SITUAÇÃO-->
 			<div class="form-group col-6">
 				<label for="situacao.id" class="col-form-label">Situação
@@ -101,7 +127,9 @@
 		<security:csrfInput />
 
 		<!-- OBTIGATÓRIO -->
-		<label>(*) Campos obrigatórios</label>
+		<label>(*) Campos obrigatórios</label> <br> <label>(**)
+			Política de Assistência Estudantil (POLAE) - Resolução 14/2014, do
+			Conselho Superior do IFPI</label>
 		<div>
 			<button type="reset" class="btn btn-secondary btn-lg">
 				<span class="glyphicon glyphicon-trash"></span> Limpar

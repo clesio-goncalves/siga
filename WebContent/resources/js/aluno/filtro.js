@@ -9,9 +9,10 @@ function limpar(){
 	$("input[name='matricula']").val(""),
 	$("input[name='nome']").val(""),
 	$("input[name='telefone']").val(""),
-	$("select[name='atendimentos']").val(""),
 	$("input[name='usuario']").val(""),
-	$("select[name='situacao']").val("")
+	$("select[name='beneficio']").val(""),
+	$("select[name='situacao']").val(""),
+	$("select[name='atendimentos']").val("")
 }
 
 // Filtro
@@ -27,9 +28,10 @@ function filtrar(){
 			matricula : $("input[name='matricula']").val(),
 			nome : $("input[name='nome']").val(),
 			telefone : $("input[name='telefone']").val(),
-			atendimentos : $("select[name='atendimentos'] :selected").val(),
 			usuario : $("input[name='usuario']").val(),
-			situacao : $("select[name='situacao'] :selected").val()
+			beneficio : $("select[name='beneficio']").val(),
+			situacao : $("select[name='situacao'] :selected").val(),
+			atendimentos : $("select[name='atendimentos'] :selected").val()
 		},
 		beforeSend: function(xhr) {
             xhr.setRequestHeader(header, token);

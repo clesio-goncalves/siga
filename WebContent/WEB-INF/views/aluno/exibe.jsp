@@ -69,6 +69,16 @@
 							href="<c:url value="/situacao/exibe?id=${aluno.situacao.id}" />">${aluno.situacao.nome}</a></td>
 					</tr>
 					<tr>
+						<th>Benefício assistencial</th>
+						<c:if test="${aluno.beneficio == null}">
+							<td>Nenhum</td>
+						</c:if>
+						<c:if test="${aluno.beneficio != null}">
+							<td><a
+								href="<c:url value="/beneficio/exibe?id=${aluno.beneficio.id}" />">${aluno.beneficio.nome}</a></td>
+						</c:if>
+					</tr>
+					<tr>
 						<th>Usuário</th>
 
 						<!-- Usuário -->

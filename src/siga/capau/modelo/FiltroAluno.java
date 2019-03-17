@@ -8,9 +8,10 @@ public class FiltroAluno {
 	private String matricula;
 	private String nome;
 	private String telefone;
-	private String atendimentos;
 	private String usuario;
+	private String beneficio;
 	private String situacao;
+	private String atendimentos;
 
 	public String getCurso() {
 		return curso;
@@ -60,14 +61,6 @@ public class FiltroAluno {
 		this.telefone = telefone;
 	}
 
-	public String getAtendimentos() {
-		return atendimentos;
-	}
-
-	public void setAtendimentos(String atendimentos) {
-		this.atendimentos = atendimentos;
-	}
-
 	public String getUsuario() {
 		return usuario;
 	}
@@ -76,12 +69,28 @@ public class FiltroAluno {
 		this.usuario = usuario;
 	}
 
+	public String getBeneficio() {
+		return beneficio;
+	}
+
+	public void setBeneficio(String beneficio) {
+		this.beneficio = beneficio;
+	}
+
 	public String getSituacao() {
 		return situacao;
 	}
 
 	public void setSituacao(String situacao) {
 		this.situacao = situacao;
+	}
+
+	public String getAtendimentos() {
+		return atendimentos;
+	}
+
+	public void setAtendimentos(String atendimentos) {
+		this.atendimentos = atendimentos;
 	}
 
 }

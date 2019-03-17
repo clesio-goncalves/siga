@@ -41,6 +41,7 @@
 							
 							
 						<security:authorize access="hasRole('ROLE_Administrador')">
+							<a class="dropdown-item" href="<c:url value="/beneficio/novo" />">Benefício Assistencial</a>
 							<a class="dropdown-item" href="<c:url value="/situacao/nova" />">Situações dos Alunos</a>
 							<div class="dropdown-divider"></div>
 						</security:authorize>
@@ -98,6 +99,7 @@
 						
 						<security:authorize access="hasRole('ROLE_Administrador')">
 							<a class="dropdown-item" href="<c:url value="/perfil/lista" />">Perfis de Usuário</a>
+							<a class="dropdown-item" href="<c:url value="/beneficio/lista" />">Benefício Assistencial</a>
 							<a class="dropdown-item" href="<c:url value="/situacao/lista" />">Situações dos Alunos</a>
 							<div class="dropdown-divider"></div>
 						</security:authorize>
