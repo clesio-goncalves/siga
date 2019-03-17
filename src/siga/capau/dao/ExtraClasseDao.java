@@ -27,7 +27,8 @@ public class ExtraClasseDao {
 	}
 
 	public List<ExtraClasse> lista() {
-		return manager.createQuery("select e from ExtraClasse e order by e.data desc", ExtraClasse.class).getResultList();
+		return manager.createQuery("select e from ExtraClasse e order by e.data desc", ExtraClasse.class)
+				.getResultList();
 	}
 
 	public Long buscaDocenteIdPeloExtraClasseId(Long id) {
@@ -41,8 +42,8 @@ public class ExtraClasseDao {
 	}
 
 	public List<ExtraClasse> buscaPeloDocenteId(Long docente_id) {
-		return manager.createQuery("select e from ExtraClasse e where e.docente.id = :docente_id order by e.data desc", ExtraClasse.class)
-				.setParameter("docente_id", docente_id).getResultList();
+		return manager.createQuery("select e from ExtraClasse e where e.docente.id = :docente_id order by e.data desc",
+				ExtraClasse.class).setParameter("docente_id", docente_id).getResultList();
 	}
 
 	public List<ExtraClasse> buscaPelaDisciplinaId(Long disciplina_id) {
@@ -57,6 +58,10 @@ public class ExtraClasseDao {
 
 	public void remove(Long id) {
 		manager.createQuery("delete from ExtraClasse a where a.id = :id").setParameter("id", id).executeUpdate();
+	}
+
+	public void removePeloAlunoId(Long id) {
+		manager.createQuery("delete from ExtraClasse a where a.aluno.id = :id").setParameter("id", id).executeUpdate();
 	}
 
 	public List<ExtraClasse> filtraExtraClasse(FiltroExtraClasse filtro_extra_classe) {
@@ -120,10 +125,10 @@ public class ExtraClasseDao {
 		if (!filtro_extra_classe.getConteudo().equals("")) {
 			sql = sql + " and e.conteudo like '%" + filtro_extra_classe.getConteudo() + "%'";
 		}
-		
+
 		// Oder by
 		sql = sql + " order by e.data desc";
-		
+
 		return manager.createQuery(sql, ExtraClasse.class).getResultList();
 
 	}

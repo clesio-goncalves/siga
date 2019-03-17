@@ -368,43 +368,45 @@
 			<a href="<c:url value="/aluno/edita?id=${aluno.id}" />"
 				class="btn btn-warning btn-lg"><span
 				class="glyphicon glyphicon-edit"></span> Editar </a>
-			<!-- Excluir -->
-			<button type="button" class="btn btn-danger btn-lg"
-				data-toggle="modal" data-target="#modal${aluno.id}">
-				<span class="glyphicon glyphicon-trash"></span> Excluir
-			</button>
-		</div>
-		<div class="modal fade" id="modal${aluno.id}">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Exclusão do aluno</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<p>
-							Deseja realmente excluir o aluno <br>ID (${aluno.id}) ->
-							${aluno.nome}?
-						</p>
-						<p>
-							<b>Atenção: Não é recomendado excluir o usuário, <br>
-								Então, desative-o.<b>
-						</p>
-					</div>
-					<div class="modal-footer">
-						<a href="<c:url value="/aluno/remove?id=${aluno.id}" />"
-							class="btn btn-danger"><span
-							class="glyphicon glyphicon-trash"></span> Excluir</a>
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">
-							<span class="glyphicon glyphicon-log-out"></span> Fechar
-						</button>
+			<security:authorize access="hasRole('ROLE_Administrador')">
+				<!-- Excluir -->
+				<button type="button" class="btn btn-danger btn-lg"
+					data-toggle="modal" data-target="#modal${aluno.id}">
+					<span class="glyphicon glyphicon-trash"></span> Excluir
+				</button>
+				<div class="modal fade" id="modal${aluno.id}">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Exclusão do aluno</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p align="left">
+									Deseja realmente excluir o aluno <br>ID (${aluno.id}) ->
+									${aluno.nome}?
+								</p>
+								<p align="left">
+									<b>Atenção: Não é recomendado excluir o usuário, <br>
+										Então, desative-o.<b>
+								</p>
+							</div>
+							<div class="modal-footer">
+								<a href="<c:url value="/aluno/remove?id=${aluno.id}" />"
+									class="btn btn-danger"><span
+									class="glyphicon glyphicon-trash"></span> Excluir</a>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">
+									<span class="glyphicon glyphicon-log-out"></span> Fechar
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
+			</security:authorize>
 		</div>
 	</security:authorize>
 

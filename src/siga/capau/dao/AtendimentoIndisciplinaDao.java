@@ -51,6 +51,11 @@ public class AtendimentoIndisciplinaDao {
 				.executeUpdate();
 	}
 
+	public void removePeloAlunoId(Long id) {
+		manager.createQuery("delete from AtendimentoIndisciplina a where a.aluno.id = :id").setParameter("id", id)
+				.executeUpdate();
+	}
+
 	public List<AtendimentoIndisciplina> filtraAtendimentoIndisciplina(
 			FiltroAtendimentoIndisciplina filtro_atendimento_indisciplina) {
 

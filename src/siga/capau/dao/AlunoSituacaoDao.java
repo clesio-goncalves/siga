@@ -24,13 +24,19 @@ public class AlunoSituacaoDao {
 	}
 
 	public List<AlunoSituacao> buscaAlunoSituacaoPorAlunoId(Long aluno_id) {
-		return manager.createQuery("select a from AlunoSituacao a where a.aluno.id = :aluno_id order by a.data desc", AlunoSituacao.class)
-				.setParameter("aluno_id", aluno_id).getResultList();
+		return manager.createQuery("select a from AlunoSituacao a where a.aluno.id = :aluno_id order by a.data desc",
+				AlunoSituacao.class).setParameter("aluno_id", aluno_id).getResultList();
 	}
 
 	public List<AlunoSituacao> buscaAlunoSituacaoPorSituacaoId(Long situacao_id) {
 		return manager
-				.createQuery("select a from AlunoSituacao a where a.situacao.id = :situacao_id  order by a.data desc", AlunoSituacao.class)
+				.createQuery("select a from AlunoSituacao a where a.situacao.id = :situacao_id  order by a.data desc",
+						AlunoSituacao.class)
 				.setParameter("situacao_id", situacao_id).getResultList();
+	}
+
+	public void removePeloAlunoId(Long id) {
+		manager.createQuery("delete from AlunoSituacao a where a.aluno.id = :id").setParameter("id", id)
+				.executeUpdate();
 	}
 }

@@ -26,7 +26,8 @@ public class AtendimentoMonitoriaDao {
 	}
 
 	public List<AtendimentoMonitoria> lista() {
-		return manager.createQuery("select am from AtendimentoMonitoria am order by am.data desc", AtendimentoMonitoria.class)
+		return manager
+				.createQuery("select am from AtendimentoMonitoria am order by am.data desc", AtendimentoMonitoria.class)
 				.getResultList();
 	}
 
@@ -41,7 +42,8 @@ public class AtendimentoMonitoriaDao {
 	}
 
 	public List<AtendimentoMonitoria> buscaPeloMonitorId(Long monitor_id) {
-		return manager.createQuery("select am from AtendimentoMonitoria am where am.monitor.id = :monitor_id order by am.data desc",
+		return manager.createQuery(
+				"select am from AtendimentoMonitoria am where am.monitor.id = :monitor_id order by am.data desc",
 				AtendimentoMonitoria.class).setParameter("monitor_id", monitor_id).getResultList();
 	}
 
@@ -56,6 +58,11 @@ public class AtendimentoMonitoriaDao {
 
 	public void remove(Long id) {
 		manager.createQuery("delete from AtendimentoMonitoria am where am.id = :id").setParameter("id", id)
+				.executeUpdate();
+	}
+
+	public void removePeloAlunoId(Long id) {
+		manager.createQuery("delete from AtendimentoMonitoria a where a.aluno.id = :id").setParameter("id", id)
 				.executeUpdate();
 	}
 
@@ -128,7 +135,7 @@ public class AtendimentoMonitoriaDao {
 				sql = sql + " and am.status_atendimento = true";
 			}
 		}
-		
+
 		sql = sql + " order by am.data desc";
 
 		return manager.createQuery(sql, AtendimentoMonitoria.class).getResultList();

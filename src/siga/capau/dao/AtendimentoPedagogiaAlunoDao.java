@@ -47,6 +47,11 @@ public class AtendimentoPedagogiaAlunoDao {
 		manager.createQuery("delete from AtendimentoPedagogiaAluno a where a.id = :id").setParameter("id", id)
 				.executeUpdate();
 	}
+	
+	public void removePeloAlunoId(Long id) {
+		manager.createQuery("delete from AtendimentoPedagogiaAluno a where a.aluno.id = :id").setParameter("id", id)
+				.executeUpdate();
+	}
 
 	public List<AtendimentoPedagogiaAluno> filtraAtendimentoPedagogiaAluno(
 			FiltroAtendimentoPedagogiaAluno filtro_atendimento_pedagogia) {

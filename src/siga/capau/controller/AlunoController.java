@@ -147,7 +147,14 @@ public class AlunoController {
 	@RequestMapping("/remove")
 	@Secured("ROLE_Administrador")
 	public String remove(Aluno aluno) {
-		dao.remove(aluno.getId());
+		dao_aluno_situacao.removePeloAlunoId(aluno.getId()); // AlunoSituacao
+		dao_atendimento_indisciplina.removePeloAlunoId(aluno.getId()); // AtendimentoIndisciplina
+		dao_atendimento_monitoria.removePeloAlunoId(aluno.getId()); // AtendimentoMonitoria
+		dao_atendimento_pedagogia_aluno.removePeloAlunoId(aluno.getId()); // AtendimentoPedagogiaAluno
+		dao_atendimento_pedagogia_familia.removePeloAlunoId(aluno.getId()); // AtendimentoPedagogiaFamilia
+		dao_atendimento_saude.removePeloAlunoId(aluno.getId()); // AtendimentoSaude
+		dao_extraclasse.removePeloAlunoId(aluno.getId()); // ExtraClasse
+		dao.remove(aluno.getId()); // Aluno
 		return "redirect:lista";
 	}
 
