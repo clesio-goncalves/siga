@@ -78,33 +78,48 @@
 			</div>
 		</div>
 
-		<!-- USUÁRIO-->
-		<div class="form-group">
-			<label for="usuario.id" class="col-form-label">Usuário</label>
-			<c:if test="${aluno.usuario != null}">
-				<input type="hidden" name="usuario.id" value="${aluno.usuario.id}" />
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<span class="input-group-text">@</span>
+		<div class="row">
+			<!-- USUÁRIO-->
+			<div class="form-group col-6">
+				<label for="usuario.id" class="col-form-label">Usuário</label>
+				<c:if test="${aluno.usuario != null}">
+					<input type="hidden" name="usuario.id" value="${aluno.usuario.id}" />
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">@</span>
+						</div>
+						<select class="custom-select" name="usuario.id"
+							disabled="disabled">
+							<option value="" selected>${aluno.usuario.email}</option>
+						</select>
 					</div>
-					<select class="custom-select" name="usuario.id" disabled="disabled">
-						<option value="" selected>${aluno.usuario.email}</option>
-					</select>
-				</div>
-			</c:if>
-			<c:if test="${aluno.usuario == null}">
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<span class="input-group-text">@</span>
+				</c:if>
+				<c:if test="${aluno.usuario == null}">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">@</span>
+						</div>
+						<select class="custom-select" name="usuario.id">
+							<option value="">Não informar</option>
+							<c:forEach var="usuario" items="${usuarios}">
+								<option value="${usuario.id}">${usuario.email}</option>
+							</c:forEach>
+						</select>
 					</div>
-					<select class="custom-select" name="usuario.id">
-						<option value="">Não informar</option>
-						<c:forEach var="usuario" items="${usuarios}">
-							<option value="${usuario.id}">${usuario.email}</option>
-						</c:forEach>
-					</select>
-				</div>
-			</c:if>
+				</c:if>
+			</div>
+			<!-- SITUAÇÃO-->
+			<div class="form-group col-6">
+				<label for="situacao.id" class="col-form-label">Situação
+					atual<span class="obrigatorio">*</span>
+				</label> <select class="custom-select" name="situacao.id"
+					required="required">
+					<c:forEach var="forsituacao" items="${situacoes}">
+						<option value="${forsituacao.id}"
+							${aluno.situacao.id == forsituacao.id ? 'selected' : '' }>${forsituacao.nome}</option>
+					</c:forEach>
+				</select>
+			</div>
 		</div>
 
 		<security:csrfInput />

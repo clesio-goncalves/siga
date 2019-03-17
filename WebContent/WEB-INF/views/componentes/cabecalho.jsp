@@ -38,6 +38,12 @@
 					role="button" aria-haspopup="true" aria-expanded="false">Cadastro</a>
 					<div class="dropdown-menu" x-placement="bottom-start"
 						style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+							
+							
+						<security:authorize access="hasRole('ROLE_Administrador')">
+							<a class="dropdown-item" href="<c:url value="/situacao/nova" />">Situações dos Alunos</a>
+							<div class="dropdown-divider"></div>
+						</security:authorize>
 												
 							<a class="dropdown-item" href="<c:url value="/usuario/novo" />">Usuário</a>
 							<a class="dropdown-item" href="<c:url value="/aluno/novo" />">Aluno</a>
@@ -92,6 +98,7 @@
 						
 						<security:authorize access="hasRole('ROLE_Administrador')">
 							<a class="dropdown-item" href="<c:url value="/perfil/lista" />">Perfis de Usuário</a>
+							<a class="dropdown-item" href="<c:url value="/situacao/lista" />">Situações dos Alunos</a>
 							<div class="dropdown-divider"></div>
 						</security:authorize>
 						

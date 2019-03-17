@@ -18,8 +18,9 @@ public class AlunoDao {
 	private String sql;
 	private boolean where;
 
-	public void adiciona(Aluno aluno) {
+	public Aluno adiciona(Aluno aluno) {
 		manager.persist(aluno);
+		return aluno;
 	}
 
 	public void altera(Aluno aluno) {
@@ -41,18 +42,35 @@ public class AlunoDao {
 				.setParameter("turma_id", turma_id).getResultList();
 	}
 
+	public List<Aluno> listaAlunosPorSituacaoId(Long situacao_id) {
+		return manager.createQuery("select a from Aluno a where a.turma.ativo = true and a.situacao.id = :situacao_id",
+				Aluno.class).setParameter("situacao_id", situacao_id).getResultList();
+	}
+
 	public List<Aluno> alunoPossuiUsuario(Long id) {
 		return manager.createQuery("select a from Aluno a where a.id = :id and a.usuario.id is not null", Aluno.class)
 				.setParameter("id", id).getResultList();
 	}
 
 	public Long buscaQntAlunosPorTurmaId(Long turma_id) {
-		return manager.createQuery("select count(a.turma.id) from Aluno a where a.turma.id = :turma_id", Long.class)
+		return manager.createQuery("select count(a) from Aluno a where a.turma.id = :turma_id", Long.class)
 				.setParameter("turma_id", turma_id).getSingleResult();
+	}
+
+	public Long buscaQntAlunosPorSituacaoId(Long situacao_id) {
+		return manager
+				.createQuery("select count(a) from Aluno a where a.turma.ativo = true and a.situacao.id = :situacao_id",
+						Long.class)
+				.setParameter("situacao_id", situacao_id).getSingleResult();
 	}
 
 	public Long usuarioAluno(Long id) {
 		return manager.createQuery("select count(a) from Aluno a where a.usuario.id = :id", Long.class)
+				.setParameter("id", id).getSingleResult();
+	}
+
+	public Long buscaSituacaoAtualPorAluno(Long id) {
+		return manager.createQuery("select a.situacao.id from Aluno a where a.id = :id", Long.class)
 				.setParameter("id", id).getSingleResult();
 	}
 

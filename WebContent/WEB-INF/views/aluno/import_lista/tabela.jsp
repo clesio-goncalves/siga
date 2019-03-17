@@ -12,8 +12,8 @@
 			<th>Nome Completo</th>
 			<th>Turma</th>
 			<th>Matrícula</th>
-			<th>Telefone</th>
 			<th>Usuário</th>
+			<th>Situação</th>
 			<th>Ações</th>
 		</tr>
 	</thead>
@@ -32,14 +32,6 @@
 					<td>${aluno.matricula}</td>
 				</c:if>
 
-				<!-- Telefone -->
-				<c:if test="${aluno.telefone eq \"\"}">
-					<td>-</td>
-				</c:if>
-				<c:if test="${aluno.telefone ne \"\"}">
-					<td>${aluno.telefone}</td>
-				</c:if>
-
 				<!-- Usuário -->
 				<c:if test="${aluno.usuario == null}">
 					<td>-</td>
@@ -47,6 +39,7 @@
 				<c:if test="${aluno.usuario != null}">
 					<td>${aluno.usuario.email}</td>
 				</c:if>
+				<td>${aluno.situacao.nome}</td>
 
 				<!-- AÇÕES -->
 				<td>

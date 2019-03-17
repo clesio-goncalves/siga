@@ -70,6 +70,18 @@ values (11, 'aluno@aluno.com','$2a$10$Z032yir9pQ4FSrG/WQxo7eWm4tstNtfspS3srxahol
 insert into Usuario(id, email, senha, ativo, perfil_id)
 values (12, 'cd@cd.com','$2a$10$blE.bIaeXORY9jDiiMq2COivr.osQmn2y0AIvqFRpaVI3X/Ehc3wi', 1, 12);
 
+insert into Situacao (id, nome)
+values (1, 'Aprovado sem pendências');
+
+insert into Situacao (id, nome)
+values (2, 'Aprovado no Conselho');
+
+insert into Situacao (id, nome)
+values (3, 'Aprovado no Conselho com Pendência');
+
+insert into Situacao (id, nome)
+values (4, 'Retido');
+
 insert into Curso(id, nome)
 values (1, 'Técnico em Mineração');
 

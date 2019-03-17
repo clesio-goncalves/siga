@@ -129,7 +129,7 @@ public class UsuarioDao implements UserDetailsService {
 	
 	public Long buscaQntUsuariosAtivosPorPerfilId(Long perfil_id) {
 		return manager.createQuery(
-				"select count(u.perfil.id) from Usuario u where u.ativo = true and u.perfil.id = :perfil_id",
+				"select count(u) from Usuario u where u.ativo = true and u.perfil.id = :perfil_id",
 				Long.class).setParameter("perfil_id", perfil_id).getSingleResult();
 	}
 

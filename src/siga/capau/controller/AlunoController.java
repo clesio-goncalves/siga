@@ -1,6 +1,7 @@
 package siga.capau.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
+import siga.capau.dao.AlunoSituacaoDao;
 import siga.capau.dao.AtendimentoIndisciplinaDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.AtendimentoPedagogiaAlunoDao;
@@ -28,6 +30,7 @@ import siga.capau.dao.AtendimentoPedagogiaFamiliaDao;
 import siga.capau.dao.AtendimentoSaudeDao;
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.ExtraClasseDao;
+import siga.capau.dao.SituacaoDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Aluno;
@@ -76,17 +79,24 @@ public class AlunoController {
 	@Autowired
 	AtendimentoPedagogiaFamiliaDao dao_atendimento_pedagogia_familia;
 
+	@Autowired
+	SituacaoDao dao_situacao;
+
+	@Autowired
+	AlunoSituacaoDao dao_aluno_situacao;
+
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String novoAluno(Model model) {
-		this.lista_turma = dao_turma.listaTurmas();
+		this.lista_turma = dao_turma.listaTurmasAtivas();
 		if (this.lista_turma.size() == 0) {
 			return "redirect:/turma/nova";
 		}
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
+		model.addAttribute("situacoes", dao_situacao.lista());
 		return "aluno/novo";
 	}
 
@@ -106,7 +116,11 @@ public class AlunoController {
 		}
 
 		// Adiciona no banco de dados
-		dao.adiciona(aluno);
+		this.aluno = dao.adiciona(aluno);
+
+		// Adiciona Vinculo em AlunoSituação
+		this.dao_aluno_situacao.adiciona(this.aluno.getId(), aluno.getSituacao().getId(), new Date());
+
 		return "redirect:lista";
 	}
 
@@ -115,6 +129,7 @@ public class AlunoController {
 		this.lista_alunos = dao.lista();
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("alunos", this.lista_alunos); // todos os aluno ativos
+		model.addAttribute("situacoes", dao_situacao.lista());
 		return "aluno/lista";
 	}
 
@@ -149,6 +164,7 @@ public class AlunoController {
 		model.addAttribute("cursos", dao_curso.lista());
 		model.addAttribute("turmas", dao_turma.listaTurmaPorCursoId(this.aluno.getTurma().getCurso().getId()));
 		model.addAttribute("usuarios", dao_usuario.listaUsuarioAlunoSemVinculo());
+		model.addAttribute("situacoes", dao_situacao.lista());
 		return "aluno/edita";
 	}
 
@@ -165,6 +181,11 @@ public class AlunoController {
 		// Testa se o id do usuário é null
 		if (aluno.getUsuario().getId() == null) {
 			aluno.setUsuario(null);
+		}
+
+		// Se a situação informada for diferente, então insere em AlunoSituação
+		if (dao.buscaSituacaoAtualPorAluno(aluno.getId()) != aluno.getSituacao().getId()) {
+			this.dao_aluno_situacao.adiciona(aluno.getId(), aluno.getSituacao().getId(), new Date());
 		}
 
 		// Altera no banco

@@ -47,7 +47,6 @@
 				<jsp:include page="import_novo/turma.jsp"></jsp:include>
 			</div>
 		</div>
-
 		<div class="row">
 			<!-- MATRICULA -->
 			<div class="form-group col-6">
@@ -69,19 +68,31 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- USUÁRIO-->
-		<div class="form-group">
-			<label for="usuario.id" class="col-form-label">Usuário</label>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text">@</span>
+		<div class="row">
+			<!-- USUÁRIO-->
+			<div class="form-group col-6">
+				<label for="usuario.id" class="col-form-label">Usuário</label>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">@</span>
+					</div>
+					<select class="custom-select" name="usuario.id">
+						<option value="">Não informar</option>
+						<!-- percorre usuarios montando as linhas da tabela -->
+						<c:forEach var="usuario" items="${usuarios}">
+							<option value="${usuario.id}">${usuario.email}</option>
+						</c:forEach>
+					</select>
 				</div>
-				<select class="custom-select" name="usuario.id">
-					<option value="">Não informar</option>
-					<!-- percorre usuarios montando as linhas da tabela -->
-					<c:forEach var="usuario" items="${usuarios}">
-						<option value="${usuario.id}">${usuario.email}</option>
+			</div>
+			<!-- SITUAÇÃO-->
+			<div class="form-group col-6">
+				<label for="situacao.id" class="col-form-label">Situação
+					atual<span class="obrigatorio">*</span>
+				</label> <select class="custom-select" name="situacao.id"
+					required="required">
+					<c:forEach var="situacao" items="${situacoes}">
+						<option value="${situacao.id}">${situacao.nome}</option>
 					</c:forEach>
 				</select>
 			</div>

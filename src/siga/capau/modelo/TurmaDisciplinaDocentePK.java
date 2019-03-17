@@ -59,7 +59,6 @@ public class TurmaDisciplinaDocentePK implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(getTurma(), getDisciplina(), getDocente());
-
 	}
 
 }

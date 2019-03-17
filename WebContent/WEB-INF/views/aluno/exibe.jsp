@@ -63,7 +63,11 @@
 						<td><a
 							href="<c:url value="/turma/exibe?id=${aluno.turma.id}" />">${aluno.turma.nome}</a></td>
 					</tr>
-
+					<tr>
+						<th>Situação atual</th>
+						<td style="font-weight: bold;"><a
+							href="<c:url value="/situacao/exibe?id=${aluno.situacao.id}" />">${aluno.situacao.nome}</a></td>
+					</tr>
 					<tr>
 						<th>Usuário</th>
 

@@ -77,7 +77,7 @@ public class TurmaDao {
 
 	public Long buscaQntTurmasPorCursoId(Long curso_id) {
 		return manager
-				.createQuery("select count(t.curso.id) from Turma t where t.ativo=true and t.curso.id = :curso_id",
+				.createQuery("select count(t) from Turma t where t.ativo=true and t.curso.id = :curso_id",
 						Long.class)
 				.setParameter("curso_id", curso_id).getSingleResult();
 	}

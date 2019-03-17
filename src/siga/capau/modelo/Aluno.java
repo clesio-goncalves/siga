@@ -31,6 +31,10 @@ public class Aluno {
 	@OneToOne
 	private Usuario usuario;
 
+	@NotNull
+	@ManyToOne
+	private Situacao situacao;
+
 	public Long getId() {
 		return id;
 	}
@@ -77,6 +81,14 @@ public class Aluno {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Situacao getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(Situacao situacao) {
+		this.situacao = situacao;
 	}
 
 }
