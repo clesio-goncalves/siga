@@ -174,8 +174,7 @@ public class AtendimentoPedagogiaAlunoController {
 	}
 
 	@RequestMapping("/registro_atendimento_aluno")
-	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
-			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
+	@Secured("ROLE_Pedagogia")
 	public void registroAtendimentoFamilia(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 

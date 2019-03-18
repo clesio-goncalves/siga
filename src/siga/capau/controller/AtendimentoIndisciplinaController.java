@@ -1,6 +1,7 @@
 package siga.capau.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +108,8 @@ public class AtendimentoIndisciplinaController {
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Psicologia", "ROLE_Assistência Social",
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model) {
-		model.addAttribute("atendimento_indisciplina", dao.buscaPorId(id));
+		this.atendimento_indisciplina = dao.buscaPorId(id);
+		model.addAttribute("atendimento_indisciplina", this.atendimento_indisciplina);
 		return "atendimento_indisciplina/exibe";
 	}
 
@@ -191,6 +193,32 @@ public class AtendimentoIndisciplinaController {
 			gerador.geraPDFParaOutputStream(response);
 		} else {
 			response.sendRedirect("lista");
+		}
+	}
+
+	@RequestMapping(value = "/advertencia_escrita", method = RequestMethod.POST)
+	@Secured("ROLE_Coordenação de Disciplina")
+	public void registroAtendimentoFamilia(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		if (this.atendimento_indisciplina != null) {
+			this.lista_atendimentos_indisciplina = new ArrayList<AtendimentoIndisciplina>();
+			this.lista_atendimentos_indisciplina.add(0, atendimento_indisciplina);
+			String nomeRelatorio = "Termo de Advertência Escrita.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/indisciplina/termo_advertencia_escrita.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_indisciplina);
+
+			parametros.put("motivo_advertencia", request.getParameter("motivo_advertencia"));
+			parametros.put("precedida_advertencia_verbal", request.getParameter("precedida_advertencia_verbal"));
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("exibe");
 		}
 	}
 

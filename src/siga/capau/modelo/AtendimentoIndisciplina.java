@@ -50,7 +50,7 @@ public class AtendimentoIndisciplina {
 	@NotNull
 	@ManyToOne
 	private Profissional profissional;
-
+	
 	public Long getId() {
 		return id;
 	}

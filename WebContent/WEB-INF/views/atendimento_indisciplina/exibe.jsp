@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <title>Exibe os dados do atendimento de indisciplina</title>
 <c:import url="../componentes/cabecalho.jsp" />
 
@@ -79,6 +81,15 @@
 	</div>
 	<security:authorize access="hasRole('ROLE_Coordenação de Disciplina')">
 		<div align="center">
+			<!-- PDF -->
+			<c:if
+				test="${atendimento_indisciplina.tipo_advertencia eq 'Escrita'}">
+				<button type="button" class="btn btn-outline-danger btn-lg"
+					onclick="advertenciaEscrita()" data-toggle="modal"
+					data-target="#modal_advertencia_escrita">
+					<span class="glyphicon glyphicon-file"></span> Relatório PDF</a>
+				</button>
+			</c:if>
 			<!-- Cadastrar -->
 			<a href="<c:url value="/atendimento/indisciplina/novo" />"
 				class="btn btn-primary btn-lg"><span
@@ -95,6 +106,11 @@
 				<span class="glyphicon glyphicon-trash"></span> Excluir
 			</button>
 		</div>
+		<!-- modal_advertencia_escrita  -->
+		<c:if test="${atendimento_indisciplina.tipo_advertencia eq 'Escrita'}">
+			<jsp:include page="import_exibe/modal_advertencia_escrita.jsp"></jsp:include>
+		</c:if>
+
 		<div class="modal fade" id="modal${atendimento_indisciplina.id}">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -132,5 +148,6 @@
 		href="<c:url value="/atendimento/indisciplina/lista" />"><span
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
-
+<script type="text/javascript"
+	src="<c:url value="/resources/js/atendimento/indisciplina_advertencia_escrita.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />
