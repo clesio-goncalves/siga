@@ -33,7 +33,7 @@
 					<td>${atendimento_indisciplina.advertido}</td>
 					<td>-</td>
 				</c:if>
-				<td>${atendimento_indisciplina.descricao}</td>
+				<td style="white-space: pre-wrap;">${atendimento_indisciplina.descricao}</td>
 				<td>
 					<!-- Exibir --> <a
 					href="<c:url value="/atendimento/indisciplina/exibe?id=${atendimento_indisciplina.id}"/>"
