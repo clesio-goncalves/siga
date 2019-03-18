@@ -85,8 +85,15 @@
 			<c:if
 				test="${atendimento_indisciplina.tipo_advertencia eq 'Escrita'}">
 				<button type="button" class="btn btn-outline-danger btn-lg"
-					onclick="advertenciaEscrita()" data-toggle="modal"
+					onclick="advertencia()" data-toggle="modal"
 					data-target="#modal_advertencia_escrita">
+					<span class="glyphicon glyphicon-file"></span> Relatório PDF</a>
+				</button>
+			</c:if>
+			<c:if test="${atendimento_indisciplina.tipo_advertencia eq 'Verbal'}">
+				<button type="button" class="btn btn-outline-danger btn-lg"
+					onclick="advertencia()" data-toggle="modal"
+					data-target="#modal_advertencia_verbal">
 					<span class="glyphicon glyphicon-file"></span> Relatório PDF</a>
 				</button>
 			</c:if>
@@ -109,6 +116,11 @@
 		<!-- modal_advertencia_escrita  -->
 		<c:if test="${atendimento_indisciplina.tipo_advertencia eq 'Escrita'}">
 			<jsp:include page="import_exibe/modal_advertencia_escrita.jsp"></jsp:include>
+		</c:if>
+
+		<!-- modal_advertencia_verbal  -->
+		<c:if test="${atendimento_indisciplina.tipo_advertencia eq 'Verbal'}">
+			<jsp:include page="import_exibe/modal_advertencia_verbal.jsp"></jsp:include>
 		</c:if>
 
 		<div class="modal fade" id="modal${atendimento_indisciplina.id}">
@@ -149,5 +161,5 @@
 		class="glyphicon glyphicon-chevron-left"></span> Voltar</a>
 </div>
 <script type="text/javascript"
-	src="<c:url value="/resources/js/atendimento/indisciplina_advertencia_escrita.js" />"></script>
+	src="<c:url value="/resources/js/atendimento/indisciplina_advertencia.js" />"></script>
 <c:import url="../componentes/rodape.jsp" />

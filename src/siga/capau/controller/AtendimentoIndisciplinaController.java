@@ -198,8 +198,7 @@ public class AtendimentoIndisciplinaController {
 
 	@RequestMapping(value = "/advertencia_escrita", method = RequestMethod.POST)
 	@Secured("ROLE_Coordenação de Disciplina")
-	public void registroAtendimentoFamilia(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	public void advertenciaEscrita(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		if (this.atendimento_indisciplina != null) {
 			this.lista_atendimentos_indisciplina = new ArrayList<AtendimentoIndisciplina>();
 			this.lista_atendimentos_indisciplina.add(0, atendimento_indisciplina);
@@ -211,6 +210,30 @@ public class AtendimentoIndisciplinaController {
 
 			parametros.put("motivo_advertencia", request.getParameter("motivo_advertencia"));
 			parametros.put("precedida_advertencia_verbal", request.getParameter("precedida_advertencia_verbal"));
+			parametros.put("relatorio_logo",
+					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
+			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
+
+			GeradorRelatorio gerador = new GeradorRelatorio(nomeRelatorio, nomeArquivo, parametros, relatorio);
+			gerador.geraPDFParaOutputStream(response);
+		} else {
+			response.sendRedirect("exibe");
+		}
+	}
+
+	@RequestMapping(value = "/advertencia_verbal", method = RequestMethod.POST)
+	@Secured("ROLE_Coordenação de Disciplina")
+	public void advertenciaVerbal(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		if (this.atendimento_indisciplina != null) {
+			this.lista_atendimentos_indisciplina = new ArrayList<AtendimentoIndisciplina>();
+			this.lista_atendimentos_indisciplina.add(0, atendimento_indisciplina);
+			String nomeRelatorio = "Registro de Ocorrência de Advertência Verbal.pdf";
+			String nomeArquivo = request.getServletContext()
+					.getRealPath("/resources/relatorio/indisciplina/termo_advertencia_verbal.jasper");
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_atendimentos_indisciplina);
+
+			parametros.put("motivo_advertencia", request.getParameter("motivo_advertencia"));
 			parametros.put("relatorio_logo",
 					request.getServletContext().getRealPath("/resources/imagens/relatorio_logo.png"));
 			parametros.put("usuario_logado", retornaUsuarioLogado().getEmail());
