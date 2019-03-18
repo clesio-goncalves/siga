@@ -165,10 +165,10 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25">
+		<band height="60">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<rectangle>
-				<reportElement mode="Opaque" x="0" y="0" width="803" height="25" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="c02fbbfc-dc9b-4461-99a7-5e0a6c944bba">
+				<reportElement mode="Opaque" x="0" y="0" width="803" height="60" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="c02fbbfc-dc9b-4461-99a7-5e0a6c944bba">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -179,7 +179,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="0" width="70" height="25" uuid="ed762b49-de80-46c5-b865-d9ecf93e7c6f">
+				<reportElement x="0" y="0" width="70" height="60" uuid="ed762b49-de80-46c5-b865-d9ecf93e7c6f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -190,7 +190,7 @@
 				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH:mm">
-				<reportElement x="70" y="0" width="50" height="25" uuid="296b19d7-2164-4899-a498-5534a09926e4">
+				<reportElement x="70" y="0" width="50" height="60" uuid="296b19d7-2164-4899-a498-5534a09926e4">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -200,7 +200,7 @@
 				<textFieldExpression><![CDATA[$F{horario}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="120" y="0" width="248" height="25" uuid="7430ecd1-46a9-4e2d-8cfb-d5df640ff99f">
+				<reportElement x="120" y="0" width="248" height="60" uuid="7430ecd1-46a9-4e2d-8cfb-d5df640ff99f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -212,7 +212,7 @@
 				<textFieldExpression><![CDATA[$F{aluno.nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="368" y="0" width="65" height="25" uuid="fec2e4f4-cc77-4840-96f6-d52eca6f6473">
+				<reportElement x="368" y="0" width="65" height="60" uuid="fec2e4f4-cc77-4840-96f6-d52eca6f6473">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -224,7 +224,7 @@
 				<textFieldExpression><![CDATA[$F{advertido}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="433" y="0" width="70" height="25" uuid="9b8ccebd-95a4-46c5-b705-18eb7ea86fef">
+				<reportElement x="433" y="0" width="70" height="60" uuid="9b8ccebd-95a4-46c5-b705-18eb7ea86fef">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -236,7 +236,7 @@
 				<textFieldExpression><![CDATA[$F{advertido}.equals("Sim") ? $F{tipo_advertencia} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="503" y="0" width="300" height="25" uuid="7ee60266-2a7c-4ac9-8c3c-bb1308254c84">
+				<reportElement x="503" y="0" width="300" height="60" uuid="7ee60266-2a7c-4ac9-8c3c-bb1308254c84">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>

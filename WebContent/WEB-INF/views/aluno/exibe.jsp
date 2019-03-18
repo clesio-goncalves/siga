@@ -11,6 +11,9 @@
 
 <div class="container">
 	<div class="card border-light mb-3">
+
+		<security:authentication property="principal" var="usuario_logado" />
+
 		<div class="card-header">Exibe os dados do aluno</div>
 		<!-- Table -->
 		<div class="card-body">
@@ -63,21 +66,38 @@
 						<td><a
 							href="<c:url value="/turma/exibe?id=${aluno.turma.id}" />">${aluno.turma.nome}</a></td>
 					</tr>
-					<tr>
-						<th>Situação atual</th>
-						<td style="font-weight: bold;"><a
-							href="<c:url value="/situacao/exibe?id=${aluno.situacao.id}" />">${aluno.situacao.nome}</a></td>
-					</tr>
-					<tr>
-						<th>Benefício assistencial</th>
-						<c:if test="${aluno.beneficio == null}">
-							<td>Nenhum</td>
-						</c:if>
-						<c:if test="${aluno.beneficio != null}">
-							<td><a
-								href="<c:url value="/beneficio/exibe?id=${aluno.beneficio.id}" />">${aluno.beneficio.nome}</a></td>
-						</c:if>
-					</tr>
+					<c:if test="${usuario_logado.perfil.id == 1}">
+						<tr>
+							<th>Situação atual</th>
+							<td style="font-weight: bold;"><a
+								href="<c:url value="/situacao/exibe?id=${aluno.situacao.id}" />">${aluno.situacao.nome}</a></td>
+						</tr>
+						<tr>
+							<th>Benefício assistencial</th>
+							<c:if test="${aluno.beneficio == null}">
+								<td>Nenhum</td>
+							</c:if>
+							<c:if test="${aluno.beneficio != null}">
+								<td><a
+									href="<c:url value="/beneficio/exibe?id=${aluno.beneficio.id}" />">${aluno.beneficio.nome}</a></td>
+							</c:if>
+						</tr>
+					</c:if>
+					<c:if test="${usuario_logado.perfil.id != 1}">
+						<tr>
+							<th>Situação atual</th>
+							<td style="font-weight: bold; color: blue;">${aluno.situacao.nome}</td>
+						</tr>
+						<tr>
+							<th>Benefício assistencial</th>
+							<c:if test="${aluno.beneficio == null}">
+								<td>Nenhum</td>
+							</c:if>
+							<c:if test="${aluno.beneficio != null}">
+								<td>${aluno.beneficio.nome}</td>
+							</c:if>
+						</tr>
+					</c:if>
 					<tr>
 						<th>Usuário</th>
 
@@ -92,7 +112,6 @@
 					</tr>
 				</table>
 			</div>
-			<security:authentication property="principal" var="usuario_logado" />
 			<c:if
 				test="${usuario_logado.perfil.id != 11 or usuario_logado.id == aluno.usuario.id}">
 				<legend>ATENDIMENTO DE MONITORIA</legend>
