@@ -117,6 +117,9 @@ public class AlunoController {
 			return "redirect:novo";
 		}
 
+		// Insere o nome em maiusculo
+		aluno.setNome(aluno.getNome().toUpperCase());
+
 		// Testa se o id do usuário é null
 		if (aluno.getUsuario().getId() == null) {
 			aluno.setUsuario(null);
@@ -199,6 +202,9 @@ public class AlunoController {
 		} else if (this.lista_alunos.size() > 0 && this.lista_alunos.get(0).getId() != aluno.getId()) {
 			return "redirect:edita?id=" + aluno.getId();
 		}
+
+		// Insere o nome em maiusculo
+		aluno.setNome(aluno.getNome().toUpperCase());
 
 		// Testa se o id do usuário é null
 		if (aluno.getUsuario().getId() == null) {

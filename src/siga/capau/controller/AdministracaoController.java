@@ -61,6 +61,9 @@ public class AdministracaoController {
 			return "redirect:novo";
 		}
 
+		// Insere o nome em maiusculo
+		administracao.setNome(administracao.getNome().toUpperCase());
+
 		// Adiciona no banco de dados
 		dao.adiciona(administracao);
 		return "redirect:lista";
@@ -114,6 +117,9 @@ public class AdministracaoController {
 					&& this.lista_administracao.get(0).getId() != administracao.getId()) {
 				return "redirect:edita?id=" + administracao.getId();
 			}
+
+			// Insere o nome em maiusculo
+			administracao.setNome(administracao.getNome().toUpperCase());
 
 			// Altera no banco
 			dao.altera(administracao);

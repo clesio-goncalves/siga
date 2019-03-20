@@ -71,6 +71,9 @@ public class DocenteController {
 			return "redirect:novo";
 		}
 
+		// Insere o nome em maiusculo
+		docente.setNome(docente.getNome().toUpperCase());
+
 		// Adiciona no banco de dados
 		dao.adiciona(docente);
 
@@ -121,6 +124,9 @@ public class DocenteController {
 		} else if (this.lista_docentes.size() > 0 && this.lista_docentes.get(0).getId() != docente.getId()) {
 			return "redirect:edita?id=" + docente.getId();
 		}
+
+		// Insere o nome em maiusculo
+		docente.setNome(docente.getNome().toUpperCase());
 
 		// Altera no banco
 		dao.altera(docente);

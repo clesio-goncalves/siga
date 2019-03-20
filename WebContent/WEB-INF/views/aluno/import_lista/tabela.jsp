@@ -21,7 +21,7 @@
 		<c:forEach var="aluno" items="${alunos}">
 			<tr>
 				<td>${aluno.id}</td>
-				<td>${aluno.nome}</td>
+				<td style="white-space: pre-wrap;">${aluno.nome}</td>
 				<td>${aluno.turma.nome}</td>
 				<td>${aluno.matricula}</td>
 

@@ -71,6 +71,9 @@ public class MonitorController {
 			return "redirect:novo";
 		}
 
+		// Insere o nome em maiusculo
+		monitor.setNome(monitor.getNome().toUpperCase());
+
 		// Adiciona no banco de dados
 		dao.adiciona(monitor);
 		return "redirect:lista";
@@ -114,6 +117,9 @@ public class MonitorController {
 		} else if (this.lista_monitores.size() > 0 && this.lista_monitores.get(0).getId() != monitor.getId()) {
 			return "redirect:edita?id=" + monitor.getId();
 		}
+
+		// Insere o nome em maiusculo
+		monitor.setNome(monitor.getNome().toUpperCase());
 
 		// Altera no banco
 		dao.altera(monitor);

@@ -77,6 +77,9 @@ public class ProfissionalController {
 			return "redirect:novo";
 		}
 
+		// Insere o nome em maiusculo
+		profissional.setNome(profissional.getNome().toUpperCase());
+
 		// Adiciona no banco de dados
 		dao.adiciona(profissional);
 		return "redirect:lista";
@@ -132,6 +135,9 @@ public class ProfissionalController {
 				&& this.lista_profissionais.get(0).getId() != profissional.getId()) {
 			return "redirect:edita?id=" + profissional.getId();
 		}
+
+		// Insere o nome em maiusculo
+		profissional.setNome(profissional.getNome().toUpperCase());
 
 		// Altera no banco
 		dao.altera(profissional);
