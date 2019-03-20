@@ -136,8 +136,11 @@ function alteraStatusAtendimento(contexto) {
 		$('#disciplina').attr('disabled', "disabled");
 		$('#disciplina').selectpicker('refresh');
 		$("textarea[name='conteudo']").attr('readonly', "readonly");
+		$("textarea[name='dificuldades_diagnosticadas']").attr('readonly',
+		"readonly");
 		if (contexto == "novo") {
 			$("textarea[name='conteudo']").val("-");
+			$("textarea[name='dificuldades_diagnosticadas']").val("-");
 		}
 		docente_id = $("input[name='docente_id']").val();
 		if (docente_id == "") {
@@ -167,8 +170,12 @@ function alteraStatusAtendimento(contexto) {
 		$("textarea[name='conteudo']").removeAttr('readonly');
 		$('#docente').attr('disabled', "disabled");
 		$('#docente').selectpicker('refresh');
+		$("textarea[name='conteudo']").removeAttr('readonly');
+		$("textarea[name='dificuldades_diagnosticadas']")
+				.removeAttr('readonly');
 		if (contexto == "novo") {
 			$("textarea[name='conteudo']").val("");
+			$("textarea[name='dificuldades_diagnosticadas']").val("");
 		}
 	}
 }

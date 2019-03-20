@@ -107,15 +107,6 @@ public class ExtraClasseDao {
 			sql = sql + " and e.docente.id = " + filtro_extra_classe.getDocente();
 		}
 
-		// Status atendimento
-		if (!filtro_extra_classe.getStatus_atendimento().equals("")) {
-			if (filtro_extra_classe.getStatus_atendimento().equals("sim")) {
-				sql = sql + " and e.status_atendimento = false";
-			} else {
-				sql = sql + " and e.status_atendimento = true";
-			}
-		}
-
 		// local
 		if (!filtro_extra_classe.getLocal().equals("")) {
 			sql = sql + " and e.local like '%" + filtro_extra_classe.getLocal() + "%'";
@@ -124,6 +115,21 @@ public class ExtraClasseDao {
 		// conteudo
 		if (!filtro_extra_classe.getConteudo().equals("")) {
 			sql = sql + " and e.conteudo like '%" + filtro_extra_classe.getConteudo() + "%'";
+		}
+
+		// dificuldades_diagnosticadas
+		if (!filtro_extra_classe.getDificuldades_diagnosticadas().equals("")) {
+			sql = sql + " and e.dificuldades_diagnosticadas like '%"
+					+ filtro_extra_classe.getDificuldades_diagnosticadas() + "%'";
+		}
+
+		// Status atendimento
+		if (!filtro_extra_classe.getStatus_atendimento().equals("")) {
+			if (filtro_extra_classe.getStatus_atendimento().equals("sim")) {
+				sql = sql + " and e.status_atendimento = false";
+			} else {
+				sql = sql + " and e.status_atendimento = true";
+			}
 		}
 
 		// Oder by

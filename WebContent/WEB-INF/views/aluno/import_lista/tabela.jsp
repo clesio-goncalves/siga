@@ -23,14 +23,7 @@
 				<td>${aluno.id}</td>
 				<td>${aluno.nome}</td>
 				<td>${aluno.turma.nome}</td>
-
-				<!-- Matricula -->
-				<c:if test="${aluno.matricula eq \"\"}">
-					<td>-</td>
-				</c:if>
-				<c:if test="${aluno.matricula ne \"\"}">
-					<td>${aluno.matricula}</td>
-				</c:if>
+				<td>${aluno.matricula}</td>
 
 				<!-- Usuário -->
 				<c:if test="${aluno.usuario == null}">

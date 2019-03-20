@@ -52,8 +52,10 @@
 		<div class="row">
 			<!-- MATRICULA -->
 			<div class="form-group col-4">
-				<label for="matricula" class="col-form-label">Matricula</label> <input
-					type="text" class="form-control" name="matricula" MAXLENGTH="50">
+				<label for="matricula" class="col-form-label">Matricula<span
+				class="obrigatorio">*</span></label> <input type="text"
+					class="form-control" name="matricula" MAXLENGTH="50"
+					required="required">
 			</div>
 
 			<!-- TELEFONE -->

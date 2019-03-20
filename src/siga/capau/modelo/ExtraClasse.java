@@ -43,6 +43,10 @@ public class ExtraClasse {
 	@Column(columnDefinition = "TEXT")
 	private String conteudo;
 
+	@NotNull
+	@Column(columnDefinition = "TEXT")
+	private String dificuldades_diagnosticadas;
+
 	private boolean status_atendimento;
 
 	@ManyToOne
@@ -101,6 +105,14 @@ public class ExtraClasse {
 
 	public void setConteudo(String conteudo) {
 		this.conteudo = conteudo;
+	}
+
+	public String getDificuldades_diagnosticadas() {
+		return dificuldades_diagnosticadas;
+	}
+
+	public void setDificuldades_diagnosticadas(String dificuldades_diagnosticadas) {
+		this.dificuldades_diagnosticadas = dificuldades_diagnosticadas;
 	}
 
 	public boolean isStatus_atendimento() {

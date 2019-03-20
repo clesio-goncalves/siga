@@ -71,6 +71,11 @@ public class AlunoDao {
 				.setParameter("situacao_id", situacao_id).getSingleResult();
 	}
 
+	public List<Aluno> buscaPorMatricula(String matricula) {
+		return manager.createQuery("select a from Aluno a where a.matricula = :matricula", Aluno.class)
+				.setParameter("matricula", matricula).getResultList();
+	}
+
 	public Long buscaQntAlunosPorBeneficioId(Long beneficio_id) {
 		return manager.createQuery(
 				"select count(a) from Aluno a where a.turma.ativo = true and a.beneficio.id = :beneficio_id",

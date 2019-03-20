@@ -13,9 +13,10 @@ function limpar(){
 	$("select[name='disciplina']").val("").selectpicker("refresh"),
 	$("select[name='aluno']").val("").selectpicker("refresh"),
 	$("select[name='docente']").val("").selectpicker("refresh"),
-	$("select[name='status_atendimento']").val(""),
 	$("input[name='local']").val(""),
-	$("input[name='conteudo']").val("")
+	$("input[name='conteudo']").val(""),
+	$("input[name='dificuldades_diagnosticadas']").val(""),
+	$("select[name='status_atendimento']").val("")
 }
 
 // Filtro
@@ -40,9 +41,10 @@ function filtrar(){
 			disciplina : $("select[name='disciplina'] :selected").val(),
 			aluno : $("select[name='aluno'] :selected").val(),
 			docente : filtro_docente,
-			status_atendimento : $("select[name='status_atendimento'] :selected").val(),
 			local : $("input[name='local']").val(),
-			conteudo : $("input[name='conteudo']").val()
+			conteudo : $("input[name='conteudo']").val(),
+			status_atendimento : $("select[name='status_atendimento'] :selected").val(),
+			dificuldades_diagnosticadas : $("input[name='dificuldades_diagnosticadas']").val(),
 		},
 		beforeSend: function(xhr) {
             xhr.setRequestHeader(header, token);

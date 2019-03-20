@@ -108,7 +108,7 @@
 				</div>
 			</div>
 
-			<div class="col-5">
+			<div class="col-4">
 				<!-- Docente -->
 				<input type="hidden" name="docente_id" value="${docente.id}" />
 				<div class="form-group">
@@ -135,7 +135,31 @@
 					</c:if>
 				</div>
 			</div>
+			<div class="col-3">
+				<!-- Local -->
+				<div class="form-group">
+					<label for="local" class="col-form-label">Local</label> <input
+						type="text" class="form-control" name="local" MAXLENGTH="255">
+				</div>
+			</div>
 
+		</div>
+		<div class="row">
+			<div class="col-3">
+				<!-- Conteúdo -->
+				<div class="form-group">
+					<label for="conteudo" class="col-form-label">Conteúdo</label> <input
+						type="text" class="form-control" name="conteudo" MAXLENGTH="255">
+				</div>
+			</div>
+			<div class="col-3">
+				<!-- Dificuldades Diagnosticadas -->
+				<div class="form-group">
+					<label for="dificuldades_diagnosticadas" class="col-form-label">Dificuldades
+						diagnosticadas</label> <input type="text" class="form-control"
+						name="dificuldades_diagnosticadas" MAXLENGTH="255">
+				</div>
+			</div>
 			<div class="col-2">
 				<!-- Status Atendimento -->
 				<div class="form-group">
@@ -146,23 +170,6 @@
 						<option value="sim">Sim</option>
 						<option value="nao">Não</option>
 					</select>
-				</div>
-			</div>
-
-		</div>
-		<div class="row">
-			<div class="col-3">
-				<!-- Local -->
-				<div class="form-group">
-					<label for="local" class="col-form-label">Local</label> <input
-						type="text" class="form-control" name="local" MAXLENGTH="255">
-				</div>
-			</div>
-			<div class="col-5">
-				<!-- Conteúdo -->
-				<div class="form-group">
-					<label for="conteudo" class="col-form-label">Conteúdo</label> <input
-						type="text" class="form-control" name="conteudo" MAXLENGTH="255">
 				</div>
 			</div>
 			<div class="col-4">

@@ -4,9 +4,10 @@ public class FiltroExtraClasse extends FiltroAtendimento {
 
 	private String disciplina;
 	private String docente;
-	private String status_atendimento;
 	private String local;
 	private String conteudo;
+	private String dificuldades_diagnosticadas;
+	private String status_atendimento;
 
 	public String getDisciplina() {
 		return disciplina;
@@ -24,14 +25,6 @@ public class FiltroExtraClasse extends FiltroAtendimento {
 		this.docente = docente;
 	}
 
-	public String getStatus_atendimento() {
-		return status_atendimento;
-	}
-
-	public void setStatus_atendimento(String status_atendimento) {
-		this.status_atendimento = status_atendimento;
-	}
-
 	public String getLocal() {
 		return local;
 	}
@@ -46,6 +39,22 @@ public class FiltroExtraClasse extends FiltroAtendimento {
 
 	public void setConteudo(String conteudo) {
 		this.conteudo = conteudo;
+	}
+
+	public String getDificuldades_diagnosticadas() {
+		return dificuldades_diagnosticadas;
+	}
+
+	public void setDificuldades_diagnosticadas(String dificuldades_diagnosticadas) {
+		this.dificuldades_diagnosticadas = dificuldades_diagnosticadas;
+	}
+
+	public String getStatus_atendimento() {
+		return status_atendimento;
+	}
+
+	public void setStatus_atendimento(String status_atendimento) {
+		this.status_atendimento = status_atendimento;
 	}
 
 }

@@ -33,14 +33,7 @@
 
 					<tr>
 						<th>Matrícula</th>
-
-						<!-- Matricula -->
-						<c:if test="${aluno.matricula eq \"\"}">
-							<td>-</td>
-						</c:if>
-						<c:if test="${aluno.matricula ne \"\"}">
-							<td>${aluno.matricula}</td>
-						</c:if>
+						<td>${aluno.matricula}</td>
 					</tr>
 
 					<tr>

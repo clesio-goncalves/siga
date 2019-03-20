@@ -86,14 +86,7 @@
 							<tr>
 								<td>${aluno_turma.id}</td>
 								<td>${aluno_turma.nome}</td>
-
-								<!-- Matricula -->
-								<c:if test="${aluno_turma.matricula eq \"\"}">
-									<td>-</td>
-								</c:if>
-								<c:if test="${aluno_turma.matricula ne \"\"}">
-									<td>${aluno_turma.matricula}</td>
-								</c:if>
+								<td>${aluno_turma.matricula}</td>
 
 								<!-- Usuário -->
 								<c:if test="${aluno_turma.usuario == null}">

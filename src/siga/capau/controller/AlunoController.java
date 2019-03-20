@@ -113,6 +113,8 @@ public class AlunoController {
 
 		if (result.hasErrors()) {
 			return "redirect:novo";
+		} else if (dao.buscaPorMatricula(aluno.getMatricula()).size() > 0) {
+			return "redirect:novo";
 		}
 
 		// Testa se o id do usuário é null
@@ -191,7 +193,10 @@ public class AlunoController {
 			"ROLE_Coordenação de Disciplina" })
 	public String altera(@Valid Aluno aluno, BindingResult result) {
 
+		this.lista_alunos = dao.buscaPorMatricula(aluno.getMatricula());
 		if (result.hasErrors()) {
+			return "redirect:edita?id=" + aluno.getId();
+		} else if (this.lista_alunos.size() > 0 && this.lista_alunos.get(0).getId() != aluno.getId()) {
 			return "redirect:edita?id=" + aluno.getId();
 		}
 

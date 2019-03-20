@@ -84,6 +84,10 @@
 						<td>${extra_classe.conteudo}</td>
 					</tr>
 					<tr>
+						<th>Dificuldades diagnosticadas</th>
+						<td>${extra_classe.dificuldades_diagnosticadas}</td>
+					</tr>
+					<tr>
 						<th>Status</th>
 						<c:if test="${extra_classe.status_atendimento}">
 							<td>Não houve atendimento</td>

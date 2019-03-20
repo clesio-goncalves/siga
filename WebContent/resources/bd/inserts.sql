@@ -71,7 +71,7 @@ insert into Usuario(id, email, senha, ativo, perfil_id)
 values (12, 'cd@cd.com','$2a$10$blE.bIaeXORY9jDiiMq2COivr.osQmn2y0AIvqFRpaVI3X/Ehc3wi', 1, 12);
 
 insert into Situacao (id, nome)
-values (1, 'Aprovado sem pendências');
+values (1, 'Cursando');
 
 insert into Situacao (id, nome)
 values (2, 'Aprovado no Conselho');

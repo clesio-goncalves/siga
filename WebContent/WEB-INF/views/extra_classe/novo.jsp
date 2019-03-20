@@ -100,6 +100,15 @@
 				maxlength="3000"></textarea>
 		</div>
 
+		<!-- DIFICULDADES DIAGNOSTICADAS -->
+		<div class="form-group">
+			<label for="dificuldades_diagnosticadas">Dificuldades
+				diagnosticadas<span class="obrigatorio">*</span>
+			</label>
+			<textarea class="form-control" name="dificuldades_diagnosticadas"
+				rows="3" required maxlength="3000"></textarea>
+		</div>
+
 		<!-- STATUS ATENDIMENTO -->
 		<div class="form-group">
 			<div class="custom-control custom-checkbox">

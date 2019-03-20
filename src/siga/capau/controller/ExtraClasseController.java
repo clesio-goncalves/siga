@@ -326,7 +326,7 @@ public class ExtraClasseController {
 
 			String nomeArquivo = request.getServletContext()
 					.getRealPath("/resources/relatorio/extraclasse/" + retornaCaminhoRelatorio() + ".jasper");
-			
+
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			JRBeanCollectionDataSource relatorio = new JRBeanCollectionDataSource(this.lista_extra_classe);
 
@@ -367,6 +367,7 @@ public class ExtraClasseController {
 		this.filtra_extra_classe.setDocente(request.getParameter("docente"));
 		this.filtra_extra_classe.setLocal(request.getParameter("local"));
 		this.filtra_extra_classe.setConteudo(request.getParameter("conteudo"));
+		this.filtra_extra_classe.setDificuldades_diagnosticadas(request.getParameter("dificuldades_diagnosticadas"));
 		this.filtra_extra_classe.setStatus_atendimento(request.getParameter("status_atendimento"));
 
 		trataDatas();
