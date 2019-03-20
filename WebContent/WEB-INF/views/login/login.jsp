@@ -17,11 +17,12 @@
 <body class="my-login-page">
 	<section class="h-100">
 		<div class="container h-100">
+			<div class="imagem">
+				<img src="<c:url value="/resources/imagens/SIGA.png" />"
+					class="tamanho_imagem">
+			</div>
 			<div class="row justify-content-md-center h-100">
 				<div class="card-wrapper">
-					<div class="brand">
-						<img src="<c:url value="/resources/imagens/logo.jpg" />">
-					</div>
 					<div class="card fat">
 						<div class="card-body">
 							<h3 class="card-title" align="left">Login</h3>
@@ -65,7 +66,7 @@
 
 								<div class="form-group no-margin">
 									<button type="submit" class="btn btn-lg btn-success btn-block">
-										Login</button>
+										Entrar</button>
 								</div>
 							</form>
 						</div>

@@ -76,6 +76,12 @@ public class AlunoDao {
 				.setParameter("matricula", matricula).getResultList();
 	}
 
+	public List<String> buscaAlunoPorAtendimentoMonitoriaId(Long atendimento_monitoria_id) {
+		return manager.createQuery(
+				"select a.nome from Aluno a inner join AlunoAtendimentoMonitoria aat on aat.aluno.id = a.id where aat.atendimento_monitoria.id = :atendimento_monitoria_id",
+				String.class).setParameter("atendimento_monitoria_id", atendimento_monitoria_id).getResultList();
+	}
+
 	public Long buscaQntAlunosPorBeneficioId(Long beneficio_id) {
 		return manager.createQuery(
 				"select count(a) from Aluno a where a.turma.ativo = true and a.beneficio.id = :beneficio_id",

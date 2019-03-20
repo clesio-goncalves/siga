@@ -17,10 +17,15 @@
 			<div class="table-responsive">
 				<table
 					class="table table-striped table-bordered dt-responsive nowrap">
+					<tr>
+						<th width="30%">ID Atendimento</th>
+						<td>${atendimento_monitoria.id}</td>
+					</tr>
+
 					<!-- Aluno -->
 					<c:if test="${atendimento_monitoria.status_atendimento}">
 						<tr>
-							<th width="30%">Aluno</th>
+							<th>Aluno</th>
 							<td>-</td>
 						</tr>
 						<tr>
@@ -38,20 +43,16 @@
 					</c:if>
 					<c:if test="${atendimento_monitoria.status_atendimento == false}">
 						<tr>
-							<th width="30%">Aluno</th>
-							<td><a
-								href="<c:url value="/aluno/exibe?id=${atendimento_monitoria.aluno.id}" />"
-								style="font-weight: bold; color: blue;">${atendimento_monitoria.aluno.nome}</a></td>
+							<th style="vertical-align: middle;">Aluno</th>
+							<td>${atendimento_monitoria.alunos}</td>
 						</tr>
 						<tr>
 							<th>Curso</th>
-							<td><a
-								href="<c:url value="/curso/exibe?id=${atendimento_monitoria.aluno.turma.curso.id}" />">${atendimento_monitoria.aluno.turma.curso.nome}</a></td>
+							<td><a href="<c:url value="/curso/exibe?id=${curso.id}" />">${curso.nome}</a></td>
 						</tr>
 						<tr>
 							<th>Turma</th>
-							<td><a
-								href="<c:url value="/turma/exibe?id=${atendimento_monitoria.aluno.turma.id}" />">${atendimento_monitoria.aluno.turma.nome}</a></td>
+							<td><a href="<c:url value="/turma/exibe?id=${turma.id}" />">${turma.nome}</a></td>
 						</tr>
 						<tr>
 							<th>Disciplina</th>
@@ -131,8 +132,8 @@
 					<div class="modal-body">
 						<p>
 							Deseja realmente excluir o Atendimento de Monitoria <br>ID
-							(${atendimento_monitoria.id}) - Aluno:
-							${atendimento_monitoria.aluno.nome}?
+							(${atendimento_monitoria.id}) - Monitor:
+							${atendimento_monitoria.monitor.nome}?
 						</p>
 					</div>
 					<div class="modal-footer">

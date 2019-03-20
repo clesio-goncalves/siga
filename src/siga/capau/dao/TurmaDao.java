@@ -77,13 +77,18 @@ public class TurmaDao {
 
 	public Long buscaQntTurmasPorCursoId(Long curso_id) {
 		return manager
-				.createQuery("select count(t) from Turma t where t.ativo=true and t.curso.id = :curso_id",
-						Long.class)
+				.createQuery("select count(t) from Turma t where t.ativo=true and t.curso.id = :curso_id", Long.class)
 				.setParameter("curso_id", curso_id).getSingleResult();
 	}
 
 	public Turma buscaPorId(Long id) {
 		return manager.find(Turma.class, id);
+	}
+
+	public Turma buscaTurmaPorAtendimentoMonitoriaId(Long atendimento_id) {
+		return manager.createQuery(
+				"select t from Turma t inner join Aluno a on a.turma.id = t.id inner join AlunoAtendimentoMonitoria aat on aat.aluno.id = a.id where aat.atendimento_monitoria.id = :atendimento_id",
+				Turma.class).setParameter("atendimento_id", atendimento_id).getSingleResult();
 	}
 
 	public void remove(Long id) {

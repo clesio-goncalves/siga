@@ -44,6 +44,13 @@ public class CursoDao {
 				.getResultList();
 	}
 
+	public Curso buscaPorTurmaId(Long turma_id) {
+		return manager
+				.createQuery("select c from Curso c inner join Turma t on t.curso.id = c.id where t.id = :turma_id",
+						Curso.class)
+				.setParameter("turma_id", turma_id).getSingleResult();
+	}
+
 	public String buscaNomePorId(Long id) {
 		return manager.createQuery("select c.nome from Curso c where c.id = :id", String.class).setParameter("id", id)
 				.getSingleResult();

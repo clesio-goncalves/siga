@@ -30,10 +30,7 @@
 					<td>-</td>
 				</c:if>
 				<c:if test="${atendimento_monitoria.status_atendimento ==  false}">
-					<td><c:forEach var="aluno_atendimento"
-							items="${alunos_atendimento}">
-							- ${aluno_atendimento.aluno.nome}<br>
-						</c:forEach></td>
+					<td>${atendimento_monitoria.alunos}</td>
 					<td>${atendimento_monitoria.disciplina.nome}</td>
 				</c:if>
 				<td>${atendimento_monitoria.monitor.nome}</td>

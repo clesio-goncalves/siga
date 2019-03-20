@@ -30,6 +30,7 @@ import siga.capau.dao.TurmaDao;
 import siga.capau.modelo.AtendimentoMonitoria;
 import siga.capau.modelo.FiltroAtendimentoMonitoria;
 import siga.capau.modelo.Monitor;
+import siga.capau.modelo.Turma;
 import siga.capau.modelo.Usuario;
 import siga.capau.relatorio.GeradorRelatorio;
 
@@ -41,6 +42,7 @@ public class AtendimentoMonitoriaController {
 	private AtendimentoMonitoria atendimento_monitoria;
 	private List<AtendimentoMonitoria> lista_atendimentos_monitoria;
 	private FiltroAtendimentoMonitoria filtra_atendimento_monitoria;
+	private Turma turma;
 	private Usuario usuario;
 	private Monitor monitor;
 	private List<Monitor> lista_monitor;
@@ -116,7 +118,6 @@ public class AtendimentoMonitoriaController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Monitor",
 			"ROLE_Coordenação de Disciplina" })
 	public String lista(Model model) {
-
 		this.usuario = retornaUsuarioLogado();
 
 		// Se o usuario logado for monitor só exibe os atendimentos dele
@@ -142,7 +143,10 @@ public class AtendimentoMonitoriaController {
 
 		for (AtendimentoMonitoria atendimento : this.lista_atendimentos_monitoria) {
 			if (!atendimento.isStatus_atendimento()) {
-				// devo retornar os alunos do atendimento de monitoria
+				atendimento.setAlunos("");
+				for (String nome_aluno : dao_aluno.buscaAlunoPorAtendimentoMonitoriaId(atendimento.getId())) {
+					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
+				}
 			}
 		}
 		return "atendimento_monitoria/lista";
@@ -152,6 +156,7 @@ public class AtendimentoMonitoriaController {
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
 	public String remove(AtendimentoMonitoria AtendimentoMonitoria, HttpServletResponse response) {
 		if (possuiPermissao(AtendimentoMonitoria.getId())) {
+			
 			dao.remove(AtendimentoMonitoria.getId());
 			return "redirect:lista";
 		} else {
@@ -166,7 +171,20 @@ public class AtendimentoMonitoriaController {
 			"ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model, HttpServletResponse response) {
 		if (possuiPermissao(id)) {
+			this.atendimento_monitoria = dao.buscaPorId(id);
 			model.addAttribute("atendimento_monitoria", dao.buscaPorId(id));
+
+			if (!this.atendimento_monitoria.isStatus_atendimento()) {
+				this.atendimento_monitoria.setAlunos("");
+				for (String nome_aluno : dao_aluno
+						.buscaAlunoPorAtendimentoMonitoriaId(this.atendimento_monitoria.getId())) {
+					this.atendimento_monitoria
+							.setAlunos(this.atendimento_monitoria.getAlunos() + " - " + nome_aluno + "<br>");
+				}
+			}
+			this.turma = dao_turma.buscaTurmaPorAtendimentoMonitoriaId(id);
+			model.addAttribute("turma", this.turma);
+			model.addAttribute("curso", dao_curso.buscaPorTurmaId(this.turma.getId()));
 			return "atendimento_monitoria/exibe";
 		} else {
 			response.setStatus(403);
