@@ -17,8 +17,9 @@ public class AtendimentoMonitoriaDao {
 	private EntityManager manager;
 	private String sql;
 
-	public void adiciona(AtendimentoMonitoria AtendimentoMonitoria) {
+	public AtendimentoMonitoria adiciona(AtendimentoMonitoria AtendimentoMonitoria) {
 		manager.persist(AtendimentoMonitoria);
+		return AtendimentoMonitoria;
 	}
 
 	public void altera(AtendimentoMonitoria AtendimentoMonitoria) {

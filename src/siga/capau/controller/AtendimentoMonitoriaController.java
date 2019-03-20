@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import siga.capau.dao.AlunoAtendimentoMonitoriaDao;
 import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.CursoDao;
@@ -44,6 +45,7 @@ public class AtendimentoMonitoriaController {
 	private Monitor monitor;
 	private List<Monitor> lista_monitor;
 	private boolean possui_permissao_editar = false;
+	String alunos_id[];
 
 	@Autowired
 	AtendimentoMonitoriaDao dao;
@@ -62,6 +64,9 @@ public class AtendimentoMonitoriaController {
 
 	@Autowired
 	CursoDao dao_curso;
+
+	@Autowired
+	AlunoAtendimentoMonitoriaDao dao_aluno_atendimento_monitoria;
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
@@ -88,8 +93,21 @@ public class AtendimentoMonitoriaController {
 		if (result.hasErrors()) {
 			return "redirect:novo";
 		}
+
 		// Adiciona no banco de dados
-		dao.adiciona(AtendimentoMonitoria);
+		this.atendimento_monitoria = dao.adiciona(AtendimentoMonitoria);
+
+		if (!AtendimentoMonitoria.isStatus_atendimento()) {
+			// Split lista de alunos
+			this.alunos_id = AtendimentoMonitoria.getAlunos().split(",");
+
+			// Adiciona Vinculo em AlunoAtendimentoMonitoria
+			for (String aluno_id : this.alunos_id) {
+				this.dao_aluno_atendimento_monitoria.adiciona(Long.parseLong(aluno_id),
+						this.atendimento_monitoria.getId());
+			}
+		}
+
 		return "redirect:lista";
 	}
 
@@ -121,6 +139,12 @@ public class AtendimentoMonitoriaController {
 		}
 		model.addAttribute("atendimento_monitorias", this.lista_atendimentos_monitoria);
 		model.addAttribute("alunos", dao_aluno.lista());
+
+		for (AtendimentoMonitoria atendimento : this.lista_atendimentos_monitoria) {
+			if (!atendimento.isStatus_atendimento()) {
+				// devo retornar os alunos do atendimento de monitoria
+			}
+		}
 		return "atendimento_monitoria/lista";
 	}
 
@@ -158,39 +182,39 @@ public class AtendimentoMonitoriaController {
 			model.addAttribute("atendimento_monitoria", this.atendimento_monitoria);
 			this.possui_permissao_editar = true;
 
-			if (this.usuario.getPerfil().getId() == 10) { // Monitor
-				model.addAttribute("monitor", this.atendimento_monitoria.getMonitor());
-				model.addAttribute("cursos", dao_curso.listaCursosPorMonitorId(this.lista_monitor.get(0).getId()));
-
-				// Se for informado que houve atendimento
-				if (this.atendimento_monitoria.isStatus_atendimento() == false) {
-					model.addAttribute("turmas",
-							dao_turma.listaTurmaPorCursoIdMonitorId(
-									this.atendimento_monitoria.getAluno().getTurma().getCurso().getId(),
-									this.atendimento_monitoria.getMonitor().getId()));
-					model.addAttribute("alunos",
-							dao_aluno.listaAlunosPorTurmaId(this.atendimento_monitoria.getAluno().getTurma().getId()));
-					model.addAttribute("disciplinas",
-							dao_disciplina.listaDisciplinasPorTurmaIdMonitorId(
-									this.atendimento_monitoria.getAluno().getTurma().getId(),
-									this.atendimento_monitoria.getMonitor().getId()));
-				}
-			} else {
-				model.addAttribute("cursos", dao_curso.lista());
-				// Se for informado que houve atendimento
-				if (this.atendimento_monitoria.isStatus_atendimento() == false) {
-					model.addAttribute("turmas", dao_turma
-							.listaTurmaPorCursoId(this.atendimento_monitoria.getAluno().getTurma().getCurso().getId()));
-					model.addAttribute("alunos",
-							dao_aluno.listaAlunosPorTurmaId(this.atendimento_monitoria.getAluno().getTurma().getId()));
-					model.addAttribute("disciplinas", dao_disciplina
-							.listaDisciplinasPorTurmaId(this.atendimento_monitoria.getAluno().getTurma().getId()));
-					model.addAttribute("monitores",
-							dao_monitor.buscaPorDisciplinaId(this.atendimento_monitoria.getDisciplina().getId()));
-				} else {
-					model.addAttribute("monitores", dao_monitor.lista());
-				}
-			}
+//			if (this.usuario.getPerfil().getId() == 10) { // Monitor
+//				model.addAttribute("monitor", this.atendimento_monitoria.getMonitor());
+//				model.addAttribute("cursos", dao_curso.listaCursosPorMonitorId(this.lista_monitor.get(0).getId()));
+//
+//				// Se for informado que houve atendimento
+//				if (this.atendimento_monitoria.isStatus_atendimento() == false) {
+//					model.addAttribute("turmas",
+//							dao_turma.listaTurmaPorCursoIdMonitorId(
+//									this.atendimento_monitoria.getAluno().getTurma().getCurso().getId(),
+//									this.atendimento_monitoria.getMonitor().getId()));
+//					model.addAttribute("alunos",
+//							dao_aluno.listaAlunosPorTurmaId(this.atendimento_monitoria.getAluno().getTurma().getId()));
+//					model.addAttribute("disciplinas",
+//							dao_disciplina.listaDisciplinasPorTurmaIdMonitorId(
+//									this.atendimento_monitoria.getAluno().getTurma().getId(),
+//									this.atendimento_monitoria.getMonitor().getId()));
+//				}
+//			} else {
+//				model.addAttribute("cursos", dao_curso.lista());
+//				// Se for informado que houve atendimento
+//				if (this.atendimento_monitoria.isStatus_atendimento() == false) {
+//					model.addAttribute("turmas", dao_turma
+//							.listaTurmaPorCursoId(this.atendimento_monitoria.getAluno().getTurma().getCurso().getId()));
+//					model.addAttribute("alunos",
+//							dao_aluno.listaAlunosPorTurmaId(this.atendimento_monitoria.getAluno().getTurma().getId()));
+//					model.addAttribute("disciplinas", dao_disciplina
+//							.listaDisciplinasPorTurmaId(this.atendimento_monitoria.getAluno().getTurma().getId()));
+//					model.addAttribute("monitores",
+//							dao_monitor.buscaPorDisciplinaId(this.atendimento_monitoria.getDisciplina().getId()));
+//				} else {
+//					model.addAttribute("monitores", dao_monitor.lista());
+//				}
+//			}
 			return "atendimento_monitoria/edita";
 		} else {
 			response.setStatus(403);

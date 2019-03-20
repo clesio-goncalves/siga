@@ -10,7 +10,7 @@
 		<tr>
 			<th>Data</th>
 			<th>Horário</th>
-			<th>Aluno</th>
+			<th>Aluno(s)</th>
 			<th>Disciplina</th>
 			<th>Monitor</th>
 			<th>Ações</th>
@@ -30,7 +30,10 @@
 					<td>-</td>
 				</c:if>
 				<c:if test="${atendimento_monitoria.status_atendimento ==  false}">
-					<td>${atendimento_monitoria.aluno.nome}</td>
+					<td><c:forEach var="aluno_atendimento"
+							items="${alunos_atendimento}">
+							- ${aluno_atendimento.aluno.nome}<br>
+						</c:forEach></td>
 					<td>${atendimento_monitoria.disciplina.nome}</td>
 				</c:if>
 				<td>${atendimento_monitoria.monitor.nome}</td>
@@ -67,8 +70,8 @@
 									<div class="modal-body">
 										<p>
 											Deseja realmente excluir o Atendimento de Monitoria <br>ID
-											(${atendimento_monitoria.id}) - Aluno:
-											${atendimento_monitoria.aluno.nome}?
+											(${atendimento_monitoria.id}) - Monitor:
+											${atendimento_monitoria.monitor.nome}?
 										</p>
 									</div>
 									<div class="modal-footer">

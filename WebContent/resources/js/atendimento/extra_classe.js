@@ -1,5 +1,6 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
+var cont_select_aluno = 0;
 
 /**
  * Busca as turmas com base no curso selecionado
@@ -36,6 +37,7 @@ function alteraCurso(contexto) {
  * @returns {undefined}
  */
 function alteraTurma(contexto) {
+	cont_select_aluno = 0;
 	$.ajax({
 		type : "POST",
 		url : "filtro_aluno",
@@ -64,27 +66,30 @@ function alteraTurma(contexto) {
  * @returns {undefined}
  */
 function alteraAluno(contexto) {
-	$.ajax({
-		type : "POST",
-		url : "filtro_disciplina",
-		cache : false,
-		data : {
-			contexto : contexto,
-			turma_id : $("select[name='turma.id'] :selected").val(),
-			docente_id : $("input[name='docente_id']").val()
-		},
-		beforeSend : function(xhr) {
-			xhr.setRequestHeader(header, token);
-		},
-		success : function(response) {
-			$('#lista_disciplinas').html(response);
-			$('#disciplina').removeAttr('disabled');
-			$('#disciplina').selectpicker('refresh');
-		},
-		error : function() {
-			alert("Ocorreu um erro");
-		}
-	});
+	cont_select_aluno = cont_select_aluno + 1;
+	if (cont_select_aluno == 1) {
+		$.ajax({
+			type : "POST",
+			url : "filtro_disciplina",
+			cache : false,
+			data : {
+				contexto : contexto,
+				turma_id : $("select[name='turma.id'] :selected").val(),
+				docente_id : $("input[name='docente_id']").val()
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(response) {
+				$('#lista_disciplinas').html(response);
+				$('#disciplina').removeAttr('disabled');
+				$('#disciplina').selectpicker('refresh');
+			},
+			error : function() {
+				alert("Ocorreu um erro");
+			}
+		});
+	}
 }
 
 /**
