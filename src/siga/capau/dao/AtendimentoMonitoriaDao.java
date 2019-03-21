@@ -16,6 +16,8 @@ public class AtendimentoMonitoriaDao {
 	@PersistenceContext
 	private EntityManager manager;
 	private String sql;
+	private boolean where;
+	private boolean join;
 
 	public AtendimentoMonitoria adiciona(AtendimentoMonitoria AtendimentoMonitoria) {
 		manager.persist(AtendimentoMonitoria);
@@ -72,9 +74,37 @@ public class AtendimentoMonitoriaDao {
 			FiltroAtendimentoMonitoria filtro_atendimento_monitoria) {
 
 		sql = "select am from AtendimentoMonitoria as am";
+		this.where = false;
+		this.join = false;
 
-		sql = sql + " where DATE(am.data) between '" + filtro_atendimento_monitoria.getData_inicial_atendimento()
-				+ "' and '" + filtro_atendimento_monitoria.getData_final_atendimento() + "'";
+		// Curso
+		if (filtro_atendimento_monitoria.getCurso() != null) {
+			sql = sql
+					+ " inner join AlunoAtendimentoMonitoria aam on aam.atendimento_monitoria.id = am.id where aam.aluno.turma.curso.id = "
+					+ filtro_atendimento_monitoria.getCurso();
+			this.join = true;
+			this.where = true;
+		}
+
+		// Turma
+		if (filtro_atendimento_monitoria.getTurma() != null) {
+			testeWhere();
+			sql = sql + " aam.aluno.turma.id = " + filtro_atendimento_monitoria.getTurma();
+		}
+
+		// Aluno
+		if (filtro_atendimento_monitoria.getAluno() != null) {
+			testeJoin();
+			testeWhere();
+			sql = sql + " aam.aluno.id = " + filtro_atendimento_monitoria.getAluno();
+			this.join = true;
+			this.where = true;
+		}
+
+		// Data
+		testeWhere();
+		sql = sql + " DATE(am.data) between '" + filtro_atendimento_monitoria.getData_inicial_atendimento() + "' and '"
+				+ filtro_atendimento_monitoria.getData_final_atendimento() + "'";
 
 		// Horario inicial atendimento
 		if (!filtro_atendimento_monitoria.getHorario_inicial_atendimento().equals("")) {
@@ -88,24 +118,9 @@ public class AtendimentoMonitoriaDao {
 					+ ":00'";
 		}
 
-		// Curso
-		if (filtro_atendimento_monitoria.getCurso() != null) {
-			sql = sql + " and am.aluno.turma.curso.id = " + filtro_atendimento_monitoria.getCurso();
-		}
-
-		// Turma
-		if (filtro_atendimento_monitoria.getTurma() != null) {
-			sql = sql + " and am.aluno.turma.id = " + filtro_atendimento_monitoria.getTurma();
-		}
-
 		// disciplina
 		if (filtro_atendimento_monitoria.getDisciplina() != null) {
 			sql = sql + " and am.disciplina.id = " + filtro_atendimento_monitoria.getDisciplina();
-		}
-
-		// Aluno
-		if (filtro_atendimento_monitoria.getAluno() != null) {
-			sql = sql + " and am.aluno.id = " + filtro_atendimento_monitoria.getAluno();
 		}
 
 		// monitor
@@ -138,10 +153,36 @@ public class AtendimentoMonitoriaDao {
 			}
 		}
 
+		// Group by
+		sql = sql + " group by am.id";
+
+		// Oder by
 		sql = sql + " order by am.data desc";
+
+		System.out
+				.println("------------------------------------------------------------------------------------------");
+		System.out.println(sql);
+		System.out
+				.println("------------------------------------------------------------------------------------------");
 
 		return manager.createQuery(sql, AtendimentoMonitoria.class).getResultList();
 
+	}
+
+	private void testeJoin() {
+		if (this.join == false) {
+			this.join = true;
+			sql = sql + " inner join AlunoAtendimentoMonitoria aam on aam.atendimento_monitoria.id = e.id";
+		}
+	}
+
+	private void testeWhere() {
+		if (this.where == false) {
+			this.where = true;
+			sql = sql + " where";
+		} else {
+			sql = sql + " and";
+		}
 	}
 
 }

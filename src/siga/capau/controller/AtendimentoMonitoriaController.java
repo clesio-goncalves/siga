@@ -132,17 +132,9 @@ public class AtendimentoMonitoriaController {
 			model.addAttribute("disciplinas", dao_disciplina.lista());
 			model.addAttribute("monitores", dao_monitor.lista());
 		}
+		alteraAlunosMonitoria();
 		model.addAttribute("atendimento_monitorias", this.lista_atendimentos_monitoria);
 		model.addAttribute("alunos", dao_aluno.lista());
-
-		for (AtendimentoMonitoria atendimento : this.lista_atendimentos_monitoria) {
-			if (!atendimento.isStatus_atendimento()) {
-				atendimento.setAlunos("");
-				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorAtendimentoMonitoriaId(atendimento.getId())) {
-					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
-				}
-			}
-		}
 		return "atendimento_monitoria/lista";
 	}
 
@@ -364,6 +356,7 @@ public class AtendimentoMonitoriaController {
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
 		this.lista_atendimentos_monitoria = dao.filtraAtendimentoMonitoria(trataParametrosRequest(request));
+		alteraAlunosMonitoria();
 		model.addAttribute("atendimento_monitorias", this.lista_atendimentos_monitoria);
 		return "atendimento_monitoria/import_lista/tabela";
 	}
@@ -492,6 +485,17 @@ public class AtendimentoMonitoriaController {
 				dao_disciplina.listaDisciplinasPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
 		model.addAttribute("monitores",
 				dao_monitor.buscaPorDisciplinaId(this.atendimento_monitoria.getDisciplina().getId()));
+	}
+
+	private void alteraAlunosMonitoria() {
+		for (AtendimentoMonitoria atendimento : this.lista_atendimentos_monitoria) {
+			if (!atendimento.isStatus_atendimento()) {
+				atendimento.setAlunos("");
+				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorAtendimentoMonitoriaId(atendimento.getId())) {
+					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
+				}
+			}
+		}
 	}
 
 }

@@ -133,18 +133,10 @@ public class ExtraClasseController {
 			model.addAttribute("disciplinas", dao_disciplina.lista());
 			model.addAttribute("docentes", dao_docente.lista());
 		}
+		alteraAlunosExtraClasse();
 		model.addAttribute("extra_classes", this.lista_extra_classe);
 		model.addAttribute("alunos", dao_aluno.lista());
-
-		for (ExtraClasse atendimento : this.lista_extra_classe) {
-			if (!atendimento.isStatus_atendimento()) {
-				atendimento.setAlunos("");
-				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorExtraClasseId(atendimento.getId())) {
-					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
-				}
-			}
-		}
-
+		
 		return "extra_classe/lista";
 	}
 
@@ -335,6 +327,7 @@ public class ExtraClasseController {
 	@RequestMapping(value = "/filtrar", method = RequestMethod.POST)
 	public String filtra(HttpServletRequest request, HttpServletResponse response, Model model) {
 		this.lista_extra_classe = dao.filtraExtraClasse(trataParametrosRequest(request));
+		alteraAlunosExtraClasse();
 		model.addAttribute("extra_classes", this.lista_extra_classe);
 		return "extra_classe/import_lista/tabela";
 	}
@@ -494,6 +487,17 @@ public class ExtraClasseController {
 				dao_disciplina.listaDisciplinasPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
 		model.addAttribute("docentes", dao_docente.listaDocentesPorDisciplinaIdTurmaId(
 				this.extra_classe.getDisciplina().getId(), this.lista_alunos.get(0).getTurma().getId()));
+	}
+
+	private void alteraAlunosExtraClasse() {
+		for (ExtraClasse atendimento : this.lista_extra_classe) {
+			if (!atendimento.isStatus_atendimento()) {
+				atendimento.setAlunos("");
+				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorExtraClasseId(atendimento.getId())) {
+					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
+				}
+			}
+		}
 	}
 
 }

@@ -15,8 +15,9 @@ public class ExtraClasseDao {
 
 	@PersistenceContext
 	private EntityManager manager;
-
 	private String sql;
+	private boolean join;
+	private boolean where;
 
 	public ExtraClasse adiciona(ExtraClasse extraClasse) {
 		manager.persist(extraClasse);
@@ -69,8 +70,36 @@ public class ExtraClasseDao {
 	public List<ExtraClasse> filtraExtraClasse(FiltroExtraClasse filtro_extra_classe) {
 
 		sql = "select e from ExtraClasse as e";
+		this.where = false;
+		this.join = false;
 
-		sql = sql + " where DATE(e.data) between '" + filtro_extra_classe.getData_inicial_atendimento() + "' and '"
+		// Curso
+		if (filtro_extra_classe.getCurso() != null) {
+			sql = sql
+					+ " inner join AlunoExtraClasse aec on aec.extra_classe.id = e.id where aec.aluno.turma.curso.id = "
+					+ filtro_extra_classe.getCurso();
+			this.join = true;
+			this.where = true;
+		}
+
+		// Turma
+		if (filtro_extra_classe.getTurma() != null) {
+			testeWhere();
+			sql = sql + " aec.aluno.turma.id = " + filtro_extra_classe.getTurma();
+		}
+
+		// Aluno
+		if (filtro_extra_classe.getAluno() != null) {
+			testeJoin();
+			testeWhere();
+			sql = sql + " aec.aluno.id = " + filtro_extra_classe.getAluno();
+			this.join = true;
+			this.where = true;
+		}
+
+		// Data
+		testeWhere();
+		sql = sql + " DATE(e.data) between '" + filtro_extra_classe.getData_inicial_atendimento() + "' and '"
 				+ filtro_extra_classe.getData_final_atendimento() + "'";
 
 		// Horario inicial atendimento
@@ -84,24 +113,9 @@ public class ExtraClasseDao {
 			sql = sql + " and TIME(e.horario_final) <= '" + filtro_extra_classe.getHorario_final_atendimento() + ":00'";
 		}
 
-		// Curso
-		if (filtro_extra_classe.getCurso() != null) {
-			sql = sql + " and e.aluno.turma.curso.id = " + filtro_extra_classe.getCurso();
-		}
-
-		// Turma
-		if (filtro_extra_classe.getTurma() != null) {
-			sql = sql + " and e.aluno.turma.id = " + filtro_extra_classe.getTurma();
-		}
-
 		// disciplina
 		if (filtro_extra_classe.getDisciplina() != null) {
 			sql = sql + " and e.disciplina.id = " + filtro_extra_classe.getDisciplina();
-		}
-
-		// Aluno
-		if (filtro_extra_classe.getAluno() != null) {
-			sql = sql + " and e.aluno.id = " + filtro_extra_classe.getAluno();
 		}
 
 		// docente
@@ -134,11 +148,36 @@ public class ExtraClasseDao {
 			}
 		}
 
+		// Group by
+		sql = sql + " group by e.id";
+
 		// Oder by
 		sql = sql + " order by e.data desc";
 
+		System.out
+				.println("------------------------------------------------------------------------------------------");
+		System.out.println(sql);
+		System.out
+				.println("------------------------------------------------------------------------------------------");
+
 		return manager.createQuery(sql, ExtraClasse.class).getResultList();
 
+	}
+
+	private void testeJoin() {
+		if (this.join == false) {
+			this.join = true;
+			sql = sql + " inner join AlunoExtraClasse aec on aec.extra_classe.id = e.id";
+		}
+	}
+
+	private void testeWhere() {
+		if (this.where == false) {
+			this.where = true;
+			sql = sql + " where";
+		} else {
+			sql = sql + " and";
+		}
 	}
 
 }

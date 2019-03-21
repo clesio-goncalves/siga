@@ -143,10 +143,10 @@ public class AlunoDao {
 		if (!filtro_aluno.getAtendimentos().equals("")) {
 			switch (filtro_aluno.getAtendimentos()) {
 			case "Extraclasse":
-				sql = sql + " inner join ExtraClasse e on e.aluno.id = a.id";
+				sql = sql + " inner join AlunoExtraClasse aec on aec.aluno.id = a.id";
 				break;
 			case "Monitoria":
-				sql = sql + " inner join AtendimentoMonitoria am on am.aluno.id = a.id";
+				sql = sql + " inner join AlunoAtendimentoMonitoria aam on aam.aluno.id = a.id";
 				break;
 			case "Saude":
 				sql = sql + " inner join AtendimentoSaude saude on saude.aluno.id = a.id";
