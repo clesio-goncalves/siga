@@ -10,7 +10,7 @@
 	<field name="data" class="java.util.Date"/>
 	<field name="horario_inicial" class="java.util.Date"/>
 	<field name="horario_final" class="java.util.Date"/>
-	<field name="aluno.nome" class="java.lang.String"/>
+	<field name="alunos" class="java.lang.String"/>
 	<field name="disciplina.nome" class="java.lang.String"/>
 	<field name="monitor.nome" class="java.lang.String"/>
 	<background>
@@ -152,10 +152,10 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25">
+		<band height="60">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<rectangle>
-				<reportElement mode="Opaque" x="0" y="0" width="803" height="25" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="ece30ecd-205f-45a7-bce0-96b7cb2a1315">
+				<reportElement mode="Opaque" x="0" y="0" width="803" height="60" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="ece30ecd-205f-45a7-bce0-96b7cb2a1315">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -166,7 +166,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="0" width="70" height="25" uuid="65cb6197-d2d5-4d88-aa60-d146a478337b">
+				<reportElement x="0" y="0" width="70" height="60" uuid="65cb6197-d2d5-4d88-aa60-d146a478337b">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -177,7 +177,7 @@
 				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH:mm">
-				<reportElement x="70" y="0" width="30" height="25" uuid="9413ed70-7347-480e-b692-287b582a1bf7">
+				<reportElement x="70" y="0" width="30" height="60" uuid="9413ed70-7347-480e-b692-287b582a1bf7">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -187,18 +187,7 @@
 				<textFieldExpression><![CDATA[$F{horario_inicial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="0" width="249" height="25" uuid="bc296804-05fc-4af5-ad72-9006d7fd8cb1">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<paragraph lineSpacing="1_1_2"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{aluno.nome} == null ? "-" : $F{aluno.nome}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="404" y="0" width="150" height="25" uuid="c353d611-bd79-4075-b233-cb7ba60d06da">
+				<reportElement x="404" y="0" width="150" height="60" uuid="c353d611-bd79-4075-b233-cb7ba60d06da">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -209,7 +198,7 @@
 				<textFieldExpression><![CDATA[$F{disciplina.nome} == null ? "-" : $F{disciplina.nome}]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH:mm">
-				<reportElement x="100" y="0" width="3" height="25" uuid="32b3dde6-7d4b-4686-9788-03f4a54df5de">
+				<reportElement x="100" y="0" width="3" height="60" uuid="32b3dde6-7d4b-4686-9788-03f4a54df5de">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -219,7 +208,7 @@
 				<textFieldExpression><![CDATA["-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH:mm">
-				<reportElement x="103" y="0" width="30" height="25" uuid="413d2328-0301-449f-a5dd-b14fb646d03b">
+				<reportElement x="103" y="0" width="30" height="60" uuid="413d2328-0301-449f-a5dd-b14fb646d03b">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -229,7 +218,7 @@
 				<textFieldExpression><![CDATA[$F{horario_final}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="554" y="0" width="249" height="25" uuid="980e3bcb-ce74-4757-a1e8-c830e03f3859">
+				<reportElement x="554" y="0" width="249" height="60" uuid="980e3bcb-ce74-4757-a1e8-c830e03f3859">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -238,6 +227,17 @@
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{monitor.nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="0" width="249" height="60" uuid="33e24555-a2a2-43c7-a3b7-501a61b97c0c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alunos} == null ? "-" : $F{alunos}.replace("<br>-","\n-").replace("<br>","")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

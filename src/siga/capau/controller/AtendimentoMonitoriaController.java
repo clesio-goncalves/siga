@@ -449,7 +449,7 @@ public class AtendimentoMonitoriaController {
 			for (String nome_aluno : dao_aluno
 					.buscaNomeAlunoPorAtendimentoMonitoriaId(this.atendimento_monitoria.getId())) {
 				this.atendimento_monitoria
-						.setAlunos(this.atendimento_monitoria.getAlunos() + " - " + nome_aluno + "<br>");
+						.setAlunos(this.atendimento_monitoria.getAlunos() + "- " + nome_aluno + "<br>");
 			}
 			this.turma = dao_turma.buscaTurmaPorAtendimentoMonitoriaId(id);
 			model.addAttribute("turma", this.turma);
@@ -492,7 +492,7 @@ public class AtendimentoMonitoriaController {
 			if (!atendimento.isStatus_atendimento()) {
 				atendimento.setAlunos("");
 				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorAtendimentoMonitoriaId(atendimento.getId())) {
-					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
+					atendimento.setAlunos(atendimento.getAlunos() + "- " + nome_aluno + "<br>");
 				}
 			}
 		}

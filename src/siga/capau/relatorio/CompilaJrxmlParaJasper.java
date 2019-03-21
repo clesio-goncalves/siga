@@ -7,6 +7,6 @@ public class CompilaJrxmlParaJasper {
 
 	public static void main(String[] args) throws JRException {
 		JasperCompileManager.compileReportToFile(
-				"/home/clesio/eclipse-workspace/siga/WebContent/resources/relatorio/indisciplina/atendimento_indisciplina_diretor.jrxml");
+				"/home/clesio/eclipse-workspace/siga/WebContent/resources/relatorio/monitoria/atendimento_monitoria_pedagogia.jrxml");
 	}
 }

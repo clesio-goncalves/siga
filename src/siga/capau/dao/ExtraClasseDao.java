@@ -154,12 +154,6 @@ public class ExtraClasseDao {
 		// Oder by
 		sql = sql + " order by e.data desc";
 
-		System.out
-				.println("------------------------------------------------------------------------------------------");
-		System.out.println(sql);
-		System.out
-				.println("------------------------------------------------------------------------------------------");
-
 		return manager.createQuery(sql, ExtraClasse.class).getResultList();
 
 	}

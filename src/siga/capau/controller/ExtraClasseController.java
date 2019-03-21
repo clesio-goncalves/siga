@@ -452,7 +452,7 @@ public class ExtraClasseController {
 		if (!this.extra_classe.isStatus_atendimento()) {
 			this.extra_classe.setAlunos("");
 			for (String nome_aluno : dao_aluno.buscaNomeAlunoPorExtraClasseId(this.extra_classe.getId())) {
-				this.extra_classe.setAlunos(this.extra_classe.getAlunos() + " - " + nome_aluno + "<br>");
+				this.extra_classe.setAlunos(this.extra_classe.getAlunos() + "- " + nome_aluno + "<br>");
 			}
 			this.turma = dao_turma.buscaTurmaPorExtraClasseId(id);
 			model.addAttribute("turma", this.turma);
@@ -494,7 +494,7 @@ public class ExtraClasseController {
 			if (!atendimento.isStatus_atendimento()) {
 				atendimento.setAlunos("");
 				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorExtraClasseId(atendimento.getId())) {
-					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
+					atendimento.setAlunos(atendimento.getAlunos() + "- " + nome_aluno + "<br>");
 				}
 			}
 		}

@@ -159,12 +159,6 @@ public class AtendimentoMonitoriaDao {
 		// Oder by
 		sql = sql + " order by am.data desc";
 
-		System.out
-				.println("------------------------------------------------------------------------------------------");
-		System.out.println(sql);
-		System.out
-				.println("------------------------------------------------------------------------------------------");
-
 		return manager.createQuery(sql, AtendimentoMonitoria.class).getResultList();
 
 	}
