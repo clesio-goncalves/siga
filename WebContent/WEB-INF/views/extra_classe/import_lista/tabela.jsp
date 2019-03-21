@@ -29,7 +29,7 @@
 					<td>-</td>
 				</c:if>
 				<c:if test="${extra_classe.status_atendimento == false}">
-					<td>${extra_classe.aluno.nome}</td>
+					<td>${extra_classe.alunos}</td>
 					<td>${extra_classe.disciplina.nome}</td>
 				</c:if>
 				<td>${extra_classe.docente.nome}</td>

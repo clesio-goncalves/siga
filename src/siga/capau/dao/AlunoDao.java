@@ -82,10 +82,22 @@ public class AlunoDao {
 				String.class).setParameter("atendimento_monitoria_id", atendimento_monitoria_id).getResultList();
 	}
 
+	public List<String> buscaNomeAlunoPorExtraClasseId(Long extra_classe_id) {
+		return manager.createQuery(
+				"select a.nome from Aluno a inner join AlunoExtraClasse aec on aec.aluno.id = a.id where aec.extra_classe.id = :extra_classe_id",
+				String.class).setParameter("extra_classe_id", extra_classe_id).getResultList();
+	}
+
 	public List<Aluno> buscaAlunoPorAtendimentoMonitoriaId(Long atendimento_monitoria_id) {
 		return manager.createQuery(
 				"select a from Aluno a inner join AlunoAtendimentoMonitoria aat on aat.aluno.id = a.id where aat.atendimento_monitoria.id = :atendimento_monitoria_id",
 				Aluno.class).setParameter("atendimento_monitoria_id", atendimento_monitoria_id).getResultList();
+	}
+
+	public List<Aluno> buscaAlunoPorExtraClasseId(Long extra_classe_id) {
+		return manager.createQuery(
+				"select a from Aluno a inner join AlunoExtraClasse aec on aec.aluno.id = a.id where aec.extra_classe.id = :extra_classe_id",
+				Aluno.class).setParameter("extra_classe_id", extra_classe_id).getResultList();
 	}
 
 	public Long buscaQntAlunosPorBeneficioId(Long beneficio_id) {

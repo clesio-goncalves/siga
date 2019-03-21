@@ -21,7 +21,6 @@
 						<th width="30%">ID Atendimento</th>
 						<td>${atendimento_monitoria.id}</td>
 					</tr>
-
 					<!-- Aluno -->
 					<c:if test="${atendimento_monitoria.status_atendimento}">
 						<tr>

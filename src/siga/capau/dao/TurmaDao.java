@@ -91,6 +91,12 @@ public class TurmaDao {
 				Turma.class).setParameter("atendimento_id", atendimento_id).getSingleResult();
 	}
 
+	public Turma buscaTurmaPorExtraClasseId(Long atendimento_id) {
+		return manager.createQuery(
+				"select t from Turma t inner join Aluno a on a.turma.id = t.id inner join AlunoExtraClasse aec on aec.aluno.id = a.id where aec.extra_classe.id = :atendimento_id",
+				Turma.class).setParameter("atendimento_id", atendimento_id).getSingleResult();
+	}
+
 	public void remove(Long id) {
 		manager.createQuery("delete from Turma t where t.id = :id").setParameter("id", id).executeUpdate();
 	}

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -49,8 +50,8 @@ public class ExtraClasse {
 
 	private boolean status_atendimento;
 
-	@ManyToOne
-	private Aluno aluno;
+	@Transient
+	private String alunos;
 
 	@ManyToOne
 	private Disciplina disciplina;
@@ -123,12 +124,12 @@ public class ExtraClasse {
 		this.status_atendimento = status_atendimento;
 	}
 
-	public Aluno getAluno() {
-		return aluno;
+	public String getAlunos() {
+		return alunos;
 	}
 
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
+	public void setAlunos(String alunos) {
+		this.alunos = alunos;
 	}
 
 	public Disciplina getDisciplina() {

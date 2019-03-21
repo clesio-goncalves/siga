@@ -11,8 +11,8 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/select/bootstrap-select.min.css" />">
 <div class="jumbotron">
-	<div>
-		<h1 class="display-3">Cadastrar Aluno</h1>
+	<div class="container">
+		<h1>Cadastrar Aluno</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar o
 			cadastro do aluno no sistema.</p>
 	</div>

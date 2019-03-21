@@ -18,8 +18,9 @@ public class ExtraClasseDao {
 
 	private String sql;
 
-	public void adiciona(ExtraClasse extraClasse) {
+	public ExtraClasse adiciona(ExtraClasse extraClasse) {
 		manager.persist(extraClasse);
+		return extraClasse;
 	}
 
 	public void altera(ExtraClasse extraClasse) {

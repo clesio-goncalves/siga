@@ -35,7 +35,7 @@
 					${extra_classe.status_atendimento ? 'disabled' : ''}>
 					<c:forEach var="curso" items="${cursos}">
 						<option value="${curso.id}"
-							${extra_classe.aluno.turma.curso.id == curso.id ? 'selected' : ''}>${curso.nome}</option>
+							${curso_atendimento == curso.id ? 'selected' : ''}>${curso.nome}</option>
 					</c:forEach>
 				</select>
 			</div>

@@ -21,14 +21,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import siga.capau.dao.AlunoDao;
+import siga.capau.dao.AlunoExtraClasseDao;
 import siga.capau.dao.CursoDao;
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.DocenteDao;
 import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.TurmaDao;
+import siga.capau.modelo.Aluno;
 import siga.capau.modelo.Docente;
 import siga.capau.modelo.ExtraClasse;
 import siga.capau.modelo.FiltroExtraClasse;
+import siga.capau.modelo.Turma;
 import siga.capau.modelo.Usuario;
 import siga.capau.relatorio.GeradorRelatorio;
 
@@ -40,10 +43,13 @@ public class ExtraClasseController {
 	private ExtraClasse extra_classe;
 	private List<ExtraClasse> lista_extra_classe;
 	private FiltroExtraClasse filtra_extra_classe;
+	private List<Aluno> lista_alunos;
+	private Turma turma;
 	private Usuario usuario;
 	private Docente docente;
 	private List<Docente> lista_docente;
 	private boolean possui_permissao_editar = false;
+	String alunos_id[];
 
 	@Autowired
 	ExtraClasseDao dao;
@@ -62,6 +68,9 @@ public class ExtraClasseController {
 
 	@Autowired
 	DocenteDao dao_docente;
+
+	@Autowired
+	AlunoExtraClasseDao dao_aluno_extraclasse;
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
@@ -92,7 +101,11 @@ public class ExtraClasseController {
 		}
 
 		// Adiciona no banco de dados
-		dao.adiciona(extraClasse);
+		this.extra_classe = dao.adiciona(extraClasse);
+
+		// Vincula os alunos ao atendimento de extraclasse
+		adicionaAlunoExtraClasse(extraClasse);
+
 		return "redirect:lista";
 	}
 
@@ -122,6 +135,16 @@ public class ExtraClasseController {
 		}
 		model.addAttribute("extra_classes", this.lista_extra_classe);
 		model.addAttribute("alunos", dao_aluno.lista());
+
+		for (ExtraClasse atendimento : this.lista_extra_classe) {
+			if (!atendimento.isStatus_atendimento()) {
+				atendimento.setAlunos("");
+				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorExtraClasseId(atendimento.getId())) {
+					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
+				}
+			}
+		}
+
 		return "extra_classe/lista";
 	}
 
@@ -129,6 +152,7 @@ public class ExtraClasseController {
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
 	public String remove(ExtraClasse extraClasse, HttpServletResponse response) {
 		if (possuiPermissao(extraClasse.getId())) {
+			dao_aluno_extraclasse.removePeloAtendimentoId(extraClasse.getId());
 			dao.remove(extraClasse.getId());
 			return "redirect:lista";
 		} else {
@@ -142,7 +166,9 @@ public class ExtraClasseController {
 			"ROLE_Enfermagem", "ROLE_Pedagogia", "ROLE_Odontologia", "ROLE_Docente", "ROLE_Coordenação de Disciplina" })
 	public String exibe(Long id, Model model, HttpServletResponse response) {
 		if (possuiPermissao(id)) {
-			model.addAttribute("extra_classe", dao.buscaPorId(id));
+			this.extra_classe = dao.buscaPorId(id);
+			model.addAttribute("extra_classe", this.extra_classe);
+			dadosExibir(id, model);
 			return "extra_classe/exibe";
 		} else {
 			response.setStatus(403);
@@ -161,30 +187,19 @@ public class ExtraClasseController {
 			if (this.usuario.getPerfil().getId() == 9) { // Docente
 				model.addAttribute("docente", this.extra_classe.getDocente());
 				model.addAttribute("cursos", dao_curso.listaCursosPorDocenteId(this.extra_classe.getDocente().getId()));
+
 				// Se for informado que houve atendimento
 				if (this.extra_classe.isStatus_atendimento() == false) {
-					model.addAttribute("turmas",
-							dao_turma.listaTurmaPorCursoIdDocenteId(
-									this.extra_classe.getAluno().getTurma().getCurso().getId(),
-									this.extra_classe.getDocente().getId()));
-					model.addAttribute("alunos",
-							dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-					model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasPorTurmaIdDocenteId(
-							this.extra_classe.getAluno().getTurma().getId(), this.extra_classe.getDocente().getId()));
+					buscaDadosAtendimento(model);
+					buscaDadosAtendimentoParaDocente(model);
 				}
 			} else {
 				model.addAttribute("cursos", dao_curso.lista());
+
 				// Se for informado que houve atendimento
 				if (this.extra_classe.isStatus_atendimento() == false) {
-					model.addAttribute("turmas",
-							dao_turma.listaTurmaPorCursoId(this.extra_classe.getAluno().getTurma().getCurso().getId()));
-					model.addAttribute("alunos",
-							dao_aluno.listaAlunosPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-					model.addAttribute("disciplinas",
-							dao_disciplina.listaDisciplinasPorTurmaId(this.extra_classe.getAluno().getTurma().getId()));
-					model.addAttribute("docentes",
-							dao_docente.listaDocentesPorDisciplinaIdTurmaId(this.extra_classe.getDisciplina().getId(),
-									this.extra_classe.getAluno().getTurma().getId()));
+					buscaDadosAtendimento(model);
+					buscaDadosAtendimentoParaOutros(model);
 				} else {
 					model.addAttribute("docentes", dao_docente.lista());
 				}
@@ -207,10 +222,18 @@ public class ExtraClasseController {
 			// Se na edição marcar atendimento como não realizado
 			if (extraClasse.isStatus_atendimento()) {
 				extraClasse.setConteudo("-");
+				extraClasse.setDificuldades_diagnosticadas("-");
 			}
 
 			// Altera no banco
 			dao.altera(extraClasse);
+
+			// Desvincula os alunos de AlunoExtraClasse
+			dao_aluno_extraclasse.removePeloAtendimentoId(extraClasse.getId());
+
+			// Vincula os alunos ao atendimento de extraclasse
+			adicionaAlunoExtraClasse(extraClasse);
+
 			this.possui_permissao_editar = false;
 			return "redirect:lista";
 		} else {
@@ -418,6 +441,59 @@ public class ExtraClasseController {
 
 	private Usuario retornaUsuarioLogado() {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+
+	private void adicionaAlunoExtraClasse(ExtraClasse extraClasse) {
+		if (!extraClasse.isStatus_atendimento()) {
+			// Split lista de alunos
+			this.alunos_id = extraClasse.getAlunos().split(",");
+
+			// Adiciona Vinculo em AlunoExtraClasse
+			for (String aluno_id : this.alunos_id) {
+				this.dao_aluno_extraclasse.adiciona(Long.parseLong(aluno_id), this.extra_classe.getId());
+			}
+		}
+	}
+
+	private void dadosExibir(Long id, Model model) {
+		if (!this.extra_classe.isStatus_atendimento()) {
+			this.extra_classe.setAlunos("");
+			for (String nome_aluno : dao_aluno.buscaNomeAlunoPorExtraClasseId(this.extra_classe.getId())) {
+				this.extra_classe.setAlunos(this.extra_classe.getAlunos() + " - " + nome_aluno + "<br>");
+			}
+			this.turma = dao_turma.buscaTurmaPorExtraClasseId(id);
+			model.addAttribute("turma", this.turma);
+			model.addAttribute("curso", dao_curso.buscaPorTurmaId(this.turma.getId()));
+		}
+	}
+
+	private void buscaDadosAtendimento(Model model) {
+		this.lista_alunos = this.dao_aluno.buscaAlunoPorExtraClasseId(this.extra_classe.getId());
+		model.addAttribute("turma_atendimento", this.lista_alunos.get(0).getTurma().getId());
+		model.addAttribute("curso_atendimento", this.lista_alunos.get(0).getTurma().getCurso().getId());
+
+		this.extra_classe.setAlunos("");
+		for (Aluno aluno : this.lista_alunos) {
+			this.extra_classe.setAlunos(this.extra_classe.getAlunos() + aluno.getId() + " ");
+		}
+	}
+
+	private void buscaDadosAtendimentoParaDocente(Model model) {
+		model.addAttribute("turmas", dao_turma.listaTurmaPorCursoIdDocenteId(
+				this.lista_alunos.get(0).getTurma().getCurso().getId(), this.extra_classe.getDocente().getId()));
+		model.addAttribute("alunos", dao_aluno.listaAlunosPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
+		model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasPorTurmaIdDocenteId(
+				this.lista_alunos.get(0).getTurma().getId(), this.extra_classe.getDocente().getId()));
+	}
+
+	private void buscaDadosAtendimentoParaOutros(Model model) {
+		model.addAttribute("turmas",
+				dao_turma.listaTurmaPorCursoId(this.lista_alunos.get(0).getTurma().getCurso().getId()));
+		model.addAttribute("alunos", dao_aluno.listaAlunosPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
+		model.addAttribute("disciplinas",
+				dao_disciplina.listaDisciplinasPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
+		model.addAttribute("docentes", dao_docente.listaDocentesPorDisciplinaIdTurmaId(
+				this.extra_classe.getDisciplina().getId(), this.lista_alunos.get(0).getTurma().getId()));
 	}
 
 }

@@ -24,9 +24,9 @@
 			<c:set var="nome_perfil" value="${fn:replace(perfil, 'ROLE_', '')}" />
 			<h1>Bem-vindo, ${nome_perfil}</h1>
 		</security:authorize>
-		<p class="lead">Este é o protótipo do sistema SIGA-Capau (Sistema
-			Integrado de Gestão de Alunos do Campus Paulistana) que acompanha o
-			desenvolvimento dos alunos no campus.</p>
+		<p class="lead">Este é o protótipo do sistema SIGA.CAPAU (Sistema
+			Integrado de Gestão de Alunos - IFPI Campus Paulistana) que acompanha
+			o desenvolvimento dos alunos no campus.</p>
 	</div>
 </div>
 

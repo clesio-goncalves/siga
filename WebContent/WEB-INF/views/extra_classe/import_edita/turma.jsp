@@ -9,6 +9,6 @@
 	${extra_classe.status_atendimento ? 'disabled' : ''}>
 	<c:forEach var="turma" items="${turmas}">
 		<option value="${turma.id}"
-			${extra_classe.aluno.turma.id == turma.id ? 'selected' : ''}>${turma.nome}</option>
+			${turma_atendimento == turma.id ? 'selected' : ''}>${turma.nome}</option>
 	</c:forEach>
 </select>
