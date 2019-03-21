@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import siga.capau.dao.AlunoDao;
 import siga.capau.dao.DocenteDao;
 import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.TurmaDisciplinaDocenteDao;
 import siga.capau.dao.UsuarioDao;
 import siga.capau.modelo.Docente;
+import siga.capau.modelo.ExtraClasse;
 import siga.capau.modelo.Usuario;
 import siga.capau.relatorio.GeradorRelatorio;
 
@@ -35,6 +37,7 @@ public class DocenteController {
 
 	private List<Docente> lista_docentes;
 	private List<Usuario> lista_usuario;
+	private List<ExtraClasse> lista_extra_classe;
 
 	@Autowired
 	DocenteDao dao;
@@ -47,6 +50,9 @@ public class DocenteController {
 
 	@Autowired
 	ExtraClasseDao dao_extraclasse;
+
+	@Autowired
+	AlunoDao dao_aluno;
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
@@ -99,10 +105,10 @@ public class DocenteController {
 
 	@RequestMapping("/exibe")
 	public String exibe(Long id, Model model) {
-		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPeloDocenteId(id));
 		model.addAttribute("docente", dao.buscaPorId(id));
 		model.addAttribute("disciplinas_turma",
 				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorDocenteId(id));
+		atendimentosExtraClasse(model, id);
 		return "docente/exibe";
 	}
 
@@ -156,6 +162,19 @@ public class DocenteController {
 
 	private Usuario retornaUsuarioLogado() {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+
+	private void atendimentosExtraClasse(Model model, Long id) {
+		this.lista_extra_classe = dao_extraclasse.buscaPeloDocenteId(id);
+		for (ExtraClasse atendimento : this.lista_extra_classe) {
+			if (!atendimento.isStatus_atendimento()) {
+				atendimento.setAlunos("");
+				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorExtraClasseId(atendimento.getId())) {
+					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
+				}
+			}
+		}
+		model.addAttribute("atendimentos_extraclasse", this.lista_extra_classe);
 	}
 
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.DocenteDao;
@@ -27,8 +28,10 @@ import siga.capau.dao.ExtraClasseDao;
 import siga.capau.dao.MonitorDao;
 import siga.capau.dao.TurmaDao;
 import siga.capau.dao.TurmaDisciplinaDocenteDao;
+import siga.capau.modelo.AtendimentoMonitoria;
 import siga.capau.modelo.Disciplina;
 import siga.capau.modelo.Docente;
+import siga.capau.modelo.ExtraClasse;
 import siga.capau.modelo.Turma;
 import siga.capau.modelo.Usuario;
 import siga.capau.relatorio.GeradorRelatorio;
@@ -42,6 +45,8 @@ public class DisciplinaController {
 	private List<Long> lista_id_turma;
 	private List<Disciplina> lista_disciplinas;
 	private List<Docente> lista_docente;
+	private List<ExtraClasse> lista_extra_classe;
+	private List<AtendimentoMonitoria> lista_atendimentos_monitoria;
 	private Disciplina disciplina;
 	private String[] turmas_id;
 	private String[] docentes_id;
@@ -66,6 +71,9 @@ public class DisciplinaController {
 
 	@Autowired
 	AtendimentoMonitoriaDao dao_atendimento_monitoria;
+
+	@Autowired
+	AlunoDao dao_aluno;
 
 	@RequestMapping("/nova")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia",
@@ -139,8 +147,8 @@ public class DisciplinaController {
 		model.addAttribute("monitores", dao_monitor.lista());
 		model.addAttribute("turmas_docentes",
 				dao_turma_disciplina_docente.buscaTurmaDisciplinaDocentePorDisciplinaId(id));
-		model.addAttribute("atendimentos_extraclasse", dao_extraclasse.buscaPelaDisciplinaId(id));
-		model.addAttribute("atendimentos_monitoria", dao_atendimento_monitoria.buscaPelaDisciplinaId(id));
+		atendimentosExtraClasse(model, id);
+		atendimentosMonitoria(model, id);
 		return "disciplina/exibe";
 	}
 
@@ -209,7 +217,6 @@ public class DisciplinaController {
 
 		// Remove todas as turmas q foram removidas na alteração
 		for (Long id : this.lista_id_turma) {
-			System.out.println("remove turmas_id");
 			this.dao_turma_disciplina_docente.removeTurmaDisciplinaDocentePelaDisciplinaIdAndTurmaId(disciplina.getId(),
 					id);
 		}
@@ -240,6 +247,32 @@ public class DisciplinaController {
 
 	private Usuario retornaUsuarioLogado() {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+
+	private void atendimentosExtraClasse(Model model, Long id) {
+		this.lista_extra_classe = dao_extraclasse.buscaPelaDisciplinaId(id);
+		for (ExtraClasse atendimento : this.lista_extra_classe) {
+			if (!atendimento.isStatus_atendimento()) {
+				atendimento.setAlunos("");
+				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorExtraClasseId(atendimento.getId())) {
+					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
+				}
+			}
+		}
+		model.addAttribute("atendimentos_extraclasse", this.lista_extra_classe);
+	}
+
+	private void atendimentosMonitoria(Model model, Long id) {
+		this.lista_atendimentos_monitoria = dao_atendimento_monitoria.buscaPelaDisciplinaId(id);
+		for (AtendimentoMonitoria atendimento : this.lista_atendimentos_monitoria) {
+			if (!atendimento.isStatus_atendimento()) {
+				atendimento.setAlunos("");
+				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorAtendimentoMonitoriaId(atendimento.getId())) {
+					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
+				}
+			}
+		}
+		model.addAttribute("atendimentos_monitoria", this.lista_atendimentos_monitoria);
 	}
 
 }

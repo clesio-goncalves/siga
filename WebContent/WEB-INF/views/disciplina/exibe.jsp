@@ -71,9 +71,9 @@
 						<thead>
 							<tr>
 								<th>Data</th>
-								<th>Turma</th>
+								<th>Horário</th>
 								<th>Docente</th>
-								<th>Aluno</th>
+								<th>Aluno(s)</th>
 								<th>Ações</th>
 							</tr>
 						</thead>
@@ -83,9 +83,13 @@
 								<tr>
 									<td><fmt:formatDate
 											value="${atendimento_extraclasse.data}" /></td>
-									<td>${atendimento_extraclasse.aluno.turma.nome}</td>
+									<td><fmt:formatDate type="time"
+											value="${atendimento_extraclasse.horario_inicial}"
+											pattern="HH:mm" /> - <fmt:formatDate type="time"
+											value="${atendimento_extraclasse.horario_final}"
+											pattern="HH:mm" /></td>
 									<td>${atendimento_extraclasse.docente.nome}</td>
-									<td>${atendimento_extraclasse.aluno.nome}</td>
+									<td>${atendimento_extraclasse.alunos}</td>
 									<td>
 										<!-- Exibir --> <a
 										href="<c:url value="/atendimento/extra-classe/exibe?id=${atendimento_extraclasse.id}"/>"
@@ -114,8 +118,8 @@
 							<tr>
 								<th>Data</th>
 								<th>Horário</th>
-								<th>Turma</th>
-								<th>Aluno</th>
+								<th>Monitor</th>
+								<th>Aluno(s)</th>
 								<th>Ações</th>
 							</tr>
 						</thead>
@@ -129,15 +133,15 @@
 											pattern="HH:mm" /> - <fmt:formatDate type="time"
 											value="${atendimento_monitoria.horario_final}"
 											pattern="HH:mm" /></td>
+									<td>${atendimento_monitoria.monitor.nome}</td>
 									<c:if test="${atendimento_monitoria.status_atendimento}">
-										<td>-</td>
 										<td>-</td>
 									</c:if>
 									<c:if
 										test="${atendimento_monitoria.status_atendimento == false}">
-										<td>${atendimento_monitoria.aluno.turma.nome}</td>
-										<td>${atendimento_monitoria.aluno.nome}</td>
+										<td>${atendimento_monitoria.alunos}</td>
 									</c:if>
+
 									<td>
 										<!-- Exibir --> <a
 										href="<c:url value="/atendimento/monitoria/exibe?id=${atendimento_monitoria.id}"/>"

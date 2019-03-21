@@ -38,7 +38,8 @@ public class AtendimentoMonitoriaDao {
 	}
 
 	public List<AtendimentoMonitoria> buscaPeloAlunoId(Long aluno_id) {
-		return manager.createQuery("select am from AtendimentoMonitoria am where am.aluno.id = :aluno_id",
+		return manager.createQuery(
+				"select am from AtendimentoMonitoria am inner join AlunoAtendimentoMonitoria aam on aam.atendimento_monitoria.id = am.id where aam.aluno.id = :aluno_id",
 				AtendimentoMonitoria.class).setParameter("aluno_id", aluno_id).getResultList();
 	}
 

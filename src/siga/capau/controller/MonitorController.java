@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import siga.capau.dao.AlunoDao;
 import siga.capau.dao.AtendimentoMonitoriaDao;
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.MonitorDao;
 import siga.capau.dao.UsuarioDao;
+import siga.capau.modelo.AtendimentoMonitoria;
 import siga.capau.modelo.Monitor;
 import siga.capau.modelo.Usuario;
 import siga.capau.relatorio.GeradorRelatorio;
@@ -35,6 +37,7 @@ public class MonitorController {
 
 	private List<Usuario> lista_usuario;
 	private List<Monitor> lista_monitores;
+	private List<AtendimentoMonitoria> lista_atendimentos_monitoria;
 
 	@Autowired
 	MonitorDao dao;
@@ -47,6 +50,9 @@ public class MonitorController {
 
 	@Autowired
 	AtendimentoMonitoriaDao dao_atendimento_monitoria;
+
+	@Autowired
+	AlunoDao dao_aluno;
 
 	@RequestMapping("/novo")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Docente" })
@@ -97,7 +103,7 @@ public class MonitorController {
 	public String exibe(Long id, Model model) {
 		model.addAttribute("monitor", dao.buscaPorId(id));
 		model.addAttribute("disciplinas_monitor", dao_disciplina.listaDisciplinasPorMonitorId(id));
-		model.addAttribute("atendimentos_monitoria", dao_atendimento_monitoria.buscaPeloMonitorId(id));
+		atendimentosMonitoria(model, id);
 		return "monitor/exibe";
 	}
 
@@ -149,5 +155,18 @@ public class MonitorController {
 
 	private Usuario retornaUsuarioLogado() {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+
+	private void atendimentosMonitoria(Model model, Long id) {
+		this.lista_atendimentos_monitoria = dao_atendimento_monitoria.buscaPeloMonitorId(id);
+		for (AtendimentoMonitoria atendimento : this.lista_atendimentos_monitoria) {
+			if (!atendimento.isStatus_atendimento()) {
+				atendimento.setAlunos("");
+				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorAtendimentoMonitoriaId(atendimento.getId())) {
+					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
+				}
+			}
+		}
+		model.addAttribute("atendimentos_monitoria", this.lista_atendimentos_monitoria);
 	}
 }

@@ -78,9 +78,9 @@
 							<thead>
 								<tr>
 									<th>Data</th>
-									<th>Turma</th>
+									<th>Horário</th>
 									<th>Disciplina</th>
-									<th>Aluno</th>
+									<th>Aluno(s)</th>
 									<th>Ações</th>
 								</tr>
 							</thead>
@@ -89,16 +89,19 @@
 									items="${atendimentos_monitoria}">
 									<tr>
 										<td><fmt:formatDate value="${atendimento_monitoria.data}" /></td>
+										<td><fmt:formatDate type="time"
+												value="${atendimento_monitoria.horario_inicial}"
+												pattern="HH:mm" /> - <fmt:formatDate type="time"
+												value="${atendimento_monitoria.horario_final}"
+												pattern="HH:mm" /></td>
 										<c:if test="${atendimento_monitoria.status_atendimento}">
-											<td>-</td>
 											<td>-</td>
 											<td>-</td>
 										</c:if>
 										<c:if
 											test="${atendimento_monitoria.status_atendimento == false}">
-											<td>${atendimento_monitoria.aluno.turma.nome}</td>
 											<td>${atendimento_monitoria.disciplina.nome}</td>
-											<td>${atendimento_monitoria.aluno.nome}</td>
+											<td>${atendimento_monitoria.alunos}</td>
 										</c:if>
 										<td>
 											<!-- Exibir --> <a

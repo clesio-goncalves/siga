@@ -42,7 +42,7 @@
 					</c:if>
 					<c:if test="${atendimento_monitoria.status_atendimento == false}">
 						<tr>
-							<th style="vertical-align: middle;">Aluno</th>
+							<th style="vertical-align: middle;">Aluno(s)</th>
 							<td>${atendimento_monitoria.alunos}</td>
 						</tr>
 						<tr>

@@ -72,9 +72,9 @@
 							<thead>
 								<tr>
 									<th>Data</th>
-									<th>Turma</th>
+									<th>Horário</th>
 									<th>Disciplina</th>
-									<th>Aluno</th>
+									<th>Aluno(s)</th>
 									<th>Ações</th>
 								</tr>
 							</thead>
@@ -84,18 +84,19 @@
 									<tr>
 										<td><fmt:formatDate
 												value="${atendimento_extraclasse.data}" /></td>
-
-										<!-- Turma -->
+										<td><fmt:formatDate type="time"
+												value="${atendimento_extraclasse.horario_inicial}"
+												pattern="HH:mm" /> - <fmt:formatDate type="time"
+												value="${atendimento_extraclasse.horario_final}"
+												pattern="HH:mm" /></td>
 										<c:if test="${atendimento_extraclasse.status_atendimento}">
-											<td>-</td>
 											<td>-</td>
 											<td>-</td>
 										</c:if>
 										<c:if
 											test="${atendimento_extraclasse.status_atendimento == false}">
-											<td>${atendimento_extraclasse.aluno.turma.nome}</td>
 											<td>${atendimento_extraclasse.disciplina.nome}</td>
-											<td>${atendimento_extraclasse.aluno.nome}</td>
+											<td>${atendimento_extraclasse.alunos}</td>
 										</c:if>
 										<td>
 											<!-- Exibir --> <a

@@ -42,7 +42,7 @@
 					</c:if>
 					<c:if test="${extra_classe.status_atendimento == false}">
 						<tr>
-							<th style="vertical-align: middle;">Aluno</th>
+							<th style="vertical-align: middle;">Aluno(s)</th>
 							<td>${extra_classe.alunos}</td>
 						</tr>
 						<tr>

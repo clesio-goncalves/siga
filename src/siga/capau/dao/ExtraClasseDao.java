@@ -38,8 +38,9 @@ public class ExtraClasseDao {
 	}
 
 	public List<ExtraClasse> buscaPeloAlunoId(Long aluno_id) {
-		return manager.createQuery("select e from ExtraClasse e where e.aluno.id = :aluno_id", ExtraClasse.class)
-				.setParameter("aluno_id", aluno_id).getResultList();
+		return manager.createQuery(
+				"select e from ExtraClasse e inner join AlunoExtraClasse aec on aec.extra_classe.id = e.id where aec.aluno.id = :aluno_id",
+				ExtraClasse.class).setParameter("aluno_id", aluno_id).getResultList();
 	}
 
 	public List<ExtraClasse> buscaPeloDocenteId(Long docente_id) {
