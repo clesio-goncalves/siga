@@ -1,6 +1,7 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 var cont_select_aluno = 0;
+var permite_edita = false;
 
 /**
  * Busca as turmas com base no curso selecionado
@@ -38,6 +39,7 @@ function alteraCurso(contexto) {
  */
 function alteraTurma(contexto) {
 	cont_select_aluno = 0;
+	permite_edita = true;
 	$.ajax({
 		type : "POST",
 		url : "filtro_aluno",
@@ -66,7 +68,14 @@ function alteraTurma(contexto) {
  * @returns {undefined}
  */
 function alteraAluno(contexto) {
-	cont_select_aluno = cont_select_aluno + 1;
+	if (contexto == 'novo') {
+		cont_select_aluno = cont_select_aluno + 1;
+	} else {
+		if (permite_edita) {
+			cont_select_aluno = cont_select_aluno + 1;
+		}
+	}
+
 	if (cont_select_aluno == 1) {
 		$.ajax({
 			type : "POST",

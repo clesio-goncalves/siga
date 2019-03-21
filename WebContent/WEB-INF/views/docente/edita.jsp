@@ -10,7 +10,7 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Docente</h1>
+		<h1>Editar Docente</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
 			alteração do Docente no sistema. Não é permitida a alteração do campo
 			Usuário, com o objetivo de mater a consistência dos dados.</p>

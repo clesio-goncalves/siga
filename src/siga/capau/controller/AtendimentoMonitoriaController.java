@@ -27,6 +27,7 @@ import siga.capau.dao.CursoDao;
 import siga.capau.dao.DisciplinaDao;
 import siga.capau.dao.MonitorDao;
 import siga.capau.dao.TurmaDao;
+import siga.capau.modelo.Aluno;
 import siga.capau.modelo.AtendimentoMonitoria;
 import siga.capau.modelo.FiltroAtendimentoMonitoria;
 import siga.capau.modelo.Monitor;
@@ -45,6 +46,7 @@ public class AtendimentoMonitoriaController {
 	private Turma turma;
 	private Usuario usuario;
 	private Monitor monitor;
+	private List<Aluno> lista_alunos;
 	private List<Monitor> lista_monitor;
 	private boolean possui_permissao_editar = false;
 	String alunos_id[];
@@ -91,24 +93,16 @@ public class AtendimentoMonitoriaController {
 
 	@RequestMapping(value = "/adiciona", method = RequestMethod.POST)
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
-	public String adiciona(@Valid AtendimentoMonitoria AtendimentoMonitoria, BindingResult result) {
+	public String adiciona(@Valid AtendimentoMonitoria atendimentoMonitoria, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:novo";
 		}
 
 		// Adiciona no banco de dados
-		this.atendimento_monitoria = dao.adiciona(AtendimentoMonitoria);
+		this.atendimento_monitoria = dao.adiciona(atendimentoMonitoria);
 
-		if (!AtendimentoMonitoria.isStatus_atendimento()) {
-			// Split lista de alunos
-			this.alunos_id = AtendimentoMonitoria.getAlunos().split(",");
-
-			// Adiciona Vinculo em AlunoAtendimentoMonitoria
-			for (String aluno_id : this.alunos_id) {
-				this.dao_aluno_atendimento_monitoria.adiciona(Long.parseLong(aluno_id),
-						this.atendimento_monitoria.getId());
-			}
-		}
+		// Vincula os alunos ao atendimento de monitoria
+		adicionaAlunoAtendimentoMonitoria(atendimentoMonitoria);
 
 		return "redirect:lista";
 	}
@@ -144,7 +138,7 @@ public class AtendimentoMonitoriaController {
 		for (AtendimentoMonitoria atendimento : this.lista_atendimentos_monitoria) {
 			if (!atendimento.isStatus_atendimento()) {
 				atendimento.setAlunos("");
-				for (String nome_aluno : dao_aluno.buscaAlunoPorAtendimentoMonitoriaId(atendimento.getId())) {
+				for (String nome_aluno : dao_aluno.buscaNomeAlunoPorAtendimentoMonitoriaId(atendimento.getId())) {
 					atendimento.setAlunos(atendimento.getAlunos() + " - " + nome_aluno + "<br>");
 				}
 			}
@@ -154,10 +148,10 @@ public class AtendimentoMonitoriaController {
 
 	@RequestMapping("/remove")
 	@Secured({ "ROLE_Administrador", "ROLE_Coordenador", "ROLE_Diretor", "ROLE_Pedagogia", "ROLE_Monitor" })
-	public String remove(AtendimentoMonitoria AtendimentoMonitoria, HttpServletResponse response) {
-		if (possuiPermissao(AtendimentoMonitoria.getId())) {
-			
-			dao.remove(AtendimentoMonitoria.getId());
+	public String remove(AtendimentoMonitoria atendimentoMonitoria, HttpServletResponse response) {
+		if (possuiPermissao(atendimentoMonitoria.getId())) {
+			dao_aluno_atendimento_monitoria.removePeloAtendimentoId(atendimentoMonitoria.getId());
+			dao.remove(atendimentoMonitoria.getId());
 			return "redirect:lista";
 		} else {
 			response.setStatus(403);
@@ -173,18 +167,7 @@ public class AtendimentoMonitoriaController {
 		if (possuiPermissao(id)) {
 			this.atendimento_monitoria = dao.buscaPorId(id);
 			model.addAttribute("atendimento_monitoria", dao.buscaPorId(id));
-
-			if (!this.atendimento_monitoria.isStatus_atendimento()) {
-				this.atendimento_monitoria.setAlunos("");
-				for (String nome_aluno : dao_aluno
-						.buscaAlunoPorAtendimentoMonitoriaId(this.atendimento_monitoria.getId())) {
-					this.atendimento_monitoria
-							.setAlunos(this.atendimento_monitoria.getAlunos() + " - " + nome_aluno + "<br>");
-				}
-			}
-			this.turma = dao_turma.buscaTurmaPorAtendimentoMonitoriaId(id);
-			model.addAttribute("turma", this.turma);
-			model.addAttribute("curso", dao_curso.buscaPorTurmaId(this.turma.getId()));
+			dadosExibir(id, model);
 			return "atendimento_monitoria/exibe";
 		} else {
 			response.setStatus(403);
@@ -200,39 +183,26 @@ public class AtendimentoMonitoriaController {
 			model.addAttribute("atendimento_monitoria", this.atendimento_monitoria);
 			this.possui_permissao_editar = true;
 
-//			if (this.usuario.getPerfil().getId() == 10) { // Monitor
-//				model.addAttribute("monitor", this.atendimento_monitoria.getMonitor());
-//				model.addAttribute("cursos", dao_curso.listaCursosPorMonitorId(this.lista_monitor.get(0).getId()));
-//
-//				// Se for informado que houve atendimento
-//				if (this.atendimento_monitoria.isStatus_atendimento() == false) {
-//					model.addAttribute("turmas",
-//							dao_turma.listaTurmaPorCursoIdMonitorId(
-//									this.atendimento_monitoria.getAluno().getTurma().getCurso().getId(),
-//									this.atendimento_monitoria.getMonitor().getId()));
-//					model.addAttribute("alunos",
-//							dao_aluno.listaAlunosPorTurmaId(this.atendimento_monitoria.getAluno().getTurma().getId()));
-//					model.addAttribute("disciplinas",
-//							dao_disciplina.listaDisciplinasPorTurmaIdMonitorId(
-//									this.atendimento_monitoria.getAluno().getTurma().getId(),
-//									this.atendimento_monitoria.getMonitor().getId()));
-//				}
-//			} else {
-//				model.addAttribute("cursos", dao_curso.lista());
-//				// Se for informado que houve atendimento
-//				if (this.atendimento_monitoria.isStatus_atendimento() == false) {
-//					model.addAttribute("turmas", dao_turma
-//							.listaTurmaPorCursoId(this.atendimento_monitoria.getAluno().getTurma().getCurso().getId()));
-//					model.addAttribute("alunos",
-//							dao_aluno.listaAlunosPorTurmaId(this.atendimento_monitoria.getAluno().getTurma().getId()));
-//					model.addAttribute("disciplinas", dao_disciplina
-//							.listaDisciplinasPorTurmaId(this.atendimento_monitoria.getAluno().getTurma().getId()));
-//					model.addAttribute("monitores",
-//							dao_monitor.buscaPorDisciplinaId(this.atendimento_monitoria.getDisciplina().getId()));
-//				} else {
-//					model.addAttribute("monitores", dao_monitor.lista());
-//				}
-//			}
+			if (this.usuario.getPerfil().getId() == 10) { // Monitor
+				model.addAttribute("monitor", this.atendimento_monitoria.getMonitor());
+				model.addAttribute("cursos", dao_curso.listaCursosPorMonitorId(this.lista_monitor.get(0).getId()));
+
+				// Se for informado que houve atendimento
+				if (this.atendimento_monitoria.isStatus_atendimento() == false) {
+					buscaDadosAtendimento(model);
+					buscaDadosAtendimentoParaMonitor(model);
+				}
+			} else {
+				model.addAttribute("cursos", dao_curso.lista());
+
+				// Se for informado que houve atendimento
+				if (this.atendimento_monitoria.isStatus_atendimento() == false) {
+					buscaDadosAtendimento(model);
+					buscaDadosAtendimentoParaOutros(model);
+				} else {
+					model.addAttribute("monitores", dao_monitor.lista());
+				}
+			}
 			return "atendimento_monitoria/edita";
 		} else {
 			response.setStatus(403);
@@ -257,6 +227,13 @@ public class AtendimentoMonitoriaController {
 
 			// Altera no banco
 			dao.altera(atendimentoMonitoria);
+
+			// Desvincula os alunos de AlunoAtendimentoMonitoria
+			dao_aluno_atendimento_monitoria.removePeloAtendimentoId(atendimentoMonitoria.getId());
+
+			// Vincula os alunos ao atendimento de monitoria
+			adicionaAlunoAtendimentoMonitoria(atendimentoMonitoria);
+
 			this.possui_permissao_editar = false;
 			return "redirect:lista";
 		} else {
@@ -458,6 +435,63 @@ public class AtendimentoMonitoriaController {
 
 	private Usuario retornaUsuarioLogado() {
 		return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+
+	private void adicionaAlunoAtendimentoMonitoria(AtendimentoMonitoria atendimentoMonitoria) {
+		if (!atendimentoMonitoria.isStatus_atendimento()) {
+			// Split lista de alunos
+			this.alunos_id = atendimentoMonitoria.getAlunos().split(",");
+
+			// Adiciona Vinculo em AlunoAtendimentoMonitoria
+			for (String aluno_id : this.alunos_id) {
+				this.dao_aluno_atendimento_monitoria.adiciona(Long.parseLong(aluno_id),
+						this.atendimento_monitoria.getId());
+			}
+		}
+	}
+
+	private void dadosExibir(Long id, Model model) {
+		if (!this.atendimento_monitoria.isStatus_atendimento()) {
+			this.atendimento_monitoria.setAlunos("");
+			for (String nome_aluno : dao_aluno
+					.buscaNomeAlunoPorAtendimentoMonitoriaId(this.atendimento_monitoria.getId())) {
+				this.atendimento_monitoria
+						.setAlunos(this.atendimento_monitoria.getAlunos() + " - " + nome_aluno + "<br>");
+			}
+			this.turma = dao_turma.buscaTurmaPorAtendimentoMonitoriaId(id);
+			model.addAttribute("turma", this.turma);
+			model.addAttribute("curso", dao_curso.buscaPorTurmaId(this.turma.getId()));
+		}
+	}
+
+	private void buscaDadosAtendimento(Model model) {
+		this.lista_alunos = this.dao_aluno.buscaAlunoPorAtendimentoMonitoriaId(this.atendimento_monitoria.getId());
+		model.addAttribute("turma_atendimento", this.lista_alunos.get(0).getTurma().getId());
+		model.addAttribute("curso_atendimento", this.lista_alunos.get(0).getTurma().getCurso().getId());
+
+		this.atendimento_monitoria.setAlunos("");
+		for (Aluno aluno : this.lista_alunos) {
+			this.atendimento_monitoria.setAlunos(this.atendimento_monitoria.getAlunos() + aluno.getId() + " ");
+		}
+	}
+
+	private void buscaDadosAtendimentoParaMonitor(Model model) {
+		model.addAttribute("turmas",
+				dao_turma.listaTurmaPorCursoIdMonitorId(this.lista_alunos.get(0).getTurma().getCurso().getId(),
+						this.atendimento_monitoria.getMonitor().getId()));
+		model.addAttribute("alunos", dao_aluno.listaAlunosPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
+		model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasPorTurmaIdMonitorId(
+				this.lista_alunos.get(0).getTurma().getId(), this.atendimento_monitoria.getMonitor().getId()));
+	}
+
+	private void buscaDadosAtendimentoParaOutros(Model model) {
+		model.addAttribute("turmas",
+				dao_turma.listaTurmaPorCursoId(this.lista_alunos.get(0).getTurma().getCurso().getId()));
+		model.addAttribute("alunos", dao_aluno.listaAlunosPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
+		model.addAttribute("disciplinas",
+				dao_disciplina.listaDisciplinasPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
+		model.addAttribute("monitores",
+				dao_monitor.buscaPorDisciplinaId(this.atendimento_monitoria.getDisciplina().getId()));
 	}
 
 }

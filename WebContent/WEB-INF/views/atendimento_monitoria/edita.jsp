@@ -12,7 +12,7 @@
 <c:import url="../componentes/css_atendimento.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Atendimento de Monitoria</h1>
+		<h1>Editar Atendimento de Monitoria</h1>
 		<p class="lead">Preencha o formulário abaixo com os dados do
 			atendimento de monitoria para realizar a alteração no sistema.</p>
 	</div>
@@ -36,7 +36,7 @@
 					${atendimento_monitoria.status_atendimento ? 'disabled' : ''}>
 					<c:forEach var="curso" items="${cursos}">
 						<option value="${curso.id}"
-							${atendimento_monitoria.aluno.turma.curso.id == curso.id ? 'selected' : ''}>${curso.nome}</option>
+							${curso_atendimento == curso.id ? 'selected' : ''}>${curso.nome}</option>
 					</c:forEach>
 				</select>
 			</div>

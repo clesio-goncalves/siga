@@ -10,7 +10,7 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Servidor</h1>
+		<h1>Editar Servidor Admin</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
 			alteração do Servidor no sistema. É permitida a alteração somente dos
 			campos Nome, SIAPE e Descrição da Função com o objetivo de mater a

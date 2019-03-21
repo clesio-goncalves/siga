@@ -9,6 +9,6 @@
 	${atendimento_monitoria.status_atendimento ? 'disabled' : ''}>
 	<c:forEach var="turma" items="${turmas}">
 		<option value="${turma.id}"
-			${atendimento_monitoria.aluno.turma.id == turma.id ? 'selected' : ''}>${turma.nome}</option>
+			${turma_atendimento == turma.id ? 'selected' : ''}>${turma.nome}</option>
 	</c:forEach>
 </select>

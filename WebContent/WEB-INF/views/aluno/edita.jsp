@@ -12,7 +12,7 @@
 	href="<c:url value="/resources/css/select/bootstrap-select.min.css" />">
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Aluno</h1>
+		<h1>Editar Aluno</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
 			alteração do aluno no sistema. Não é permitida a alteração do campo
 			Usuário (anteriormente vinculado), com o objetivo de mater a

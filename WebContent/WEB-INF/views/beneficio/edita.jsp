@@ -10,7 +10,7 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Benefício</h1>
+		<h1>Editar Benefício</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
 			alteração do benefício assistencial no sistema. Política de
 			Assistência Estudantil (POLAE) - Resolução 14/2014, do Conselho

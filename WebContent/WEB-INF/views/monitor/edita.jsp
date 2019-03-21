@@ -8,7 +8,7 @@
 <c:import url="../componentes/cabecalho.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Monitor</h1>
+		<h1>Editar Monitor</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
 			alteração do monitor no sistema. Não é permitida a alteração do campo
 			Usuário, com o objetivo de mater a consistência dos dados.</p>

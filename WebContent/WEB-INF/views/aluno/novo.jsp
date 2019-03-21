@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/select/bootstrap-select.min.css" />">
 <div class="jumbotron">
-	<div class="container">
+	<div>
 		<h1 class="display-3">Cadastrar Aluno</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar o
 			cadastro do aluno no sistema.</p>
@@ -53,7 +53,7 @@
 			<!-- MATRICULA -->
 			<div class="form-group col-4">
 				<label for="matricula" class="col-form-label">Matricula<span
-				class="obrigatorio">*</span></label> <input type="text"
+					class="obrigatorio">*</span></label> <input type="text"
 					class="form-control" name="matricula" MAXLENGTH="50"
 					required="required">
 			</div>

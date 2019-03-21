@@ -8,7 +8,7 @@
 <c:import url="../componentes/cabecalho.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Usuário</h1>
+		<h1>Editar Usuário</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
 			alteração do usuário no sistema. Não é permitida a alteração do
 			Perfil do usuário, com o objetivo de mater a consistência dos dados.</p>

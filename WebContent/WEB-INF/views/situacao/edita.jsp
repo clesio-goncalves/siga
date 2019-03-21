@@ -10,7 +10,7 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Situação</h1>
+		<h1>Editar Situação</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
 			alteração da situação do aluno no sistema.</p>
 	</div>

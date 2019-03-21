@@ -1,0 +1,9 @@
+.imagem{
+	text-align: center;
+}
+
+@media	(max-width:	500px)	{
+	.tamanho_imagem {
+		width: 100%;
+	}
+}

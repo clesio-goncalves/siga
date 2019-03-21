@@ -39,4 +39,9 @@ public class AlunoAtendimentoMonitoriaDao {
 				.executeUpdate();
 	}
 
+	public void removePeloAtendimentoId(Long id) {
+		manager.createQuery("delete from AlunoAtendimentoMonitoria a where a.atendimento_monitoria.id = :id")
+				.setParameter("id", id).executeUpdate();
+	}
+
 }

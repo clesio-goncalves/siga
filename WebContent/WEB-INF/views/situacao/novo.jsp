@@ -9,7 +9,7 @@
 <c:import url="../componentes/cabecalho.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Cadastrar Situação</h1>
+		<h1>Cadastrar Situação</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar o
 			cadastro da situação do aluno no sistema.</p>
 	</div>

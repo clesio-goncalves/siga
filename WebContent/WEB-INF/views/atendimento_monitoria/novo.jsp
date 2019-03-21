@@ -12,7 +12,7 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Atendimento de Monitoria</h1>
+		<h1>Atendimento de Monitoria</h1>
 		<p class="lead">Preencha o formulário abaixo com os dados do
 			atendimento de monitoria no sistema.</p>
 	</div>

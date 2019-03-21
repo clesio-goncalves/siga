@@ -9,7 +9,7 @@
 <c:import url="../componentes/cabecalho.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Cadastrar Benefício</h1>
+		<h1>Cadastrar Benefício</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar o
 			cadastro do benefício assistencial ao aluno no sistema. Política de
 			Assistência Estudantil (POLAE) - Resolução 14/2014, do Conselho

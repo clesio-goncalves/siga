@@ -12,7 +12,7 @@
 <c:import url="../componentes/css_atendimento.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Atendimento Extraclasse</h1>
+		<h1>Editar Atendimento Extraclasse</h1>
 		<p class="lead">Preencha o formulário abaixo com os dados do
 			atendimento extraclasse para realizar a alteração no sistema.</p>
 	</div>

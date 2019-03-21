@@ -9,7 +9,7 @@
 <c:import url="../componentes/cabecalho.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Cadastrar Curso</h1>
+		<h1>Cadastrar Curso</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar o
 			cadastro do curso no sistema.</p>
 	</div>
@@ -19,9 +19,9 @@
 
 		<!-- NOME -->
 		<div class="form-group">
-			<label for="nome" class="col-form-label">Nome<span class="obrigatorio">*</span></label> <input
-				type="text" class="form-control" name="nome" autofocus
-				MAXLENGTH="255" required>
+			<label for="nome" class="col-form-label">Nome<span
+				class="obrigatorio">*</span></label> <input type="text" class="form-control"
+				name="nome" autofocus MAXLENGTH="255" required>
 		</div>
 
 		<security:csrfInput />

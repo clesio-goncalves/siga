@@ -8,7 +8,7 @@
 <c:import url="../componentes/cabecalho.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Cadastrar Monitor</h1>
+		<h1>Cadastrar Monitor</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar o
 			cadastro do monitor no sistema.</p>
 	</div>

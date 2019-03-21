@@ -10,7 +10,7 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Curso</h1>
+		<h1>Editar Curso</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
 			alteração do curso no sistema.</p>
 	</div>

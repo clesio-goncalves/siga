@@ -12,7 +12,7 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Ocorrência de Indisciplina</h1>
+		<h1>Ocorrência de Indisciplina</h1>
 		<p class="lead">Preencha o formulário abaixo com os dados da
 			ocorrência de indisciplina no sistema.</p>
 	</div>

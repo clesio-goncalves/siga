@@ -7,15 +7,22 @@
 <html>
 <head>
 <title>Inicio</title>
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/index.css" />">
 <c:import url="componentes/cabecalho.jsp" />
 
 <div class="jumbotron">
 	<div class="container">
+		<div class="imagem">
+			<img src="<c:url value="/resources/imagens/SIGA.png" />"
+				class="tamanho_imagem">
+		</div>
+		<hr class="my-4">
 		<security:authorize access="isAuthenticated()">
 			<security:authentication property="principal" var="usuario" />
 			<c:set var="perfil" value="${usuario.perfil.nome}" />
 			<c:set var="nome_perfil" value="${fn:replace(perfil, 'ROLE_', '')}" />
-			<h1 class="display-3">Bem-vindo, ${nome_perfil}</h1>
+			<h1>Bem-vindo, ${nome_perfil}</h1>
 		</security:authorize>
 		<p class="lead">Este é o protótipo do sistema SIGA-Capau (Sistema
 			Integrado de Gestão de Alunos do Campus Paulistana) que acompanha o

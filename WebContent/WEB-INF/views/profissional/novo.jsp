@@ -11,7 +11,7 @@
 <c:import url="../componentes/cabecalho.jsp" />
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Cadastrar Profissional</h1>
+		<h1>Cadastrar Profissional</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar o
 			cadastro do Profissional no sistema.</p>
 	</div>

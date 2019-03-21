@@ -10,7 +10,7 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Profissional</h1>
+		<h1>Editar Profissional</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
 			alteração do Profissional no sistema. É permitida a alteração somente
 			dos campos Nome e SIAPE, com o objetivo de mater a consistência dos

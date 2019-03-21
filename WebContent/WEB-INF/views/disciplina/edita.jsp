@@ -11,7 +11,7 @@
 
 <div class="jumbotron">
 	<div class="container">
-		<h1 class="display-3">Editar Disciplina</h1>
+		<h1>Editar Disciplina</h1>
 		<p class="lead">Preencha o formulário abaixo para realizar a
 			alteração do disciplina no sistema.</p>
 	</div>
