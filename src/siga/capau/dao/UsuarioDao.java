@@ -38,19 +38,19 @@ public class UsuarioDao implements UserDetailsService {
 	// aluno
 	public List<Usuario> listaUsuarioAlunoSemVinculo() {
 		return manager.createQuery(
-				"select u from Usuario u where u.ativo=true and u.perfil.nome like 'Aluno' and u.id not in (select a.usuario.id from Aluno as a where a.usuario.id is not null)",
+				"select u from Usuario u where u.ativo=true and u.perfil.id = 11 and u.id not in (select a.usuario.id from Aluno as a where a.usuario.id is not null)",
 				Usuario.class).getResultList();
 	}
 
 	public List<Usuario> listaUsuarioMonitorSemVinculo() {
 		return manager.createQuery(
-				"select u from Usuario u where u.ativo=true and u.perfil.nome like 'Monitor' and u.id not in (select m.usuario.id from Monitor as m where m.usuario.id is not null)",
+				"select u from Usuario u where u.ativo=true and u.perfil.id = 10 and u.id not in (select m.usuario.id from Monitor as m where m.usuario.id is not null)",
 				Usuario.class).getResultList();
 	}
 
 	public List<Usuario> listaUsuarioDocenteSemVinculo() {
 		return manager.createQuery(
-				"select u from Usuario u where u.ativo=true and u.perfil.nome like 'Docente' and u.id not in (select d.usuario.id from Docente as d where d.usuario.id is not null)",
+				"select u from Usuario u where u.ativo=true and u.perfil.id = 9 and u.id not in (select d.usuario.id from Docente as d where d.usuario.id is not null)",
 				Usuario.class).getResultList();
 	}
 
@@ -61,11 +61,11 @@ public class UsuarioDao implements UserDetailsService {
 	}
 
 	// seleciona todos os usuário do tipo Psicologo, Assistente Social, Enfermeiro
-	// ou Odontologo que ainda estão sem vinculo com algum desses profissionais da
-	// saúde
+	// Odontologo OU Coordenação de Disciplina que ainda estão sem vinculo com algum
+	// desses profissionais
 	public List<Usuario> listaUsuarioProfissionalSemVinculo() {
 		return manager.createQuery(
-				"select u from Usuario u where u.ativo=true and u.perfil.nome in ('Psicologia', 'Assistência Social', 'Enfermagem', 'Odontologia', 'Pedagogia') and u.id not in (select p.usuario.id from Profissional as p)",
+				"select u from Usuario u where u.ativo=true and u.perfil.id IN (4, 5, 6, 7, 8, 12) and u.id not in (select p.usuario.id from Profissional as p)",
 				Usuario.class).getResultList();
 	}
 
@@ -73,7 +73,7 @@ public class UsuarioDao implements UserDetailsService {
 	// que ainda estão sem vinculo com algum desses administracaoes
 	public List<Usuario> listaUsuarioAdministracaoSemVinculo() {
 		return manager.createQuery(
-				"select u from Usuario u where u.ativo=true and u.perfil.nome in ('Administrador', 'Coordenador', 'Diretor') and u.id not in (select s.usuario.id from Administracao as s)",
+				"select u from Usuario u where u.ativo=true and u.perfil.id IN (1, 2, 3) and u.id not in (select s.usuario.id from Administracao as s)",
 				Usuario.class).getResultList();
 	}
 
@@ -126,10 +126,9 @@ public class UsuarioDao implements UserDetailsService {
 		return manager.createQuery("select u.perfil.id from Usuario u where u.id = :id", Long.class)
 				.setParameter("id", id).getSingleResult();
 	}
-	
+
 	public Long buscaQntUsuariosAtivosPorPerfilId(Long perfil_id) {
-		return manager.createQuery(
-				"select count(u) from Usuario u where u.ativo = true and u.perfil.id = :perfil_id",
+		return manager.createQuery("select count(u) from Usuario u where u.ativo = true and u.perfil.id = :perfil_id",
 				Long.class).setParameter("perfil_id", perfil_id).getSingleResult();
 	}
 
