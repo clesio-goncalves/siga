@@ -82,7 +82,8 @@ public class ExtraClasseController {
 			this.lista_docente = dao_docente.buscaPorUsuario(this.usuario.getId());
 			if (this.lista_docente.size() == 1) {
 				model.addAttribute("docente", this.lista_docente.get(0));
-				model.addAttribute("cursos", dao_curso.listaCursosPorDocenteId(this.lista_docente.get(0).getId()));
+				model.addAttribute("cursos",
+						dao_curso.listaCursosPorDisciplinasDoDocenteId(this.lista_docente.get(0).getId()));
 			} else {
 				return "redirect:/docente/novo";
 			}
@@ -120,7 +121,8 @@ public class ExtraClasseController {
 			this.lista_docente = dao_docente.buscaPorUsuario(this.usuario.getId());
 			if (this.lista_docente.size() == 1) { // se há docente para o usuário cadastrado
 				this.lista_extra_classe = dao.buscaPeloDocenteId(this.lista_docente.get(0).getId());
-				model.addAttribute("cursos", dao_curso.listaCursosPorDocenteId(this.lista_docente.get(0).getId()));
+				model.addAttribute("cursos",
+						dao_curso.listaCursosPorDisciplinasDoDocenteId(this.lista_docente.get(0).getId()));
 				model.addAttribute("disciplinas",
 						dao_disciplina.listaDisciplinasPorDocenteId(this.lista_docente.get(0).getId()));
 				model.addAttribute("docente", this.lista_docente.get(0));
@@ -136,7 +138,7 @@ public class ExtraClasseController {
 		alteraAlunosExtraClasse();
 		model.addAttribute("extra_classes", this.lista_extra_classe);
 		model.addAttribute("alunos", dao_aluno.lista());
-		
+
 		return "extra_classe/lista";
 	}
 
@@ -178,7 +180,8 @@ public class ExtraClasseController {
 
 			if (this.usuario.getPerfil().getId() == 9) { // Docente
 				model.addAttribute("docente", this.extra_classe.getDocente());
-				model.addAttribute("cursos", dao_curso.listaCursosPorDocenteId(this.extra_classe.getDocente().getId()));
+				model.addAttribute("cursos",
+						dao_curso.listaCursosPorDisciplinasDoDocenteId(this.extra_classe.getDocente().getId()));
 
 				// Se for informado que houve atendimento
 				if (this.extra_classe.isStatus_atendimento() == false) {
@@ -239,7 +242,8 @@ public class ExtraClasseController {
 		if (request.getParameter("curso_id") != null) {
 			if (this.usuario.getPerfil().getId() == 9) { // Se Docente
 				model.addAttribute("turmas",
-						dao_turma.listaTurmaPorCursoIdDocenteId(Long.parseLong(request.getParameter("curso_id")),
+						dao_turma.listaTurmaPorCursoIdDisciplinasDocenteId(
+								Long.parseLong(request.getParameter("curso_id")),
 								Long.parseLong(request.getParameter("docente_id"))));
 			} else {
 				model.addAttribute("turmas",
@@ -281,7 +285,7 @@ public class ExtraClasseController {
 		if (request.getParameter("turma_id") != null) {
 			if (this.usuario.getPerfil().getId() == 9) { // Se Docente
 				model.addAttribute("disciplinas",
-						dao_disciplina.listaDisciplinasPorTurmaIdDocenteId(
+						dao_disciplina.listaDisciplinasPorTurmaIdDisciplinasDoDocenteId(
 								Long.parseLong(request.getParameter("turma_id")),
 								Long.parseLong(request.getParameter("docente_id"))));
 			} else {
@@ -299,13 +303,9 @@ public class ExtraClasseController {
 	@RequestMapping(value = "/filtro_docente", method = RequestMethod.POST)
 	public String filtrarDocente(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception {
-		if (request.getParameter("turma_id") != null) {
-			if (request.getParameter("disciplina_id") != null) {
-				model.addAttribute("docentes",
-						dao_docente.listaDocentesPorDisciplinaIdTurmaId(
-								Long.parseLong(request.getParameter("disciplina_id")),
-								Long.parseLong(request.getParameter("turma_id"))));
-			}
+		if (request.getParameter("disciplina_id") != null) {
+			model.addAttribute("docentes",
+					dao_docente.listaDocentesPorDisciplinaId(Long.parseLong(request.getParameter("disciplina_id"))));
 		}
 		if (request.getParameter("contexto").equals("edita")) {
 			return "extra_classe/import_edita/docente";
@@ -472,10 +472,10 @@ public class ExtraClasseController {
 	}
 
 	private void buscaDadosAtendimentoParaDocente(Model model) {
-		model.addAttribute("turmas", dao_turma.listaTurmaPorCursoIdDocenteId(
+		model.addAttribute("turmas", dao_turma.listaTurmaPorCursoIdDisciplinasDocenteId(
 				this.lista_alunos.get(0).getTurma().getCurso().getId(), this.extra_classe.getDocente().getId()));
 		model.addAttribute("alunos", dao_aluno.listaAlunosPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
-		model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasPorTurmaIdDocenteId(
+		model.addAttribute("disciplinas", dao_disciplina.listaDisciplinasPorTurmaIdDisciplinasDoDocenteId(
 				this.lista_alunos.get(0).getTurma().getId(), this.extra_classe.getDocente().getId()));
 	}
 
@@ -485,8 +485,8 @@ public class ExtraClasseController {
 		model.addAttribute("alunos", dao_aluno.listaAlunosPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
 		model.addAttribute("disciplinas",
 				dao_disciplina.listaDisciplinasPorTurmaId(this.lista_alunos.get(0).getTurma().getId()));
-		model.addAttribute("docentes", dao_docente.listaDocentesPorDisciplinaIdTurmaId(
-				this.extra_classe.getDisciplina().getId(), this.lista_alunos.get(0).getTurma().getId()));
+		model.addAttribute("docentes",
+				dao_docente.listaDocentesPorDisciplinaId(this.extra_classe.getDisciplina().getId()));
 	}
 
 	private void alteraAlunosExtraClasse() {

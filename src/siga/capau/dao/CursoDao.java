@@ -27,9 +27,9 @@ public class CursoDao {
 		return manager.createQuery("select c from Curso c order by c.id desc", Curso.class).getResultList();
 	}
 
-	public List<Curso> listaCursosPorDocenteId(Long docente_id) {
+	public List<Curso> listaCursosPorDisciplinasDoDocenteId(Long docente_id) {
 		return manager.createQuery(
-				"select DISTINCT c from Curso c inner join Turma t on t.curso.id = c.id inner join TurmaDisciplinaDocente tdd on tdd.turma.id = t.id where tdd.docente.id = :docente_id",
+				"select DISTINCT c from Curso c inner join Turma t on t.curso.id = c.id inner join TurmaDisciplinaDocente tdd on tdd.turma.id = t.id where tdd.disciplina.id IN (select DISTINCT tddi.disciplina.id from TurmaDisciplinaDocente tddi where tddi.docente.id = :docente_id)",
 				Curso.class).setParameter("docente_id", docente_id).getResultList();
 	}
 
