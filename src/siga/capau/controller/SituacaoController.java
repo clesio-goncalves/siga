@@ -73,7 +73,7 @@ public class SituacaoController {
 	@Secured("ROLE_Administrador")
 	public String exibe(Long id, Model model) {
 		model.addAttribute("situacao", dao.buscaPorId(id));
-		model.addAttribute("alunos_situacao", dao_aluno.listaAlunosPorTurmaId(id));
+		model.addAttribute("alunos_situacao", dao_aluno.listaAlunosPorSituacaoId(id));
 		return "situacao/exibe";
 	}
 
@@ -111,7 +111,6 @@ public class SituacaoController {
 
 	@RequestMapping("/relatorio")
 	public void relatorio(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
 		if (this.lista_situacoes != null) {
 			String nomeRelatorio = "Relatório de Situacões dos alunos.pdf";
 			String nomeArquivo = request.getServletContext()

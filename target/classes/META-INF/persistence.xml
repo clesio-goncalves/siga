@@ -14,8 +14,8 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 
 			<!-- propriedades do hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
 
 			<!-- atualiza o banco, gera as tabelas se for preciso -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
